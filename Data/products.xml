@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<ProductsCollection>
+  <product id="1">
+    <name>Product 1</name>
+    <price>1000</price>
+  </product>
+  <product id="2">
+    <name>Product 2</name>
+    <price>2000</price>
+  </product>
+  <product id="3">
+    <name>bongo</name>
+    <price>100</price>
+  </product>
+  <product id="4">
+    <name>wiadro</name>
+    <price>420</price>
+  </product>
+</ProductsCollection>

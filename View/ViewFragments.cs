@@ -24,11 +24,11 @@ namespace FarmConsole.View
         }
         public static string TopLeft(int lenght)
         {
-            return ("").PadRight(lenght - 1, '-') + ".";
+            return ("").PadRight(lenght - 1, '─') + ".";
         }
         public static string TopRight(int lenght)
         {
-            return "." + ("").PadRight(lenght - 1, '-');
+            return "." + ("").PadRight(lenght - 1, '─');
         }
         public static string Bot(int lenght)
         {
@@ -36,11 +36,11 @@ namespace FarmConsole.View
         }
         public static string BotLeft(int lenght)
         {
-            return ("").PadRight(lenght - 1, '-') + "'";
+            return ("").PadRight(lenght - 1, '─') + "'";
         }
         public static string BotRight(int lenght)
         {
-            return "'" + ("").PadRight(lenght - 1, '-');
+            return "'" + ("").PadRight(lenght - 1, '─');
         }
         public static string[] SideLeft(int width, int lenght)
         {

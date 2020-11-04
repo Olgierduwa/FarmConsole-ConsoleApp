@@ -7,7 +7,7 @@ namespace FarmConsole.Model
 {
     class LOGIC
     {
-        public static string openScreen = "Menu";
+        public static string openScreen = "Play";
 
         public LOGIC()
         {
@@ -106,14 +106,36 @@ namespace FarmConsole.Model
         }
         public void Play()
         {
-            int left_sel = 4, right_sel = 4;
             GUI.Play();
             int c1 = 1, c0 = 1;
             bool pressQ = false, pressE = false;
+            string[] left_list = new string[]
+            {
+                "Jeden     ",
+                "Dwa   .   ",
+                "Trzy  ..  ",
+                "Cztery... ",
+                "piec  ....",
+                "szesc  ...",
+                "siedem  ..",
+                "osiem    .",
+                "dziewiec  "
+            };
+            string[] right_list = new string[]
+            {
+                "Jeden Jede",
+                "Dwa   Dwa ",
+                "Trzy  Trzy",
+                "Cztery Elo",
+                "Trzy  Trzy",
+                "Cztery Elo"
+            };
+            int LSize = left_list.Length;
+            int RSize = right_list.Length;
             while (c1 != -5)
             {
                 Console.SetCursorPosition(Console.WindowWidth - 1, Console.WindowHeight - 1);
-                c1 = QH.choice_side_menu(Console.ReadKey().KeyChar, c1, left_sel, right_sel);
+                c1 = QH.choice_side_menu(Console.ReadKey().KeyChar, c1, LSize, RSize);
                 Console.Write("\b");
                 if (c1 < 0) switch (c1)
                     {
@@ -124,17 +146,17 @@ namespace FarmConsole.Model
                             {
                                 if (!pressQ)
                                 {
-                                    if (pressE) GUI.vt3.setSO(3, c0 - left_sel);
-                                    GUI.LeftMenu(); pressQ = true; c1 = 1;
+                                    if (pressE) GUI.vt3.setSO(3, c0 - LSize);
+                                    GUI.LeftMenu(left_list); pressQ = true; c1 = 1;
                                 }
-                                else if (pressE && (c0 > left_sel && c0 < left_sel + right_sel + 1))
+                                else if (pressE && (c0 > LSize && c0 < LSize + RSize + 1))
                                 {
-                                    GUI.vt3.setSO(3, c0 - left_sel); c0 = c1 = 1; GUI.vt2.setSO(3, c1);
+                                    GUI.vt3.setSO(3, c0 - LSize); c0 = c1 = 1; GUI.vt2.setSO(3, c1);
                                 }
                                 else
                                 {
                                     GUI.Clear(GUI.vt2); pressQ = false;
-                                    if (pressE) { c1 = left_sel + 1; GUI.vt3.setSO(3, c1 - left_sel); }
+                                    if (pressE) { c1 = LSize + 1; GUI.vt3.setSO(3, c1 - LSize); }
                                 }
                             }
                             break;
@@ -143,11 +165,11 @@ namespace FarmConsole.Model
                                 if (!pressE)
                                 {
                                     if (pressQ) GUI.vt2.setSO(3, c0);
-                                    GUI.RightMenu(); pressE = true; c1 = left_sel + 1;
+                                    GUI.RightMenu(right_list); pressE = true; c1 = LSize + 1;
                                 }
-                                else if (pressQ && (c0 > 0 && c0 < left_sel + 1))
+                                else if (pressQ && (c0 > 0 && c0 < LSize + 1))
                                 {
-                                    GUI.vt2.setSO(3, c0); c0 = c1 = left_sel + 1; GUI.vt3.setSO(3, c1 - left_sel);
+                                    GUI.vt2.setSO(3, c0); c0 = c1 = LSize + 1; GUI.vt3.setSO(3, c1 - LSize);
                                 }
                                 else
                                 {
@@ -168,8 +190,8 @@ namespace FarmConsole.Model
                         case 8: break;
                         case 9: break;
                     }
-                else if (c1 > 0 && c1 < left_sel + 1 && pressQ) { GUI.vt2.setSO(3, c1, c0); GUI.vt2.updateViewList(3, c1, c0, left_sel); }
-                else if (c1 > left_sel && c1 < left_sel + right_sel + 1 && pressE) { GUI.vt3.setSO(3, c1 - left_sel, c0 - left_sel); }
+                else if (c1 > 0 && c1 < LSize + 1 && pressQ) { GUI.vt2.updateList(c1, c0, LSize); }
+                else if (c1 > LSize && c1 < LSize + RSize + 1 && pressE) { GUI.vt3.updateList(c1 - LSize, c0 - LSize, RSize); }
 
                 //QH.INFO(0, "c0: " + c0, "c1: " + c1, "Q: " + pressQ, "E: " + pressE);
 

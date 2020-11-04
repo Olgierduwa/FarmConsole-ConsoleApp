@@ -13,6 +13,7 @@ namespace FarmConsole.View
         public static ViewTools vt1 = new ViewTools();
         public static ViewTools vt2 = new ViewTools();
         public static ViewTools vt3 = new ViewTools();
+
         public static void Clear(ViewTools vt0)
         {
             vt0.clearList();
@@ -154,7 +155,7 @@ namespace FarmConsole.View
 
 
         }
-        public static void LeftMenu()
+        public static void LeftMenu(string[] component_list)
         {
             vt2.endl(6);
             vt2.groupStart(0);
@@ -163,22 +164,18 @@ namespace FarmConsole.View
             vt2.groupEnd();
             vt2.groupStart(1);
             vt2.endl(2);
-            vt2.selOption("Jeden Jede", true);
-            vt2.selOption("Dwa   Dwa ", false);
-            vt2.selOption("Trzy  Trzy", false);
-            vt2.selOption("Cztery Elo", false);
-            vt2.selOption("piec piec ", false);
-            vt2.selOption("szesc szes", false);
-            vt2.selOption("siedem sie", false, false);
-            vt2.selOption("osiem osie", false, false);
-            vt2.selOption("dziewiec d", false, false);
+            vt2.selOption(component_list[0], true);
+            for (int i = 1; i < component_list.Length; i++)
+                if (i < (Console.WindowHeight - 17) / 3)
+                     vt2.selOption(component_list[i], false);
+                else vt2.selOption(component_list[i], false, false);
             vt2.groupEnd();
             vt2.groupEnd();
             vt2.doubleButtonBot(1,"A / Uzyj", "D / Odrzuc");
             vt2.printList();
             //vt2.showComponentList();
         }
-        public static void RightMenu()
+        public static void RightMenu(string[] component_list)
         {
             vt3.endl(6);
             vt3.groupStart(0);
@@ -187,10 +184,11 @@ namespace FarmConsole.View
             vt3.groupEnd();
             vt3.groupStart(5);
             vt3.endl(2);
-            vt3.selOption("Jeden Jede", true);
-            vt3.selOption("Dwa   Dwa ", false);
-            vt3.selOption("Trzy  Trzy", false);
-            vt3.selOption("Cztery Elo", false);
+            vt3.selOption(component_list[0], true);
+            for (int i = 1; i < component_list.Length; i++)
+                if (i < (Console.WindowHeight - 17) / 3)
+                    vt3.selOption(component_list[i], false);
+                else vt3.selOption(component_list[i], false, false);
             vt3.groupEnd();
             vt3.groupEnd();
             vt3.doubleButtonBot(5,"A / Uzyj", "D / Wyrzuc");

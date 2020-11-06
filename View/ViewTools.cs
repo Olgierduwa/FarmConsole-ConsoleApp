@@ -47,29 +47,28 @@ namespace FarmConsole.View
             }
         }
 
-        public void updateList(int c1, int c0, int count)
+        public void updateList(int c1, int c0, int count, int id_group = 3)
         {
-            int id_group = 3;
-            int startFrom = 6;
-            Component first = CLIST[startFrom + 1];
+            int idStartFrom = 4;
+            while (CLIST[idStartFrom-1].id_group != id_group) idStartFrom++;
+            Component first = CLIST[idStartFrom + 1];
             int range = (Console.WindowHeight - 17) / first.height;
-
             if (c0 < c1) {
                 if (c0 < count + 1 - range) {
-                    CLIST[startFrom + c0].show = false;
-                    CLIST[startFrom + c0 + range].show = true;
+                    CLIST[idStartFrom + c0].show = false;
+                    CLIST[idStartFrom + c0 + range].show = true;
                 }
             } else {
                 if (c1 < count + 1 - range) {
-                    CLIST[startFrom + c1].show = true;
-                    CLIST[startFrom + c1 + range].show = false;
+                    CLIST[idStartFrom + c1].show = true;
+                    CLIST[idStartFrom + c1 + range].show = false;
                 }
             }
 
-            CLIST[startFrom + c0].prop = 0;
-            CLIST[startFrom + c0].color = ConsoleColor.DarkGray;
-            CLIST[startFrom + c1].prop = 1;
-            CLIST[startFrom + c1].color = ConsoleColor.Yellow;
+            CLIST[idStartFrom + c0].prop = 0;
+            CLIST[idStartFrom + c0].color = ConsoleColor.DarkGray;
+            CLIST[idStartFrom + c1].prop = 1;
+            CLIST[idStartFrom + c1].color = ConsoleColor.Yellow;
 
             int shownOnList = 0, firstShow = -1, currentOnList = 0;
             foreach (Component c in CLIST)
@@ -78,21 +77,28 @@ namespace FarmConsole.View
                 {
                     if (c.show == true)
                     {
-                        if (firstShow == -1) firstShow = startFrom - currentOnList;
-                        print(c, first.posY + shownOnList * first.height);
+                        if (firstShow == -1) firstShow = idStartFrom - currentOnList;
+                        Console.ForegroundColor = c.color;
+                        for (int i = 0; i < c.height; i++)
+                        {
+                            Console.SetCursorPosition(c.posX, first.posY + shownOnList * first.height + i);
+                            Console.Write(c.view[i]);
+                        }
+                        Console.ForegroundColor = ConsoleColor.White;
+                        for (int i = 1; i < c.height - 1; i++)
+                        {
+                            Console.SetCursorPosition(c.posX + 1, first.posY + shownOnList * first.height + i);
+                            Console.Write(c.view[i].Substring(1, c.view[i].Length - 2));
+                        }
                         shownOnList++;
                     }
                     currentOnList++;
                 }
             }
-            Console.SetCursorPosition(CLIST[firstShow + c0].posX + 4, CLIST[firstShow + c0].posY + 1);
-            Console.Write("  ");
-
-            Console.SetCursorPosition(CLIST[firstShow + c1].posX + 4, CLIST[firstShow + c1].posY + 1);
-            Console.Write("><");
-            
+            //if (c1!=c0){Console.SetCursorPosition(CLIST[firstShow + c0].posX + 2, CLIST[firstShow + c0].posY + 1); Console.Write("  ");}
+            //             Console.SetCursorPosition(CLIST[firstShow + c1].posX + 2, CLIST[firstShow + c1].posY + 1); Console.Write("><");
             //Console.Write(firstShow +"+"+ c1);
-            showComponentList();
+            //showComponentList();
         }
         public void clearList()
         {
@@ -111,15 +117,13 @@ namespace FarmConsole.View
         public void printList()
         {
             foreach(Component c in CLIST)
-            if(c.show == true) print(c);
+            if(c.show == true && c.view[0].Length > 0) print(c);
             Console.SetCursorPosition(Console.WindowWidth - 1, Console.WindowHeight - 1);
         }
         private void print(Component c, int posY = -10)
         {
             if(posY == -10) posY = c.posY;
-            if (c.view[0].Length == 0) return;
             Console.ForegroundColor = c.color;
-            Console.SetCursorPosition(c.posX, c.posY);
             for (int i = 0; i < c.height; i++)
             {
                 Console.SetCursorPosition(c.posX, posY + i);
@@ -238,39 +242,28 @@ namespace FarmConsole.View
             addComponent("EN", view);
         }
 
-        public void selOption(string text, bool sel, bool show = true)
-        {
-            string check = "><";
-            if (sel == false) check = "  ";
-            addComponent("SO", new string[]
-            {
-                ViewFragments.Top(12 + text.Length),
-                "|  [" + check + "]  " + text + "  |",
-                ViewFragments.Bot(12 + text.Length)
-            }, show, Convert.ToInt32(sel));
-        }
-        public void infoBlock(int length, string text, bool show = true) 
+        public void infoBlock(int L, string text, bool show = true) 
         {
             List<string> content = new List<string>();
-            int height = 3 + text.Length / (length - 6);
+            int height = 3 + text.Length / (L - 6);
             int j = 0;
             while (j < text.Length)
             {
-                if ((text[j] == ' ' || j + 1 == text.Length) && j >= length - 4)
+                if ( (text[j] == ' ' || j + 1 == text.Length) && j >= L - 6 ) // jesli text jest do podzialu
                 {
                     j--;
                     while (j > 0 && text[j] != ' ') j--;
                     string line = text.Substring(0, j);
-                    content.Add(("").PadRight((length-2 - line.Length)/2,' ') + line + ("").PadRight(length / 2 - line.Length / 2 - 1, ' '));
+                    content.Add(("").PadRight((L - line.Length)/2 -1,' ') + line + ("").PadRight(L - line.Length - (L- line.Length)/2 -1 , ' '));
                     text = text.Remove(0, j);
                     j = 0;
                 }
                 j++;
             }
-            if (text.Length > 0) content.Add(("").PadRight((length - 2 - text.Length) / 2, ' ') + text + ("").PadRight(length / 2 - text.Length / 2 - 1, ' '));
-            string[] view1 = new string[] { ViewFragments.Top(length) };
+            if (text.Length > 0) content.Add(("").PadRight((L - text.Length)/2 -1, ' ') + text + ("").PadRight(L - text.Length - (L - text.Length)/2 -1, ' '));
+            string[] view1 = new string[] { ViewFragments.Top(L) };
             string[] view2 = ViewFragments.Sides(content);
-            string[] view3 = new string[] { ViewFragments.Bot(length) };
+            string[] view3 = new string[] { ViewFragments.Bot(L) };
             string[] view = view1.Concat(view2.Concat(view3).ToArray()).ToArray();
             addComponent("IB", view, show);
         }
@@ -278,10 +271,10 @@ namespace FarmConsole.View
         {
             addComponent("SB", new string[]
             {
-                ViewFragments.Top(text.Length + 8),
-                "|   " + text + "   |",
-                ViewFragments.Bot(text.Length + 8)
-            }, show, 0, ConsoleColor.White);
+                ViewFragments.Top(10 + text.Length),
+                "|    " + text + "    |",
+                ViewFragments.Bot(10 + text.Length)
+            }, show, 0);
         }
         public void singleButtonBot(string text, bool show = true)
         {
@@ -343,43 +336,6 @@ namespace FarmConsole.View
             }, show, 0, ConsoleColor.White);
         }
         
-        public void setSO(int idGroup, int idSelNow, int idSelBefore = -10)
-        {
-            foreach(Component c in CLIST)
-            {
-                if (c.id_group == idGroup && (c.id_object == idSelNow))
-                {
-                    if(c.prop == 1)
-                    {
-                        c.prop = 0;
-                        Console.SetCursorPosition(c.posX + 4, c.posY + 1);
-                        Console.Write("  ");
-                    }
-                    else
-                    {
-                        c.prop = 1;
-                        Console.SetCursorPosition(c.posX + 4, c.posY + 1);
-                        Console.Write("><");
-                    }
-                }
-                if (c.id_group == idGroup && (c.id_object == idSelBefore))
-                {
-                    if (c.prop == 1)
-                    {
-                        c.prop = 0;
-                        Console.SetCursorPosition(c.posX + 4, c.posY + 1);
-                        Console.Write("  ");
-                    }
-                    else
-                    {
-                        c.prop = 1;
-                        Console.SetCursorPosition(c.posX + 4, c.posY + 1);
-                        Console.Write("><");
-                    }
-                }
-            }
-            Console.SetCursorPosition(Console.WindowWidth - 1, Console.WindowHeight - 1);
-        }
         public void setSL(int idGroup, int idSel, int count, int value)
         {
             for (int i = 0; i < CLIST.Count; i++)

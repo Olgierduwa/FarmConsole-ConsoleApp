@@ -25,14 +25,36 @@ namespace FarmConsole.View
 
             vt1.groupStart(0);
             vt1.groupStart(2);
-            vt1.selOption("Zacznij Rozgrywke ", true);
-            vt1.selOption("Kontynuuj Rozrywke", false);
-            vt1.selOption("Ustaw Wlasne Opcje", false);
-            vt1.selOption("Poznaj Zasady Gry ", false);
+            vt1.endl(1);
+            vt1.singleButton("Zacznij Rozgrywke ");
+            vt1.singleButton("Kontynuuj Rozrywke");
+            vt1.singleButton("Ustaw Wlasne Opcje");
+            vt1.singleButton("Poznaj Zasady Gry ");
             vt1.groupEnd();
             vt1.groupStart(4);
+            vt1.endl(1);
             vt1.infoBlock(32, "\"Swietny Tytul!!\"");
             vt1.infoBlock(32, "\"Oto najlpesza gra konsolowa, o jakiej slyszal swiat!\"");
+            vt1.groupEnd();
+            vt1.groupEnd();
+
+            vt1.foot(foot);
+            vt1.printList();
+            //vt1.showComponentList();
+        }
+        public static void Escape()
+        {
+            vt1.h1(title);
+            vt1.endl(Console.WindowHeight / 5);
+
+            vt1.groupStart(0);
+            vt1.groupStart(3);
+            vt1.endl(1);
+            vt1.singleButton("  Kontynuuj ");
+            vt1.singleButton(" Zapisz Gre ");
+            vt1.singleButton("Wróc do Menu");
+            vt1.singleButton(" Ustawienia ");
+            vt1.singleButton("  Samouczek ");
             vt1.groupEnd();
             vt1.groupEnd();
 
@@ -46,8 +68,9 @@ namespace FarmConsole.View
             vt1.h2("Rozpocznij Nowa Giereczke");
             vt1.endl(Console.WindowHeight / 5);
             vt1.groupStart(3);
-            vt1.selOption("Kobieta  ", true);
-            vt1.selOption("Mezczyzna", false);
+            vt1.endl(1);
+            vt1.singleButton("Kobieta  ");
+            vt1.singleButton("Mezczyzna");
             vt1.groupEnd();
             vt1.doubleButtonBot(3,"Q / Powrot","E / Enter");
             vt1.foot(foot);
@@ -79,12 +102,14 @@ namespace FarmConsole.View
             vt1.endl(Console.WindowHeight / 6);
             vt1.groupStart(0);
             vt1.groupStart(2);
-            vt1.selOption("Szerokosc Ekranu ", true);
-            vt1.selOption("Wysokosc Ekranu  ", false);
-            vt1.selOption("Wielkosc Czcionki", false);
-            vt1.selOption("Poziom trudnosc  ", false);
+            vt1.endl(1);
+            vt1.singleButton("Szerokosc Ekranu ");
+            vt1.singleButton("Wysokosc Ekranu  ");
+            vt1.singleButton("Wielkosc Czcionki");
+            vt1.singleButton("Poziom trudnosc  ");
             vt1.groupEnd();
             vt1.groupStart(4);
+            vt1.endl(1);
             vt1.slider(6, OPTIONS.getOptionViewById(0));
             vt1.slider(6, OPTIONS.getOptionViewById(1));
             vt1.slider(6, OPTIONS.getOptionViewById(2));
@@ -101,9 +126,18 @@ namespace FarmConsole.View
         {
             vt1.h1(title);
             vt1.h2("Nie wiesz o co chodzi?");
-            vt1.endl(Console.WindowHeight / 5);
-            vt1.groupStart(3);
-            vt1.infoBlock(40,XF.findText(0));
+            vt1.endl(Console.WindowHeight / 9);
+            vt1.groupStart(0);
+                vt1.groupStart(2);
+                vt1.infoBlock(45,"Sterowanie");
+                vt1.endl(1);
+                vt1.infoBlock(45, XF.findText(1));
+                vt1.groupEnd();
+                vt1.groupStart(4);
+                vt1.infoBlock(45, "Od Autora");
+                vt1.endl(1);
+                vt1.infoBlock(45, XF.findText(2));
+                vt1.groupEnd();
             vt1.groupEnd();
 
             vt1.foot(foot);
@@ -117,15 +151,11 @@ namespace FarmConsole.View
             vt1.foot(foot);
             vt1.printList();
             //vt.showComponentList();
+            //Console.SetCursorPosition(0, 5); for (int i = 0; i < 5; i++) Console.Write(("|").PadRight(Console.WindowWidth / 5-1, ' ') + "|");
 
-            Console.SetCursorPosition(0, 5);
-            Console.Write(("|").PadRight(Console.WindowWidth / 5-1, ' ') + "|");
-            Console.Write(("|").PadRight(Console.WindowWidth / 5-1, ' ') + "|");
-            Console.Write(("|").PadRight(Console.WindowWidth / 5-1, ' ') + "|");
-            Console.Write(("|").PadRight(Console.WindowWidth / 5-1, ' ') + "|");
-            Console.Write(("|").PadRight(Console.WindowWidth / 5-1, ' ') + "|");
+            int size = 5;
 
-            int h = 43, w = 43;
+            int h = size*6+1, w = size * 6 + 1;
             char[,] tab = new char[h,w];
             for (int i = 0; i < h; i++)
             {
@@ -164,11 +194,10 @@ namespace FarmConsole.View
             vt2.groupEnd();
             vt2.groupStart(1);
             vt2.endl(2);
-            vt2.selOption(component_list[0], true);
-            for (int i = 1; i < component_list.Length; i++)
+            for (int i = 0; i < component_list.Length; i++)
                 if (i < (Console.WindowHeight - 17) / 3)
-                     vt2.selOption(component_list[i], false);
-                else vt2.selOption(component_list[i], false, false);
+                     vt2.singleButton(component_list[i]);
+                else vt2.singleButton(component_list[i], false);
             vt2.groupEnd();
             vt2.groupEnd();
             vt2.doubleButtonBot(1,"A / Uzyj", "D / Odrzuc");
@@ -184,11 +213,10 @@ namespace FarmConsole.View
             vt3.groupEnd();
             vt3.groupStart(5);
             vt3.endl(2);
-            vt3.selOption(component_list[0], true);
-            for (int i = 1; i < component_list.Length; i++)
+            for (int i = 0; i < component_list.Length; i++)
                 if (i < (Console.WindowHeight - 17) / 3)
-                    vt3.selOption(component_list[i], false);
-                else vt3.selOption(component_list[i], false, false);
+                    vt3.singleButton(component_list[i]);
+                else vt3.singleButton(component_list[i], false);
             vt3.groupEnd();
             vt3.groupEnd();
             vt3.doubleButtonBot(5,"A / Uzyj", "D / Wyrzuc");

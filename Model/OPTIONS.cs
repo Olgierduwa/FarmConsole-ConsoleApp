@@ -8,12 +8,12 @@ namespace FarmConsole.Model
 {
     public static class OPTIONS
     {
-        private static int optionsCount = 4;
+        private static int optionsCount = 5; 
         private static int[] options = loadOptions();
         private static int[] optionsView = loadOptionView();
         private static int[] loadOptions()
         {
-            return XF.getOption();
+            return XF.GetOptions();
         }
         private static int[] loadOptionView()
         {
@@ -23,6 +23,7 @@ namespace FarmConsole.Model
             opt[1] = (options[1]-35)/5;
             opt[2] = options[2];
             opt[3] = options[3];
+            opt[4] = options[4];
 
             return opt;
         }
@@ -32,8 +33,9 @@ namespace FarmConsole.Model
             options[1] = (opt[1]*5)+35;
             options[2] = opt[2];
             options[3] = opt[3];
+            options[4] = opt[4];
 
-            XF.saveOptions(options);
+            XF.UpdateOptions(options);
             WindowMenager.setWindow();
         }
         public static int getOptionsCount()

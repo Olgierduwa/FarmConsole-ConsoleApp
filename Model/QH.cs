@@ -13,10 +13,10 @@ namespace FarmConsole.Model
         {
             switch (c)
             {
-                case 's': if (x < r) return (x + 1); break;
-                case 'w': if (x > 1) return (x - 1); break;
-                case 'e': return (-1);
-                case 'q': return (-2);
+                case 's': if (x < r) { S.play("K1"); return (x + 1); } break;
+                case 'w': if (x > 1) { S.play("K1"); return (x - 1); } break;
+                case 'e': S.play("K2"); return (-1);
+                case 'q': S.play("K3"); return (-2);
             }
             return x;
         }

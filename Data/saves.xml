@@ -31,32 +31,32 @@
     <wallet>1000000</wallet>
   </save>
   <save id="6">
-    <lvl>100</lvl>
-    <name>Malcolm Aron</name>
-    <lastplay>20/11/06 20:15</lastplay>
-    <wallet>4200</wallet>
-  </save>
-  <save id="5">
     <lvl>2137</lvl>
-    <name>Piotr Tomczyk</name>
+    <name>Jan Paweł II</name>
     <lastplay>20/11/05 19:30</lastplay>
     <wallet>1000000</wallet>
   </save>
-  <save id="6">
+  <save id="7">
     <lvl>100</lvl>
-    <name>Malcolm Aron</name>
+    <name>Adam</name>
     <lastplay>20/11/06 20:15</lastplay>
     <wallet>4200</wallet>
   </save>
-  <save id="5">
-    <lvl>2137</lvl>
-    <name>Piotr Tomczyk</name>
-    <lastplay>20/11/05 19:30</lastplay>
-    <wallet>1000000</wallet>
-  </save>
-  <save id="6">
+  <save id="8">
     <lvl>100</lvl>
-    <name>Malcolm Aron</name>
+    <name>Ewa</name>
+    <lastplay>20/11/06 20:15</lastplay>
+    <wallet>4200</wallet>
+  </save>
+  <save id="9">
+    <lvl>100</lvl>
+    <name>Jezus Chytrus</name>
+    <lastplay>20/11/06 20:15</lastplay>
+    <wallet>4200</wallet>
+  </save>
+  <save id="10">
+    <lvl>100</lvl>
+    <name>Adam</name>
     <lastplay>20/11/06 20:15</lastplay>
     <wallet>4200</wallet>
   </save>

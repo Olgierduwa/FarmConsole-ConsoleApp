@@ -14,10 +14,11 @@ namespace FarmConsole.Model
             var waveOut = new WaveOutEvent();
             switch (select)
             {
-                case "K1": waveOut.Init(new WaveFileReader("../../../Sounds/klik1.wav")); waveOut.Play(); break;
-                case "K2": waveOut.Init(new WaveFileReader("../../../Sounds/klik2.wav")); waveOut.Play(); break;
-                case "K3": waveOut.Init(new WaveFileReader("../../../Sounds/klik3.wav")); waveOut.Play(); break;
+                case "K1": waveOut.Init(new WaveFileReader("../../../Sounds/klik1.wav")); break;
+                case "K2": waveOut.Init(new WaveFileReader("../../../Sounds/klik2.wav")); break;
+                case "K3": waveOut.Init(new WaveFileReader("../../../Sounds/klik3.wav")); break;
             }
+            waveOut.Play();
         }
     }
 }

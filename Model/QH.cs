@@ -11,6 +11,7 @@ namespace FarmConsole.Model
         public static long yyy = 0;
         public static int choice_selector(char c, int x, int r)
         {
+            Console.Write("\b ");
             switch (c)
             {
                 case 's': if (x < r) { S.play("K1"); return (x + 1); } break;
@@ -22,6 +23,7 @@ namespace FarmConsole.Model
         }
         public static int choice_side_menu(char c, int x, int r1, int r2)
         {
+            Console.Write("\b ");
             if (x > r1 && x < r1 + r2 + 1) switch (c) // r1 - r2
             {
                 case 's': if (x < r1 + r2) return (x + 1); break;
@@ -47,19 +49,14 @@ namespace FarmConsole.Model
             var watch = System.Diagnostics.Stopwatch.StartNew();
             ////////////////////////////////////////////////////
 
+            GUI.vt1.clearList();
+
             ////////////////////////////////////////////////////
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
             yyy++;
             xxx = (xxx + elapsedMs);
-            Console.SetCursorPosition(20, 7);
-            Console.Write(elapsedMs + "  obecna");
-            Console.SetCursorPosition(20, 8);
-            Console.Write(xxx + "  suma");
-            Console.SetCursorPosition(20, 9);
-            Console.Write(yyy + "  ilosc");
-            Console.SetCursorPosition(20, 10);
-            Console.Write(xxx / yyy + "  srednia");
+            QH.INFO(0, elapsedMs + "  obecna", xxx + "  suma", yyy + "  ilosc", xxx / yyy + "  srednia");
         }
         public static void INFO(int x, string a, string b, string c, string d)
         {

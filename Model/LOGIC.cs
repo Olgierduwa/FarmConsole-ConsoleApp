@@ -7,6 +7,8 @@ namespace FarmConsole.Model
 {
     class LOGIC
     {
+        public static long xxx = 0;
+        public static long yyy = 0;
         private Save save = new Save();
         public static string openScreen = "Menu";
 
@@ -30,12 +32,10 @@ namespace FarmConsole.Model
         public void Menu()
         {
             int c1 = 1, c0 = 1, optionsCount = 4; openScreen = "NewGame";
-            GUI.Menu(); GUI.vt1.updateList(1, 1, optionsCount, 2);
+            GUI.Menu(); GUI.vt1.updateList(c1, c0, optionsCount, 2);
             while (c1 > 0)
             {
-                Console.SetCursorPosition(Console.WindowWidth - 1, Console.WindowHeight - 1);
                 c1 = QH.choice_selector(Console.ReadKey().KeyChar, c1, optionsCount);
-                Console.Write("\b");
                 switch (c1)
                 {
                     case -2: {
@@ -46,8 +46,8 @@ namespace FarmConsole.Model
                             Console.SetCursorPosition(Console.WindowWidth - 1, Console.WindowHeight - 1);
                             c2 = Console.ReadKey().KeyChar;
                             switch (c2) {
-                                case 'e': S.play("K3"); GUI.vt1.clear(); openScreen = "Close"; Console.SetCursorPosition(0,0); return;
-                                case 'q': S.play("K2"); GUI.vt1.clear(); openScreen = "Menu"; GUI.Menu(); break; }
+                                case 'e': S.play("K3"); GUI.vt1.clearList(); openScreen = "Close"; Console.SetCursorPosition(0,0); return;
+                                case 'q': S.play("K2"); GUI.vt1.clearList(); openScreen = "Menu"; GUI.Menu(); break; }
                         }
                         } break;
                     case -1: break;
@@ -59,31 +59,37 @@ namespace FarmConsole.Model
                 if (c1 > 0) { GUI.vt1.updateList(c1, c0, optionsCount, 2); }
                 c0 = c1;
             }
-            GUI.vt1.clear();
+            GUI.vt1.clearList();
         }
         public void Escape()
         {
-            int c1 = 1, c0 = 1, optionsCount = 5; openScreen = "NewGame";
-            GUI.Escape(); GUI.vt1.updateList(1, 1, optionsCount, 2);
-            while (c1 > 0)
+            int selected = 1;
+            int optionsCount = 5;
+            openScreen = "Escape";
+            ConsoleKeyInfo key;
+            GUI.Escape(); GUI.vt1.updateList(selected, 1, optionsCount, 2);
+            while (openScreen == "Escape")
             {
-                Console.SetCursorPosition(Console.WindowWidth - 1, Console.WindowHeight - 1);
-                c1 = QH.choice_selector(Console.ReadKey().KeyChar, c1, optionsCount);
-                Console.Write("\b");
-                switch (c1)
+                key = Console.ReadKey(true);
+                switch (key.Key)
                 {
-                    case -2: break;
-                    case -1: break;
-                    case 1: openScreen = "Play"; break; // kontynuluj
-                    case 2: openScreen = "Save"; break;
-                    case 3: openScreen = "Menu"; save = new Save(); break;
-                    case 4: openScreen = "Options"; break;
-                    case 5: openScreen = "Help"; break;
+                    case ConsoleKey.Escape: openScreen = "Play"; GUI.vt1.clearList(); break; // kontynuluj
+                    case ConsoleKey.Q: openScreen = "Play"; break; // kontynuluj
+                    case ConsoleKey.E:
+                        switch (selected)
+                        {
+                            case 1: openScreen = "Play";break; // kontynuluj
+                            case 2: openScreen = "Save"; break;
+                            case 3: openScreen = "Menu"; save = new Save(); break;
+                            case 4: openScreen = "Options"; break;
+                            case 5: openScreen = "Help"; break;
+                        }
+                        break;
+                    case ConsoleKey.W: if (selected > 1) { S.play("K1"); selected--; GUI.vt1.updateList(selected, selected+1, optionsCount, 2); } break;
+                    case ConsoleKey.S: if (selected < 5) { S.play("K1"); selected++; GUI.vt1.updateList(selected, selected-1, optionsCount, 2); } break;
                 }
-                if (c1 > 0) GUI.vt1.updateList(c1, c0, optionsCount, 2);
-                c0 = c1;
             }
-            GUI.vt1.clear();
+            GUI.vt1.clearList();
         }
         public void NewGame()
         {
@@ -91,9 +97,7 @@ namespace FarmConsole.Model
             GUI.NewGame(); GUI.vt1.updateList(1, 1, optionsCount, 1);
             while (c1 > 0)
             {
-                Console.SetCursorPosition(Console.WindowWidth - 1, Console.WindowHeight - 1);
                 c1 = QH.choice_selector(Console.ReadKey().KeyChar, c1, optionsCount);
-                Console.Write("\b");
                 switch (c1)
                 {
                     case -2: openScreen = "Menu"; break;
@@ -104,7 +108,7 @@ namespace FarmConsole.Model
                 if (c1 > 0) GUI.vt1.updateList(c1, c0, optionsCount, 1);
                 c0 = c1;
             }
-            GUI.vt1.clear();
+            GUI.vt1.clearList();
         }
         public void Load()
         {
@@ -116,9 +120,8 @@ namespace FarmConsole.Model
             string opis = "E / Rozpocznij Nową Grę";
             while (c1 != 'q' && c1 != 'e')
             {
-                Console.SetCursorPosition(Console.WindowWidth - 1, Console.WindowHeight - 1);
                 c1 = Console.ReadKey().KeyChar;
-                Console.Write("\b");
+                Console.Write("\b ");
                 switch (c1)
                 {
                     case 'q': S.play("K3"); openScreen = "Menu"; break;
@@ -128,13 +131,13 @@ namespace FarmConsole.Model
                             char c2 = 'x';
                             while(c2 != 'd' && c2 != 'q')
                             {
-                                Console.SetCursorPosition(Console.WindowWidth - 1, Console.WindowHeight - 1);
                                 c2 = Console.ReadKey().KeyChar;
+                                Console.Write("\b ");
                                 switch (c2)
                                 {
                                     case 'd':
                                         S.play("K2");
-                                        GUI.vt1.clear();
+                                        GUI.vt1.clearList();
                                         saves[y-1].delete();
                                         saves = XF.GetSaves();
                                         GUI.Load(saves);
@@ -143,12 +146,12 @@ namespace FarmConsole.Model
                                         break;
                                     case 'q':
                                         S.play("K3");
-                                        GUI.vt1.clear();
-                                        GUI.Load(saves);
+                                        GUI.vt1.showability(0, 0, true);
                                         GUI.vt1.updateList(y + 1, y + 1, oc);
                                         break;
                                 }
                             }
+                            GUI.vt1.showability(6, 0, false);
                         } break; // usun save
                     case 'e': if (y == 0) { S.play("K2"); openScreen = "NewGame"; }
                             else { save.load(y); openScreen = "Play"; } break;
@@ -178,7 +181,7 @@ namespace FarmConsole.Model
                     GUI.vt1.showability(4, 3, false);
                 }
             }
-            GUI.vt1.clear();
+            GUI.vt1.clearList();
         }
         public void Save()
         {
@@ -190,9 +193,8 @@ namespace FarmConsole.Model
             string opis = "E / Utwórz Nowy Zapis";
             while (c1 != 'q' && c1 != 'e')
             {
-                Console.SetCursorPosition(Console.WindowWidth - 1, Console.WindowHeight - 1);
                 c1 = Console.ReadKey().KeyChar;
-                Console.Write("\b");
+                Console.Write("\b ");
                 switch (c1)
                 {
                     case 'q': S.play("K3"); openScreen = "Escape"; break;
@@ -222,7 +224,7 @@ namespace FarmConsole.Model
                     GUI.vt1.showability(4, 3, false);
                 }
             }
-            GUI.vt1.clear();
+            GUI.vt1.clearList();
         }
         public void Options()
         {
@@ -234,13 +236,12 @@ namespace FarmConsole.Model
             GUI.vt1.updateList(1, 1, oc, 2);
             while (c1 != 'q' && c1 != 'e')
             {
-                Console.SetCursorPosition(Console.WindowWidth - 1, Console.WindowHeight - 1);
                 c1 = Console.ReadKey().KeyChar;
-                Console.Write("\b");
+                Console.Write("\b ");
                 switch (c1)
                 {
                     case 'q': S.play("K3"); openScreen = "Menu"; break;
-                    case 'e': S.play("K2"); GUI.vt1.clear(); Console.Clear(); OPTIONS.saveOptions(opt);
+                    case 'e': S.play("K2"); GUI.vt1.clearList(); Console.Clear(); OPTIONS.saveOptions(opt);
                               ViewTools vt = new ViewTools(); vt.foot(XF.GetString(1)); break;
                     case 'w': if (y > 0 ) { S.play("K1"); GUI.vt1.updateList(y, y + 1, oc, 2); y--; } break;
                     case 's': if (y < oc-1) { S.play("K1"); GUI.vt1.updateList(y + 2, y + 1, oc, 2); y++; } break;
@@ -248,14 +249,14 @@ namespace FarmConsole.Model
                     case 'd': if (opt[y] < r) { S.play("K2"); opt[y]++; GUI.vt1.updateSlider(3, y+1, r, opt[y]); } break;
                 }
                 //QH.INFO(0, "y: " + y, "options[y]: "+ opt[y], "", "");
-            }GUI.vt1.clear();
+            }GUI.vt1.clearList();
         }
         public void Help()
         {
             GUI.Help();
             char choice;
             choice = Console.ReadKey().KeyChar;
-            GUI.vt1.clear();
+            GUI.vt1.clearList();
             openScreen = "Menu";
             S.play("K3");
         }
@@ -289,9 +290,7 @@ namespace FarmConsole.Model
             int c1 = 1, c0 = 1, cL = 1, cR = LSize + 1, lastPress = 0;
             while (c1 != -5)
             {
-                Console.SetCursorPosition(Console.WindowWidth - 1, Console.WindowHeight - 1);
                 c1 = QH.choice_side_menu(Console.ReadKey().KeyChar, c1, LSize, RSize);
-                Console.Write("\b");
                 if (c1 < 0) switch (c1)
                     {
                         case -5: openScreen = "Escape"; break;
@@ -311,7 +310,7 @@ namespace FarmConsole.Model
                                     pressQ = false;
                                     cL = 1;
                                     c1 = c0 = 1;
-                                    GUI.vt2.clear();
+                                    GUI.vt2.clearList();
                                 }
                                 else if (!pressQ && pressE) // przelaczanie sie na Q schowane //
                                 {
@@ -326,7 +325,7 @@ namespace FarmConsole.Model
                                     pressQ = false;
                                     cL = 1;
                                     c1 = c0 = cR;
-                                    GUI.vt2.clear();
+                                    GUI.vt2.clearList();
                                     GUI.vt3.updateList(c1 - LSize, c0 - LSize, RSize);
                                 }
                                 else if (pressQ && pressE) // przelaczanie sie na Q pokazane //
@@ -352,7 +351,7 @@ namespace FarmConsole.Model
                                     pressE = false;
                                     cR = LSize + 1;
                                     c1 = c0 = 1;
-                                    GUI.vt3.clear();
+                                    GUI.vt3.clearList();
                                 }
                                 else if (pressQ && !pressE) // przelaczanie sie na E schowane //
                                 {
@@ -367,7 +366,7 @@ namespace FarmConsole.Model
                                     pressE = false;
                                     cR = LSize + 1;
                                     c1 = c0 = cL;
-                                    GUI.vt3.clear();
+                                    GUI.vt3.clearList();
                                     GUI.vt2.updateList(c1, c0, LSize);
                                 }
                                 else if (pressQ && pressE) // przelaczanie sie na E pokazane //
@@ -398,7 +397,7 @@ namespace FarmConsole.Model
 
                 c0 = c1;
             }
-            GUI.vt1.clear();
+            GUI.vt1.clearList();
         }
     }
 }

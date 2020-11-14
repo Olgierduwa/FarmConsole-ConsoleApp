@@ -43,8 +43,8 @@ namespace FarmConsole.View
             vt1.groupEnd();
 
             vt1.foot(foot);
-            vt1.printList();
             //vt1.showComponentList();
+            vt1.printList();
         }
         public static void Escape()
         {
@@ -64,7 +64,7 @@ namespace FarmConsole.View
 
             vt1.foot(foot);
             vt1.printList();
-            //vt1.showComponentList();
+            vt1.showComponentList();
         }
         public static void NewGame()
         {
@@ -111,28 +111,28 @@ namespace FarmConsole.View
 
             vt1.groupStart(3);
 
-                    vt1.groupStart(3);
-                    vt1.endl(5);
-                    vt1.textBox(33, "B E Z S P R Z E C Z N I E " +
-                                    "P R A G N Ę   U S U N Ą Ć " +
-                                    "T E N   Z A P I S   G R Y " +
-                                    "T R W A L E   T R A C Ą C " +
-                                    "O D T W A R Z A L N O Ś Ć", false ,ConsoleColor.Red);
-                    vt1.endl(1);
-                    vt1.doubleButton(" Q / NIE ", " D / TAK ", false, ConsoleColor.Red);
-                    vt1.groupEnd();
-
-                    vt1.groupStart(3);
-                    vt1.endl(8);
-                    vt1.text("T E N   Z A P I S   G R Y", false, ConsoleColor.Red);
-                    vt1.groupEnd();
-
+                vt1.groupStart(3);
+                vt1.endl(5);
+                vt1.textBox(33, "B E Z S P R Z E C Z N I E " +
+                                "P R A G N Ę   U S U N Ą Ć " +
+                                "T E N   Z A P I S   G R Y " +
+                                "T R W A L E   T R A C Ą C " +
+                                "O D T W A R Z A L N O Ś Ć", false ,ConsoleColor.Red);
+                vt1.endl(1);
+                vt1.doubleButton(" Q / NIE ", " D / TAK ", false, ConsoleColor.Red);
                 vt1.groupEnd();
+
+                vt1.groupStart(3);
+                vt1.endl(8);
+                vt1.text("T E N   Z A P I S   G R Y", false, ConsoleColor.Red);
+                vt1.groupEnd();
+
+            vt1.groupEnd();
 
             vt1.groupEnd();
             vt1.foot(foot);
             vt1.printList();
-            vt1.showComponentList();
+            //vt1.showComponentList();
         }
         public static void Save(Save[] saves)
         {
@@ -244,7 +244,7 @@ namespace FarmConsole.View
             }
 
             
-            for (int i = 0; i < h; i++)
+            /*for (int i = 0; i < h; i++)
             {
                 //Console.SetCursorPosition(20, 6 + i);
                 for (int j = 0; j < w; j++)
@@ -255,7 +255,7 @@ namespace FarmConsole.View
                         Console.Write(tab[i, j]);
                     }
                 }
-            }
+            }*/
 
 
         }

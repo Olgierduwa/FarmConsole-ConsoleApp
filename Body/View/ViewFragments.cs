@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FarmConsole.View
+namespace FarmConsole.Body.View.GUI
 {
     static class ViewFragments
     {

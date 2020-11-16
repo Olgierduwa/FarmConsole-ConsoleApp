@@ -1,9 +1,10 @@
-﻿using System;
+﻿using FarmConsole.Body.Model.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
 
-namespace FarmConsole.Model
+namespace FarmConsole.Body.Model.Objects
 {
     public class Save
     {

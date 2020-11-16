@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FarmConsole.Model
+namespace FarmConsole.Body.Model.Logic
 {
-    class Location
+    public partial class Logic
     {
     }
 }

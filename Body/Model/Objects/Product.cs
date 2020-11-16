@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FarmConsole.Model
+namespace FarmConsole.Body.Model.Objects
 {
     public class Product
     {

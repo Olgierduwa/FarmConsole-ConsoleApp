@@ -1,5 +1,5 @@
-﻿using FarmConsole.Model;
-using FarmConsole.View;
+﻿using FarmConsole.Body.Model.Logic;
+using FarmConsole.Body.View.GUI;
 using System;
 using System.Xml.Schema;
 
@@ -10,7 +10,7 @@ namespace FarmConsole
         static void Main(string[] args)
         {
             WindowMenager.setWindow();
-            LOGIC s = new LOGIC();
+            Logic s = new Logic();
         }
     }
 }

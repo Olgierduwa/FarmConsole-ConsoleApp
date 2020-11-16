@@ -1,10 +1,8 @@
-﻿using FarmConsole.Model;
-using System;
-using System.Collections.Generic;
+﻿using FarmConsole.Body.Model.Helpers;
 using System.Runtime.InteropServices;
-using System.Text;
+using System;
 
-namespace FarmConsole.View
+namespace FarmConsole.Body.View.GUI
 {
     public static class WindowMenager
     {
@@ -42,7 +40,6 @@ namespace FarmConsole.View
             windowHeight = OPTIONS.getOptionById(1);
             Console.SetWindowSize(windowWidth, windowHeight);
             Console.SetBufferSize(windowWidth, windowHeight);
-            Console.SetWindowPosition(0, 0);
         }
     }
 }

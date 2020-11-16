@@ -1,26 +1,14 @@
-﻿using FarmConsole.View;
+﻿using FarmConsole.Body.View.GUI;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace FarmConsole.Model
+namespace FarmConsole.Body.Model.Helpers
 {
-    static class QH // Quick Help
+    static class QH
     {
         public static long xxx = 0;
         public static long yyy = 0;
-        public static int choice_selector(char c, int x, int r)
-        {
-            Console.Write("\b ");
-            switch (c)
-            {
-                case 's': if (x < r) { S.play("K1"); return (x + 1); } break;
-                case 'w': if (x > 1) { S.play("K1"); return (x - 1); } break;
-                case 'e': S.play("K2"); return (-1);
-                case 'q': S.play("K3"); return (-2);
-            }
-            return x;
-        }
         public static int choice_side_menu(char c, int x, int r1, int r2)
         {
             Console.Write("\b ");
@@ -44,6 +32,7 @@ namespace FarmConsole.Model
             }
             return x;
         }
+
         public static void AVG()
         {
             var watch = System.Diagnostics.Stopwatch.StartNew();

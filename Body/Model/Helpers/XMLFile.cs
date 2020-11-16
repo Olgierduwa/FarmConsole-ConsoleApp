@@ -1,21 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using System.Linq;
-using System.IO;
 using System.Text.RegularExpressions;
+using FarmConsole.Body.Model.Objects;
 
-namespace FarmConsole.Model
+namespace FarmConsole.Body.Model.Helpers
 {
     public static class XF
     {
-        private static string string_path = "../../../Data/strings.xml";
-        private static string product_path = "../../../Data/products.xml";
-        private static string long_path = "../../../Data/longtexts.xml";
-        private static string options_path = "../../../Data/options.xml";
-        private static string saves_path = "../../../Data/saves.xml";
+        private static string location = "../../../Body/Data/";
+        private static string string_path = location + "strings.xml";
+        private static string product_path = location + "products.xml";
+        private static string long_path = location + "longtexts.xml";
+        private static string options_path = location + "options.xml";
+        private static string saves_path = location + "saves.xml";
 
         public static string GetString(int id)
         {
@@ -36,29 +35,25 @@ namespace FarmConsole.Model
             text = Regex.Replace(node.InnerText, @"\s+", " ", RegexOptions.Multiline);
             return text;
         }
+
         public static int[] GetOptions()
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(options_path);
-            XmlNodeList lista = doc.GetElementsByTagName("Option");
-            int[] opt = new int[lista.Count];
-            for (int i = 0; i < lista.Count; i++) opt[i] = Int32.Parse(lista[i].InnerText.ToString());
+            XmlNodeList list = doc.SelectNodes("/OptionsCollection/option");
+            int[] opt = new int[list.Count];
+            for (int i = 0; i < list.Count; i++)
+                opt[i] = Int32.Parse(list[i]["current"].InnerText);
             return opt;
         }
         public static void UpdateOptions(int[] opt)
         {
             XmlDocument doc = new XmlDocument();
-            XmlNode lista = doc.CreateElement("OptionsCollection");
-            doc.AppendChild(lista);
-            XmlNode opcja;
-            for (int i = 0; i < opt.Length; i++)
-            {
-                opcja = doc.CreateElement("Option");
-                opcja.InnerText = opt[i].ToString();
-                lista.AppendChild(opcja);
-            }
+            doc.Load(options_path);
+            XmlNodeList list = doc.SelectNodes("/OptionsCollection/option");
+            if (opt.Length > 0) for (int i = 0; i < list.Count; i++) list[i]["current"].InnerText = opt[i].ToString();
+            else                for (int i = 0; i < list.Count; i++) list[i]["current"].InnerText = list[i]["default"].InnerText;
             doc.Save(options_path);
-
         }
 
         public static Product GetProduct(int id)

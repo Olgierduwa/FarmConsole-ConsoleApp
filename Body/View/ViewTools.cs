@@ -1,4 +1,4 @@
-﻿using FarmConsole.Model;
+﻿using FarmConsole.Body.Model.Logic;
 using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
-namespace FarmConsole.View
+namespace FarmConsole.Body.View.GUI
 {
     public class ViewTools
     {
@@ -216,12 +216,12 @@ namespace FarmConsole.View
                 }
             }
         }
-        public void focus(int id_group_1, int id_group_2 = -10)
+        public void focus(int id_group)
         {
             int t = 0;
             foreach (Component c in CLIST)
             {
-                if ((c.id_group == id_group_1 || c.id_group == id_group_2) && c.id_object > 0)
+                if ((c.id_group == id_group) && c.id_object >= 0)
                 {
                     c.show = true;
                     print(c);

@@ -5,4 +5,4 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Style", "IDE0017:Uprość inicjowanie obiektów", Justification = "<Oczekujące>", Scope = "member", Target = "~M:FarmConsole.Model.S.play(System.String)")]
+[assembly: SuppressMessage("Style", "IDE0017:Uprość inicjowanie obiektów", Justification = "<Oczekujące>", Scope = "member", Target = "~M:FarmConsole.Body.Model.Logic.S.play(System.String)")]

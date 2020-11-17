@@ -68,14 +68,14 @@ namespace FarmConsole.Body.Model.Logic
                                     pressQ = true;
                                     selected = last_selected = lest_selected;
                                     GUI.LeftMenu(left_list);
-                                    GUI.vt2.updateList(selected, last_selected, LSize);
+                                    GUI.vt2.UpdateList(selected, last_selected, LSize);
                                 }
                                 else if (pressQ && !pressE) // chowanie Q //
                                 {
                                     pressQ = false;
                                     lest_selected = 1;
                                     selected = last_selected = 1;
-                                    GUI.vt2.clearList();
+                                    GUI.vt2.ClearList();
                                 }
                                 else if (!pressQ && pressE) // przelaczanie sie na Q schowane //
                                 {
@@ -83,21 +83,21 @@ namespace FarmConsole.Body.Model.Logic
                                     right_selected = last_selected;
                                     selected = last_selected = lest_selected;
                                     GUI.LeftMenu(left_list);
-                                    GUI.vt2.updateList(selected, last_selected, LSize);
+                                    GUI.vt2.UpdateList(selected, last_selected, LSize);
                                 }
                                 else if (pressQ && pressE && lastPress == -2) // chowanie Q i przelaczanie sie na E //
                                 {
                                     pressQ = false;
                                     lest_selected = 1;
                                     selected = last_selected = right_selected;
-                                    GUI.vt2.clearList();
-                                    GUI.vt3.updateList(selected - LSize, last_selected - LSize, RSize);
+                                    GUI.vt2.ClearList();
+                                    GUI.vt3.UpdateList(selected - LSize, last_selected - LSize, RSize);
                                 }
                                 else if (pressQ && pressE) // przelaczanie sie na Q pokazane //
                                 {
                                     right_selected = last_selected;
                                     selected = last_selected = lest_selected;
-                                    GUI.vt2.updateList(selected, last_selected, LSize);
+                                    GUI.vt2.UpdateList(selected, last_selected, LSize);
                                 }
                                 lastPress = -2;
                             }
@@ -109,14 +109,14 @@ namespace FarmConsole.Body.Model.Logic
                                     pressE = true;
                                     selected = last_selected = LSize + 1;
                                     GUI.RightMenu(right_list);
-                                    GUI.vt3.updateList(selected - LSize, last_selected - LSize, RSize);
+                                    GUI.vt3.UpdateList(selected - LSize, last_selected - LSize, RSize);
                                 }
                                 else if (!pressQ && pressE) // chowanie E //
                                 {
                                     pressE = false;
                                     right_selected = LSize + 1;
                                     selected = last_selected = 1;
-                                    GUI.vt3.clearList();
+                                    GUI.vt3.ClearList();
                                 }
                                 else if (pressQ && !pressE) // przelaczanie sie na E schowane //
                                 {
@@ -124,21 +124,21 @@ namespace FarmConsole.Body.Model.Logic
                                     lest_selected = last_selected;
                                     selected = last_selected = LSize + 1;
                                     GUI.RightMenu(right_list);
-                                    GUI.vt3.updateList(selected - LSize, last_selected - LSize, RSize);
+                                    GUI.vt3.UpdateList(selected - LSize, last_selected - LSize, RSize);
                                 }
                                 else if (pressQ && pressE && lastPress == -1) // chowanie E i przelaczanie sie na Q //
                                 {
                                     pressE = false;
                                     right_selected = LSize + 1;
                                     selected = last_selected = lest_selected;
-                                    GUI.vt3.clearList();
-                                    GUI.vt2.updateList(selected, last_selected, LSize);
+                                    GUI.vt3.ClearList();
+                                    GUI.vt2.UpdateList(selected, last_selected, LSize);
                                 }
                                 else if (pressQ && pressE) // przelaczanie sie na E pokazane //
                                 {
                                     lest_selected = last_selected;
                                     selected = last_selected = right_selected;
-                                    GUI.vt3.updateList(selected - LSize, last_selected - LSize, RSize);
+                                    GUI.vt3.UpdateList(selected - LSize, last_selected - LSize, RSize);
                                 }
                                 lastPress = -1;
                             }
@@ -155,14 +155,14 @@ namespace FarmConsole.Body.Model.Logic
                         case 8: break;
                         case 9: break;
                     }
-                else if (selected > 0 && selected < LSize + 1 && pressQ) { GUI.vt2.updateList(selected, last_selected, LSize); }
-                else if (selected > LSize && selected < LSize + RSize + 1 && pressE) { GUI.vt3.updateList(selected - LSize, last_selected - LSize, RSize); }
+                else if (selected > 0 && selected < LSize + 1 && pressQ) { GUI.vt2.UpdateList(selected, last_selected, LSize); }
+                else if (selected > LSize && selected < LSize + RSize + 1 && pressE) { GUI.vt3.UpdateList(selected - LSize, last_selected - LSize, RSize); }
 
                 //QH.INFO(0, "c0: " + c0, "c1: " + c1, "Q: " + pressQ, "E: " + pressE);
 
                 last_selected = selected;
             }
-            GUI.vt1.clearList();
+            GUI.vt1.ClearList();
         }
     }
 }

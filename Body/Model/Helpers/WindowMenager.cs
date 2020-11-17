@@ -1,8 +1,9 @@
 ﻿using FarmConsole.Body.Model.Helpers;
 using System.Runtime.InteropServices;
 using System;
+using FarmConsole.Body.Sounds;
 
-namespace FarmConsole.Body.View.GUI
+namespace FarmConsole.Body.Model.Helpers
 {
     public static class WindowMenager
     {
@@ -23,11 +24,11 @@ namespace FarmConsole.Body.View.GUI
 
         private static int windowWidth;
         private static int windowHeight;
-        public static void setWindow()
+
+        public static void PresetWindow()
         {
             IntPtr handle = GetConsoleWindow();
             IntPtr sysMenu = GetSystemMenu(handle, false);
-
             if (handle != IntPtr.Zero)
             {
                 DeleteMenu(sysMenu, SC_CLOSE, MF_BYCOMMAND);
@@ -36,10 +37,21 @@ namespace FarmConsole.Body.View.GUI
                 DeleteMenu(sysMenu, SC_SIZE, MF_BYCOMMAND);
             }
             Console.CursorVisible = false;
-            windowWidth = OPTIONS.getOptionById(0);
-            windowHeight = OPTIONS.getOptionById(1);
+            Console.Title = XF.GetString(0);
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
+
+            SetWindow();
+        }
+
+        public static void SetWindow()
+        {
+            windowWidth = OPTIONS.GetOptionById(0);
+            windowHeight = OPTIONS.GetOptionById(1);
+            S.SetVolume(OPTIONS.GetOptionById(2));
             Console.SetWindowSize(windowWidth, windowHeight);
             Console.SetBufferSize(windowWidth, windowHeight);
+            Console.SetWindowSize(windowWidth, windowHeight);
         }
     }
 }

@@ -1,19 +1,19 @@
 <OptionsCollection>
-  <option id="0">
+  <option id="0" Name="WindowWidth">
     <default>220</default>
-    <current>220</current>
+    <current>120</current>
   </option>
-  <option id="1">
+  <option id="1" Name="WindowHeight">
     <default>40</default>
-    <current>60</current>
+    <current>35</current>
   </option>
-  <option id="2">
-    <default>5</default>
-    <current>6</current>
+  <option id="2" Name="SoundVolume">
+    <default>3</default>
+    <current>1</current>
   </option>
   <option id="3">
-    <default>1</default>
-    <current>3</current>
+    <default>5</default>
+    <current>5</current>
   </option>
   <option id="4">
     <default>5</default>

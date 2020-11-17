@@ -38,7 +38,7 @@ namespace FarmConsole.Body.Model.Helpers
             var watch = System.Diagnostics.Stopwatch.StartNew();
             ////////////////////////////////////////////////////
 
-            GUI.vt1.clearList();
+            GUI.vt1.ClearList();
 
             ////////////////////////////////////////////////////
             watch.Stop();

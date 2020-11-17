@@ -8,14 +8,14 @@ namespace FarmConsole.Body.Model.Helpers
 {
     public static class OPTIONS
     {
-        private static int optionsCount = 4;
-        private static int[] currentOptions = loadOptions();
-        private static int[] optionsView = loadOptionView();
-        private static int[] loadOptions()
+        private static readonly int optionsCount = 4;
+        private static int[] currentOptions = LoadOptions();
+        private static int[] optionsView = LoadOptionView();
+        private static int[] LoadOptions()
         {
             return XF.GetOptions();
         }
-        private static int[] loadOptionView()
+        private static int[] LoadOptionView()
         {
             int[] opt = new int[optionsCount];
 
@@ -27,7 +27,7 @@ namespace FarmConsole.Body.Model.Helpers
 
             return opt;
         }
-        public static void saveOptions(int[] opt)
+        public static void SaveOptions(int[] opt)
         {
             currentOptions[0] = (opt[0] * 20) + 120;
             currentOptions[1] = (opt[1] * 5) + 35;
@@ -36,30 +36,30 @@ namespace FarmConsole.Body.Model.Helpers
             //currentOptions[4] = opt[4];
 
             XF.UpdateOptions(currentOptions);
-            WindowMenager.setWindow();
+            WindowMenager.SetWindow();
         }
-        public static void resetOptions()
+        public static void ResetOptions()
         {
             XF.UpdateOptions(new int[] { });
-            currentOptions = loadOptions();
-            optionsView = loadOptionView();
-            WindowMenager.setWindow();
+            currentOptions = LoadOptions();
+            optionsView = LoadOptionView();
+            WindowMenager.SetWindow();
         }
-        public static int getOptionsCount()
+        public static int GetOptionsCount()
         {
             return optionsCount;
         }
-        public static int getOptionById(int id)
+        public static int GetOptionById(int id)
         {
             return currentOptions[id];
         }
-        public static int getOptionViewById(int id)
+        public static int GetOptionViewById(int id)
         {
             return optionsView[id];
         }
-        public static int[] getOptionsView()
+        public static int[] GetOptionsView()
         {
-            optionsView = loadOptionView();
+            optionsView = LoadOptionView();
             return optionsView;
         }
     }

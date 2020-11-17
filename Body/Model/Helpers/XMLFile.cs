@@ -9,12 +9,13 @@ namespace FarmConsole.Body.Model.Helpers
 {
     public static class XF
     {
-        private static string location = "../../../Body/Data/";
-        private static string string_path = location + "strings.xml";
-        private static string product_path = location + "products.xml";
-        private static string long_path = location + "longtexts.xml";
-        private static string options_path = location + "options.xml";
-        private static string saves_path = location + "saves.xml";
+        private static readonly string loc = "../../../Body/Data/";
+
+        private static readonly string string_path = loc + "strings.xml";
+        private static readonly string product_path = loc + "products.xml";
+        private static readonly string long_path = loc + "longtexts.xml";
+        private static readonly string options_path = loc + "options.xml";
+        private static readonly string saves_path = loc + "saves.xml";
 
         public static string GetString(int id)
         {

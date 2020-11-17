@@ -1,19 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.ComponentModel;
-using System.Media;
+﻿using FarmConsole.Body.Model.Helpers;
 using NAudio.Wave;
+using System;
 
 namespace FarmConsole.Body.Sounds
 {
     public static class S
     {
-        private static string location = "../../../Body/Sounds/";
+        private static readonly string location = "../../../Body/Sounds/";
+        private static float volume = Convert.ToSingle(OPTIONS.GetOptionById(2)) / 6.0f;
+        private static WaveOutEvent waveOut = new WaveOutEvent();
 
-        public static void play(string select)
+        public static void Play(string select)
         {
-            var waveOut = new WaveOutEvent();
+            waveOut = new WaveOutEvent();
             switch (select)
             {
                 case "K1": waveOut.Init(new WaveFileReader(location + "klik1.wav")); break;
@@ -21,6 +20,11 @@ namespace FarmConsole.Body.Sounds
                 case "K3": waveOut.Init(new WaveFileReader(location + "klik3.wav")); break;
             }
             waveOut.Play();
+        }
+        public static void SetVolume(int vol)
+        {
+            volume = Convert.ToSingle(vol) / 6.0f;
+            waveOut.Volume = volume;
         }
     }
 }

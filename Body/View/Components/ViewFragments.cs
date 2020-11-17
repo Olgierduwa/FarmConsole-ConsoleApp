@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FarmConsole.Body.View.GUI
+namespace FarmConsole.Body.View.Components
 {
     static class ViewFragments
     {
-        public static string singleLine()
+        public static string SingleLine()
         {
             return ("").PadRight(Console.WindowWidth, '-');
         }
-        public static string doubleLine()
+        public static string DoubleLine()
         {
             return ("").PadRight(Console.WindowWidth, '=');
         }
-        public static string centeredText(int length, string text)
+        public static string CenteredText(int length, string text)
         {
             return ("").PadRight(length / 2 - text.Length / 2, ' ') + text + ("").PadRight(length / 2 - text.Length / 2, ' ');
         }

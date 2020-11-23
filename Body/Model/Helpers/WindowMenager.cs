@@ -36,7 +36,6 @@ namespace FarmConsole.Body.Model.Helpers
                 DeleteMenu(sysMenu, SC_MAXIMIZE, MF_BYCOMMAND);
                 DeleteMenu(sysMenu, SC_SIZE, MF_BYCOMMAND);
             }
-            Console.CursorVisible = false;
             Console.Title = XF.GetString(0);
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.White;
@@ -46,9 +45,11 @@ namespace FarmConsole.Body.Model.Helpers
 
         public static void SetWindow()
         {
+            Console.CursorVisible = false;
             windowWidth = OPTIONS.GetOptionById(0);
             windowHeight = OPTIONS.GetOptionById(1);
-            S.SetVolume(OPTIONS.GetOptionById(2));
+            S.SetSoundVolume(OPTIONS.GetOptionById(2));
+            S.SetMusicVolume(OPTIONS.GetOptionById(3));
             Console.SetWindowSize(windowWidth, windowHeight);
             Console.SetBufferSize(windowWidth, windowHeight);
             Console.SetWindowSize(windowWidth, windowHeight);

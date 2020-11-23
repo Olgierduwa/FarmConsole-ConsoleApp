@@ -11,14 +11,14 @@
   </text>
   <text id="1">
     ' ' '
-    ------------------------------------
-    --- [Q] --- Kwestionariusz ---------
-    --- [E] --- Ekwipunek --------------
-    --- [A] --- Ruch Dół-Lewo ----------
-    --- [W] --- Ruch Góra-Lewo / Góra --
-    --- [S] --- Ruch Dół-Prawo / Dół ---
-    --- [D] --- Ruch Góra-Prawo --------
-    ------------------------------------
+    ------------------------------------ 
+    --- [Q] --- Kwestionariusz --------- 
+    --- [E] --- Ekwipunek -------------- 
+    --- [A] --- Ruch Dół-Lewo ---------- 
+    --- [W] --- Ruch Góra-Lewo / Góra -- 
+    --- [S] --- Ruch Dół-Prawo / Dół --- 
+    --- [D] --- Ruch Góra-Prawo -------- 
+    ------------------------------------ 
     . . .
   </text>
   <text id="2">
@@ -36,5 +36,28 @@
     jakąkolwiek wyobraźnię i wolny czas.
     ------------------------------------
     . . .
+  </text>
+  <text id="100">
+    !!! Ś W I A D O M I E !!! 
+    !!! O P U S Z C Z A M !!!
+    !!! R O Z G R Y W K Ę !!! 
+  </text>
+  <text id="101">
+    B E Z S P R Z E C Z N I E 
+    P R A G N Ę _ U S U N Ą Ć 
+    T E N _ Z A P I S _ G R Y 
+    T R W A L E _ T R A C Ą C 
+    O D T W A R Z A L N O Ś Ć
+  </text>
+  <text id="102">
+    E K W I W A L E N T N I E 
+    N A D P I S U J Ę _ T E N 
+    W Y B R A N Y _ Z A P I S 
+    T Y M Ż E _ Z A P I S E M 
+    A B Y _ U Z U P E Ł N I Ć 
+    K R Z T A Ł T O W A N I E
+  </text>
+  <text id="103">
+    
   </text>
 </texts>

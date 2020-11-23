@@ -9,7 +9,7 @@ namespace FarmConsole.Body.Model.Helpers
     {
         public static long xxx = 0;
         public static long yyy = 0;
-        public static int choice_side_menu(char c, int x, int r1, int r2)
+        public static int Choice_side_menu(char c, int x, int r1, int r2)
         {
             Console.Write("\b ");
             if (x > r1 && x < r1 + r2 + 1) switch (c) // r1 - r2

@@ -1,9 +1,10 @@
-﻿using System;
-using System.Xml;
-using System.Xml.Linq;
+﻿using FarmConsole.Body.Model.Objects;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using FarmConsole.Body.Model.Objects;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace FarmConsole.Body.Model.Helpers
 {
@@ -16,6 +17,7 @@ namespace FarmConsole.Body.Model.Helpers
         private static readonly string long_path = loc + "longtexts.xml";
         private static readonly string options_path = loc + "options.xml";
         private static readonly string saves_path = loc + "saves.xml";
+        private static readonly string fields_save = loc + "fields.xml";
 
         public static string GetString(int id)
         {
@@ -36,7 +38,21 @@ namespace FarmConsole.Body.Model.Helpers
             text = Regex.Replace(node.InnerText, @"\s+", " ", RegexOptions.Multiline);
             return text;
         }
+        public static string[] GetFields()
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(fields_save);
+            XmlNodeList list = doc.SelectNodes("/FieldsCollection/field");
+            string[] fields = new string[list.Count];
+            for (int i = 0; i < list.Count; i++)
+                fields[i] = list[i].InnerText;
+            return fields;
+        }
 
+        public static int GetOptionsCount()
+        {
+            return XElement.Load(options_path).Descendants("option").Select(x => Int32.Parse(x.Attribute("id").Value)).Last() + 1;
+        }
         public static int[] GetOptions()
         {
             XmlDocument doc = new XmlDocument();
@@ -46,6 +62,15 @@ namespace FarmConsole.Body.Model.Helpers
             for (int i = 0; i < list.Count; i++)
                 opt[i] = Int32.Parse(list[i]["current"].InnerText);
             return opt;
+        }
+        public static string[] GetOptionsNames()
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(options_path);
+            XmlNodeList list = doc.SelectNodes("/OptionsCollection/option");
+            string[] names = new string[list.Count];
+            for (int i = 0; i < list.Count; i++) names[i] = list[i].Attributes["Name"].Value;
+            return names;
         }
         public static void UpdateOptions(int[] opt)
         {

@@ -5,59 +5,31 @@
     <name>Malcolm Aron</name>
     <lastplay>20/11/06 20:15</lastplay>
     <wallet>4200</wallet>
+    <field-type>11 10 12 12 10 10 10 10 10 10 10 10 10 10 13 13 13 13 12 10 13 13 13 13 11 10 13 13 13 13 11 10 13 13 13 13 </field-type>
+    <field-duration>1 2 2 3 4 5 6 7 8 10 10 10 10 10 10 10 10 10 12 10 10 10 10 10 11 10 10 10 10 10 11 10 10 10 10 10 </field-duration>
   </save>
   <save id="2">
     <lvl>99</lvl>
     <name>Clifton Wright</name>
     <lastplay>20/11/05 19:30</lastplay>
     <wallet>69000</wallet>
+    <field-type>11 10 12 12 10 10 10 10 10 10 10 10 10 10 10 10 10 10 12 10 10 10 10 10 11 10 10 10 10 10 11 10 10 10 10 10 </field-type>
+    <field-duration>1 2 2 3 4 5 6 7 8 10 10 10 10 10 10 10 10 10 12 10 10 10 10 10 11 10 10 10 10 10 11 10 10 10 10 10 </field-duration>
   </save>
   <save id="3">
-    <lvl>4</lvl>
-    <name>Drizzy Graham</name>
-    <lastplay>20/11/04 18:45</lastplay>
-    <wallet>69000</wallet>
-  </save>
-  <save id="4">
-    <lvl>99</lvl>
-    <name>Aisaaax3</name>
-    <lastplay>20/11/05 19:30</lastplay>
-    <wallet>69000</wallet>
-  </save>
-  <save id="5">
-    <lvl>2137</lvl>
-    <name>Piotr Tomczyk</name>
-    <lastplay>20/11/05 19:30</lastplay>
-    <wallet>1000000</wallet>
-  </save>
-  <save id="6">
-    <lvl>2137</lvl>
-    <name>Jan Paweł II</name>
-    <lastplay>20/11/05 19:30</lastplay>
-    <wallet>1000000</wallet>
-  </save>
-  <save id="7">
-    <lvl>100</lvl>
-    <name>Adam</name>
-    <lastplay>20/11/06 20:15</lastplay>
-    <wallet>4200</wallet>
-  </save>
-  <save id="8">
-    <lvl>100</lvl>
-    <name>Ewa</name>
-    <lastplay>20/11/06 20:15</lastplay>
-    <wallet>4200</wallet>
-  </save>
-  <save id="9">
     <lvl>100</lvl>
     <name>Jezus Chytrus</name>
     <lastplay>20/11/06 20:15</lastplay>
     <wallet>4200</wallet>
-  </save>
-  <save id="10">
-    <lvl>2137</lvl>
-    <name>Jan Paweł II</name>
-    <lastplay>20/11/05 19:30</lastplay>
-    <wallet>1000000</wallet>
+    <field-type>11 10 12 12 10 10 10 10 10 10 10 10 10 10 10 10 10 10 12 10 10 10 10 10 11 10 10 10 10 10 11 10 10 10 10 10 </field-type>
+    <field-duration>1 2 2 3 4 5 6 7 8 10 10 10 10 10 10 10 10 10 12 10 10 10 10 10 11 10 10 10 10 10 11 10 10 10 10 10 </field-duration>
   </save>
 </Saves>
+<!--
+11 10 12 12 10 10
+10 10 10 10 10 10
+10 10 10 10 10 10
+12 10 10 10 10 10
+11 10 10 10 10 10
+11 10 10 10 10 10
+-->

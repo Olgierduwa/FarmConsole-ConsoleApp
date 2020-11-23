@@ -6,5 +6,6 @@ namespace FarmConsole.Body.Model.Logic
 {
     public partial class Logic
     {
+
     }
 }

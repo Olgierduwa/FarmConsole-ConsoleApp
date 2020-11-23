@@ -8,7 +8,7 @@ namespace FarmConsole.Body.Model.Helpers
 {
     public static class OPTIONS
     {
-        private static readonly int optionsCount = 4;
+        private static readonly int optionsCount = XF.GetOptionsCount();
         private static int[] currentOptions = LoadOptions();
         private static int[] optionsView = LoadOptionView();
         private static int[] LoadOptions()

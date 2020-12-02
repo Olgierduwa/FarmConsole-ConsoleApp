@@ -30,7 +30,7 @@ namespace FarmConsole.Body.View.GUI
                 else vt2.TextBox(component_list[i], 30, false);
             vt2.GroupEnd();
             vt2.GroupEnd();
-            vt2.DoubleButtonBot(1, "A / Uzyj", "D / Odrzuc");
+            vt2.DoubleButtonBot(1, "D", "Wybierz");
             vt2.PrintList();
             //vt2.showComponentList();
         }
@@ -49,7 +49,7 @@ namespace FarmConsole.Body.View.GUI
                 else vt3.TextBox(component_list[i], 30, false);
             vt3.GroupEnd();
             vt3.GroupEnd();
-            vt3.DoubleButtonBot(5, "A / Uzyj", "D / Wyrzuc");
+            vt3.DoubleButtonBot(5, "Wybierz", "D");
             vt3.PrintList();
             //vt3.showComponentList();
         }

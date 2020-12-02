@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 
 namespace FarmConsole.Body.Model.Objects
@@ -10,7 +11,6 @@ namespace FarmConsole.Body.Model.Objects
         public int Y { get; set; }
         public int Type { get; set; }
         public int Duration { get; set; }
-        public bool Selected { get; set; }
 
         public Field(int x, int y, int type, int duration = 0)
         {
@@ -18,7 +18,11 @@ namespace FarmConsole.Body.Model.Objects
             this.Y = y;
             this.Type = type;
             this.Duration = duration;
-            this.Selected = false;
+        }
+        public void Move(Point p)
+        {
+            X += p.X;
+            Y += p.Y;
         }
     }
 }

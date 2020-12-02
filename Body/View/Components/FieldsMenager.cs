@@ -22,9 +22,12 @@ namespace FarmConsole.Body.View.Components
         private int StartX;
         private int StartY;
         private int FarmSize;
+        private Point Position = new Point();
         private Point[,] SimpleMap;
         private Field[,] PhisicalMap;
         private List<Point> CheckList = new List<Point>() { };
+        private List<Point> SelectedList = new List<Point>() { };
+        private int SelectedType;
 
         public ConsoleColor color(string type)
         {
@@ -39,11 +42,15 @@ namespace FarmConsole.Body.View.Components
                 case "10":
                 case "DefaultColor": return ConsoleColor.Green;
 
-                case "11":
-                case "House": return ConsoleColor.Gray;
+                case "11": // house
+                    return ConsoleColor.Gray;
 
-                case "12":
-                case "Silos": return ConsoleColor.DarkGray;
+                case "12": // silos
+                case "14": // water tower
+                    return ConsoleColor.DarkGray;
+
+                case "13":
+                case "Weed": return ConsoleColor.DarkYellow;
 
                 default: return ConsoleColor.White;
             }
@@ -52,7 +59,7 @@ namespace FarmConsole.Body.View.Components
         {
             FarmSize = Convert.ToInt32(Math.Sqrt(Convert.ToDouble(MapFromSave.Length))) + 3;
             StartX = Console.WindowWidth / 2 - 12;
-            StartY = 5;
+            StartY = (Console.WindowHeight - 7 * FarmSize) / 2 + 2;
 
             this.SimpleMap = MapFromSave;
             GetFieldsData();
@@ -102,23 +109,76 @@ namespace FarmConsole.Body.View.Components
             for (int i = 0; i < FarmSize; i++)
                 for (int j = 0; j < FarmSize; j++)
                     ShowField(new Point(i, j));
+            MoveSelect(Position, Position, false);
         }
         public void ClearFarm()
         {
             string space = ("").PadRight(Console.WindowWidth, ' ');
-            Console.SetCursorPosition(0, BorderTop + 1);
-            for (int i = BorderTop + 1; i < BorderBottom; i++) Console.WriteLine(space);
+            for (int i = BorderTop + 1; i < BorderBottom; i++)
+            {
+                Console.SetCursorPosition(0, i);
+                Console.Write(space);
+            }
         }
         public void MoveFarm(Point vector)
         {
             StartX += vector.X * 24;
             StartY += vector.Y * 6;
-            InitializeMap();
+
+            for (int i = 0; i < FarmSize; i++)
+                for (int j = 0; j < FarmSize; j++)
+                    PhisicalMap[i, j].Move(new Point(vector.X * 24, vector.Y * 6));
+
             ShowFarm();
         }
-
-        private void ShowField(Point p,bool currentSelected = false)
+        public void ShowPartFarm(string type)
         {
+            int CW = Console.WindowWidth;
+            int leftBarrier;
+            int rightBarrier;
+            switch (type)
+            {
+                case "left":
+                    leftBarrier = BorderLeft;
+                    rightBarrier = CW / 5;
+                    if (rightBarrier < 30) rightBarrier = 30;
+                    for (int i = 2; i < FarmSize - 1; i++)
+                        for (int j = 2; j < FarmSize - 1; j++)
+                            ShowField(new Point(i, j), leftBarrier: leftBarrier, rightBarrier: rightBarrier);
+                    MoveSelect(Position, Position, false); break;
+
+                case "right":
+                    rightBarrier = CW - 1;
+                    leftBarrier = CW - CW / 5;
+                    if (leftBarrier > CW - 30) leftBarrier = CW - 30; 
+                    for (int i = 2; i < FarmSize - 1; i++)
+                        for (int j = 2; j < FarmSize - 1; j++)
+                            ShowField(new Point(i, j), leftBarrier: leftBarrier, rightBarrier: rightBarrier);
+                    MoveSelect(Position, Position, false); break;
+
+                case "both":
+                    leftBarrier = BorderLeft;
+                    rightBarrier = CW / 5;
+                    if (rightBarrier < 30) rightBarrier = 30;
+                    for (int i = 2; i < FarmSize - 1; i++)
+                        for (int j = 2; j < FarmSize - 1; j++)
+                            ShowField(new Point(i, j), leftBarrier: leftBarrier, rightBarrier: rightBarrier);
+
+                    rightBarrier = CW - 1;
+                    leftBarrier = CW - CW / 5;
+                    if (leftBarrier > CW - 30) leftBarrier = CW - 30;
+                    for (int i = 2; i < FarmSize - 1; i++)
+                        for (int j = 2; j < FarmSize - 1; j++)
+                            ShowField(new Point(i, j), leftBarrier: leftBarrier, rightBarrier: rightBarrier);
+                    MoveSelect(Position, Position, false); break;
+            }
+        }
+
+        private void ShowField(Point p,bool currentSelected = false, int leftBarrier = 0, int rightBarrier = 0)
+        {
+            if (leftBarrier == 0) leftBarrier = BorderLeft;
+            if (rightBarrier == 0) rightBarrier = BorderRight;
+
             int X = PhisicalMap[p.X, p.Y].X;
             int Y = PhisicalMap[p.X, p.Y].Y;
             int T = PhisicalMap[p.X, p.Y].Type;
@@ -126,27 +186,27 @@ namespace FarmConsole.Body.View.Components
             int C = FieldHeigth - H;
 
             Console.ForegroundColor = color(PhisicalMap[p.X, p.Y].Type.ToString());
-            if (PhisicalMap[p.X, p.Y].Selected == true) Console.ForegroundColor = color("SelectedColor");
+            if (SelectedList.Contains(p)) Console.ForegroundColor = color("SelectedColor");
             if (currentSelected == true) Console.ForegroundColor = color("CurrentFieldColor");
 
             for (int i = 0; i < H; i++)
             {
                 if (Y + i + C > BorderTop && BorderBottom > Y + i + C)
                 {
-                    if (X + FieldStartPos[T][i] < BorderLeft)
+                    if (X + FieldStartPos[T][i] < leftBarrier)
                     {
-                        if (X + FieldStartPos[T][i] + FieldView[T][i].Length > BorderLeft)
+                        if (X + FieldStartPos[T][i] + FieldView[T][i].Length > leftBarrier)
                         {
-                            Console.SetCursorPosition(BorderLeft, Y + i + C);
-                            Console.Write(FieldView[T][i].Substring(BorderLeft - X - FieldStartPos[T][i]));
+                            Console.SetCursorPosition(leftBarrier, Y + i + C);
+                            Console.Write(FieldView[T][i].Substring(leftBarrier - X - FieldStartPos[T][i]));
                         }
                     }
-                    else if (X + FieldStartPos[T][i] + FieldView[T][i].Length > BorderRight)
+                    else if (X + FieldStartPos[T][i] + FieldView[T][i].Length > rightBarrier)
                     {
-                        if (X + FieldStartPos[T][i] < BorderRight)
+                        if (X + FieldStartPos[T][i] < rightBarrier)
                         {
                             Console.SetCursorPosition(X + FieldStartPos[T][i], Y + i + C);
-                            Console.Write(FieldView[T][i].Substring(0, BorderRight - X - FieldStartPos[T][i]));
+                            Console.Write(FieldView[T][i].Substring(0, rightBarrier - X - FieldStartPos[T][i]));
                         }
                     }
                     else
@@ -160,14 +220,16 @@ namespace FarmConsole.Body.View.Components
         }
         public void MoveSelect(Point beforePos, Point currentPos, bool shift)
         {
+            Position.X = currentPos.X;
+            Position.Y = currentPos.Y;
             beforePos.X++; beforePos.Y++;
             currentPos.X++; currentPos.Y++;
             //Modified = true;
             if (shift == true)
             {
-                if (PhisicalMap[beforePos.X, beforePos.Y].Selected == true)
-                    PhisicalMap[beforePos.X, beforePos.Y].Selected = false;
-                else PhisicalMap[beforePos.X, beforePos.Y].Selected = true;
+                if (SelectedList.Contains(beforePos) == true) SelectedList.Remove(beforePos);
+            else if (SelectedList.Count == 0) { SelectedType = PhisicalMap[beforePos.X, beforePos.Y].Type; SelectedList.Add(beforePos); }
+            else if (SelectedType == PhisicalMap[beforePos.X, beforePos.Y].Type) SelectedList.Add(beforePos);
             }
 
             if (beforePos.Y > currentPos.Y || beforePos.X > currentPos.X)

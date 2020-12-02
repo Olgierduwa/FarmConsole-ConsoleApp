@@ -38,10 +38,10 @@ namespace FarmConsole.Body.Model.Objects
             for (int i = 0; i < 4; i++)
                 for (int j = 0; j < 4; j++)
                     map[i, j] = new Point(10,0);
-            map[2, 2] = new Point(12, 0);
-            map[1, 1] = new Point(11, 0);
-            map[2, 1] = new Point(11, 0);
-            map[1, 2] = new Point(11, 0);
+            map[0, 0] = new Point(11, 0);
+            map[2, 0] = new Point(12, 0);
+            map[3, 0] = new Point(12, 0);
+            map[0, 2] = new Point(14, 0);
 
         } // new constructor
         public Save() {} // empty constructor

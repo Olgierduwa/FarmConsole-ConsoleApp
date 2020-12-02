@@ -46,12 +46,12 @@ namespace FarmConsole.Body.Model.Logic
             {
                 switch (openScreen)
                 {
+                    case "NewGame": NewGame(); break;
+                    case "Options": Options(); break;
                     case "Escape": Escape(); break;
                     case "Menu": Menu(); break;
-                    case "NewGame": NewGame(); break;
                     case "Load": Load(); break;
                     case "Save": Save(); break;
-                    case "Options": Options(); break;
                     case "Help": Help(); break;
                     case "Play": Play(); break;
                 }
@@ -67,6 +67,7 @@ namespace FarmConsole.Body.Model.Logic
                 {
                     case ConsoleKey.W: if (selected > selStart) { S.Play("K1"); selected--; GUI.vt1.UpdateList(selected, selected+1, selCount, 2); } break;
                     case ConsoleKey.S: if (selected < selCount) { S.Play("K1"); selected++; GUI.vt1.UpdateList(selected, selected-1, selCount, 2); } break;
+                    case ConsoleKey.Escape:
                     case ConsoleKey.Q: if (Warning("exit") == true) openScreen = "Close"; break;
                     case ConsoleKey.E: S.Play("K2"); switch (selected)
                     {
@@ -116,6 +117,7 @@ namespace FarmConsole.Body.Model.Logic
                 {
                     case ConsoleKey.W: if (selected > selStart) { S.Play("K1"); selected--; GUI.vt1.UpdateList(selected, selected + 1, selCount, 1); } break;
                     case ConsoleKey.S: if (selected < selCount) { S.Play("K1"); selected++; GUI.vt1.UpdateList(selected, selected - 1, selCount, 1); } break;
+                    case ConsoleKey.Escape:
                     case ConsoleKey.Q: S.Play("K3"); openScreen = "Menu"; break;
                     case ConsoleKey.E: switch (selected)
                     {
@@ -138,6 +140,7 @@ namespace FarmConsole.Body.Model.Logic
                 {
                     case ConsoleKey.W: if (selected > selStart) { S.Play("K1"); selected--; GUI.vt1.UpdateList(selected, selected + 1, selCount, 2, 14); } break;
                     case ConsoleKey.S: if (selected < selCount) { S.Play("K1"); selected++; GUI.vt1.UpdateList(selected, selected - 1, selCount, 2, 14); } break;
+                    case ConsoleKey.Escape:
                     case ConsoleKey.Q: S.Play("K3"); openScreen = "Menu"; break;
                     case ConsoleKey.E:  S.Play("K2"); switch (selected) { case 1: openScreen = "NewGame"; break; default: save.load(selected - 1); openScreen = "Play"; break; } break;
                     case ConsoleKey.D: if (selected > 1 && Warning("delete") == true)
@@ -176,6 +179,7 @@ namespace FarmConsole.Body.Model.Logic
                 {
                     case ConsoleKey.W: if (selected > selStart) { S.Play("K1"); selected--; GUI.vt1.UpdateList(selected, selected + 1, selCount, 2, 14); } break;
                     case ConsoleKey.S: if (selected < selCount) { S.Play("K1"); selected++; GUI.vt1.UpdateList(selected, selected - 1, selCount, 2, 14); } break;
+                    case ConsoleKey.Escape:
                     case ConsoleKey.Q: S.Play("K3"); openScreen = "Escape"; break;
                     case ConsoleKey.E:  if (selected == 1 || Warning("update") == true)
                     {
@@ -184,7 +188,7 @@ namespace FarmConsole.Body.Model.Logic
                         selected = 1;
                         selCount = saves.Length + 1;
                         GUI.vt1.ClearList();
-                        GUI.Load(saves);
+                        GUI.Save(saves);
                         GUI.vt1.UpdateList(1, 1, selCount, 2, 14);
                     }
                     break;
@@ -236,6 +240,7 @@ namespace FarmConsole.Body.Model.Logic
                         }
                         break;
 
+                    case ConsoleKey.Escape:
                     case ConsoleKey.Q: S.Play("K3"); S.SetSoundVolume(); S.SetMusicVolume(); openScreen = lastScreen; break;
                     case ConsoleKey.E: S.Play("K2"); GUI.vt1.ClearList(); if (selected == selCount) OPTIONS.ResetOptions(); else OPTIONS.SaveOptions(opt);
                         GUI.Options(); selected = 1; GUI.vt1.UpdateList(selected, selected, selCount, 2); opt = OPTIONS.GetOptionsView(); break;

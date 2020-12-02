@@ -205,9 +205,6 @@ namespace FarmConsole.Body.View.GUI
                 vt1.Slider(6, OPTIONS.GetOptionViewById(1));
                 vt1.Slider(6, OPTIONS.GetOptionViewById(2));
                 vt1.Slider(6, OPTIONS.GetOptionViewById(3));
-                vt1.Slider(6, 2);
-                vt1.Slider(6, 1);
-                vt1.Slider(6, 0);
             //vt1.slider(6, OPTIONS.getOptionViewById(4));
             vt1.GroupEnd();
 

@@ -5,40 +5,22 @@
     <name>Malcolm Aron</name>
     <lastplay>20/11/06 20:15</lastplay>
     <wallet>4200</wallet>
-    <field-type>11 10 12 12 10 10 10 10 10 10 10 10 10 10 13 13 13 13 12 10 13 13 13 13 11 10 13 13 13 13 11 10 13 13 13 13 </field-type>
-    <field-duration>1 2 2 3 4 5 6 7 8 10 10 10 10 10 10 10 10 10 12 10 10 10 10 10 11 10 10 10 10 10 11 10 10 10 10 10 </field-duration>
+    <field-category>6 0 7 7 0 0 0 0 0 0 0 0 0 0 0 0 0 0 7 0 0 1 1 1 6 0 0 1 1 1 6 0 0 1 1 1 </field-category>
+    <field-type>0 2 0 0 2 2 2 2 2 2 2 2 2 2 2 2 2 2 1 2 2 0 0 0 0 2 2 0 0 0 0 2 2 0 0 0 </field-type>
+    <field-duration>0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </field-duration>
+    <inventory>1 0 10 2 0 10 2 1 10 3 0 10 4 0 10 5 0 10 6 0 10 7 0 10 8 0 10 </inventory>
   </save>
   <save id="2">
     <lvl>100</lvl>
-    <name>Jezus Chytrus</name>
+    <name>Clifton Wright</name>
     <lastplay>20/11/06 20:15</lastplay>
     <wallet>4200</wallet>
-    <field-type>11 10 12 12 10 10 10 10 10 10 10 10 10 10 10 10 10 10 12 10 10 10 10 10 11 10 10 10 10 10 11 10 10 10 10 10 </field-type>
-    <field-duration>1 2 2 3 4 5 6 7 8 10 10 10 10 10 10 10 10 10 12 10 10 10 10 10 11 10 10 10 10 10 11 10 10 10 10 10 </field-duration>
-  </save>
-  <save id="3">
-    <lvl>0</lvl>
-    <name>Turbo Kox</name>
-    <lastplay>
-    </lastplay>
-    <wallet>420,0</wallet>
-    <field-type>11 10 10 10 10 10 10 10 12 10 10 10 12 10 10 10 </field-type>
-    <field-duration>0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </field-duration>
-  </save>
-  <save id="4">
-    <lvl>100</lvl>
-    <name>Malcolm Aron</name>
-    <lastplay>20/11/06 20:15</lastplay>
-    <wallet>4200</wallet>
-    <field-type>11 10 12 12 10 10 10 10 10 10 10 10 10 10 13 13 13 13 12 10 13 13 13 13 11 10 13 13 13 13 11 10 13 13 13 13 </field-type>
-    <field-duration>1 2 2 3 4 5 6 7 8 10 10 10 10 10 10 10 10 10 12 10 10 10 10 10 11 10 10 10 10 10 11 10 10 10 10 10 </field-duration>
+    <field-category>6 0 7 7 0 0 0 0 0 0 0 0 0 0 0 0 0 0 7 0 0 1 1 1 6 0 0 1 1 1 6 0 0 1 1 1 </field-category>
+    <field-type>0 2 0 0 2 2 2 2 2 2 2 2 2 2 2 2 2 2 1 2 2 0 0 0 0 2 2 0 0 0 0 2 2 0 0 0 </field-type>
+    <field-duration>0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </field-duration>
+    <inventory></inventory>
   </save>
 </Saves>
 <!--
-11 10 12 12 10 10
-10 10 10 10 10 10
-10 10 10 10 10 10
-12 10 10 10 10 10
-11 10 10 10 10 10
-11 10 10 10 10 10
+
 -->

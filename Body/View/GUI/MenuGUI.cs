@@ -112,8 +112,8 @@ namespace FarmConsole.Body.View.GUI
             vt1.Endl(1);
             vt1.TextBox("P U S T Y   Z A P I S");
             for (int i = 0; i < savesCount; i++)
-                if (i < showCount) vt1.TextBox(saves[i].name);
-                else vt1.TextBox(saves[i].name, 40, false);
+                if (i < showCount) vt1.TextBox(saves[i].Name);
+                else vt1.TextBox(saves[i].Name, 40, false);
             vt1.GroupEnd();
 
             vt1.GroupStart(4);
@@ -153,8 +153,8 @@ namespace FarmConsole.Body.View.GUI
             vt1.TextBox( "P U S T Y   Z A P I S");
             for (int i = 0; i < savesCount; i++)
                 if (i < showCount)
-                    vt1.TextBox(saves[i].name);
-                else vt1.TextBox(saves[i].name, show: false);
+                    vt1.TextBox(saves[i].Name);
+                else vt1.TextBox(saves[i].Name, show: false);
             vt1.GroupEnd();
 
             vt1.GroupStart(4);

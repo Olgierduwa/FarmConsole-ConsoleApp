@@ -1,6 +1,7 @@
 ﻿using FarmConsole.Body.Model.Helpers;
 using FarmConsole.Body.Model.Objects;
 using FarmConsole.Body.Sounds;
+using FarmConsole.Body.View.Components;
 using FarmConsole.Body.View.GUI;
 using System;
 
@@ -11,7 +12,7 @@ namespace FarmConsole.Body.Model.Logic
         public static long xxx = 0;
         public static long yyy = 0;
         private Save save = new Save();
-        public static string openScreen = "Menu";
+        public static string openScreen = "Load";
         public static string lastScreen = "Menu";
 
         public bool? Warning(string type)
@@ -49,6 +50,7 @@ namespace FarmConsole.Body.Model.Logic
                     case "NewGame": NewGame(); break;
                     case "Options": Options(); break;
                     case "Escape": Escape(); break;
+                    case "Intro": Intro(); break;
                     case "Menu": Menu(); break;
                     case "Load": Load(); break;
                     case "Save": Save(); break;
@@ -56,6 +58,22 @@ namespace FarmConsole.Body.Model.Logic
                     case "Play": Play(); break;
                 }
             }
+        }
+
+        public void Intro()
+        {
+            Animations.SlideEffect(2, "purple");
+            Animations.SlideEffect(3, "red");
+            Animations.SlideEffect(0, "yellow");
+            Animations.SlideEffect(3, "green");
+            Animations.SlideEffect(1, "blue");
+            Animations.SlideEffect(0, "white");
+            //Animations.SlideEffect(0);
+            //Animations.CrossEffect(0, "red");
+            //Animations.CrossEffect(1, "green");
+            //Animations.CrossEffect(0, "blue");
+            //Animations.CrossEffect(1, "purple");
+            //Animations.CrossEffect(0, "white");
         }
         public void Menu()
         {
@@ -65,6 +83,7 @@ namespace FarmConsole.Body.Model.Logic
             {
                 switch (Console.ReadKey(true).Key)
                 {
+                    case ConsoleKey.R: openScreen = "Intro"; break;
                     case ConsoleKey.W: if (selected > selStart) { S.Play("K1"); selected--; GUI.vt1.UpdateList(selected, selected+1, selCount, 2); } break;
                     case ConsoleKey.S: if (selected < selCount) { S.Play("K1"); selected++; GUI.vt1.UpdateList(selected, selected-1, selCount, 2); } break;
                     case ConsoleKey.Escape:
@@ -142,10 +161,10 @@ namespace FarmConsole.Body.Model.Logic
                     case ConsoleKey.S: if (selected < selCount) { S.Play("K1"); selected++; GUI.vt1.UpdateList(selected, selected - 1, selCount, 2, 14); } break;
                     case ConsoleKey.Escape:
                     case ConsoleKey.Q: S.Play("K3"); openScreen = "Menu"; break;
-                    case ConsoleKey.E:  S.Play("K2"); switch (selected) { case 1: openScreen = "NewGame"; break; default: save.load(selected - 1); openScreen = "Play"; break; } break;
+                    case ConsoleKey.E:  S.Play("K2"); switch (selected) { case 1: openScreen = "NewGame"; break; default: save.Load(selected - 1); openScreen = "Play"; break; } break;
                     case ConsoleKey.D: if (selected > 1 && Warning("delete") == true)
                     {
-                        saves[selected - 2].delete();
+                        saves[selected - 2].Delete();
                         saves = XF.GetSaves();
                         selected = 1;
                         selCount = saves.Length + 1;
@@ -158,10 +177,10 @@ namespace FarmConsole.Body.Model.Logic
                 if (selected > 1)
                 {
                     GUI.vt1.UpdateBox(3, 1, ". . ." +
-                    " ---------------------------------- Nazwa Gracza - " + saves[selected - 2].name.ToString() +
-                    " ---------------------------------- Osiągniety Poziom - " + saves[selected - 2].lvl.ToString() +
-                    " ---------------------------------- Posiadany Majątek - " + saves[selected - 2].wallet.ToString() +
-                    " ---------------------------------- Ostatni Zapis - " + saves[selected - 2].lastplay.ToString() + " ---------------------------------- . . .");
+                    " ---------------------------------- Nazwa Gracza - " + saves[selected - 2].Name.ToString() +
+                    " ---------------------------------- Osiągniety Poziom - " + saves[selected - 2].LVL.ToString() +
+                    " ---------------------------------- Posiadany Majątek - " + saves[selected - 2].Wallet.ToString() +
+                    " ---------------------------------- Ostatni Zapis - " + saves[selected - 2].Lastplay.ToString() + " ---------------------------------- . . .");
                     GUI.vt1.Showability(3, 3, true);
                 }
                 else { GUI.vt1.UpdateBox(3, 1, "E / Rozpocznij Nową Grę"); GUI.vt1.Showability(3, 3, false); }
@@ -183,7 +202,7 @@ namespace FarmConsole.Body.Model.Logic
                     case ConsoleKey.Q: S.Play("K3"); openScreen = "Escape"; break;
                     case ConsoleKey.E:  if (selected == 1 || Warning("update") == true)
                     {
-                        save.update(selected - 1);
+                        save.Update(selected - 1);
                         saves = XF.GetSaves();
                         selected = 1;
                         selCount = saves.Length + 1;
@@ -196,10 +215,10 @@ namespace FarmConsole.Body.Model.Logic
                 if (selected > 1)
                 {
                     GUI.vt1.UpdateBox(3, 1, ". . ." +
-                    " ---------------------------------- Nazwa Gracza - " + saves[selected - 2].name.ToString() +
-                    " ---------------------------------- Osiągniety Poziom - " + saves[selected - 2].lvl.ToString() +
-                    " ---------------------------------- Posiadany Majątek - " + saves[selected - 2].wallet.ToString()  +
-                    " ---------------------------------- Ostatni Zapis - " + saves[selected - 2].lastplay.ToString() + " ---------------------------------- . . .");
+                    " ---------------------------------- Nazwa Gracza - " + saves[selected - 2].Name.ToString() +
+                    " ---------------------------------- Osiągniety Poziom - " + saves[selected - 2].LVL.ToString() +
+                    " ---------------------------------- Posiadany Majątek - " + saves[selected - 2].Wallet.ToString()  +
+                    " ---------------------------------- Ostatni Zapis - " + saves[selected - 2].Lastplay.ToString() + " ---------------------------------- . . .");
                     GUI.vt1.Showability(3, 3, true);
                 }
                 else { GUI.vt1.UpdateBox(3, 1, "E / Utwórz Nowy Zapis"); GUI.vt1.Showability(3, 3, false); }

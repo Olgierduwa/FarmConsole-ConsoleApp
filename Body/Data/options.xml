@@ -5,11 +5,11 @@
   </option>
   <option id="1" Name="Wysokość Ekranu">
     <default>40</default>
-    <current>35</current>
+    <current>40</current>
   </option>
   <option id="2" Name="Głośność Efektów">
     <default>3</default>
-    <current>1</current>
+    <current>3</current>
   </option>
   <option id="3" Name="Głośność Muzyki">
     <default>3</default>

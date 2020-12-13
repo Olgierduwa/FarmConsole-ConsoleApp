@@ -1,6 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <StrigsCollection>
-  <String>Farm Console</String>
-  <String>* FC copyright 2020 *</String>
-  <String>╔ Ô</String>
+  <String id="0">Farm Console</String>
+  <String id="1">* FC copyright 2020 *</String>
+  <String id="2">╔ Ô</String>
+  
+  <String id="100">Informacje</String>
+  <String id="101">Zniszcz</String>
+  <String id="102">Przenieś</String>
+  <String id="103">Sprzedaj</String>
+  <String id="104">Odwiedź</String>
+  <String id="105">Użyj</String>
+  <String id="106">Postaw</String>
+  <String id="107">Zaoraj</String>
+  <String id="108">Posiej</String>
+  <String id="109">Podlej</String>
+  <String id="110">Użyźnij</String>
+  <String id="111">Zbierz</String>
+  <String id="112">Zrób nawóz</String>
 </StrigsCollection>

@@ -11,11 +11,13 @@ namespace FarmConsole.Body.Model.Objects
         public int Y { get; set; }
         public int Type { get; set; }
         public int Duration { get; set; }
+        public int Category { get; set; }
 
-        public Field(int x, int y, int type, int duration = 0)
+        public Field(int x, int y, int category, int type, int duration = 0)
         {
             this.X = x;
             this.Y = y;
+            this.Category = category;
             this.Type = type;
             this.Duration = duration;
         }

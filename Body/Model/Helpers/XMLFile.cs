@@ -18,14 +18,18 @@ namespace FarmConsole.Body.Model.Helpers
         private static readonly string options_path = loc + "options.xml";
         private static readonly string saves_path = loc + "saves.xml";
         private static readonly string fields_save = loc + "fields.xml";
+        private static readonly string graphics_save = loc + "graphics.xml";
 
         public static string GetString(int id)
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(string_path);
-            XmlNodeList lista = doc.GetElementsByTagName("String");
-            if (id > lista.Count) { return ("- BRAK ID W STRING.XML -"); }
-            return lista[id].InnerText.Trim().ToString();
+            XmlNodeList list = doc.SelectNodes("/StrigsCollection/String[@id=" + id.ToString() + "]");
+            XmlNode node = list[0];
+            string text = "- BRAK STRINGA -";
+            if (list.Count < 1) { return text; }
+            text = Regex.Replace(node.InnerText, @"\s+", " ", RegexOptions.Multiline);
+            return text;
         }
         public static string GetText(int id)
         {
@@ -38,14 +42,38 @@ namespace FarmConsole.Body.Model.Helpers
             text = Regex.Replace(node.InnerText, @"\s+", " ", RegexOptions.Multiline);
             return text;
         }
-        public static string[] GetFields()
+        public static string[] GetGraphic(int id)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(graphics_save);
+            XmlNodeList list = doc.SelectNodes("/graphics/graphic[@id=" + id.ToString() + "]");
+            XmlNode node = list[0];
+            if (list.Count < 1) { return new string[] { "- BRAK GRAFIKI -" }; }
+
+            char[] MyChar = { '\r', '\n' };
+            string[] graphic = node.InnerText.Split('@');
+            for (int i = 0; i < graphic.Length; i++)
+                graphic[i] = graphic[i].Trim(MyChar).Substring(4);
+
+            return graphic;
+        }
+        public static List<string>[] GetFields()
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(fields_save);
-            XmlNodeList list = doc.SelectNodes("/FieldsCollection/field");
-            string[] fields = new string[list.Count];
-            for (int i = 0; i < list.Count; i++)
-                fields[i] = list[i].InnerText;
+            XmlNodeList listOfCategory = doc.SelectNodes("/FieldsCollection/category");
+            List<string>[] fields = new List<string>[listOfCategory.Count];
+            for (int i = 0; i < listOfCategory.Count; i++)
+            {
+                fields[i] = new List<string>();
+                XmlNode nodeOfCategory = listOfCategory[i];
+                for (int j = 0; j < nodeOfCategory.ChildNodes.Count; j++)
+                {
+                    XmlNodeList nodeOfField = nodeOfCategory.SelectNodes("field[@id=" + j.ToString() + "]");
+                    XmlNode node = nodeOfField[0];
+                    fields[i].Add(node.InnerText);
+                }
+            }
             return fields;
         }
 
@@ -82,18 +110,34 @@ namespace FarmConsole.Body.Model.Helpers
             doc.Save(options_path);
         }
 
-        public static Product GetProduct(int id)
+        public static Product GetProduct(int cat, int id)
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(product_path);
-            XmlNodeList list = doc.SelectNodes("/ProductsCollection/product[@id=" + id.ToString() + "]");
-            XmlNode node = list[0];
+            XmlNodeList category = doc.SelectNodes("/ProductsCollection/category[@cat=" + cat.ToString() + "]");
+            XmlNode nodeCategory = category[0];
+            XmlNodeList products = nodeCategory.SelectNodes("product[@id=" + id.ToString() + "]");
+            XmlNode nodeProduct = products[0];
             Product p = new Product();
-            if (list.Count < 1) {return p; }
-            p.id = int.Parse(node.Attributes["id"].Value);
-            p.name = node["name"].InnerText;
-            p.price = decimal.Parse(node["price"].InnerText);
+            if (products.Count < 1) { return p; }
+            p.category = cat;
+            p.type = id;
+            p.name = nodeProduct["name"].InnerText;
+            p.price = decimal.Parse(nodeProduct["price"].InnerText);
             return p;
+        }
+        public static string[] GetProductCategoryName()
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(product_path);
+            XmlNodeList listOfCategory = doc.SelectNodes("/ProductsCollection/category");
+            string[] categoryList = new string[listOfCategory.Count];
+            for (int i = 0; i < listOfCategory.Count; i++)
+            {
+                XmlNode node = listOfCategory[i];
+                categoryList[i] = node.Attributes["name"].Value;
+            }
+            return categoryList;
         }
         public static void AddProduct(Product _product)
         {

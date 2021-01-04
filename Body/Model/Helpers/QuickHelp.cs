@@ -9,29 +9,6 @@ namespace FarmConsole.Body.Model.Helpers
     {
         public static long xxx = 0;
         public static long yyy = 0;
-        public static int Choice_side_menu(char c, int x, int r1, int r2)
-        {
-            Console.Write("\b ");
-            if (x > r1 && x < r1 + r2 + 1) switch (c) // r1 - r2
-            {
-                case 's': if (x < r1 + r2) return (x + 1); break;
-                case 'w': if (x > r1 + 1) return (x - 1); break;
-            }
-            if (x > 0 && x < r1 + 1) switch (c) // 1 - r1
-            {
-                case 's': if (x < r1) return (x + 1); break;
-                case 'w': if (x > 1) return (x - 1); break;
-            }
-            switch (c) // q e // a d // ESC
-            {
-                case 'd': return (-4);
-                case 'a': return (-3);
-                case 'q': return (-2);
-                case 'e': return (-1);
-                case (char)27: return (-5);
-            }
-            return x;
-        }
 
         public static void AVG()
         {

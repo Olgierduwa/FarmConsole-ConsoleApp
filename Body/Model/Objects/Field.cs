@@ -21,6 +21,15 @@ namespace FarmConsole.Body.Model.Objects
             this.Type = type;
             this.Duration = duration;
         }
+        public Field(Field field)
+        {
+            this.X = field.X;
+            this.Y = field.Y;
+            this.Category = field.Category;
+            this.Type = field.Type;
+            this.Duration = field.Duration;
+        }
+
         public void Move(Point p)
         {
             X += p.X;

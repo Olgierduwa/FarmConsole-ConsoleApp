@@ -8,23 +8,28 @@ namespace FarmConsole.Body.View.Components
 {
     static class Animations
     {
+
+        private static ConsoleColor[] colors = (ConsoleColor[])ConsoleColor.GetValues(typeof(ConsoleColor));
+        private static int[] GetColors(string effectColor)
+        {
+            int[] idColors = new int[] { 8, 7, 15, 7, 8, 0 };
+            switch (effectColor)
+            {
+                case "purple": idColors = new int[] { 0, 5, 13, 5, 0, 0 }; break;
+                case "red": idColors = new int[]    { 0, 4, 12, 4, 0, 0 }; break;
+                case "yellow": idColors = new int[] { 0, 6, 14, 6, 0, 0 }; break;
+                case "green": idColors = new int[]  { 0, 2, 10, 2, 0, 0 }; break;
+                case "blue": idColors = new int[]   { 1, 3, 11, 3, 1, 0 }; break;
+                case "white": idColors = new int[]  { 8, 7, 15, 7, 8, 0 }; break;
+            }
+            return idColors;
+        }
+
         public static void CrossEffect(int graphicID, string effectColor = "red", double middleTime = 1600)
         {
             AnimationsGUI.Centrum(graphicID);
             DateTime Now = DateTime.Now;
-
-            ConsoleColor[] colors = (ConsoleColor[])ConsoleColor.GetValues(typeof(ConsoleColor));
-
-            int[] idColors = new int[] { 4, 12, 14, 15, 14, 12, 4, 0 };
-            switch(effectColor)
-            {
-                case "red":     idColors = new int[] { 4, 12,  14, 12, 4, 0 }; break;
-                case "blue":    idColors = new int[] { 1,  3,  11,  3, 1, 0 }; break;
-                case "green":   idColors = new int[] { 2, 10,  15, 10, 2, 0 }; break;
-                case "purple":  idColors = new int[] { 5, 13, 15, 13, 5, 0 }; break;
-                case "white":   idColors = new int[] { 8, 7, 15, 7, 8, 0 }; break;
-            }
-
+            int[] idColors = GetColors(effectColor);
             double[] sleep = new double[] { 500, 100, middleTime, 100, 500 };
             int currentColorId = 0;
             int stage = 0;
@@ -59,18 +64,8 @@ namespace FarmConsole.Body.View.Components
         public static void SlideEffect(int graphicID, string effectColor = "purple", double middleTime = 2000)
         {
             DateTime Now = DateTime.Now;
-            double[] sleep = new double[] { 30, 2000, 30 };
-            int[] idColors = new int[] { };
-            ConsoleColor[] colors = (ConsoleColor[])ConsoleColor.GetValues(typeof(ConsoleColor));
-            switch (effectColor)
-            {
-                case "purple": idColors = new int[] { 0, 0, 5, 13, 5, 0, 0 }; break;
-                case "red": idColors = new int[]    { 0, 0, 4, 12, 4, 0, 0 }; break;
-                case "yellow": idColors = new int[] { 0, 0, 6, 14, 6, 0, 0 }; break;
-                case "green": idColors = new int[]  { 0, 0, 2, 10, 2, 0, 0 }; break;
-                case "blue": idColors = new int[]   { 0, 1, 3, 11, 3, 1, 0 }; break;
-                case "white": idColors = new int[]  { 0, 8, 7, 15, 7, 8, 0 }; break;
-            }
+            double[] sleep = new double[] { 30, middleTime, 30 };
+            int[] idColors = GetColors(effectColor);
             int currentColorId = 0;
             int stage = 0;
             int columns = 9;
@@ -85,18 +80,18 @@ namespace FarmConsole.Body.View.Components
                     switch(stage)
                     {
                         case 0:
-                            AnimationsGUI.Part(graphicID, column, columns, colors[idColors[currentColorId]]);
+                            AnimationsGUI.Column(graphicID, column, columns, colors[idColors[currentColorId]]);
                             column++;
-                            if (column>=0 && column % 2 == 0) currentColorId++;
-                            if (currentColorId > 6) currentColorId = 6;
+                            if (column>=0 && column % 3 == 1) currentColorId++;
+                            if (currentColorId > 5) currentColorId = 5;
                             if (column == (columns + 1) / 2 + 1) stage++;
                             break;
-                        case 1: stage++; currentColorId--; break;
+                        case 1: stage++; break;
                         case 2:
-                            AnimationsGUI.Part(graphicID, column, columns, colors[idColors[currentColorId]]);
+                            AnimationsGUI.Column(graphicID, column, columns, colors[idColors[currentColorId]]);
                             column++;
-                            if (column % 2 == 1) currentColorId++;
-                            if (currentColorId > 6) currentColorId = 6;
+                            if (column % 3 == 1) currentColorId++;
+                            if (currentColorId > 5) currentColorId = 5;
                             if (column == columns + extraColumn + 2) stage++;
                             break;
                     }
@@ -104,6 +99,23 @@ namespace FarmConsole.Body.View.Components
                 }
             }
             AnimationsGUI.vt1.ClearList();
+        }
+
+        public static int PopUp(string[] text, int stage = 0, string effectColor = "green", double middleTime = 3000)
+        {
+            int[] idColors = GetColors(effectColor);
+            int currentColorId = 0, limit = 1;
+            stage++;
+
+            if (stage < 1 * limit) { currentColorId = 0; text = new string[] { text[0], text[1] }; }
+            else if (stage < 2 * limit) { currentColorId = 1; text = new string[] { text[0], text[1], text[2] }; }
+            else if (stage < 3 * limit + middleTime / 50) { currentColorId = 2; text = new string[] { text[0], text[1], text[2], text[3] }; }
+            else if (stage < 4 * limit + middleTime / 50) { currentColorId = 3; text = new string[] { text[0], text[1], text[2] }; }
+            else if (stage < 5 * limit + middleTime / 50) { currentColorId = 4; text = new string[] { text[0], text[1] }; }
+            else if (stage < 6 * limit + middleTime / 50) { currentColorId = 5; stage = -1; text = new string[] { text[0] }; }
+
+            AnimationsGUI.PopUp(text, colors[idColors[currentColorId]]);
+            return stage;
         }
     }
 }

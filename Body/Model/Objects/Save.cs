@@ -53,15 +53,15 @@ namespace FarmConsole.Body.Model.Objects
             Map[0, 2, 0] = 7; Map[0, 2, 1] = 1;
 
             for (int i = 0; i < Inventory.Length; i++) Inventory[i] = new List<Product>();
-            Inventory[1].Add(new Product(1, 0, 10));
-            Inventory[2].Add(new Product(2, 0, 10));
-            Inventory[2].Add(new Product(2, 1, 10));
-            Inventory[3].Add(new Product(3, 0, 10));
-            Inventory[4].Add(new Product(4, 0, 10));
-            Inventory[5].Add(new Product(5, 0, 10));
-            Inventory[6].Add(new Product(6, 0, 10));
-            Inventory[7].Add(new Product(7, 0, 10));
-            Inventory[8].Add(new Product(8, 0, 10));
+            Inventory[1].Add(XF.GetProduct(1, 0)); Inventory[1][0].amount = 10;
+            Inventory[2].Add(XF.GetProduct(2, 0)); Inventory[2][0].amount = 10;
+            Inventory[2].Add(XF.GetProduct(2, 1)); Inventory[2][1].amount = 10;
+            Inventory[3].Add(XF.GetProduct(3, 0)); Inventory[3][0].amount = 10;
+            Inventory[4].Add(XF.GetProduct(4, 0)); Inventory[4][0].amount = 10;
+            Inventory[5].Add(XF.GetProduct(5, 0)); Inventory[5][0].amount = 10;
+            Inventory[6].Add(XF.GetProduct(6, 0)); Inventory[6][0].amount = 10;
+            Inventory[7].Add(XF.GetProduct(7, 0)); Inventory[7][0].amount = 10;
+            Inventory[8].Add(XF.GetProduct(8, 0)); Inventory[8][0].amount = 10;
 
         } // new constructor
         public Save() {} // empty constructor

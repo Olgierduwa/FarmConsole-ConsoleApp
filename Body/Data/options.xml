@@ -1,7 +1,7 @@
 <OptionsCollection>
   <option id="0" Name="Szerokość Ekranu">
     <default>220</default>
-    <current>120</current>
+    <current>220</current>
   </option>
   <option id="1" Name="Wysokość Ekranu">
     <default>40</default>

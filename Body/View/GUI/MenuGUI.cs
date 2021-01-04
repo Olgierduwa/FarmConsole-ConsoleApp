@@ -27,24 +27,34 @@ namespace FarmConsole.Body.View.GUI
             vt1.Endl((Console.WindowHeight-20)/2);
 
             vt1.GroupStart(0);
-            vt1.GroupStart(2);
-            vt1.Endl(1);
-            vt1.TextBox("Zacznij Rozgrywke");
-            vt1.TextBox("Kontynuuj Rozrywke");
-            vt1.TextBox("Ustaw Wlasne Opcje");
-            vt1.TextBox("Poznaj Zasady Gry");
-            vt1.GroupEnd();
-            vt1.GroupStart(4);
-            vt1.Endl(1);
-            vt1.TextBox("\"Swietny Tytul!!\"");
-            vt1.TextBox("\"Oto najlpesza gra konsolowa, o jakiej slyszal swiat!\"");
-            vt1.GroupEnd();
-            vt1.GroupStart(3);
-            vt1.Endl(2);
-            vt1.TextBox(exitQuestion, 33, false, ConsoleColor.Red);
-            vt1.Endl(1);
-            vt1.DoubleButton(" Q / NIE ", " E / TAK ", false, ConsoleColor.Red);
-            vt1.GroupEnd();
+
+                vt1.GroupStart(2);
+                vt1.Endl(1);
+                vt1.TextBox("Zacznij Rozgrywke");
+                vt1.TextBox("Kontynuuj Rozrywke");
+                vt1.TextBox("Ustaw Wlasne Opcje");
+                vt1.TextBox("Poznaj Zasady Gry");
+                vt1.GroupEnd();
+
+                vt1.GroupStart(4);
+                vt1.Endl(1);
+                vt1.TextBox("\"Swietny Tytul!!\"");
+                vt1.TextBox("\"Oto najlpesza gra konsolowa, o jakiej slyszal swiat!\"");
+                vt1.GroupEnd();
+
+                vt1.GroupStart(Console.WindowWidth / 2, Console.WindowWidth);
+                vt1.Endl(2);
+                vt1.TextBox(exitQuestion, 33, false, ConsoleColor.Red);
+                vt1.GroupEnd();
+                vt1.GroupStart(Console.WindowWidth / 2 - 9, Console.WindowWidth);
+                vt1.Endl(8);
+                vt1.TextBox("Q / NIE", 15, false, ConsoleColor.Red, margin: 0);
+                vt1.GroupEnd();
+                vt1.GroupStart(Console.WindowWidth / 2 + 9, Console.WindowWidth);
+                vt1.Endl(8);
+                vt1.TextBox("E / TAK", 15, false, ConsoleColor.Red, margin: 0);
+                vt1.GroupEnd();
+
             vt1.GroupEnd();
 
             vt1.Foot(foot);
@@ -57,20 +67,27 @@ namespace FarmConsole.Body.View.GUI
             vt1.Endl(Console.WindowHeight / 5);
 
             vt1.GroupStart(0);
-            vt1.GroupStart(3);
-            vt1.Endl(1);
-            vt1.TextBox("Kontynuuj");
-            vt1.TextBox("Zapisz Gre");
-            vt1.TextBox("Wróc do Menu");
-            vt1.TextBox("Ustawienia");
-            vt1.TextBox("Samouczek");
+                vt1.GroupStart(3);
+                vt1.Endl(1);
+                vt1.TextBox("Kontynuuj");
+                vt1.TextBox("Zapisz Gre");
+                vt1.TextBox("Wróc do Menu");
+                vt1.TextBox("Ustawienia");
+                vt1.TextBox("Samouczek");
 
-            vt1.GroupStart(3);
-            vt1.Endl(4);
-            vt1.TextBox(exitQuestion, 33, false, ConsoleColor.Red);
-            vt1.Endl(1);
-            vt1.DoubleButton(" Q / NIE ", " E / TAK ", false, ConsoleColor.Red);
-            vt1.GroupEnd();
+                    vt1.GroupStart(Console.WindowWidth / 2, Console.WindowWidth);
+                    vt1.Endl(4);
+                    vt1.TextBox(exitQuestion, 33, false, ConsoleColor.Red);
+                    vt1.GroupStart(Console.WindowWidth / 2 - 9, Console.WindowWidth);
+                    vt1.Endl(10);
+                    vt1.TextBox("Q / NIE", 15, false, ConsoleColor.Red, margin: 0);
+                    vt1.GroupEnd();
+                    vt1.GroupStart(Console.WindowWidth / 2 + 9, Console.WindowWidth);
+                    vt1.Endl(10);
+                    vt1.TextBox("E / TAK", 15, false, ConsoleColor.Red, margin: 0);
+                    vt1.GroupEnd();
+
+                    vt1.GroupEnd();
 
             vt1.GroupEnd();
             vt1.GroupEnd();
@@ -83,52 +100,76 @@ namespace FarmConsole.Body.View.GUI
         {
             vt1.H1(title);
             vt1.H2("Rozpocznij Nowa Giereczke");
-            vt1.Endl(Console.WindowHeight / 5);
-            vt1.GroupStart(3);
-            vt1.Endl(1);
-            vt1.TextBox("Kobieta");
-            vt1.TextBox("Mezczyzna");
+            vt1.GroupStart(0);
+
+                vt1.GroupStart(3);
+                vt1.Endl(Console.WindowHeight / 5);
+                vt1.TextBox("Kobieta");
+                vt1.TextBox("Mezczyzna");
+                vt1.GroupEnd();
+
+                vt1.GroupStart(Console.WindowWidth / 2 - 10, Console.WindowWidth);
+                vt1.Endl(Console.WindowHeight - 12);
+                vt1.TextBox("Q / Powrot", 19, margin: 0);
+                vt1.GroupEnd();
+                vt1.GroupStart(Console.WindowWidth / 2 + 11, Console.WindowWidth);
+                vt1.Endl(Console.WindowHeight - 12);
+                vt1.TextBox("E / Enter", 19, margin: 0);
+                vt1.GroupEnd();
+
             vt1.GroupEnd();
-            vt1.DoubleButtonBot(3,"Q / Powrot","E / Enter");
             vt1.Foot(foot);
             vt1.PrintList();
             //vt1.showComponentList();
         }
         public static void Load(Save[] saves)
         {
-
             int savesCount = saves.Length;
-            int freeSpace = (Console.WindowHeight - 17);
+            int freeSpace = (Console.WindowHeight - 15);
             int showCount = freeSpace / 3;
-            int endlCount = 2;
+            int endlCount = 3;
+            int detailsHeight = (Console.WindowHeight - 24) / 2;
             if (showCount >= savesCount+1) endlCount += ((showCount - savesCount + 1) * 3 / 2);
 
             vt1.H1(title);
             vt1.H2("Kontynuuj Rozgrywkę");
-            vt1.Endl(endlCount);
 
             vt1.GroupStart(0);
-            vt1.GroupStart(2);
-            vt1.Endl(1);
-            vt1.TextBox("P U S T Y   Z A P I S");
-            for (int i = 0; i < savesCount; i++)
-                if (i < showCount) vt1.TextBox(saves[i].Name);
-                else vt1.TextBox(saves[i].Name, 40, false);
-            vt1.GroupEnd();
 
-            vt1.GroupStart(4);
-            vt1.Endl(1);
-            vt1.TextBox("E / Rozpocznij Nową Grę");
-            vt1.Endl(11);
-            vt1.DoubleButton("D / Usun Gre", "E / Kontynuuj", false);
-            vt1.GroupEnd();
+                vt1.GroupStart(2);
+                if((savesCount + 1) * 3 <= 17) vt1.Endl(detailsHeight);
+                else vt1.Endl(endlCount);
+                vt1.TextBox("P U S T Y   Z A P I S");
+                for (int i = 0; i < savesCount; i++)
+                    if (i < showCount) vt1.TextBox(saves[i].Name);
+                    else vt1.TextBox(saves[i].Name, 40, false);
+                vt1.GroupEnd();
 
-            vt1.GroupStart(3);
-            vt1.Endl(5);
-            vt1.TextBox(deleteQuestion, 33, false ,ConsoleColor.Red);
-            vt1.Endl(1);
-            vt1.DoubleButton(" Q / NIE ", " E / TAK ", false, ConsoleColor.Red);
-            vt1.GroupEnd();
+                vt1.GroupStart(4);
+                vt1.Endl(detailsHeight);
+                vt1.TextBox("E / Rozpocznij Nową Grę");
+                vt1.GroupEnd();
+                vt1.GroupStart(Console.WindowWidth * 4 / 5 - Console.WindowWidth / 10 - 10, Console.WindowWidth);
+                vt1.Endl(detailsHeight + 14);
+                vt1.TextBox("D / Usun Gre", 19, false, margin: 0);
+                vt1.GroupEnd();
+                vt1.GroupStart(Console.WindowWidth * 4 / 5 - Console.WindowWidth / 10 + 11, Console.WindowWidth);
+                vt1.Endl(detailsHeight + 14);
+                vt1.TextBox("E / Kontynuuj", 19, false, margin: 0);
+                vt1.GroupEnd();
+
+                vt1.GroupStart(Console.WindowWidth / 2, Console.WindowWidth);
+                vt1.Endl(detailsHeight + 1);
+                vt1.TextBox(deleteQuestion, 33, false, ConsoleColor.Red);
+                vt1.GroupEnd();
+                vt1.GroupStart(Console.WindowWidth / 2 - 9, Console.WindowWidth);
+                vt1.Endl(detailsHeight + 9);
+                vt1.TextBox("Q / NIE", 15, false, ConsoleColor.Red, margin: 0);
+                vt1.GroupEnd();
+                vt1.GroupStart(Console.WindowWidth / 2 + 9, Console.WindowWidth);
+                vt1.Endl(detailsHeight + 9);
+                vt1.TextBox("E / TAK", 15, false, ConsoleColor.Red, margin: 0);
+                vt1.GroupEnd();
 
             vt1.GroupEnd();
             vt1.Foot(foot);
@@ -138,38 +179,45 @@ namespace FarmConsole.Body.View.GUI
         public static void Save(Save[] saves)
         {
             int savesCount = saves.Length;
-            int freeSpace = (Console.WindowHeight - 17);
+            int freeSpace = (Console.WindowHeight - 15);
             int showCount = freeSpace / 3;
-            int endlCount = 2;
+            int endlCount = 3;
+            int detailsHeight = (Console.WindowHeight - 24) / 2;
             if (showCount >= savesCount + 1) endlCount += ((showCount - savesCount + 1) * 3 / 2);
 
             vt1.H1(title);
             vt1.H2("Zapisz Giereczke");
-            vt1.Endl(endlCount);
 
             vt1.GroupStart(0);
-            vt1.GroupStart(2);
-            vt1.Endl(1);
-            vt1.TextBox( "P U S T Y   Z A P I S");
-            for (int i = 0; i < savesCount; i++)
-                if (i < showCount)
-                    vt1.TextBox(saves[i].Name);
-                else vt1.TextBox(saves[i].Name, show: false);
-            vt1.GroupEnd();
+                vt1.GroupStart(2);
+                if ((savesCount + 1) * 3 <= 17) vt1.Endl(detailsHeight);
+                else vt1.Endl(endlCount);
+                vt1.TextBox( "P U S T Y   Z A P I S");
+                for (int i = 0; i < savesCount; i++)
+                    if (i < showCount)
+                        vt1.TextBox(saves[i].Name);
+                    else vt1.TextBox(saves[i].Name, show: false);
+                vt1.GroupEnd();
 
-            vt1.GroupStart(4);
-            vt1.Endl(1);
-            vt1.TextBox("E / Utwórz Nowy Zapis");
-            vt1.Endl(11);
-            vt1.TextBox("E / Nadpisz Gre", show: false);
-            vt1.GroupEnd();
+                vt1.GroupStart(4);
+                vt1.Endl(detailsHeight);
+                vt1.TextBox("E / Utwórz Nowy Zapis");
+                vt1.Endl(11);
+                vt1.TextBox("E / Nadpisz Gre", show: false);
+                vt1.GroupEnd();
 
-            vt1.GroupStart(3);
-            vt1.Endl(5);
-            vt1.TextBox(updateQuestion, 33,  false, ConsoleColor.Red);
-            vt1.Endl(1);
-            vt1.DoubleButton(" Q / NIE ", " E / TAK ", false, ConsoleColor.Red);
-            vt1.GroupEnd();
+                vt1.GroupStart(Console.WindowWidth / 2, Console.WindowWidth);
+                vt1.Endl(detailsHeight + 1);
+                vt1.TextBox(updateQuestion, 33, false, ConsoleColor.Red);
+                vt1.GroupEnd();
+                vt1.GroupStart(Console.WindowWidth / 2 - 9, Console.WindowWidth);
+                vt1.Endl(detailsHeight + 9);
+                vt1.TextBox("Q / NIE", 15, false, ConsoleColor.Red, margin: 0);
+                vt1.GroupEnd();
+                vt1.GroupStart(Console.WindowWidth / 2 + 9, Console.WindowWidth);
+                vt1.Endl(detailsHeight + 9);
+                vt1.TextBox("E / TAK", 15, false, ConsoleColor.Red, margin: 0);
+                vt1.GroupEnd();
 
             vt1.GroupEnd();
             vt1.Foot(foot);
@@ -182,16 +230,15 @@ namespace FarmConsole.Body.View.GUI
             int optionsCount = OPTIONS.GetOptionsCount();
             int freeSpace = (Console.WindowHeight - 18);
             int showCount = freeSpace / 3;
-            int endlCount = 2;
+            int endlCount = 3;
             if (showCount > optionsCount) endlCount += (showCount - optionsCount)*3/2;
 
             vt1.H1(title);
             vt1.H2("Ustaw Spersonalizowane Opcje");
-            vt1.Endl(endlCount);
             vt1.GroupStart(0);
 
                 vt1.GroupStart(2);
-                vt1.Endl(1);
+                vt1.Endl(endlCount);
                 for (int i = 0; i < optionsCount; i++)
                 if (i <= showCount) vt1.TextBox(names[i]);
                 else vt1.TextBox(names[i], show: false);
@@ -199,18 +246,26 @@ namespace FarmConsole.Body.View.GUI
                 if (optionsCount < showCount) vt1.TextBox("Przywróć Domyślne Ustawienia");
                 else vt1.TextBox("Przywróć Domyślne Ustawienia", show:false);
                 vt1.GroupEnd();
+
                 vt1.GroupStart(4);
-                vt1.Endl(1);
+                vt1.Endl(endlCount);
                 vt1.Slider(6, OPTIONS.GetOptionViewById(0));
                 vt1.Slider(6, OPTIONS.GetOptionViewById(1));
                 vt1.Slider(6, OPTIONS.GetOptionViewById(2));
                 vt1.Slider(6, OPTIONS.GetOptionViewById(3));
-            //vt1.slider(6, OPTIONS.getOptionViewById(4));
-            vt1.GroupEnd();
+                //vt1.slider(6, OPTIONS.getOptionViewById(4));
+                vt1.GroupEnd();
+
+                vt1.GroupStart(Console.WindowWidth / 2 - 10, Console.WindowWidth);
+                vt1.Endl(Console.WindowHeight - 12);
+                vt1.TextBox("Q / Odrzuć", 19, margin: 0);
+                vt1.GroupEnd();
+                vt1.GroupStart(Console.WindowWidth / 2 + 11, Console.WindowWidth);
+                vt1.Endl(Console.WindowHeight - 12);
+                vt1.TextBox("E / Zapisz", 19, margin: 0);
+                vt1.GroupEnd();
 
             vt1.GroupEnd();
-            vt1.DoubleButtonBot(3, "Q / Odrzuć", "E / Zapisz");
-
             vt1.Foot(foot);
             vt1.PrintList();
             //vt.showComponentList();

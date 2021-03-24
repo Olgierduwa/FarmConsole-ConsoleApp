@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<StrigsCollection>
+  <String id="0">Farm Console</String>
+  <String id="1">* FC copyright 2020 *</String>
+  <String id="2">╔ Ô</String>
+
+  <!-- Aktywności związane z polami -->
+  
+  <String id="100">Informacje</String>
+  <String id="101">Zniszcz</String>
+  <String id="102">Przenieś</String>
+  <String id="103">Sprzedaj</String>
+  <String id="104">Odwiedź</String>
+  <String id="105">Użyj</String>
+  <String id="106">Zaoraj</String>
+  <String id="107">Postaw</String>
+  <String id="108">Posiej</String>
+  <String id="109">Użyźnij</String>
+  <String id="110">Podlej</String>
+  <String id="111">Zbierz</String>
+  <String id="112">Zrób nawóz</String>
+  
+  <!-- Aktywności związane z przedmiotami -->
+  
+  <String id="200">Informacje</String>
+  <String id="201">Zniszcz</String>
+  <String id="202">Sprzedaj</String>
+  <String id="203">Postaw</String>
+  <String id="204">Użyj</String>
+  
+  <!-- PopUpText -->
+  
+  <String id="301">Wybieranie elementu Menu: W/S Zatwierdzenie lub wycofanie: E/Q Wybór wartości suwaka: A/D</String>
+  <String id="302"></String>
+  <String id="303"></String>
+  
+  <!-- Warrnings -->
+
+  <String id="401">"Nie posiadasz odpowiedniej maszyny, aby zaorac tyle pól jednocześnie!"</String>
+  <String id="402">"Nie posiadasz odpowiedniej maszyny, aby podlać tyle pól jednocześnie!"</String>
+  <String id="403">"Nie posiadasz odpowiedniej maszyny, aby zebrać tyle plonów jednocześnie!"</String>
+  <String id="404">"Nie posiadasz odpowiedniej maszyny, aby zrobić nawóz z tylu pól jednocześnie!"</String>
+  <String id="405">"Nie posiadasz odpowiedniej maszyny, aby posiać tyle pól jednocześnie!"</String>
+  <String id="406">"Nie posiadasz odpowiedniej maszyny, aby użyźnić tyle pól jednocześnie!"</String>
+  <String id="407">"Nie możesz postawić nic na istniejącym już budynku!"</String>
+  <String id="408">"Nie możesz posiać tych nasion na polu innym niż zaorane!"</String>
+  <String id="409">"Nie możesz użyć nawozu na polu innym niż pole z rosnącymi roślinami!"</String>
+  <String id="410"></String>
+  <String id="411"></String>
+  
+</StrigsCollection>

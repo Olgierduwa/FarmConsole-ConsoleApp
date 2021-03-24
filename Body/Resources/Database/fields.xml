@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<FieldsCollection>
+  <category cat="0" name="pola nieużytkowe">
+    <field id="0" name="empty_field">
+      ´´´´´´´´´´     ´´´´´´´´´´@
+      ´´´´´´             ´´´´´´@
+      ´´                     ´´@
+      ´´´                   ´´´@
+      ´´´´´´´           ´´´´´´´@
+      ´´´´´´´´´´´   ´´´´´´´´´´´@
+    </field>
+    <field id="1" name="empty_field">
+      ´´´´´´´´´´. ' .´´´´´´´´´´@
+      ´´´´´´. '       ' .´´´´´´@
+      ´´. '               ' .´´@
+      ´´´ ' .           . ' ´´´@
+      ´´´´´´´ ' .   . ' ´´´´´´´@
+      ´´´´´´´´´´´ ' ´´´´´´´´´´´@
+    </field>
+    <field id="2" name="Trawa" opis="Zwykłe pole trawy, które możesz zagospodarować jak Ci się żywnie podoba!">
+      ´´´´´´´´´´┌┼┼┼┐´´´´´´´´´´@
+      ´´´´´´┌┬┼┼┼┼┼┼┼┼┼┬┐´´´´´´@
+      ´´┌┬┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┬┐´´@
+      ´´´└┴┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┴┘´´´@
+      ´´´´´´´└┴┼┼┼┼┼┼┼┴┘´´´´´´´@
+      ´´´´´´´´´´´└┴┘´´´´´´´´´´´@
+    </field>
+  </category>
+  <category cat="1" name="pola uprawne">
+    <field id="0" name="Pole Uprawne" opis="Pole, które zostało zaorane czeka jedynie, aż zasiejesz na nim wybrane nasiona!">
+      ´´´´´´´´´´╔╬╬╬╗´´´´´´´´´´@
+      ´´´´´´╔╦╬╬╬╬╬╬╬╬╬╦╗´´´´´´@
+      ´´╔╦╬╬╬╬╬╬pole╬╬╬╬╬╬╬╦╗´´@
+      ´´´╚╩╬╬╬╬uprawne╬╬╬╬╩╝´´´@
+      ´´´´´´´╚╩╬╬╬╬╬╬╬╩╝´´´´´´´@
+      ´´´´´´´´´´´╚╩╝´´´´´´´´´´´@
+    </field>
+  </category>
+  <category cat="2" name="pola posiane">
+    <field id="0" name="Posiana Przenica" opis="Pole, na którym dopiero co została posiana przenica, niedługo wykiełkuje!">
+      ´´´´´´´´´´╔╬╬╬╗´´´´´´´´´´@
+      ´´´´´´╔╦╬╬╬╬╬╬╬╬╬╦╗´´´´´´@
+      ´´╔╦╬╬╬╬╬╬posiana╬╬╬╬╦╗´´@
+      ´´´╚╩╬╬╬╬przenica╬╬╬╩╝´´´@
+      ´´´´´´´╚╩╬╬╬╬╬╬╬╩╝´´´´´´´@
+      ´´´´´´´´´´´╚╩╝´´´´´´´´´´´@
+    </field>
+  </category>
+  <category cat="3" name="pola rosnące">
+    <field id="0" name="Rosnąca Przenica" opis="Pole, ze stopniowo rosnącą przenicą. Dbaj o nią a zbierzesz dorodne plony!">
+      ´´´´´´´´´´╔╬╬╬╗´´´´´´´´´´@
+      ´´´´´´╔╦╬╬╬╬╬╬╬╬╬╦╗´´´´´´@
+      ´´╔╦╬╬╬╬╬╬rosnąca╬╬╬╬╦╗´´@
+      ´´´╚╩╬╬╬╬przenica╬╬╬╩╝´´´@
+      ´´´´´´´╚╩╬╬╬╬╬╬╬╩╝´´´´´´´@
+      ´´´´´´´´´´´╚╩╝´´´´´´´´´´´@
+    </field>
+  </category>
+  <category cat="4" name="pola dojrzałe">
+    <field id="0" name="Dojrzała Przenica" opis="Pole z dojrzałą i gotową do zebrania przenicą. Pośpiesz się zanim zgnije!">
+      ´´´´´´´´´´╔╬╬╬╗´´´´´´´´´´@
+      ´´´´´´╔╦╬╬╬╬╬╬╬╬╬╦╗´´´´´´@
+      ´´╔╦╬╬╬╬╬dojrzała╬╬╬╬╦╗´´@
+      ´´´╚╩╬╬╬╬przenica╬╬╬╩╝´´´@
+      ´´´´´´´╚╩╬╬╬╬╬╬╬╩╝´´´´´´´@
+      ´´´´´´´´´´´╚╩╝´´´´´´´´´´´@
+    </field>
+  </category>
+  <category cat="5" name="pola zgniłe">
+    <field id="0" name="Zgniła Przenica" opis="Przenica, która zgniła w wyniku pozostawienia jej zbyt długo dojrzałej!">
+      ´´´´´´´´´´╔╬╬╬╗´´´´´´´´´´@
+      ´´´´´´╔╦╬╬╬╬╬╬╬╬╬╦╗´´´´´´@
+      ´´╔╦╬╬╬╬╬╬zgnila╬╬╬╬╬╦╗´´@
+      ´´´╚╩╬╬╬╬przenica╬╬╬╩╝´´´@
+      ´´´´´´´╚╩╬╬╬╬╬╬╬╩╝´´´´´´´@
+      ´´´´´´´´´´´╚╩╝´´´´´´´´´´´@
+    </field>
+  </category>
+  <category cat="6" name="budynki użytkowe">
+    <field id="0" name="Dom" opis="Budynek mieszkalny, który posiadasz. Możesz go odwiedzić, to przecież Twój dom!">
+      ´´´´´┌┬┐.-''¦''-._´´´´´´´@
+      ´´_.-││/    ¦     ''-._´´@
+      ´´':._'     ¦      _.:'´´@
+      ´´´║█│'-._  ¦  _.:Ŧ│█║´´´@
+      ´´.║█■▄‗  │■║■███│ │█║.´´@
+      ´´´'▀■████■█║████│ │▀'´´´@
+      ´´´´´´´'▀▀■█║█■▀▀'´´´´´´´@
+      ´´´´´´´´´´´'''´´´´´´´´´´´@
+    </field>
+  </category>
+  <category cat="7" name="dekoracje statyczne">
+    <field id="0" name="Silos" opis="Budynek dekoracyjny, w którym przechowujesz swoje produkty. Zwiększa pojemność magazynu!">
+      ´´´´´´´´´´▄■■■▄´´´´´´´´´´@
+      ´´´´´´´´║█■▄▄▄■█║´´´´´´´´@
+      ´´´´´´´´║█■███■█║´´´´´´´´@
+      ´´´´´´´´║█■███■█║´´´´´´´´@
+      ´´´´´´´´║▀■███■▀║´´´´´´´´@
+      ´´´´´´´´║█■▄▄▄■█║´´´´´´´´@
+      ´´´´´´´´║█■███■█║´´´´´´´´@
+      ´´´´´´┌┬║█■███■█║┬┐´´´´´´@
+      ´´┌┬┼┼┼┼║▀■███■▀║┼┼┼┼┬┐´´@
+      ´´´└┴┼┼┼┼▀■▄▄▄■▀┼┼┼┼┴┘´´´@
+      ´´´´´´´└┴┼┬┬┬┬┬┼┴┘´´´´´´´@
+      ´´´´´´´´´´´└┴┘´´´´´´´´´´´@
+    </field>
+    <field id="1" name="Wieża Ciśnień" opis="Budynek dekoracyjny, zwiększający wydajność nawadniania Twoich pól!">
+      ´´´´´´´´´´▄■■■▄´´´´´´´´´´@
+      ´´´´´´´´´█■▄▄▄■█´´´´´´´´´@
+      ´´´´´´´´´█║║║║║█´´´´´´´´´@
+      ´´´´´´´´´´▀■■■▀´´´´´´´´´´@
+      ´´´´´´´´´´║/║\║´´´´´´´´´´@
+      ´´´´´´´´´´║\║/║´´´´´´´´´´@
+      ´´´´´´´´´´║/║\║´´´´´´´´´´@
+      ´´´´´´_.-║.'║'.║-._´´´´´´@
+      ´´_.-'   ║.'║'.║   '-._´´@
+      ´´´'-._  '-.║.-'  _.-'´´´@
+      ´´´´´´´'-._   _.-'´´´´´´´@
+      ´´´´´´´´´´´'-'´´´´´´´´´´´@
+    </field>
+  </category>
+  <category cat="8" name="maszyny rolne">
+    <field id="0" name="Traktor" opis="Maszyna rolna, pozwalająca Ci sprawniej zarządzać Twoimi polami rolnymi!">
+      ´´´´´´´´´´╔╬╬╬╗´´´´´´´´´´@
+      ´´´´´´╔╦╬╬╬╬╬╬╬╬╬╦╗´´´´´´@
+      ´´╔╦╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╦╗´´@
+      ´´´╚╩╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╩╝´´´@
+      ´´´´´´´╚╩╬╬╬╬╬╬╬╩╝´´´´´´´@
+      ´´´´´´´´´´´╚╩╝´´´´´´´´´´´@
+    </field>
+  </category>
+</FieldsCollection>

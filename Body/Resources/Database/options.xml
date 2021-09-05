@@ -1,7 +1,7 @@
 <OptionsCollection>
   <option id="0" Name="Szerokość Ekranu">
     <default>220</default>
-    <current>220</current>
+    <current>200</current>
   </option>
   <option id="1" Name="Wysokość Ekranu">
     <default>40</default>
@@ -9,7 +9,7 @@
   </option>
   <option id="2" Name="Głośność Efektów">
     <default>3</default>
-    <current>3</current>
+    <current>5</current>
   </option>
   <option id="3" Name="Głośność Muzyki">
     <default>3</default>

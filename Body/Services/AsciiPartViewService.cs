@@ -16,7 +16,7 @@ namespace FarmConsole.Body.Services
         }
         public static string CenteredText(int length, string text)
         {
-            return "".PadRight(length / 2 - text.Length / 2, ' ') + text + "".PadRight(length / 2 - text.Length / 2, ' ');
+            return "".PadRight((length - text.Length) / 2, ' ') + text + "".PadRight((length - text.Length) / 2, ' ');
         }
         public static string Top(int lenght, bool left = true, bool right = true)
         {

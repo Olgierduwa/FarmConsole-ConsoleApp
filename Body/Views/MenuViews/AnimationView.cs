@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FarmConsole.Body.Views.MenuViews
 {
-    public class AnimationView : MenuViewService
+    public class AnimationView : MainViewService
     {
         public static void Centrum(int graphicID)
         {

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace FarmConsole.Body.Services
 {
-    public class MenuViewService
+    public class MainViewService
     {
         public static readonly string title = XF.GetString(0);
         public static readonly string foot = XF.GetString(1);
@@ -20,7 +20,7 @@ namespace FarmConsole.Body.Services
         private static readonly List<CC> CLIST = new List<CC>();
         private const ConsoleColor static_base_color = ConsoleColor.DarkGray;
         private const ConsoleColor static_content_color = ConsoleColor.White;
-
+        
         #region ComponentsControl
         public static void UpdateSelect(int c1, int c0, int count, int id_group = 2, int rangeProp = 13)
         {

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FarmConsole.Body.Controlers
 {
-    public class ShopControler
+    public class HauseController
     {
 
     }

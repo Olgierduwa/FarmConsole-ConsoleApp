@@ -7,7 +7,7 @@ using System.Text;
 
 namespace FarmConsole.Body.Views.MenuViews
 {
-    public class GameLoadView : MenuViewService
+    public class GameLoadView : MainViewService
     {
         public static void Show(SaveModel[] saves)
         {

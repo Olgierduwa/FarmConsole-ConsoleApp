@@ -129,7 +129,7 @@ namespace FarmConsole.Body.Services
             else for (int i = 0; i < list.Count; i++) list[i]["current"].InnerText = list[i]["default"].InnerText;
             doc.Save(options_path);
         }
-
+        
         public static ProductModel GetProduct(int cat, int id)
         {
             XmlDocument doc = new XmlDocument();

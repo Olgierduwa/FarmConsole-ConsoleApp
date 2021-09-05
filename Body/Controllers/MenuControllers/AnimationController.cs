@@ -6,7 +6,7 @@ using System.Text;
 
 namespace FarmConsole.Body.Controlers.MenuControlers
 {
-    static class AnimationControler
+    static class AnimationController
     {
 
         private readonly static ConsoleColor[] colors = (ConsoleColor[])Enum.GetValues(typeof(ConsoleColor));

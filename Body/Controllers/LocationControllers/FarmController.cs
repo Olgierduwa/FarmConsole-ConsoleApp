@@ -9,18 +9,19 @@ using FarmConsole.Body.Views.LocationViews;
 
 namespace FarmConsole.Body.Controlers
 {
-    public class FarmControler : MenuControlerService
+    public class FarmController : MainControllerService
     {
         public static void Open()
         {
+            HelpService.CLEAR_TIMERS();
+
             int X, Y, invert = 1, FarmSize = Convert.ToInt32(Math.Sqrt(Convert.ToDouble(save.GetMap().Length / 3)));
             bool SHOWFIELDID = false, ShiftPressed;
             X = Y = FarmSize / 2;
             GameView.Show(save.Name);
             FarmView.Show(save.GetMap());
             FarmView.MoveStandPosition(new Point(X + 1, Y + 1), new Point(X + 1, Y + 1), false);
-            SideMenuControler.Initialize();
-
+            SideMenuController.Initialize();
             while (openScreen == "Farm")
             {
                 if (Console.KeyAvailable)
@@ -32,8 +33,8 @@ namespace FarmConsole.Body.Controlers
                     switch (cki.Key)
                     {
                         case ConsoleKey.Escape: save.SetMap(FarmView.GetMap()); openScreen = "Escape"; S.Play("K2"); break;
-                        case ConsoleKey.Q: SideMenuControler.Open(cki.Key); break;
-                        case ConsoleKey.E: SideMenuControler.Open(cki.Key); break;
+                        case ConsoleKey.Q: SideMenuController.Open(cki.Key); break;
+                        case ConsoleKey.E: SideMenuController.Open(cki.Key); break;
 
                         case ConsoleKey.W: if (X > 1 && FarmView.MoveStandPosition(new Point(X + 1, Y + 1), new Point(X, Y + 1), ShiftPressed)) X--; break;
                         case ConsoleKey.A: if (Y > 1 && FarmView.MoveStandPosition(new Point(X + 1, Y + 1), new Point(X + 1, Y), ShiftPressed)) Y--; break;
@@ -56,7 +57,7 @@ namespace FarmConsole.Body.Controlers
                 }
             }
             GameView.ClearList();
-            FarmView.ClearMap();
+            FarmView.Hide();
         }
     }
 }

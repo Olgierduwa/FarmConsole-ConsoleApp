@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FarmConsole.Body.Views.MenuViews
 {
-    public class GameNewView : MenuViewService
+    public class GameNewView : MainViewService
     {
         public static void Show()
         {

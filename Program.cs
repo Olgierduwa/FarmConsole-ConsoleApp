@@ -10,19 +10,19 @@ namespace FarmConsole
         static void Main()
         {
             WindowService.PresetWindow();
-            while (MenuControlerService.openScreen != "Close")
+            while (MainControllerService.openScreen != "Close")
             {
-                switch (MenuControlerService.openScreen)
+                switch (MainControllerService.openScreen)
                 {
-                    case "Menu": MenuControler.Open(); break;
-                    case "Load": GameLoadControler.Open(); break;
-                    case "NewGame": GameNewControler.Open(); break;
-                    case "Options": OptionsControler.Open(); break;
-                    case "Escape": EscapeControler.Open(); break;
-                    case "Intro": IntroControler.Open(); break;
-                    case "Save": GameSaveControler.Open(); break;
-                    case "Help": HelpControler.Open(); break;
-                    case "Farm": FarmControler.Open(); break;
+                    case "Menu": MenuController.Open(); break;
+                    case "Load": GameLoadController.Open(); break;
+                    case "NewGame": GameNewController.Open(); break;
+                    case "Options": OptionsController.Open(); break;
+                    case "Escape": EscapeController.Open(); break;
+                    case "Intro": IntroController.Open(); break;
+                    case "Save": GameSaveController.Open(); break;
+                    case "Help": HelpController.Open(); break;
+                    case "Farm": FarmController.Open(); break;
                 }
             }
         }

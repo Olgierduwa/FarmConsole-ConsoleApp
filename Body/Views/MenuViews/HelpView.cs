@@ -6,7 +6,7 @@ using System.Text;
 
 namespace FarmConsole.Body.Views.MenuViews
 {
-    public class HelpView : MenuViewService
+    public class HelpView : MainViewService
     {
         public static void Show()
         {

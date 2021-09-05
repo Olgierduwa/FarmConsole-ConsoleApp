@@ -26,6 +26,7 @@ namespace FarmConsole.Body.Services
 
             return opt;
         }
+
         public static void SaveOptions(int[] opt)
         {
             currentOptions[0] = opt[0] * 20 + 120;

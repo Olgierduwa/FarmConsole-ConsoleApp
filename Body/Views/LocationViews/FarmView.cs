@@ -20,10 +20,15 @@ namespace FarmConsole.Body.Views.LocationViews
 
             SimpleMap = MapFromSave;
             GetFieldsData();
-            InitializeMap();
+            InitializePhisicalMap();
+            SetMapBorders();
             ShowMap();
+            MoveStandPosition(StandPosition, StandPosition, false);
         }
-
+        public static void Hide()
+        {
+            ClearMap();
+        }
         public static void Build(ProductModel p)
         {
             var point = GetSelectedPosition();
@@ -41,7 +46,7 @@ namespace FarmConsole.Body.Views.LocationViews
                 var field = new FieldModel(MapPosition.X + (point.Y - point.X) * 12, MapPosition.Y + (point.Y + point.X) * 3, 0, 2, 0);
                 SetSelectedField(point, field);
 
-                ShowSingleField(new Point(point.X, point.Y), false);
+                ShowSingleField(new Point(point.X, point.Y));
                 CompleteSurroundings(point);
             }
             while (SelectedFields.Count > 0);
@@ -64,13 +69,16 @@ namespace FarmConsole.Body.Views.LocationViews
             SetDraggedField(null);
             if (point.X != StandPosition.X || point.Y != StandPosition.Y)
             {
-                ShowSingleField(new Point(point.X, point.Y), false);
+                ShowSingleField(new Point(point.X, point.Y));
                 ConsiderHeight(new Point(point.X, point.Y - 1), StandPosition);
                 ConsiderHeight(new Point(point.X - 1, point.Y), StandPosition);
                 CompleteSurroundings(StandPosition);
             }
             MoveStandPosition(StandPosition, StandPosition, false);
         }
+
+        
+
         public static bool Plow()
         {
             if (SelectedFields.Count > 1) { ClearSelected(); return true; }

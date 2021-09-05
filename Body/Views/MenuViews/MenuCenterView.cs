@@ -7,7 +7,7 @@ using System.Text;
 
 namespace FarmConsole.Body.Views.MenuViews
 {
-    public class MenuCenterView : MenuViewService
+    public class MenuCenterView : MainViewService
     {
         public static void Show(string type, string name, int duration = 0, string opis = "")
         {

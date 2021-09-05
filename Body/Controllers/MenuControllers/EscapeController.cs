@@ -8,7 +8,7 @@ using FarmConsole.Body.Services;
 
 namespace FarmConsole.Body.Controlers
 {
-    public class EscapeControler : MenuControlerService
+    public class EscapeController : MainControllerService
     {
         public static void Open()
         {

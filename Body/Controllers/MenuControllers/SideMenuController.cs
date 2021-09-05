@@ -10,7 +10,7 @@ using System.Text;
 
 namespace FarmConsole.Body.Controlers
 {
-    public class SideMenuControler : MenuControlerService
+    public class SideMenuController : MainControllerService
     {
         private static List<int>[] FACT_ID; // field activities ID
         private static List<int>[] IACT_ID; // item activities ID
@@ -25,13 +25,13 @@ namespace FarmConsole.Body.Controlers
         {
             switch (menu)
             {
-                case "Q": Q = false; LS = 1; MenuLeftView.Clean(); FarmView.ShowMapFragment("left", E); break;
-                case "E": E = false; RS = 1; MenuRightView.Clean(); FarmView.ShowMapFragment("right", Q); break;
-                case "C": C = false; MenuCenterView.Clean(); FarmView.ShowMapFragment("center", E, Q); break;
+                case "Q": Q = false; LS = 1; MenuLeftView.Clean(); MapService.ShowMapFragment("left", E); break;
+                case "E": E = false; RS = 1; MenuRightView.Clean(); MapService.ShowMapFragment("right", Q); break;
+                case "C": C = false; MenuCenterView.Clean(); MapService.ShowMapFragment("center", E, Q); break;
                 case "2": Q = E = false; LS = RS = 1; MenuLeftView.Clean(); MenuRightView.Clean();
-                    FarmView.ShowMapFragment("right", Q); FarmView.ShowMapFragment("left", E); break;
+                    MapService.ShowMapFragment("right", Q); MapService.ShowMapFragment("left", E); break;
                 case "ALL": Q = E = C = false; LS = RS = 1; MenuLeftView.Clean(); MenuRightView.Clean(); MenuCenterView.Clean();
-                    FarmView.ShowMapFragment("all"); break;
+                    MapService.ShowMapFragment("all"); break;
             }
         }
         private static void Show(string type = "", string name = "", int duration = 0, string opis = "")

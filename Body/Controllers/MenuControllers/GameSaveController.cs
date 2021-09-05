@@ -8,7 +8,7 @@ using FarmConsole.Body.Views.MenuViews;
 
 namespace FarmConsole.Body.Controlers
 {
-    public class GameSaveControler : MenuControlerService
+    public class GameSaveController : MainControllerService
     {
         public static void Open()
         {

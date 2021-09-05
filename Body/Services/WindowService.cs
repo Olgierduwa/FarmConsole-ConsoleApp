@@ -6,6 +6,9 @@ namespace FarmConsole.Body.Services
 {
     public static class WindowService
     {
+        private static int windowWidth;
+        private static int windowHeight;
+
         private const int MF_BYCOMMAND = 0x00000000;
         public const int SC_CLOSE = 0xF060;
         public const int SC_MINIMIZE = 0xF020;
@@ -21,13 +24,11 @@ namespace FarmConsole.Body.Services
         [DllImport("kernel32.dll", ExactSpelling = true)]
         private static extern IntPtr GetConsoleWindow();
 
-        private static int windowWidth;
-        private static int windowHeight;
-
         public static void PresetWindow()
         {
             IntPtr handle = GetConsoleWindow();
             IntPtr sysMenu = GetSystemMenu(handle, false);
+
             if (handle != IntPtr.Zero)
             {
                 DeleteMenu(sysMenu, SC_CLOSE, MF_BYCOMMAND);

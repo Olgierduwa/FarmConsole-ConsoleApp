@@ -8,7 +8,7 @@ using FarmConsole.Body.Services;
 
 namespace FarmConsole.Body.Controlers
 {
-    public class GameNewControler : MenuControlerService
+    public class GameNewController : MainControllerService
     {
         public static void Open()
         {

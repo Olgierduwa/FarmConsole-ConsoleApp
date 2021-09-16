@@ -12,69 +12,60 @@ namespace FarmConsole.Body.Views.LocationViews
     {
         public static void Show(int[,,] MapFromSave)
         {
-            FarmSize = Convert.ToInt32(Math.Sqrt(Convert.ToDouble(MapFromSave.Length / 3))) + 3;
-            StandPosition = new Point();
-            MapPosition = new Point();
-            MapPosition.X = Console.WindowWidth / 2 - 12;
-            MapPosition.Y = (Console.WindowHeight - 7 * FarmSize) / 2 + 2;
-
             SimpleMap = MapFromSave;
             GetFieldsData();
-            InitializePhisicalMap();
             SetMapBorders();
+            InitializePhisicalMap();
+            InitializeVisualMap();
             ShowMap();
-            MoveStandPosition(StandPosition, StandPosition, false);
         }
         public static void Hide()
         {
             ClearMap();
         }
+
         public static void Build(ProductModel p)
         {
-            var point = GetSelectedPosition();
+            var PhisicalPos = GetSelectedPosition();
+
+            // move visual map to: point (on center)
+
             ClearSelected();
-            var field = new FieldModel(MapPosition.X + (point.Y - point.X) * 12, MapPosition.Y + (point.Y + point.X) * 3, p.category + 5, p.type, 0);
-            SetSelectedField(point, field);
-            MoveStandPosition(point, StandPosition, false);
+            SetPhisicalField(PhisicalPos, new FieldModel(p.category + 5, p.type, 0));
+
+            // move stand position to: point
+
+            Point vector = new Point();
+            MoveStandPosition(vector);
         }
         public static void Destroy()
         {
             do
             {
-                var point = GetSelectedPosition();
+                Point PhisicalPos = GetSelectedPosition();
                 if (SelectedFields.Count > 0) SelectedFields.RemoveAt(0);
-                var field = new FieldModel(MapPosition.X + (point.Y - point.X) * 12, MapPosition.Y + (point.Y + point.X) * 3, 0, 2, 0);
-                SetSelectedField(point, field);
-
-                ShowSingleField(new Point(point.X, point.Y));
-                CompleteSurroundings(point);
+                SetPhisicalField(PhisicalPos, new FieldModel(1, 2, 0));
+                ShowPhisicalField(PhisicalPos);
             }
             while (SelectedFields.Count > 0);
         }
         public static void Dragg()
         {
-            Point point;
-            if (SelectedFields.Count > 0 && GetFieldCategory(true) > 5) { point = GetSelectedPosition(true); ClearSelected(); }
-            else point = GetSelectedPosition();
-            DraggPosition = new Point(point.X, point.Y);
-            SetDraggedField(new FieldModel(GetSelectedField(point)));
-            SetSelectedFieldProp(point, 0, 2, 0);
+            SetDraggedField(GetSelectedPosition());
             Destroy();
+            ShowVisualField(CSP);
         }
         public static void Drop(bool ConfirmDrop = true)
         {
-            Point point = new Point(StandPosition.X, StandPosition.Y);
-            if (!ConfirmDrop) point = new Point(DraggPosition.X, DraggPosition.Y);
-            SetSelectedFieldProp(point, GetDraggedField().Category, GetDraggedField().Type, GetDraggedField().Duration);
-            SetDraggedField(null);
-            if (point.X != StandPosition.X || point.Y != StandPosition.Y)
+            if (ConfirmDrop) SetSelectedFieldProp(RealPos(CSP), GetDraggedField().Category, GetDraggedField().Type, GetDraggedField().Duration);
+            else
             {
-                ShowSingleField(new Point(point.X, point.Y));
-                ConsiderHeight(new Point(point.X, point.Y - 1), StandPosition);
-                ConsiderHeight(new Point(point.X - 1, point.Y), StandPosition);
-                CompleteSurroundings(StandPosition);
+                Point PhisicalPos = new Point(DraggedPosition.X, DraggedPosition.Y);
+                SetSelectedFieldProp(PhisicalPos, GetDraggedField().Category, GetDraggedField().Type, GetDraggedField().Duration);
+                ShowPhisicalField(PhisicalPos);
             }
-            MoveStandPosition(StandPosition, StandPosition, false);
+            SetDraggedField(new Point());
+            ShowVisualField(CSP, true);
         }
 
         
@@ -82,25 +73,25 @@ namespace FarmConsole.Body.Views.LocationViews
         public static bool Plow()
         {
             if (SelectedFields.Count > 1) { ClearSelected(); return true; }
-            var point = GetSelectedPosition();
-            SetSelectedFieldProp(point, 1, 0, 0);
+            var PhisicalPos = GetSelectedPosition();
+            SetSelectedFieldProp(PhisicalPos, 1, 0, 0);
             ClearSelected();
-            CompleteSurroundings(StandPosition);
+            ShowVisualField(CSP, true);
             return false;
         }
         public static bool Sow(ProductModel p)
         {
             if (SelectedFields.Count > 1) { ClearSelected(); return true; }
-            var point = GetSelectedPosition();
-            SetSelectedFieldProp(point, 2, p.type, 0);
+            var PhisicalPos = GetSelectedPosition();
+            SetSelectedFieldProp(PhisicalPos, 2, p.type, 0);
             ClearSelected();
-            CompleteSurroundings(StandPosition);
+            ShowVisualField(CSP, true);
             return false;
         }
         public static bool WaterIt()
         {
             if (SelectedFields.Count > 1) { ClearSelected(); return true; }
-            var point = GetSelectedPosition();
+            var PhisicalPos = GetSelectedPosition();
             //PhisicalMap[point.X, point.Y].Category = ?;
             //PhisicalMap[point.X, point.Y].Type = ?;
             ClearSelected();

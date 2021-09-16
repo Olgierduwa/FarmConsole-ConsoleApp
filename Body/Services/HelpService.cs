@@ -6,15 +6,27 @@ namespace FarmConsole.Body.Services
 {
     class HelpService
     {
-        public static System.Diagnostics.Stopwatch timer_1;
-        public static long sum_timer_1 = 0;
-        public static int timer_1_times;
-        public static long avg1;
+        private static System.Diagnostics.Stopwatch timer_1;
+        private static long sum_timer_1 = 0;
+        private static int timer_1_times;
+        private static long avg1;
 
-        public static System.Diagnostics.Stopwatch timer_2;
-        public static long sum_timer_2 = 0;
-        public static int timer_2_times;
-        public static long avg2;
+        private static System.Diagnostics.Stopwatch timer_2;
+        private static long sum_timer_2 = 0;
+        private static int timer_2_times;
+        private static long avg2;
+
+        /* STUFF TO COPY
+        
+            HelpService.START_TIMER_1();
+            HelpService.STOP_TIMER_1();
+
+            HelpService.START_TIMER_2();
+            HelpService.STOP_TIMER_2();
+
+            HelpService.AVG();
+        */
+
 
         public static void START_TIMER_1()
         {
@@ -30,7 +42,7 @@ namespace FarmConsole.Body.Services
             long ms = timer_1.ElapsedTicks;
             timer_1_times++;
             sum_timer_1 += ms;
-            avg1 = ms;
+            avg1 = sum_timer_1 / timer_1_times;
         }
         public static void STOP_TIMER_2()
         {
@@ -38,7 +50,7 @@ namespace FarmConsole.Body.Services
             var ms = timer_2.ElapsedTicks;
             timer_2_times++;
             sum_timer_2 += ms;
-            avg2 = ms;
+            avg2 = sum_timer_2 / timer_2_times;
         }
         public static void CLEAR_TIMERS()
         {
@@ -47,9 +59,10 @@ namespace FarmConsole.Body.Services
         }
         public static void AVG()
         {
-            INFO(0, "timer1: " + avg1, "timer2: " + avg2);
+            INFO(0, "avg1: " + avg1, "avg2: " + avg2);
             INFO(1, "times1: " + timer_1_times, "times2: " + timer_2_times);
             INFO(2, "sum1: " + sum_timer_1, "sum2: " + sum_timer_2);
+            INFO(3, "ct1: " + timer_1.ElapsedTicks, "ct2: " + timer_2.ElapsedTicks);
         }
         public static void INFO(int x, string a, string b = "", string c = "", string d = "")
         {

@@ -21,7 +21,7 @@ namespace FarmConsole.Body.Services
         [DllImport("user32.dll")]
         private static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
 
-        [DllImport("kernel32.dll", ExactSpelling = true)]
+        [DllImport("kernel32.dll", ExactSpelling = true)]   
         private static extern IntPtr GetConsoleWindow();
 
         public static void PresetWindow()

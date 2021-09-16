@@ -20,7 +20,7 @@ namespace FarmConsole.Body.Controlers
             X = Y = FarmSize / 2;
             GameView.Show(save.Name);
             FarmView.Show(save.GetMap());
-            FarmView.MoveStandPosition(new Point(X + 1, Y + 1), new Point(X + 1, Y + 1), false);
+            //FarmView.MoveStandPosition(new Point(X + 1, Y + 1), new Point(X + 1, Y + 1), false);
             SideMenuController.Initialize();
             while (openScreen == "Farm")
             {
@@ -36,10 +36,15 @@ namespace FarmConsole.Body.Controlers
                         case ConsoleKey.Q: SideMenuController.Open(cki.Key); break;
                         case ConsoleKey.E: SideMenuController.Open(cki.Key); break;
 
-                        case ConsoleKey.W: if (X > 1 && FarmView.MoveStandPosition(new Point(X + 1, Y + 1), new Point(X, Y + 1), ShiftPressed)) X--; break;
-                        case ConsoleKey.A: if (Y > 1 && FarmView.MoveStandPosition(new Point(X + 1, Y + 1), new Point(X + 1, Y), ShiftPressed)) Y--; break;
-                        case ConsoleKey.S: if (X < FarmSize && FarmView.MoveStandPosition(new Point(X + 1, Y + 1), new Point(X + 2, Y + 1), ShiftPressed)) X++; break;
-                        case ConsoleKey.D: if (Y < FarmSize && FarmView.MoveStandPosition(new Point(X + 1, Y + 1), new Point(X + 1, Y + 2), ShiftPressed)) Y++; break;
+                        //case ConsoleKey.W: if (X > 1 && FarmView.MoveStandPosition(new Point(X + 1, Y + 1), new Point(X, Y + 1), ShiftPressed)) X--; break;
+                        //case ConsoleKey.A: if (Y > 1 && FarmView.MoveStandPosition(new Point(X + 1, Y + 1), new Point(X + 1, Y), ShiftPressed)) Y--; break;
+                        //case ConsoleKey.S: if (X < FarmSize && FarmView.MoveStandPosition(new Point(X + 1, Y + 1), new Point(X + 2, Y + 1), ShiftPressed)) X++; break;
+                        //case ConsoleKey.D: if (Y < FarmSize && FarmView.MoveStandPosition(new Point(X + 1, Y + 1), new Point(X + 1, Y + 2), ShiftPressed)) Y++; break;
+
+                        case ConsoleKey.W: FarmView.MoveStandPosition(new Point(-1, 0), ShiftPressed); break;
+                        case ConsoleKey.S: FarmView.MoveStandPosition(new Point(1, 0), ShiftPressed); break;
+                        case ConsoleKey.A: FarmView.MoveStandPosition(new Point(0, -1), ShiftPressed); break;
+                        case ConsoleKey.D: FarmView.MoveStandPosition(new Point(0, 1), ShiftPressed); break;
 
                         case ConsoleKey.DownArrow: FarmView.MoveMapPosition(new Point(0, -1 * invert)); break;
                         case ConsoleKey.UpArrow: FarmView.MoveMapPosition(new Point(0, 1 * invert)); break;
@@ -48,6 +53,7 @@ namespace FarmConsole.Body.Controlers
 
                         case ConsoleKey.M: invert *= -1; break;
                         case ConsoleKey.I: SHOWFIELDID = !SHOWFIELDID; break;
+                        case ConsoleKey.X: FarmView.Show(save.GetMap()); break;
                     }
                 }
                 else if ((DateTime.Now - Now).TotalMilliseconds >= 50)

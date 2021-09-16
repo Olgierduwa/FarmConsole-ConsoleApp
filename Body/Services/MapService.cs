@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
-using System.Threading;
 
 namespace FarmConsole.Body.Services
 {
@@ -11,90 +9,72 @@ namespace FarmConsole.Body.Services
     {
         protected static readonly int StandardFieldHeight = 7;
 
-        protected static List<List<string>>[] FieldViews;
-        protected static List<List<int>>[] FieldStartPos;
-        protected static List<Point> SelectedFields;
-        protected static List<Point> CheckFields;
-        protected static Point StandPosition;
-        protected static Point MapPosition;
-        protected static Point DraggPosition;
-        private static FieldModel DraggedField;
-        private static FieldModel[,] PhisicalMap;
+        private static List<List<string>>[] FieldViews;
+        private static List<List<int>>[] FieldStartPos;
+        protected static List<Point> SelectedFields;        // Trzyma X,Y zaznaczonych pól Fizycznej Mapy
+        protected static Point CSP;                         // Pozycja stania na Wizualnej Mapie // Current Stand Position //
+        protected static Point DraggedPosition;             // Pozycja pochwyconego pola z Fizycznej Mapy
+        private static FieldModel DraggedField;             // Pochwycone Pole
+
+        // prosta mapa pozwalająca na zapis i odczyt
         protected static int[,,] SimpleMap;
-        protected static int FarmSize;
-        protected static int TopBorder;
-        protected static int BotBorder;
-        protected static int LeftBorder;
-        protected static int RightBorder;
+
+        // Pełna Mapa składająca się z pełnych pól
+        private static FieldModel[,] PhisicalMap;
+        protected static Point PhisicalMapPosition;
+        protected static int PhisicalMapSize;
+
+        // Praktyczna Mapa składająca się ze wskazników do pełnej mapy
+        private static Point[,] VisualMap;
+        protected static Point VisualMapPosition;
+        protected static int VisualMapSize;
+        
+        private static int TopBorder;
+        private static int BotBorder;
+        private static int LeftBorder;
+        private static int RightBorder;
 
         #region PUBLIC MENEGEMENT
-        public static bool MoveStandPosition(Point beforePos, Point currentPos, bool shift)
+        public static void MoveStandPosition(Point Vector = new Point(), bool Shift = false)
         {
-            StandPosition.X = currentPos.X;
-            StandPosition.Y = currentPos.Y;
-
-            Console.SetCursorPosition(2, 6);
-            Console.Write("[" + StandPosition.X + "," + StandPosition.Y + "]");
-            //Modified = true;
+            bool FixAbove = false;
+            Point FSP = new Point(CSP.X + Vector.X, CSP.Y + Vector.Y); // future stand point
+            if (FSP.X > 0 && FSP.X < VisualMapSize && FSP.Y >= 0 && FSP.Y < VisualMapSize && VisualMap[FSP.X, FSP.Y].X == 0) return;
             if (DraggedField != null)
+                if (PhisicalMap[RealPos(FSP).X, RealPos(FSP).Y].Category > 6) return;
+                else FixAbove = true;
+            else if (Shift)
             {
-                if (PhisicalMap[currentPos.X, currentPos.Y].Category > 5)
-                {
-                    StandPosition.X = beforePos.X;
-                    StandPosition.Y = beforePos.Y;
-                    return false;
-                }
-                CompleteSurroundings(beforePos);
+                Point StandPos = RealPos(CSP);
+                if (SelectedFields.Contains(StandPos)) SelectedFields.Remove(StandPos);
+                else if (SelectedFields.Count == 0 || GetFieldCategory() == PhisicalMap[StandPos.X, StandPos.Y].Category) SelectedFields.Add(StandPos);
             }
-            else if (shift == true)
-            {
-                if (SelectedFields.Contains(beforePos) == true) SelectedFields.Remove(beforePos);
-                else if (SelectedFields.Count == 0) { SelectedFields.Add(beforePos); }
-                else if (GetFieldCategory() == PhisicalMap[beforePos.X, beforePos.Y].Category
-                    && PhisicalMap[beforePos.X, beforePos.Y].Category < 6) SelectedFields.Add(beforePos);
-            }
-            ConsiderHeight(beforePos, currentPos);
-            return true;
+            CSP.X += Vector.X;
+            CSP.Y += Vector.Y;
+            Point PSP = new Point(CSP.X - Vector.X, CSP.Y - Vector.Y); // past stand point
+            ShowVisualField(PSP, FixAbove);
+            ShowVisualField(CSP);
+
+            // extra write:
+            Console.SetCursorPosition(2, 6); Console.Write("[" + RealPos(CSP).X + "," + RealPos(CSP).Y + "]");
         }
         public static void MoveMapPosition(Point vector)
         {
-            MapPosition.X += vector.X * 24;
-            MapPosition.Y += vector.Y * 6;
-
-            for (int i = 0; i < FarmSize; i++)
-                for (int j = 0; j < FarmSize; j++)
-                    PhisicalMap[i, j].Move(new Point(vector.X * 24, vector.Y * 6));
-
+            VisualMapPosition.X += vector.X * 24;
+            VisualMapPosition.Y += vector.Y * 6;
             ShowMap();
-            MoveStandPosition(StandPosition, StandPosition, false);
 
-        }
-        public static int[,,] GetMap()
-        {
-            for (int i = 2; i < FarmSize - 1; i++)
-                for (int j = 2; j < FarmSize - 1; j++)
-                {
-                    SimpleMap[i - 2, j - 2, 0] = PhisicalMap[i, j].Category;
-                    SimpleMap[i - 2, j - 2, 1] = PhisicalMap[i, j].Type;
-                    SimpleMap[i - 2, j - 2, 2] = PhisicalMap[i, j].Duration;
-                }
-            return SimpleMap;
-        }
-        public static void ShowFieldID()
-        {
-            for (int i = 0; i < FarmSize; i++)
-                for (int j = 0; j < FarmSize; j++)
-                    if (MapPosition.X + 17 + (j - i) * 12 < RightBorder && MapPosition.X + 10 + (j - i) * 12 > LeftBorder
-                        && MapPosition.Y + 3 + (j + i) * 3 < BotBorder && MapPosition.Y + 3 + (j + i) * 3 > TopBorder)
-                    {
-                        Console.SetCursorPosition(MapPosition.X + 10 + (j - i) * 12, MapPosition.Y + 3 + (j + i) * 3);
-                        Console.Write(" " + i + "," + j + " ");
-                    }
+            //for (int i = 0; i < VisualMapPosition; i++)
+            //    for (int j = 0; j < VisualMapPosition; j++) ;
+            //        PhisicalMap[i, j].Move(new Point(vector.X * 24, vector.Y * 6));
+
+            //MoveStandPosition();
+            ShowMapTable();
         }
         #endregion
 
         #region MANAGEMENT OF SIDE MENU
-        public static void ShowMapFragment(string type, bool menu1 = false, bool menu2 = false)
+          public static void ShowMapFragment(string type, bool menu1 = false, bool menu2 = false)
         {
             int CW = Console.WindowWidth;
             int leftBarrier;
@@ -105,13 +85,9 @@ namespace FarmConsole.Body.Services
                     {
                         leftBarrier = LeftBorder;
                         rightBarrier = CW / 5 + 1;
-                        for (int i = 2; i < FarmSize - 1; i++)
-                            for (int j = 2; j < FarmSize - 1; j++)
-                                ShowSingleField(new Point(i, j), leftBarrier, rightBarrier);
-
-                        rightBarrier = RightBorder;
-                        if (menu1) rightBarrier = CW - CW / 5 - 2;
-                        ConsiderHeight(StandPosition, StandPosition, leftBarrier, rightBarrier);
+                        for (int i = 2; i < PhisicalMapSize - 1; i++)
+                            for (int j = 2; j < PhisicalMapSize - 1; j++)
+                                WriteSingleField(new Point(i, j), leftBarrier, rightBarrier);
                     }
                     break;
 
@@ -119,13 +95,9 @@ namespace FarmConsole.Body.Services
                     {
                         rightBarrier = RightBorder;
                         leftBarrier = CW - CW / 5 - 2;
-                        for (int i = 2; i < FarmSize - 1; i++)
-                            for (int j = 2; j < FarmSize - 1; j++)
-                                ShowSingleField(new Point(i, j), leftBarrier, rightBarrier);
-
-                        leftBarrier = LeftBorder;
-                        if (menu1) leftBarrier = CW / 5 + 1;
-                        ConsiderHeight(StandPosition, StandPosition, leftBarrier, rightBarrier);
+                        for (int i = 2; i < PhisicalMapSize - 1; i++)
+                            for (int j = 2; j < PhisicalMapSize - 1; j++)
+                                WriteSingleField(new Point(i, j), leftBarrier, rightBarrier);
                     }
                     break;
 
@@ -133,15 +105,9 @@ namespace FarmConsole.Body.Services
                     {
                         leftBarrier = Console.WindowWidth / 2 - 20;
                         rightBarrier = Console.WindowWidth / 2 + 20;
-                        for (int i = 2; i < FarmSize - 1; i++)
-                            for (int j = 2; j < FarmSize - 1; j++)
-                                ShowSingleField(new Point(i, j), leftBarrier, rightBarrier);
-
-                        rightBarrier = RightBorder;
-                        leftBarrier = LeftBorder;
-                        if (menu2) leftBarrier = CW / 5 + 1;
-                        if (menu1) rightBarrier = CW - CW / 5 - 2;
-                        ConsiderHeight(StandPosition, StandPosition, leftBarrier, rightBarrier);
+                        for (int i = 2; i < PhisicalMapSize - 1; i++)
+                            for (int j = 2; j < PhisicalMapSize - 1; j++)
+                                WriteSingleField(new Point(i, j), leftBarrier, rightBarrier);
                     }
                     break;
 
@@ -149,23 +115,21 @@ namespace FarmConsole.Body.Services
                     {
                         leftBarrier = LeftBorder;
                         rightBarrier = CW / 5 + 1;
-                        for (int i = 2; i < FarmSize - 1; i++)
-                            for (int j = 2; j < FarmSize - 1; j++)
-                                ShowSingleField(new Point(i, j), leftBarrier, rightBarrier);
+                        for (int i = 2; i < PhisicalMapSize - 1; i++)
+                            for (int j = 2; j < PhisicalMapSize - 1; j++)
+                                WriteSingleField(new Point(i, j), leftBarrier, rightBarrier);
 
                         rightBarrier = RightBorder;
                         leftBarrier = CW - CW / 5 - 2;
-                        for (int i = 2; i < FarmSize - 1; i++)
-                            for (int j = 2; j < FarmSize - 1; j++)
-                                ShowSingleField(new Point(i, j), leftBarrier, rightBarrier);
+                        for (int i = 2; i < PhisicalMapSize - 1; i++)
+                            for (int j = 2; j < PhisicalMapSize - 1; j++)
+                                WriteSingleField(new Point(i, j), leftBarrier, rightBarrier);
 
                         leftBarrier = Console.WindowWidth / 2 - 20;
                         rightBarrier = Console.WindowWidth / 2 + 20;
-                        for (int i = 2; i < FarmSize - 1; i++)
-                            for (int j = 2; j < FarmSize - 1; j++)
-                                ShowSingleField(new Point(i, j), leftBarrier, rightBarrier);
-
-                        ConsiderHeight(StandPosition, StandPosition);
+                        for (int i = 2; i < PhisicalMapSize - 1; i++)
+                            for (int j = 2; j < PhisicalMapSize - 1; j++)
+                                WriteSingleField(new Point(i, j), leftBarrier, rightBarrier);
                     }
                     break;
             }
@@ -173,61 +137,63 @@ namespace FarmConsole.Body.Services
         public static int GetFieldCategory(bool stand = false)
         {
             if (stand || SelectedFields == null || SelectedFields.Count == 0)
-                return PhisicalMap[StandPosition.X, StandPosition.Y].Category;
+                return PhisicalMap[RealPos(CSP).X, RealPos(CSP).Y].Category;
             else return PhisicalMap[SelectedFields[0].X, SelectedFields[0].Y].Category;
         }
         public static int GetFieldType(bool stand = false)
         {
             if (stand || SelectedFields == null || SelectedFields.Count == 0)
-                return PhisicalMap[StandPosition.X, StandPosition.Y].Type;
+                return PhisicalMap[RealPos(CSP).X, RealPos(CSP).Y].Type;
             else return PhisicalMap[SelectedFields[0].X, SelectedFields[0].Y].Type;
         }
         public static int GetFieldDuration(bool stand = false)
         {
             if (stand || SelectedFields == null || SelectedFields.Count == 0)
-                return PhisicalMap[StandPosition.X, StandPosition.Y].Duration;
+                return PhisicalMap[RealPos(CSP).X, RealPos(CSP).Y].Duration;
             else return PhisicalMap[SelectedFields[0].X, SelectedFields[0].Y].Duration;
         }
         #endregion
 
         #region MANAGEMENT OF FIELD PROPERTY
-        internal static void SetSelectedField(Point p, FieldModel f)
+        internal static void SetPhisicalField(Point PhisicalPos, FieldModel f)
         {
-            PhisicalMap[p.X, p.Y] = f;
+            PhisicalMap[PhisicalPos.X, PhisicalPos.Y] = f;
         }
-        protected static void SetSelectedFieldProp(Point p, int c = -1, int t = -1, int d = -1)
+        protected static void SetSelectedFieldProp(Point PhisicalPos, int c = -1, int t = -1, int d = -1)
         {
-            if (c >= 0) PhisicalMap[p.X, p.Y].Category = c;
-            if (t >= 0) PhisicalMap[p.X, p.Y].Type = t;
-            if (d >= 0) PhisicalMap[p.X, p.Y].Duration = d;
+            if (c >= 0) PhisicalMap[PhisicalPos.X, PhisicalPos.Y].Category = c;
+            if (t >= 0) PhisicalMap[PhisicalPos.X, PhisicalPos.Y].Type = t;
+            if (d >= 0) PhisicalMap[PhisicalPos.X, PhisicalPos.Y].Duration = d;
         }
-        internal static void SetDraggedField(FieldModel f)
+        internal static void SetDraggedField(Point PhisicalPos)
         {
-            DraggedField = f;
-        }
-        internal static FieldModel GetSelectedField(Point p)
-        {
-            return PhisicalMap[p.X, p.Y];
+            if (PhisicalPos.X > 0 && PhisicalPos.Y > 0)
+            {
+                DraggedPosition = new Point(PhisicalPos.X, PhisicalPos.Y);
+                DraggedField = new FieldModel(GetSelectedField(PhisicalPos));
+            }
+            else DraggedField = null;
         }
         internal static FieldModel GetDraggedField()
         {
             return DraggedField;
         }
+        internal static FieldModel GetSelectedField(Point PhisicalPos)
+        {
+            return PhisicalMap[PhisicalPos.X, PhisicalPos.Y];
+        }
         protected static Point GetSelectedPosition(bool stand = false)
         {
             if (!stand && SelectedFields.Count > 0) return new Point(SelectedFields[0].X, SelectedFields[0].Y);
-            else return StandPosition;
+            else return RealPos(CSP);
         }
         protected static void ClearSelected()
         {
-            if (SelectedFields.Count > 0)
+            while (SelectedFields.Count > 0)
             {
-                while (SelectedFields.Count > 0)
-                {
-                    var point = SelectedFields[0];
-                    SelectedFields.RemoveAt(0);
-                    ConsiderHeight(new Point(point.X, point.Y), StandPosition);
-                }
+                var PhisicalPos = SelectedFields[0];
+                SelectedFields.RemoveAt(0);
+                ShowPhisicalField(PhisicalPos);
             }
         }
         #endregion
@@ -245,14 +211,13 @@ namespace FarmConsole.Body.Services
                 FieldStartPos[k] = new List<List<int>>();
                 for (int i = 0; i < singleLineViews[k].Count; i++) // kazde pole w danej kategorii
                 {
-
                     List<string> _FieldView = new List<string>();
                     List<int> _FieldStartPos = new List<int>();
                     string[] singleFieldView = singleLineViews[k][i].Split('@');
                     for (int j = 0; j < singleFieldView.Length - 1; j++) // kazda grafika danego pola
                     {
                         int countChar = 0;
-                        string line = singleFieldView[j].Trim(MyChar).Substring(6);
+                        string line = singleFieldView[j].Trim(MyChar).Substring(4);
                         while (line[countChar] == '´') countChar++;
                         _FieldStartPos.Add(countChar);
                         _FieldView.Add(line.TrimStart(MyChar));
@@ -262,19 +227,6 @@ namespace FarmConsole.Body.Services
                 }
             }
         }
-        protected static void InitializePhisicalMap()
-        {
-            DraggedField = null;
-            CheckFields = new List<Point>() { };
-            SelectedFields = new List<Point>() { };
-
-            PhisicalMap = new FieldModel[FarmSize, FarmSize];
-            for (int i = 0; i < FarmSize; i++)
-                for (int j = 0; j < FarmSize; j++)
-                    if (i < 2 || j < 2 || i > FarmSize - 2 || j > FarmSize - 2)
-                        PhisicalMap[i, j] = new FieldModel(MapPosition.X + (j - i) * 12, MapPosition.Y + (j + i) * 3, 0, 0);
-                    else PhisicalMap[i, j] = new FieldModel(MapPosition.X + (j - i) * 12, MapPosition.Y + (j + i) * 3, SimpleMap[i - 2, j - 2, 0], SimpleMap[i - 2, j - 2, 1], SimpleMap[i - 2, j - 2, 2]);
-        }
         protected static void SetMapBorders()
         {
             TopBorder = 4;
@@ -282,11 +234,43 @@ namespace FarmConsole.Body.Services
             LeftBorder = 0;
             RightBorder = Console.WindowWidth;
         }
-        protected static void ShowMap()
+        protected static void InitializePhisicalMap()
         {
-            for (int i = 0; i < FarmSize; i++)
-                for (int j = 0; j < FarmSize; j++)
-                    ShowSingleField(new Point(i, j));
+            PhisicalMapSize = Convert.ToInt32(Math.Sqrt(Convert.ToDouble(SimpleMap.Length / 3))) + 1;
+            PhisicalMapPosition = new Point(Console.WindowWidth / 2 - 12, (Console.WindowHeight - 8) / 2 - PhisicalMapSize * 3 + 1);
+            PhisicalMap = new FieldModel[PhisicalMapSize, PhisicalMapSize];
+            PhisicalMap[0, 0] = new FieldModel(0, 0);
+            PhisicalMap[0, 1] = new FieldModel(0, 1);
+            for (int x = 0; x < PhisicalMapSize - 1; x++)
+                for (int y = 0; y < PhisicalMapSize - 1; y++)
+                    PhisicalMap[x+1, y+1] = new FieldModel(SimpleMap[x, y, 0], SimpleMap[x, y, 1], SimpleMap[x, y, 2]);
+        }
+        protected static void InitializeVisualMap()
+        {
+            VisualMapSize = ((Console.WindowHeight + 1) / 12 + (Console.WindowWidth + 45) / 50) * 2 + 1;
+            VisualMapPosition = new Point(Console.WindowWidth / 2 - 12, (Console.WindowHeight - 8) / 2 + 4 - VisualMapSize / 2 * 6);
+            VisualMap = new Point[VisualMapSize, VisualMapSize];
+            CSP = new Point((VisualMapSize) / 2, (VisualMapSize) / 2);
+            SelectedFields = new List<Point>() { };
+            DraggedField = null;
+            int FrameSize = PhisicalMapSize + 1;
+            for (int x = 0; x < VisualMapSize; x++)
+                for (int y = 0; y < VisualMapSize; y++)
+                {
+                    Point VisualCoord = GetCoord(new Point(x, y), VisualMapPosition);
+                    Point FramePos = GetMapPos(VisualCoord, new Point(Console.WindowWidth / 2 - 12, (Console.WindowHeight - 8) / 2 - FrameSize * 3 + 1));
+                    Point PhisicalPos = GetMapPos(VisualCoord, PhisicalMapPosition);
+
+                    if (IsOnMap(PhisicalPos, PhisicalMapSize, 1)) VisualMap[x, y] = new Point(PhisicalPos.X, PhisicalPos.Y);
+                    else if (IsOnMap(FramePos, FrameSize))
+                        VisualMap[x, y] = new Point(0, 1);
+                }
+        }
+        protected static void ShowMap()
+        {   
+            for (int x = 0; x < VisualMapSize; x++)
+                for (int y = 0; y < VisualMapSize; y++)
+                    WriteSingleField(new Point(x,y));
         }
         protected static void ClearMap()
         {
@@ -297,51 +281,101 @@ namespace FarmConsole.Body.Services
                 Console.Write(space);
             }
         }
-        protected static void ShowSingleField(Point p, int leftBarrier = 0, int rightBarrier = 0, bool currentSelected = false)
+        public static int[,,] GetMap()
         {
-            if (leftBarrier == 0) leftBarrier = LeftBorder;
-            if (rightBarrier == 0) rightBarrier = RightBorder;
+            for (int i = 2; i < PhisicalMapSize - 1; i++)
+                for (int j = 2; j < PhisicalMapSize - 1; j++)
+                {
+                    SimpleMap[i - 2, j - 2, 0] = PhisicalMap[i, j].Category;
+                    SimpleMap[i - 2, j - 2, 1] = PhisicalMap[i, j].Type;
+                    SimpleMap[i - 2, j - 2, 2] = PhisicalMap[i, j].Duration;
+                }
+            return SimpleMap;
+        }
+        protected static void ShowVisualField(Point VisualPoint, bool Above = false)
+        {
+            int start = 3;
+            if (Above) start = 0;
+            for (int i = start; i < 9; i++)
+            {
+                Point Border = new Point(VisualMapPosition.X + (VisualPoint.Y - VisualPoint.X) * 12, VisualMapPosition.Y + (VisualPoint.Y + VisualPoint.X) * 3);
+                switch (i)
+                {
+                    case 0: VisualPoint.X--; VisualPoint.Y--; WriteSingleField(VisualPoint); VisualPoint.X++; break;
+                    case 1: WriteSingleField(VisualPoint, LB: Border.X + 12); VisualPoint.X--; VisualPoint.Y++; break;
+                    case 2: WriteSingleField(VisualPoint, RB: Border.X + 9); VisualPoint.X++; break;
+                    case 3: WriteSingleField(VisualPoint); VisualPoint.X++; break;
+                    case 4: WriteSingleField(VisualPoint, LB: Border.X + 12, BB: Border.Y + 4); VisualPoint.X--; VisualPoint.Y++; break;
+                    case 5: WriteSingleField(VisualPoint, RB: Border.X + 9, BB: Border.Y + 4); VisualPoint.X++; break;
+                    case 6: WriteSingleField(VisualPoint, BB: Border.Y + 1); VisualPoint.X++; break;
+                    case 7: WriteSingleField(VisualPoint, BB: Border.Y - 2); VisualPoint.X--; VisualPoint.Y++; break;
+                    case 8: WriteSingleField(VisualPoint, BB: Border.Y - 2); break;
+                }
+                //Thread.Sleep(1000);
+            }
+        }
+        protected static void ShowPhisicalField(Point PhisicalPos)
+        {
+            Point VisualPos = GetMapPos(GetCoord(PhisicalPos, PhisicalMapPosition), VisualMapPosition);
+            if (IsOnMap(VisualPos, VisualMapSize))
+                ShowVisualField(VisualPos, true);
+        }
+        protected static Point RealPos(Point VisualPos)
+        {
+            return VisualMap[VisualPos.X, VisualPos.Y];
+        }
+        #endregion
 
-            int X = PhisicalMap[p.X, p.Y].X;
-            int Y = PhisicalMap[p.X, p.Y].Y;
-            int K = PhisicalMap[p.X, p.Y].Category;
-            int T = PhisicalMap[p.X, p.Y].Type;
+        #region PRIVATE MANAGEMENT
+        private static void WriteSingleField(Point VisualPoint, int LB = -1, int RB = 1000, int TB = -1, int BB = 1000)
+        {
+            if (TB < 0) TB = TopBorder;
+            if (LB < 0) LB = LeftBorder;
+            if (BB > BotBorder) BB = BotBorder;
+            if (RB > RightBorder) RB = RightBorder;
+
+            Point P = RealPos(VisualPoint);
+
+            int X = VisualMapPosition.X + (VisualPoint.Y - VisualPoint.X) * 12;
+            int Y = VisualMapPosition.Y + (VisualPoint.Y + VisualPoint.X) * 3;
+            int K = PhisicalMap[P.X, P.Y].Category;
+            int T = PhisicalMap[P.X, P.Y].Type;
             int H = FieldStartPos[K][T].Count;
             int C = StandardFieldHeight - H;
 
-            Console.ForegroundColor = FieldColor(K, T);
-            if (SelectedFields.Contains(p)) Console.ForegroundColor = FieldColor(-1, 0);
-            if (currentSelected == true)
+            if (CSP == VisualPoint)
             {
-                Console.ForegroundColor = FieldColor(-1, 1);
                 if (DraggedField != null)
                 {
-                    Console.ForegroundColor = FieldColor(-1, 0);
+                    Console.ForegroundColor = GetFieldColor(-1, 0);
                     K = DraggedField.Category;
                     T = DraggedField.Type;
                     H = FieldStartPos[K][T].Count;
                     C = StandardFieldHeight - H;
                 }
+                else Console.ForegroundColor = GetFieldColor(-1, 1);
             }
+            else if (SelectedFields.Contains(P)) Console.ForegroundColor = GetFieldColor(-1, 0);
+            else Console.ForegroundColor = GetFieldColor(K, T);
 
             for (int i = 0; i < H; i++)
             {
-                if (Y + i + C > TopBorder && BotBorder > Y + i + C)
+                if (Y + i + C > TB && BB > Y + i + C)
                 {
-                    if (X + FieldStartPos[K][T][i] < leftBarrier)
+                    if (X + FieldStartPos[K][T][i] < LB)
                     {
-                        if (X + FieldStartPos[K][T][i] + FieldViews[K][T][i].Length > leftBarrier)
+                        if (X + FieldStartPos[K][T][i] + FieldViews[K][T][i].Length > LB)
                         {
-                            Console.SetCursorPosition(leftBarrier, Y + i + C);
-                            Console.Write(FieldViews[K][T][i].Substring(leftBarrier - X - FieldStartPos[K][T][i]));
+                            Console.SetCursorPosition(LB, Y + i + C);
+                            Console.Write(FieldViews[K][T][i].Substring(LB - X - FieldStartPos[K][T][i]));
                         }
                     }
-                    else if (X + FieldStartPos[K][T][i] + FieldViews[K][T][i].Length > rightBarrier)
+                    else if (X + FieldStartPos[K][T][i] + FieldViews[K][T][i].Length > RB)
                     {
-                        if (X + FieldStartPos[K][T][i] < rightBarrier)
+                        if (X + FieldStartPos[K][T][i] < RB)
                         {
                             Console.SetCursorPosition(X + FieldStartPos[K][T][i], Y + i + C);
-                            Console.Write(FieldViews[K][T][i].Substring(0, rightBarrier - X - FieldStartPos[K][T][i]));
+                            Console.Write(FieldViews[K][T][i].Substring(0, RB - X - FieldStartPos[K][T][i]));
                         }
                     }
                     else
@@ -353,18 +387,26 @@ namespace FarmConsole.Body.Services
             }
             Console.ResetColor();
         }
-        private static ConsoleColor FieldColor(int category, int type)
+        private static ConsoleColor GetFieldColor(int category, int type)
         {
             switch (category)
             {
                 case -1:
                     switch (type) // kolory selekcyjne
                     {
-                        case 0: return ConsoleColor.Yellow; // SelectedColor
-                        case 1: return ConsoleColor.Magenta; // CurrentFieldColor
+                        case 0: return ConsoleColor.Yellow; // SelectedFieldColor
+                        case 1: return ConsoleColor.Magenta; // CurrentStandFieldColor
                         default: return ConsoleColor.Magenta; // undefined
                     }
                 case 0: // pola nieużytkowe
+                    switch (type)
+                    {
+                        case 0: return ConsoleColor.White; // air field
+                        case 1: return ConsoleColor.White; // black field
+                        case 2: return ConsoleColor.White; // pointer field
+                        default: return ConsoleColor.Magenta; // undefined
+                    }
+                case 1: // pola nieużytkowe
                     switch (type)
                     {
                         case 0: return ConsoleColor.White; // air
@@ -372,50 +414,50 @@ namespace FarmConsole.Body.Services
                         case 2: return ConsoleColor.Green; // grass
                         default: return ConsoleColor.Magenta; // undefined
                     }
-                case 1:  // pola uprawne
+                case 2:  // pola uprawne
                     switch (type)
                     {
                         case 0: return ConsoleColor.DarkRed; // zaorane pole
                         default: return ConsoleColor.Magenta; // undefined
                     }
-                case 2:  // pola posiane
+                case 3:  // pola posiane
                     switch (type)
                     {
                         case 0: return ConsoleColor.DarkGreen; // przenica
                         default: return ConsoleColor.Magenta; // undefined
                     }
-                case 3:  // pola rosnące
+                case 4:  // pola rosnące
                     switch (type)
                     {
                         case 0: return ConsoleColor.DarkYellow; // przenica
                         default: return ConsoleColor.Magenta; // undefined
                     }
-                case 4:  // pola dojrzałe
+                case 5:  // pola dojrzałe
                     switch (type)
                     {
                         case 0: return ConsoleColor.Yellow; // przenica
                         default: return ConsoleColor.Magenta; // undefined
                     }
-                case 5:  // pola zgniłe
+                case 6:  // pola zgniłe
                     switch (type)
                     {
                         case 0: return ConsoleColor.DarkYellow; // przenica
                         default: return ConsoleColor.Magenta; // undefined
                     }
-                case 6:  // budynki użytkowe
+                case 7:  // budynki użytkowe
                     switch (type)
                     {
                         case 0: return ConsoleColor.Gray; // dom
                         default: return ConsoleColor.Magenta; // undefined
                     }
-                case 7:  // dekoracje statyczne
+                case 8:  // dekoracje statyczne
                     switch (type)
                     {
                         case 0: return ConsoleColor.DarkGray; // silos
                         case 1: return ConsoleColor.DarkGray; // wieza
                         default: return ConsoleColor.Magenta; // undefined
                     }
-                case 8:  // maszyny rolne
+                case 9:  // maszyny rolne
                     switch (type)
                     {
                         case 0: return ConsoleColor.DarkCyan; // traktor
@@ -424,106 +466,44 @@ namespace FarmConsole.Body.Services
                 default: return ConsoleColor.Magenta;
             }
         }
-        #endregion
-
-        #region PRIVATE MANAGEMENT
-        protected static void CompleteSurroundings(Point point)
+        private static bool IsOnMap(Point MapPos, int MapSize, int StartFrom = 0)
         {
-            ShowSingleField(new Point(point.X - 1, point.Y - 1));
-            ShowSingleField(new Point(point.X - 1, point.Y));
-            ShowSingleField(new Point(point.X, point.Y - 1));
-            ConsiderHeight(new Point(point.X - 1, point.Y - 1), StandPosition);
-            ConsiderHeight(new Point(point.X - 1, point.Y), StandPosition);
-            ConsiderHeight(new Point(point.X, point.Y - 1), StandPosition);
+            if (MapPos.X >= StartFrom && MapPos.Y >= StartFrom && MapPos.X < MapSize && MapPos.Y < MapSize) return true;
+            else return false;
         }
-
-
-
-        protected static void ConsiderHeight(Point beforePos, Point currentPos, int leftBarrier = 0, int rightBarrier = 0)
+        private static Point GetCoord(Point MapPos, Point StartPos)
         {
-            HelpService.START_TIMER_1(); if (beforePos.Y > currentPos.Y || beforePos.X > currentPos.X)
-            { FindFieldToOverride2(currentPos); FindFieldToOverride2(beforePos,true); }
-            else { FindFieldToOverride2(beforePos); FindFieldToOverride2(currentPos,true); }
-            HelpService.STOP_TIMER_1();
-
-            ShowSingleField(beforePos, leftBarrier, rightBarrier);
-            CheckFields.Remove(currentPos);
-            ShowSingleField(currentPos, leftBarrier, rightBarrier, true);
-            for (int i = 0; i < CheckFields.Count; i++) ShowSingleField(CheckFields[i], leftBarrier, rightBarrier);
-            CheckFields = new List<Point>() { };
-
-
-
-
-
-            HelpService.START_TIMER_2();
-            if (beforePos.Y > currentPos.Y || beforePos.X > currentPos.X)
-            { FindFieldToOverride(currentPos); FindFieldToOverride(beforePos); }
-            else { FindFieldToOverride(beforePos); FindFieldToOverride(currentPos); }
-            HelpService.STOP_TIMER_2();
-
-            ShowSingleField(beforePos, leftBarrier, rightBarrier);
-            CheckFields.Remove(currentPos);
-            ShowSingleField(currentPos, leftBarrier, rightBarrier, true);
-            for (int i = 0; i < CheckFields.Count; i++) ShowSingleField(CheckFields[i], leftBarrier, rightBarrier);
-            CheckFields = new List<Point>() { };
-
-            HelpService.AVG();
+            return new Point(StartPos.X + (MapPos.Y - MapPos.X) * 12, StartPos.Y + (MapPos.Y + MapPos.X) * 3);
         }
-        private static void FindFieldToOverride(Point p)
+        private static Point GetMapPos(Point Coord, Point StartPos)
         {
-            p.X += 1;
-            AddFieldToCheckFields(p);
-            p.Y += 1;
-            AddFieldToCheckFields(p);
-            p.X -= 1;
-            AddFieldToCheckFields(p);
+            return new Point((4 * (Coord.Y - StartPos.Y) + StartPos.X - Coord.X) / 24, (4 * (Coord.Y - StartPos.Y) + Coord.X - StartPos.X) / 24);
         }
-        private static void AddFieldToCheckFields(Point p)
+        private static void ShowMapTable()
         {
-            if (CheckFields.Contains(p) == false && FieldViews[PhisicalMap[p.X, p.Y].Category][PhisicalMap[p.X, p.Y].Type].Count > StandardFieldHeight)
-            {
-                int i = 0;
-                while (i < CheckFields.Count && CheckFields[i].Y < p.Y) i++;
-                while (i < CheckFields.Count && CheckFields[i].X < p.X) i++;
-                CheckFields.Insert(i, p);
-                FindFieldToOverride(p);
-            }
-        }
-
-        protected static void FindFieldToOverride2(Point p, bool sort = false)
-        {
-            int X = p.X + 1, Y = p.Y;
-            int XMAX = X + 1, XMIN = p.X, YMAX = Y + 2;
-            while (Y < YMAX)
-            {
-                if (CheckFields.Contains(new Point(X, Y)) == false && FieldViews[PhisicalMap[X, Y].Category][PhisicalMap[X, Y].Type].Count > StandardFieldHeight)
+            for (int x = 0; x < VisualMapSize; x++)
+                for (int y = 0; y < VisualMapSize; y++)
                 {
-                    if (X + 1 == XMAX) XMAX++;
-                    if (Y + 1 == YMAX) YMAX++;
-                    if (sort)
-                    {
-                        int i = 0;
-                        while (i < CheckFields.Count && CheckFields[i].Y < Y) i++;
-                        while (i < CheckFields.Count && CheckFields[i].X < X) i++;
-                        CheckFields.Insert(i, new Point(X, Y));
-                    }
-                    else CheckFields.Add(new Point(X, Y));
+                    Console.SetCursorPosition(2 + 6 * x, 3 + y * 2);
+                    if (VisualMap[x, y].X == 0 && VisualMap[x, y].Y == 0) Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write(VisualMap[x, y].X + "," + VisualMap[x, y].Y + "  ");
+                    Console.ResetColor();
                 }
-                else if (X == XMIN) XMIN++;
-                X++;
-                if (X == XMAX) { X = XMIN; Y++; }
-            }
         }
-
-        #endregion
-
-        protected static void ShowCheckList()
+        public static void ShowFieldID()
         {
-            Console.SetCursorPosition(14, 5);
-            Console.Write("CheckList: ");
-                foreach (Point p in CheckFields)
-                    Console.Write("[" + p.X + "," + p.Y + "] ");
+            for (int i = 0; i < PhisicalMapSize; i++)
+                for (int j = 0; j < PhisicalMapSize; j++)
+                    if (PhisicalMapPosition.X + 17 + (j - i) * 12 < RightBorder && PhisicalMapPosition.X + 10 + (j - i) * 12 > LeftBorder
+                        && PhisicalMapPosition.Y + 3 + (j + i) * 3 < BotBorder && PhisicalMapPosition.Y + 3 + (j + i) * 3 > TopBorder)
+                    {
+                        //Console.SetCursorPosition(MapPosition.X + 10 + (j - i) * 12, MapPosition.Y + 3 + (j + i) * 3);
+                        //Console.Write(" " + i + "," + j + " ");
+
+                        //Console.SetCursorPosition(PhisicalMap[i, j].X, PhisicalMap[i, j].Y);
+                        //Console.Write(" " + PhisicalMap[i, j].X + "," + PhisicalMap[i, j].Y + " ");
+                    }
         }
+        #endregion
     }
 }

@@ -5,7 +5,7 @@
     <name>Malcolm Aron</name>
     <lastplay>20/11/06 20:15</lastplay>
     <wallet>4200</wallet>
-    <field-category>6 0 7 7 0 0 0 0 0 0 0 0 0 0 0 0 0 0 7 0 0 1 1 1 6 0 0 1 1 1 6 0 0 1 1 1 </field-category>
+    <field-category>7 1 8 8 1 1 1 1 1 1 1 1 1 1 1 1 1 1 8 1 1 2 2 2 7 1 1 2 2 2 7 1 1 2 2 2 </field-category>
     <field-type>0 2 0 0 2 2 2 2 2 2 2 2 2 2 2 2 2 2 1 2 2 0 0 0 0 2 2 0 0 0 0 2 2 0 0 0 </field-type>
     <field-duration>0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </field-duration>
     <inventory>1 0 1 2 0 10 2 1 10 3 0 10 4 0 10 5 0 10 6 0 10 7 0 10 8 0 10 </inventory>
@@ -15,7 +15,7 @@
     <name>Clifton Wright</name>
     <lastplay>19/10/03 22:45</lastplay>
     <wallet>10200</wallet>
-    <field-category>6 0 7 0 7 0 0 6 0 7 7 6 0 6 6 0 6 0 7 6 0 6 0 7 6 0 6 7 0 7 6 0 0 1 7 7 </field-category>
+    <field-category>7 1 8 1 8 1 1 7 1 8 8 7 1 8 7 1 7 1 8 7 1 7 1 8 7 1 7 8 1 8 7 1 1 2 8 8 </field-category>
     <field-type>0 2 0 2 0 2 2 0 2 0 0 0 2 0 0 2 0 2 1 0 2 0 2 0 0 2 0 0 2 0 0 2 2 0 1 1 </field-type>
     <field-duration>0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </field-duration>
     <inventory>1 0 10 2 0 10 2 1 10 3 0 10 4 0 10 5 0 10 6 0 10 7 0 10 8 0 10 </inventory>
@@ -25,10 +25,20 @@
     <name>Testowy Zapis</name>
     <lastplay>20/11/06 20:15</lastplay>
     <wallet>4200</wallet>
-    <field-category>0 0 0 0 7 7 0 0 0 0 0 0 7 0 0 0 0 0 6 0 0 0 0 0 6 0 0 0 0 0 6 0 0 0 0 0 </field-category>
-    <field-type>2 2 2 2 0 0 2 2 2 2 2 2 1 2 2 2 2 2 0 2 2 2 2 2 0 2 2 2 2 2 0 2 2 2 2 2 </field-type>
+    <field-category>1 8 1 1 1 1 1 7 1 1 1 1 1 7 1 1 1 1 7 1 1 1 7 7 1 1 1 1 1 1 8 1 7 1 7 7 1 8 1 1 1 1 1 7 7 1 1 1 8 1 1 1 1 1 8 8 8 8 1 1 1 1 1 1 1 8 8 1 8 1 1 1 1 8 1 1 8 8 1 8 1 1 1 1 8 1 1 8 8 1 7 1 1 1 1 1 7 1 7 7 </field-category>
+    <field-type>2 1 2 2 2 2 2 0 2 2 2 2 2 0 2 2 2 2 0 2 2 2 0 0 2 2 2 2 2 2 0 2 0 2 0 0 2 1 2 2 2 2 2 0 0 2 2 2 1 2 2 2 2 2 0 0 0 0 2 2 2 2 2 2 2 0 0 2 0 2 2 2 2 1 2 2 0 0 2 0 2 2 2 2 1 2 2 0 0 2 0 2 2 2 2 2 0 2 0 0 </field-type>
+    <field-duration>0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </field-duration>
+    <inventory>1 0 2 2 0 3 2 1 10 3 0 9 4 0 10 5 0 10 6 0 10 7 0 10 8 0 10 </inventory>
+  </save>
+  <save id="4">
+    <lvl>100</lvl>
+    <name>Malcolm Aron</name>
+    <lastplay>20/11/06 20:15</lastplay>
+    <wallet>4200</wallet>
+    <field-category>1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 </field-category>
+    <field-type>2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 </field-type>
     <field-duration>0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </field-duration>
-    <inventory>1 0 10 2 0 10 2 1 10 3 0 10 4 0 10 5 0 10 6 0 10 7 0 10 8 0 10 </inventory>
+    <inventory>1 0 1 2 0 10 2 1 10 3 0 10 4 0 10 5 0 10 6 0 10 7 0 10 8 0 10 </inventory>
   </save>
 </Saves>
 <!--

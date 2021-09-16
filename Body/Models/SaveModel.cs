@@ -43,14 +43,14 @@ namespace FarmConsole.Body.Models
             for (int i = 0; i < 4; i++)
                 for (int j = 0; j < 4; j++)
                 {
-                    Map[i, j, 0] = 0;
+                    Map[i, j, 0] = 1;
                     Map[i, j, 1] = 2;
                     Map[i, j, 2] = 0;
                 }
-            Map[0, 0, 0] = 6; Map[0, 0, 1] = 0;
-            Map[2, 0, 0] = 7; Map[2, 0, 1] = 0;
-            Map[3, 0, 0] = 7; Map[3, 0, 1] = 0;
-            Map[0, 2, 0] = 7; Map[0, 2, 1] = 1;
+            Map[0, 0, 0] = 7; Map[0, 0, 1] = 0;
+            Map[2, 0, 0] = 8; Map[2, 0, 1] = 0;
+            Map[3, 0, 0] = 8; Map[3, 0, 1] = 0;
+            Map[0, 2, 0] = 8; Map[0, 2, 1] = 1;
 
             for (int i = 0; i < Inventory.Length; i++) Inventory[i] = new List<ProductModel>();
             Inventory[1].Add(XF.GetProduct(1, 0)); Inventory[1][0].amount = 10;

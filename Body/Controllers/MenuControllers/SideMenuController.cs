@@ -247,7 +247,7 @@ namespace FarmConsole.Body.Controlers
                             catI++; RSize = items[catI].Count; CS = PS = 1;
                             MenuRightView.UpdateItemList(items, catI); Update("E"); } break;
 
-                    case ConsoleKey.Escape: Q = E = C = false; break;
+                    case ConsoleKey.Escape: Q = E = C = false; Hide("ALL"); break;
                 }
             }
         }

@@ -25,11 +25,11 @@ namespace FarmConsole.Body.Controlers
         {
             switch (menu)
             {
-                case "Q": Q = false; LS = 1; MenuLeftView.Clean(); MapService.ShowMapFragment("left", E); break;
-                case "E": E = false; RS = 1; MenuRightView.Clean(); MapService.ShowMapFragment("right", Q); break;
-                case "C": C = false; MenuCenterView.Clean(); MapService.ShowMapFragment("center", E, Q); break;
+                case "Q": Q = false; LS = 1; MenuLeftView.Clean(); MapService.ShowMapFragment("left"); break;
+                case "E": E = false; RS = 1; MenuRightView.Clean(); MapService.ShowMapFragment("right"); break;
+                case "C": C = false; MenuCenterView.Clean(); MapService.ShowMapFragment("center"); break;
                 case "2": Q = E = false; LS = RS = 1; MenuLeftView.Clean(); MenuRightView.Clean();
-                    MapService.ShowMapFragment("right", Q); MapService.ShowMapFragment("left", E); break;
+                    MapService.ShowMapFragment("right"); MapService.ShowMapFragment("left"); break;
                 case "ALL": Q = E = C = false; LS = RS = 1; MenuLeftView.Clean(); MenuRightView.Clean(); MenuCenterView.Clean();
                     MapService.ShowMapFragment("all"); break;
             }
@@ -82,8 +82,8 @@ namespace FarmConsole.Body.Controlers
                 case 4: break; // odwiedz
                 case 5: break; // uzyj
 
-                case 0: C = true; Show("field", XF.GetFieldName(FarmView.GetFieldCategory(), FarmView.GetFieldType()),
-                        FarmView.GetFieldDuration(), XF.GetFieldDescription(FarmView.GetFieldCategory(), FarmView.GetFieldType())); break; // info
+                case 0: C = true; Show("field", XF.GetFieldName(FarmView.GetFieldProp("category"), FarmView.GetFieldProp("type")),
+                        FarmView.GetFieldProp("duration"), XF.GetFieldDescription(FarmView.GetFieldProp("category"), FarmView.GetFieldProp("type"))); break; // info
             }
             if (FACT_ID[catF][CS - 1] > 6 && FACT_ID[catF][CS - 1] < 10)
             { OS = false; RSize = items[catI].Count; E = !OS; LS = PS; CS = PS = 1; Show("EF"); }
@@ -95,7 +95,7 @@ namespace FarmConsole.Body.Controlers
                 ProductModel p = items[catI][CS - 1];
                 switch (FACT_ID[catF][LS - 1])
                 {
-                    case 7: FarmView.Build(p); break; // postaw
+                    case 7: FarmView.Build(p.category, p.type); break; // postaw
                     case 8: C = FarmView.Sow(p); if (C) { Show("warrning", XF.GetString(405)); } break; // posiej
                     case 9: C = FarmView.Fertilize(p); if (C) { Show("warrning", XF.GetString(406)); } break; // uzyznij
                 }
@@ -124,9 +124,9 @@ namespace FarmConsole.Body.Controlers
                     }
                     MenuRightView.UpdateItemList(items, catI); Update("E"); break; // zniszcz
                 case 3:
-                    if (FarmView.GetFieldCategory() < 6)
+                    if (FarmView.GetFieldProp("category") < 6)
                     {
-                        Hide("2"); FarmView.Build(p); items[catI][RS - 1].amount--;
+                        Hide("2"); FarmView.Build(p.category, p.type); items[catI][RS - 1].amount--;
                         if (items[catI][RS - 1].amount == 0) items[catI].RemoveAt(RS - 1);
                     }
                     else { C = true; Show("warrning", XF.GetString(407)); } break; // postaw
@@ -134,14 +134,14 @@ namespace FarmConsole.Body.Controlers
                     switch (catI) // uzyj
                     {
                         case 4:
-                            if (FarmView.GetFieldCategory() == 1)
+                            if (FarmView.GetFieldProp("category") == 1)
                             {
                                 C = FarmView.Sow(p); if (C) { Show("warrning", XF.GetString(405)); }
                                 else { Hide("2"); items[catI][RS - 1].amount--; if (items[catI][RS - 1].amount == 0) items[catI].RemoveAt(RS - 1); }
                             }
                             else { C = true; Show("warrning", XF.GetString(408)); } break; // posiej
                         case 6:
-                            if (FarmView.GetFieldCategory() == 3)
+                            if (FarmView.GetFieldProp("category") == 3)
                             {
                                 C = FarmView.Fertilize(p); if (C) { Show("warrning", XF.GetString(406)); }
                                 else { Hide("2"); items[catI][RS - 1].amount--; if (items[catI][RS - 1].amount == 0) items[catI].RemoveAt(RS - 1); }
@@ -206,7 +206,7 @@ namespace FarmConsole.Body.Controlers
             {
                 case ConsoleKey.Q:
                     if (DRAGGED) { FarmView.Drop(false); DRAGGED = false; LS = PS = CS = RS = 1; }
-                    else { CS = PS = 1; catF = FarmView.GetFieldCategory(); LSize = FACT[catF].Count; Show("QF"); OS = true; } break;
+                    else { CS = PS = 1; catF = FarmView.GetFieldProp("category"); LSize = FACT[catF].Count; Show("QF"); OS = true; } break;
 
                 case ConsoleKey.E:
                     if (DRAGGED) { FarmView.Drop(true); DRAGGED = false; LS = PS = CS = RS = 1; }

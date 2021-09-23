@@ -1,5 +1,6 @@
 ﻿using FarmConsole.Body.Controlers;
 using FarmConsole.Body.Services;
+using FarmConsole.Body.Views.LocationViews;
 using System;
 using System.Xml.Schema;
 
@@ -10,6 +11,7 @@ namespace FarmConsole
         static void Main()
         {
             WindowService.PresetWindow();
+            MapView.GlobalMapInitializate();
             while (MainControllerService.openScreen != "Close")
             {
                 switch (MainControllerService.openScreen)

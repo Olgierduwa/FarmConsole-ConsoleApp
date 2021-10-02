@@ -6,27 +6,26 @@
 
   <!-- Aktywności związane z polami -->
   
-  <String id="100">Informacje</String>
+  <String id="100">Opis</String>
   <String id="101">Zniszcz</String>
-  <String id="102">Przenieś</String>
-  <String id="103">Sprzedaj</String>
-  <String id="104">Odwiedź</String>
-  <String id="105">Użyj</String>
-  <String id="106">Zaoraj</String>
-  <String id="107">Postaw</String>
+  <String id="102">Postaw</String>
+  <String id="103">Użyj</String>
+  <String id="104">Schowaj</String>
+  <String id="105">Przenieś</String>
+  <String id="106">Wejdź</String>
+  <String id="107">Zaoraj</String>
   <String id="108">Posiej</String>
-  <String id="109">Użyźnij</String>
-  <String id="110">Podlej</String>
+  <String id="109">Podlej</String>
+  <String id="110">Użyźnij</String>
   <String id="111">Zbierz</String>
   <String id="112">Zrób nawóz</String>
   
   <!-- Aktywności związane z przedmiotami -->
   
-  <String id="200">Informacje</String>
+  <String id="200">Opis</String>
   <String id="201">Zniszcz</String>
-  <String id="202">Sprzedaj</String>
-  <String id="203">Postaw</String>
-  <String id="204">Użyj</String>
+  <String id="202">Postaw</String>
+  <String id="203">Użyj</String>
   
   <!-- PopUpText -->
   

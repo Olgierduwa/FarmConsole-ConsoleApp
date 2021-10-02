@@ -1,152 +1,234 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<!-- 
+0 = Black
+1 = DarkBlue
+2 = DarkGreen
+3 = DarkCyan
+4 = DarkRed
+5 = DarkMagenta
+6 = DarkYellow
+7 = Gray
+
+8 = DarkGray
+9 = Blue
+10 = Green
+11 = Cyan
+12 = Red
+13 = Magenta
+14 = Yellow
+15 = White
+-->
+
 <FieldsCollection>
-  <category cat="0" name="pola techniczne">
-    <field id="0" name="empty_field">
-		´´ @
-	</field>
-	<field id="1" name="black_field">
-		´´´´´´´´´´     ´´´´´´´´´´@
-		´´´´´´             ´´´´´´@
-		´´                     ´´@
-		´´´                   ´´´@
-		´´´´´´´           ´´´´´´´@
-		´´´´´´´´´´´   ´´´´´´´´´´´@
-	</field>
-	<field id="2" name="pointer_field">
-		´´´´´´´´´´. ' .´´´´´´´´´´@
-		´´´´´´. '       ' .´´´´´´@
-		´´. '               ' .´´@
-		´´´ ' .           . ' ´´´@
-		´´´´´´´ ' .   . ' ´´´´´´´@
-		´´´´´´´´´´´ ' ´´´´´´´´´´´@
-	</field>
-  </category>
-  <category cat="1" name="pola nieużytkowe">
-	<field id="0" name="Skała" opis="Zwykłe pole trawy, które możesz zagospodarować jak Ci się żywnie podoba!">
-		´´´´´´´´´´┌┼┼┼┐´´´´´´´´´´@
-		´´´´´´┌┬┼┼┼┼┼┼┼┼┼┬┐´´´´´´@
-		´´┌┬┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┬┐´´@
-		´´´└┴┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┴┘´´´@
-		´´´´´´´└┴┼┼┼┼┼┼┼┴┘´´´´´´´@
-		´´´´´´´´´´´└┴┘´´´´´´´´´´´@
-	</field>
-	<field id="1" name="Ziemia" opis="Zwykłe pole trawy, które możesz zagospodarować jak Ci się żywnie podoba!">
-		´´´´´´´´´´┌┼┼┼┐´´´´´´´´´´@
-		´´´´´´┌┬┼┼┼┼┼┼┼┼┼┬┐´´´´´´@
-		´´┌┬┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┬┐´´@
-		´´´└┴┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┴┘´´´@
-		´´´´´´´└┴┼┼┼┼┼┼┼┴┘´´´´´´´@
-		´´´´´´´´´´´└┴┘´´´´´´´´´´´@
-	</field>
-    <field id="2" name="Trawa" opis="Zwykłe pole trawy, które możesz zagospodarować jak Ci się żywnie podoba!">
-		´´´´´´´´´´┌┼┼┼┐´´´´´´´´´´@
-		´´´´´´┌┬┼┼┼┼┼┼┼┼┼┬┐´´´´´´@
-		´´┌┬┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┬┐´´@
-		´´´└┴┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┴┘´´´@
-		´´´´´´´└┴┼┼┼┼┼┼┼┴┘´´´´´´´@
-		´´´´´´´´´´´└┴┘´´´´´´´´´´´@
-	</field>
-  </category>
-  <category cat="2" name="pola uprawne">
-    <field id="0" name="Pole Uprawne" opis="Pole, które zostało zaorane czeka jedynie, aż zasiejesz na nim wybrane nasiona!">
-		´´´´´´´´´´╔╬╬╬╗´´´´´´´´´´@
-		´´´´´´╔╦╬╬╬╬╬╬╬╬╬╦╗´´´´´´@
-		´´╔╦╬╬╬╬╬╬pole╬╬╬╬╬╬╬╦╗´´@
-		´´´╚╩╬╬╬╬uprawne╬╬╬╬╩╝´´´@
-		´´´´´´´╚╩╬╬╬╬╬╬╬╩╝´´´´´´´@
-		´´´´´´´´´´´╚╩╝´´´´´´´´´´´@
-	</field>
-  </category>
-  <category cat="3" name="pola posiane">
-    <field id="0" name="Posiana Przenica" opis="Pole, na którym dopiero co została posiana przenica, niedługo wykiełkuje!">
-		´´´´´´´´´´╔╬╬╬╗´´´´´´´´´´@
-		´´´´´´╔╦╬╬╬╬╬╬╬╬╬╦╗´´´´´´@
-		´´╔╦╬╬╬╬╬╬posiana╬╬╬╬╦╗´´@
-		´´´╚╩╬╬╬╬przenica╬╬╬╩╝´´´@
-		´´´´´´´╚╩╬╬╬╬╬╬╬╩╝´´´´´´´@
-		´´´´´´´´´´´╚╩╝´´´´´´´´´´´@
-	</field>
-  </category>
-  <category cat="4" name="pola rosnące">
-    <field id="0" name="Rosnąca Przenica" opis="Pole, ze stopniowo rosnącą przenicą. Dbaj o nią a zbierzesz dorodne plony!">
-		´´´´´´´´´´╔╬╬╬╗´´´´´´´´´´@
-		´´´´´´╔╦╬╬╬╬╬╬╬╬╬╦╗´´´´´´@
-		´´╔╦╬╬╬╬╬╬rosnąca╬╬╬╬╦╗´´@
-		´´´╚╩╬╬╬╬przenica╬╬╬╩╝´´´@
-		´´´´´´´╚╩╬╬╬╬╬╬╬╩╝´´´´´´´@
-		´´´´´´´´´´´╚╩╝´´´´´´´´´´´@
-	</field>
-  </category>
-  <category cat="5" name="pola dojrzałe">
-    <field id="0" name="Dojrzała Przenica" opis="Pole z dojrzałą i gotową do zebrania przenicą. Pośpiesz się zanim zgnije!">
-		´´´´´´´´´´╔╬╬╬╗´´´´´´´´´´@
-		´´´´´´╔╦╬╬╬╬╬╬╬╬╬╦╗´´´´´´@
-		´´╔╦╬╬╬╬╬dojrzała╬╬╬╬╦╗´´@
-		´´´╚╩╬╬╬╬przenica╬╬╬╩╝´´´@
-		´´´´´´´╚╩╬╬╬╬╬╬╬╩╝´´´´´´´@
-		´´´´´´´´´´´╚╩╝´´´´´´´´´´´@
-	</field>
-  </category>
-  <category cat="6" name="pola zgniłe">
-    <field id="0" name="Zgniła Przenica" opis="Przenica, która zgniła w wyniku pozostawienia jej zbyt długo dojrzałej!">
-		´´´´´´´´´´╔╬╬╬╗´´´´´´´´´´@
-		´´´´´´╔╦╬╬╬╬╬╬╬╬╬╦╗´´´´´´@
-		´´╔╦╬╬╬╬╬╬zgnila╬╬╬╬╬╦╗´´@
-		´´´╚╩╬╬╬╬przenica╬╬╬╩╝´´´@
-		´´´´´´´╚╩╬╬╬╬╬╬╬╩╝´´´´´´´@
-		´´´´´´´´´´´╚╩╝´´´´´´´´´´´@
-	</field>
-  </category>
-  <category cat="7" name="budynki użytkowe">
-    <field id="0" name="Dom" opis="Budynek mieszkalny, który posiadasz. Możesz go odwiedzić, to przecież Twój dom!">
-		´´´´´´´´´´´´.´´´´´´´´´´´´@
-		´´´´´┌┬┐.-''¦''-._´´´´´´´@
-		´´´.-││/    ¦     ''-.´´´@
-		´´':._'     ¦      _.:'´´@
-		´´´║█│'-._  ¦  _.-:│█║´´´@
-		´´´'▀▀█▄▄‗│▄║▄│ ▄█││▀'´´´@
-		´´´´´´´'▀▀██║██▀▀'´´´´´´´@
-		´´´´´´´´´´´'▀'´´´´´´´´´´´@
-	</field>
-  </category>
-  <category cat="8" name="dekoracje statyczne">
-    <field id="0" name="Silos" opis="Budynek dekoracyjny, w którym przechowujesz swoje produkty. Zwiększa pojemność magazynu!">
-		´´´´´´´´´´▄■■■▄´´´´´´´´´´@
-		´´´´´´´´║█■▄▄▄■█║´´´´´´´´@
-		´´´´´´´´║█■███■█║´´´´´´´´@
-		´´´´´´´´║█■███■█║´´´´´´´´@
-		´´´´´´´´║▀■███■▀║´´´´´´´´@
-		´´´´´´´´║█■▄▄▄■█║´´´´´´´´@
-		´´´´´´´´║█■███■█║´´´´´´´´@
-		´´´´´´┌┬║█■███■█║┬┐´´´´´´@
-		´´┌┬┼┼┼┼║▀■███■▀║┼┼┼┼┬┐´´@
-		´´´└┴┼┼┼┼▀■▄▄▄■▀┼┼┼┼┴┘´´´@
-		´´´´´´´└┴┼┬┬┬┬┬┼┴┘´´´´´´´@
-		´´´´´´´´´´´└┴┘´´´´´´´´´´´@
-	</field>
-    <field id="1" name="Wieża Ciśnień" opis="Budynek dekoracyjny, zwiększający wydajność nawadniania Twoich pól!">
-		´´´´´´´´´´▄■■■▄´´´´´´´´´´@
-		´´´´´´´´´█■▄▄▄■█´´´´´´´´´@
-		´´´´´´´´´█║║║║║█´´´´´´´´´@
-		´´´´´´´´´´▀■■■▀´´´´´´´´´´@
-		´´´´´´´´´´║/║\║´´´´´´´´´´@
-		´´´´´´´´´´║\║/║´´´´´´´´´´@
-		´´´´´´´´´´║/║\║´´´´´´´´´´@
-		´´´´´´_.-║.'║'.║-._´´´´´´@
-		´´_.-'   ║.'║'.║   '-._´´@
-		´´´'-._  '-.║.-'  _.-'´´´@
-		´´´´´´´'-._   _.-'´´´´´´´@
-		´´´´´´´´´´´'-'´´´´´´´´´´´@
-	</field>
-  </category>
-  <category cat="9" name="maszyny rolne">
-    <field id="0" name="Traktor" opis="Maszyna rolna, pozwalająca Ci sprawniej zarządzać Twoimi polami rolnymi!">
-		´´´´´´´´´´╔╬╬╬╗´´´´´´´´´´@
-		´´´´´´╔╦╬╬╬╬╬╬╬╬╬╦╗´´´´´´@
-		´´╔╦╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╦╗´´@
-		´´´╚╩╬╬╬╬╬╬╬╬╬╬╬╬╬╬╬╩╝´´´@
-		´´´´´´´╚╩╬╬╬╬╬╬╬╩╝´´´´´´´@
-		´´´´´´´´´´´╚╩╝´´´´´´´´´´´@
-	</field>
-  </category>
+	<category cat="0" name="technical fields" menuAct="" mapAct="">
+		<scale s="10m x 10m">
+			<field id="0" name="emptiness" state="" menuAct="" mapAct="" price="" colors="0" property="">
+				´@
+			</field>
+			<field id="1" name="rubber" state="" menuAct="" mapAct="" price="" colors="0" property="">
+				´´´´´´´´´     ´´´´´´´´´@
+				´´´´´             ´´´´´@
+				´                     ´@
+				´´                   ´´@
+				´´´´´´           ´´´´´´@
+				´´´´´´´´´´   ´´´´´´´´´´@
+			</field>
+			<field id="2" name="marker" state="" menuAct="" mapAct="" price="" colors="15" property="">
+				´´´´´´´´´. ' .´´´´´´´´´@
+				´´´´´. '       ' .´´´´´@
+				´. '               ' .´@
+				´´ ' .           . ' ´´@
+				´´´´´´ ' .   . ' ´´´´´´@
+				´´´´´´´´´´ ' ´´´´´´´´´´@
+			</field>
+			<field id="3" name="error" state="" menuAct="" mapAct="" price="" colors="15" property="">
+				´´´´´´´´´. ' .´´´´´´´´´@
+				´´´´´. ' FIELD ' .´´´´´@
+				´. '    DOESN'T    ' .´@
+				´´ ' .   EXIST   . ' ´´@
+				´´´´´´ ' .   . ' ´´´´´´@
+				´´´´´´´´´´ ' ´´´´´´´´´´@
+			</field>
+		</scale>
+		<scale s="1m x 1m">
+			
+		</scale>
+	</category>
+	<category cat="1" name="ground fields" menuAct="" mapAct="">
+		<scale s="10m x 10m">
+			<field id="0" name="Trawa" state="Skoszona/Zarośnięta" menuAct="" mapAct="Zaoraj,Postaw/Skoś" price="" colors="10/2" property="">
+				´´´´´´´´´┌┼┼┼┐´´´´´´´´´@´´´´´´´´´┌┼┼┼┐´´´´´´´´´@
+				´´´´´┌┬┼┼┼┼┼┼┼┼┼┬┐´´´´´@´´´´´┌┬┼┼┼┼┼┼┼┼┼┬┐´´´´´@
+				´┌┬┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┬┐´@´┌┬┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┬┐´@
+				´´└┴┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┴┘´´@´´└┴┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┴┘´´@
+				´´´´´´└┴┼┼┼┼┼┼┼┴┘´´´´´´@´´´´´´└┴┼┼┼┼┼┼┼┴┘´´´´´´@
+				´´´´´´´´´´└┴┘´´´´´´´´´´@´´´´´´´´´´└┴┘´´´´´´´´´´@
+			</field>
+			<field id="1" name="Droga Szutrowa" state="-Lewy/-Prawy" menuAct="" mapAct="Obróć" price="" colors="7" property="">
+				´´´´´´´´´┌┼┼┼┐´´´´´´´´´@´´´´´´´´´┌┼┼┼┐´´´´´´´´´@
+				´´´´´´´´'└┼┼┼┼┼┼┬┐´´´´´@´´´´´┌┬┼┼┼┼┼┴┘'´´´´´´´´@
+				´┌┬┼┼┬┐.    '└┼┼┼┼┼┼┬┐´@´┌┬┼┼┼┼┼┴┘'    .┌┬┼┼┬┐´@
+				´´└┴┼┼┼┼┼┬┐.    '└┼┴┘´´@´´└┴┼┘'    .┌┬┼┼┼┼┼┴┘´´@
+				´´´´´´└┴┼┼┼┼┼┬┐.´´´´´´´@´´´´´´´´┌┬┼┼┼┼┼┴┘´´´´´´@
+				´´´´´´´´´´└┴┘´´´´´´´´´´@´´´´´´´´´´└┴┘´´´´´´´´´´@
+			</field>
+			<field id="2" name="Droga Asfaltowa" state="-Lewy/-Prawy" menuAct="" mapAct="Obróć" price="" colors="7" property="">
+				´´´´´´´´´┌┼┼┼┐´´´´´´´´´@´´´´´´´´´┌┼┼┼┐´´´´´´´´´@
+				´´´´´´´´ '└┼┼┼┼┼┬┐´´´´´@´´´´´┌┬┼┼┼┼┴┘' ´´´´´´´´@
+				´┌┬┼┬┐.      '└┼┼┼┼┼┬┐´@´┌┬┼┼┼┼┴┘'      .┌┬┼┬┐´@
+				´´└┴┼┼┼┼┬┐.      '└┼┘´´@´´└┼┘'      .┌┬┼┼┼┼┴┘´´@
+				´´´´´´└┴┼┼┼┼┬┐. ´´´´´´´@´´´´´´´ .┌┬┼┼┼┼┴┘´´´´´´@
+				´´´´´´´´´´└┴┘´´´´´´´´´´@´´´´´´´´´´└┴┘´´´´´´´´´´@
+			</field>
+			<field id="3" name="Droga Asfaltowa Dwupasmowa" state="-Lewy/-Prawy" menuAct="" mapAct="Obróć" price="" colors="7" property="">
+				´´´´´´´´´´┌┼┼┐´´´´´´´´´@´´´´´´´´´┌┼┼┐´´´´´´´´´´@
+				´´´´´´-_    '└┼┼┬┐´´´´´@´´´´´┌┬┼┼┘'    _-´´´´´´@
+				´┌┼┐.     -_    '└┼┼┬┐´@´┌┬┼┼┘'    _-     .┌┼┐´@
+				´´└┴┼┼┬┐.     -_   '┘´´@´´└'   _-     .┌┬┼┼┴┘´´@
+				´´´´´´└┴┼┼┬┐.     ´´´´´@´´´´´     .┌┬┼┼┴┘´´´´´´@
+				´´´´´´´´´´└┴┘´´´´´´´´´´@´´´´´´´´´´└┴┘´´´´´´´´´´@
+			</field>
+			<field id="4" name="Tory" state="-Lewy/-Prawy" menuAct="" mapAct="Obróć" price="" colors="7" property="">
+				´´´´´´´´´┌┼┼┼┐´´´´´´´´´@´´´´´´´´´┌┼┼┼┐´´´´´´´´´@
+				´´´´´´´´'└┼┼┼┼┼┼┬┐´´´´´@´´´´´┌┬┼┼┼┼┼┴┘'´´´´´´´´@
+				´┌┬┼┼┬┐.    '└┼┼┼┼┼┼┬┐´@´┌┬┼┼┼┼┼┴┘'    .┌┬┼┼┬┐´@
+				´´└┴┼┼┼┼┼┬┐.    '└┼┴┘´´@´´└┴┼┘'    .┌┬┼┼┼┼┼┴┘´´@
+				´´´´´´└┴┼┼┼┼┼┬┐.´´´´´´´@´´´´´´´´┌┬┼┼┼┼┼┴┘´´´´´´@
+				´´´´´´´´´´└┴┘´´´´´´´´´´@´´´´´´´´´´└┴┘´´´´´´´´´´@
+			</field>
+			<field id="5" name="Sklep Spożywczy" state="-Lewy/-Prawy" menuAct="" mapAct="Wejdź" price="" colors="7" property="">
+				´´´´´´´´´´´.´´´´´´´´´´´@´´´´´´´´´´´.´´´´´´´´´´´@
+				´´´´┌┬┐.-''¦''-._´´´´´´@´´´´´´_.-''¦''-.┌┬┐´´´´@
+				´´.-││/    ¦     ''-.´´@´´.-''     ¦    \││-.´´@
+				´':._'     ¦      _.:'´@´':._      ¦     '_.:'´@
+				´.║█│'-._  ¦  _.-:│█║.´@´.║█│:-._  ¦  _.-'│█║.´@
+				´´'▀▀█▄▄‗│▄║▄│‗▄█││▀'´´@´´'▀││█▄‗│▄║▄│‗▄▄█▀▀'´´@
+				´´´´´´'▀▀██║██▀▀'´´´´´´@´´´´´´'▀▀██║██▀▀'´´´´´´@
+				´´´´´´´´´´'▀'´´´´´´´´´´@´´´´´´´´´´'▀'´´´´´´´´´´@
+			</field>
+			<field id="6" name="Masarnia" state="-Lewy/-Prawy" menuAct="" mapAct="Wejdź" price="" colors="7" property="">
+				´´´´´´´´´´´.´´´´´´´´´´´@´´´´´´´´´´´.´´´´´´´´´´´@
+				´´´´┌┬┐.-''¦''-._´´´´´´@´´´´´´_.-''¦''-.┌┬┐´´´´@
+				´´.-││/    ¦     ''-.´´@´´.-''     ¦    \││-.´´@
+				´':._'     ¦      _.:'´@´':._      ¦     '_.:'´@
+				´.║█│'-._  ¦  _.-:│█║.´@´.║█│:-._  ¦  _.-'│█║.´@
+				´´'▀▀█▄▄‗│▄║▄│‗▄█││▀'´´@´´'▀││█▄‗│▄║▄│‗▄▄█▀▀'´´@
+				´´´´´´'▀▀██║██▀▀'´´´´´´@´´´´´´'▀▀██║██▀▀'´´´´´´@
+				´´´´´´´´´´'▀'´´´´´´´´´´@´´´´´´´´´´'▀'´´´´´´´´´´@
+			</field>
+			<field id="7" name="Piekarnia" state="-Lewy/-Prawy" menuAct="" mapAct="Wejdź" price="" colors="7" property="">
+				´´´´´´´´´´´.´´´´´´´´´´´@´´´´´´´´´´´.´´´´´´´´´´´@
+				´´´´┌┬┐.-''¦''-._´´´´´´@´´´´´´_.-''¦''-.┌┬┐´´´´@
+				´´.-││/    ¦     ''-.´´@´´.-''     ¦    \││-.´´@
+				´':._'     ¦      _.:'´@´':._      ¦     '_.:'´@
+				´.║█│'-._  ¦  _.-:│█║.´@´.║█│:-._  ¦  _.-'│█║.´@
+				´´'▀▀█▄▄‗│▄║▄│‗▄█││▀'´´@´´'▀││█▄‗│▄║▄│‗▄▄█▀▀'´´@
+				´´´´´´'▀▀██║██▀▀'´´´´´´@´´´´´´'▀▀██║██▀▀'´´´´´´@
+				´´´´´´´´´´'▀'´´´´´´´´´´@´´´´´´´´´´'▀'´´´´´´´´´´@
+			</field>
+		</scale>
+		<scale s="1m x 1m">
+			<field id="0" name="Drewniana Podłoga" state="Czysta/Brudna" menuAct="" mapAct="Postaw/Umyj" price="" colors="4" property="">
+				´´´´´´´´´┌┼┼┼┐´´´´´´´´´@´´´´´´´´´┌┼┼┼┐´´´´´´´´´@
+				´´´´´┌┬┼┼┼┼┼┼┼┼┼┬┐´´´´´@´´´´´┌┬┼┼┼┼┼┼┼┼┼┬┐´´´´´@
+				´┌┬┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┬┐´@´┌┬┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┬┐´@
+				´´└┴┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┴┘´´@´´└┴┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┴┘´´@
+				´´´´´´└┴┼┼┼┼┼┼┼┴┘´´´´´´@´´´´´´└┴┼┼┼┼┼┼┼┴┘´´´´´´@
+				´´´´´´´´´´└┴┘´´´´´´´´´´@´´´´´´´´´´└┴┘´´´´´´´´´´@
+			</field>
+		</scale>
+	</category>
+	<category cat="2" name="state fields" menuAct="" mapAct="Zniszcz">
+		<scale s="10m x 10m">
+			<field id="0" name="Pole" state="Zaorane" menuAct="" mapAct="Posiej" price="" colors="4" property="">
+				´´´´´´´´´╔╬╬╬╗´´´´´´´´´@
+				´´´´´╔╦╬╬╬╬╬╬╬╬╬╦╗´´´´´@
+				´╔╦╬╬╬╬╬╬pole╬╬╬╬╬╬╬╦╗´@
+				´´╚╩╬╬╬╬uprawne╬╬╬╬╩╝´´@
+				´´´´´´╚╩╬╬╬╬╬╬╬╩╝´´´´´´@
+				´´´´´´´´´´╚╩╝´´´´´´´´´´@
+			</field>
+			<field id="1" name="Pole Przenicy" state="Posiane/Kiełkujące/Rosnące/Dojrzewające/Dojrzałe/Zgniłe"
+				   menuAct="" mapAct="Podlej/Podlej/Podlej/Podlej/Zbierz/Zrób nawóz" price="" colors="2/2/10/14/6/6" property="">
+				´´´´´´´´´╔╬╬╬╗´´´´´´´´´@´´´´´´´´´╔╬╬╬╗´´´´´´´´´@´´´´´´´´´╔╬╬╬╗´´´´´´´´´@´´´´´´´´´╔╬╬╬╗´´´´´´´´´@´´´´´´´´´╔╬╬╬╗´´´´´´´´´@´´´´´´´´´╔╬╬╬╗´´´´´´´´´@
+				´´´´´╔╦╬╬╬╬╬╬╬╬╬╦╗´´´´´@´´´´´╔╦╬╬╬╬╬╬╬╬╬╦╗´´´´´@´´´´´╔╦╬╬╬╬╬╬╬╬╬╦╗´´´´´@´´´´´╔╦╬╬╬╬╬╬╬╬╬╦╗´´´´´@´´´´´╔╦╬╬╬╬╬╬╬╬╬╦╗´´´´´@´´´´´╔╦╬╬╬╬╬╬╬╬╬╦╗´´´´´@
+				´╔╦╬╬╬╬╬╬posiana╬╬╬╬╦╗´@´╔╦╬╬╬╬keiłkująca╬╬╬╦╗´@´╔╦╬╬╬╬╬rosnąca╬╬╬╬╬╦╗´@´╔╦╬╬╬dojrzewająca╬╬╦╗´@´╔╦╬╬╬╬╬dojrzała╬╬╬╬╦╗´@´╔╦╬╬╬╬╬╬zgnila╬╬╬╬╬╦╗´@
+				´´╚╩╬╬╬╬przenica╬╬╬╩╝´´@´´╚╩╬╬╬╬przenica╬╬╬╩╝´´@´´╚╩╬╬╬╬przenica╬╬╬╩╝´´@´´╚╩╬╬╬╬przenica╬╬╬╩╝´´@´´╚╩╬╬╬╬przenica╬╬╬╩╝´´@´´╚╩╬╬╬╬przenica╬╬╬╩╝´´@
+				´´´´´´╚╩╬╬╬╬╬╬╬╩╝´´´´´´@´´´´´´╚╩╬╬╬╬╬╬╬╩╝´´´´´´@´´´´´´╚╩╬╬╬╬╬╬╬╩╝´´´´´´@´´´´´´╚╩╬╬╬╬╬╬╬╩╝´´´´´´@´´´´´´╚╩╬╬╬╬╬╬╬╩╝´´´´´´@´´´´´´╚╩╬╬╬╬╬╬╬╩╝´´´´´´@
+				´´´´´´´´´´╚╩╝´´´´´´´´´´@´´´´´´´´´´╚╩╝´´´´´´´´´´@´´´´´´´´´´╚╩╝´´´´´´´´´´@´´´´´´´´´´╚╩╝´´´´´´´´´´@´´´´´´´´´´╚╩╝´´´´´´´´´´@´´´´´´´´´´╚╩╝´´´´´´´´´´@
+			</field>
+			<field id="2" name="Drzewo" state="Posadzone/Kiełkujące/Rosnące/Dojrzewające/Dojrzałe/Martwe"
+				   menuAct="" mapAct="Podlej/Podlej/Podlej/Podlej/Zbierz/Zniszcz" price="" colors="2/2/10/14/6/6" property="">
+				´´´´´´´´´╔╬╬╬╗´´´´´´´´´@´´´´´´´´´╔╬╬╬╗´´´´´´´´´@´´´´´´´´´╔╬╬╬╗´´´´´´´´´@´´´´´´´´´╔╬╬╬╗´´´´´´´´´@´´´´´´´´´╔╬╬╬╗´´´´´´´´´@´´´´´´´´´╔╬╬╬╗´´´´´´´´´@
+				´´´´´╔╦╬╬╬╬╬╬╬╬╬╦╗´´´´´@´´´´´╔╦╬╬╬╬╬╬╬╬╬╦╗´´´´´@´´´´´╔╦╬╬╬╬╬╬╬╬╬╦╗´´´´´@´´´´´╔╦╬╬╬╬╬╬╬╬╬╦╗´´´´´@´´´´´╔╦╬╬╬╬╬╬╬╬╬╦╗´´´´´@´´´´´╔╦╬╬╬╬╬╬╬╬╬╦╗´´´´´@
+				´╔╦╬╬╬╬posadzone╬╬╬╬╦╗´@´╔╦╬╬╬╬keiłkujące╬╬╬╦╗´@´╔╦╬╬╬╬╬rosnące╬╬╬╬╬╦╗´@´╔╦╬╬╬dojrzewające╬╬╦╗´@´╔╦╬╬╬╬╬dojrzałe╬╬╬╬╦╗´@´╔╦╬╬╬╬╬╬zgnila╬╬╬╬╬╦╗´@
+				´´╚╩╬╬╬╬drzewo╬╬╬╬╬╩╝´´@´´╚╩╬╬╬╬drzewo╬╬╬╬╬╩╝´´@´´╚╩╬╬╬╬drzewo╬╬╬╬╬╩╝´´@´´╚╩╬╬╬╬drzewo╬╬╬╬╬╩╝´´@´´╚╩╬╬╬╬drzewo╬╬╬╬╬╩╝´´@´´╚╩╬╬╬╬drzewo╬╬╬╬╬╩╝´´@
+				´´´´´´╚╩╬╬╬╬╬╬╬╩╝´´´´´´@´´´´´´╚╩╬╬╬╬╬╬╬╩╝´´´´´´@´´´´´´╚╩╬╬╬╬╬╬╬╩╝´´´´´´@´´´´´´╚╩╬╬╬╬╬╬╬╩╝´´´´´´@´´´´´´╚╩╬╬╬╬╬╬╬╩╝´´´´´´@´´´´´´╚╩╬╬╬╬╬╬╬╩╝´´´´´´@
+				´´´´´´´´´´╚╩╝´´´´´´´´´´@´´´´´´´´´´╚╩╝´´´´´´´´´´@´´´´´´´´´´╚╩╝´´´´´´´´´´@´´´´´´´´´´╚╩╝´´´´´´´´´´@´´´´´´´´´´╚╩╝´´´´´´´´´´@´´´´´´´´´´╚╩╝´´´´´´´´´´@
+			</field>
+		</scale>
+		<scale s="1m x 1m">
+			
+		</scale>
+	</category>
+	<category cat="3" name="physical fields" menuAct="Postaw,Zniszcz" mapAct="Przenieś,Schowaj,Zniszcz">
+		<scale s="10m x 10m">
+			<field id="0" name="Dom" state="-Lewy/-Prawy" menuAct="" mapAct="Wejdź,Obróć/Wejdź,Obróć" price="" colors="7" property="">
+				´´´´´´´´´´´.´´´´´´´´´´´@´´´´´´´´´´´.´´´´´´´´´´´@
+				´´´´┌┬┐.-''¦''-._´´´´´´@´´´´´´_.-''¦''-.┌┬┐´´´´@
+				´´.-││/    ¦     ''-.´´@´´.-''     ¦    \││-.´´@
+				´':._'     ¦      _.:'´@´':._      ¦     '_.:'´@
+				´.║█│'-._  ¦  _.-:│█║.´@´.║█│:-._  ¦  _.-'│█║.´@
+				´´'▀▀█▄▄‗│▄║▄│‗▄█││▀'´´@´´'▀││█▄‗│▄║▄│‗▄▄█▀▀'´´@
+				´´´´´´'▀▀██║██▀▀'´´´´´´@´´´´´´'▀▀██║██▀▀'´´´´´´@
+				´´´´´´´´´´'▀'´´´´´´´´´´@´´´´´´´´´´'▀'´´´´´´´´´´@
+			</field>
+			<field id="1" name="Silos" state="" menuAct="" mapAct="" price="" colors="8" property="">
+				´´´´´´´´´▄■■■▄´´´´´´´´´@
+				´´´´´´´║█■▄▄▄■█║´´´´´´´@
+				´´´´´´´║█■███■█║´´´´´´´@
+				´´´´´´´║█■███■█║´´´´´´´@
+				´´´´´´´║▀■███■▀║´´´´´´´@
+				´´´´´´´║█■▄▄▄■█║´´´´´´´@
+				´´´´´´´║█■███■█║´´´´´´´@
+				´´´´´┌┬║█■███■█║┬┐´´´´´@
+				´┌┬┼┼┼┼║▀■███■▀║┼┼┼┼┬┐´@
+				´´└┴┼┼┼┼▀■▄▄▄■▀┼┼┼┼┴┘´´@
+				´´´´´´└┴┼┬┬┬┬┬┼┴┘´´´´´´@
+				´´´´´´´´´´└┴┘´´´´´´´´´´@
+			</field>
+			<field id="2" name="Wieża Ciśnień" state="" menuAct="" mapAct="" price="" colors="8" property="">
+				´´´´´´´´´▄■■■▄´´´´´´´´´@
+				´´´´´´´´█■▄▄▄■█´´´´´´´´@
+				´´´´´´´´█║║║║║█´´´´´´´´@
+				´´´´´´´´´▀■■■▀´´´´´´´´´@
+				´´´´´´´´´║/║\║´´´´´´´´´@
+				´´´´´´´´´║\║/║´´´´´´´´´@
+				´´´´´´´´´║/║\║´´´´´´´´´@
+				´´´´´_.-║.'║'.║-._´´´´´@
+				´_.-'   ║.'║'.║   '-._´@
+				´´'-._  '-.║.-'  _.-'´´@
+				´´´´´´'-._   _.-'´´´´´´@
+				´´´´´´´´´´'-'´´´´´´´´´´@
+			</field>
+		</scale>
+		<scale s="1m x 1m">
+			
+		</scale>
+	</category>
+	<category cat="4" name="virtual fields" menuAct="Zniszcz" mapAct="">
+		<scale s="10m x 10m">
+			<field id="0" name="Nasiona Przenicy" state="" menuAct="Posiej" mapAct="" price="20" colors="" property="2001="/>
+			<field id="1" name="Sadzonka Drzewa" state="" menuAct="Posiej" mapAct="" price="40" colors="" property="2002"/>
+			<field id="2" name="Nasiona Rzepaku" state="" menuAct="Posiej" mapAct="" price="30" colors="" property="2003"/>
+			<field id="4" name="Naturalny Nawóz" state="" menuAct="Nawieź" mapAct="" price="80" colors="" property=""/>
+			<field id="5" name="Syntetyczny Nawóz" state="" menuAct="Nawieź" mapAct="" price="50" colors="" property=""/>
+		</scale>
+		<scale s="1m x 1m">
+			<field id="0" name="Wiadro" state="" menuAct="Użyj" mapAct="" price="20" colors="" property=""/>
+			<field id="1" name="Kawa" state="" menuAct="Wypij" mapAct="" price="30" colors="" property=""/>
+			<field id="2" name="Talerz" state="Czysty/Brudny" menuAct="Użyj/Umyj" mapAct="" price="40" colors="" property=""/>
+		</scale>
+	</category>
 </FieldsCollection>

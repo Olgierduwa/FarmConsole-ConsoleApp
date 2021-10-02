@@ -10,8 +10,6 @@ namespace FarmConsole.Body.Services
         #region PRIVATE ATTRIBUTES
         private static readonly int StandardFieldHeight = 7;
         private static List<Point> SelectedFields;          // Trzyma X,Y zaznaczonych pól Fizycznej Mapy
-        private static List<List<string>>[] FieldViews;
-        private static List<List<int>>[] FSP;               // Field Start Positions
         private static Point VSP;                           // Visual Stand Position //
         private static Point DraggedPosition;               // Pozycja pochwyconego pola z Fizycznej Mapy
         private static FieldModel BaseField;                // Pole Podłoża
@@ -20,8 +18,7 @@ namespace FarmConsole.Body.Services
         private static int BotBorder;
         private static int LeftBorder;
         private static int RightBorder;
-        private static int[,,] SimpleMap;
-        private static List<Point> MapExtremePoints;
+        private static List<Point> PhisicalMapExtremePoints;
         private static FieldModel[,] PhisicalMap;
         private static Point PhisicalMapPosition;
         private static int PhisicalMapSize;
@@ -38,13 +35,13 @@ namespace FarmConsole.Body.Services
             Point FSP = new Point(VSP.X + Vector.X, VSP.Y + Vector.Y); // future stand point
             if (FSP.X >= 0 && FSP.X < VisualMapSize && FSP.Y >= 0 && FSP.Y < VisualMapSize && VisualMap[FSP.X, FSP.Y].X == 0) return;
             if (DraggedField != null)
-                if (PhisicalMap[RealPos(FSP).X, RealPos(FSP).Y].Category > 6) return;
+                if (PhisicalMap[RealPos(FSP).X, RealPos(FSP).Y].Category == 3) return;
                 else FixAbove = true;
             else if (Shift)
             {
                 Point StandPos = RealPos(VSP);
                 if (SelectedFields.Contains(StandPos)) SelectedFields.Remove(StandPos);
-                else if (SelectedFields.Count == 0 || GetFieldProp("category") == PhisicalMap[StandPos.X, StandPos.Y].Category) SelectedFields.Add(StandPos);
+                else if (SelectedFields.Count == 0 || GetField().Category == PhisicalMap[StandPos.X, StandPos.Y].Category) SelectedFields.Add(StandPos);
             }
             Point PSP = new Point(VSP.X, VSP.Y); // past stand point
             TryMoveCSP(Vector);
@@ -70,7 +67,7 @@ namespace FarmConsole.Body.Services
 
             int FrameSize = PhisicalMapSize + 1;
             Point FramePosition = new Point(PhisicalMapPosition.X, PhisicalMapPosition.Y - 3);
-            foreach (Point ExtremePoint in MapExtremePoints)
+            foreach (Point ExtremePoint in PhisicalMapExtremePoints)
             {
                 Point VisualCoord = GetCoordByPos(new Point(ExtremePoint.X, ExtremePoint.Y), VisualMapPosition);
                 Point PhisicalPos = GetPosByCoord(VisualCoord, PhisicalMapPosition);
@@ -101,108 +98,46 @@ namespace FarmConsole.Body.Services
                 for (int y = 0; y < VisualMapSize; y++)
                     WriteSingleField(new Point(x, y), LB, RB, TB, BB);
         }
-        public static int GetFieldProp(string Type, bool Dragged = false, bool Base = false)
+        public static FieldModel[,] GetMap()
         {
-            if (Base) switch (Type)
-            {
-                case "type": return BaseField.Type;
-                case "category": return BaseField.Category;
-                case "duration": return BaseField.Duration;
-                default: return -100;
-            }
-            if (Dragged) switch (Type)
-            {
-                case "type": return DraggedField.Type;
-                case "category": return DraggedField.Category;
-                case "duration": return DraggedField.Duration;
-                default: return -100;
-            }
-            if (SelectedFields.Count == 0) switch (Type)
-            {
-                case "type": return PhisicalMap[RealPos(VSP).X, RealPos(VSP).Y].Type;
-                case "category": return PhisicalMap[RealPos(VSP).X, RealPos(VSP).Y].Category;
-                case "duration": return PhisicalMap[RealPos(VSP).X, RealPos(VSP).Y].Duration;
-                default: return -100;
-            }
-            switch (Type)
-            {
-                case "type": return PhisicalMap[SelectedFields[0].X, SelectedFields[0].Y].Type;
-                case "category": return PhisicalMap[SelectedFields[0].X, SelectedFields[0].Y].Category;
-                case "duration": return PhisicalMap[SelectedFields[0].X, SelectedFields[0].Y].Duration;
-                default: return -100;
-            }
+            FieldModel[,] Map = new FieldModel[PhisicalMapSize - 1, PhisicalMapSize - 1];
+            for (int i = 0; i < PhisicalMapSize - 1; i++)
+                for (int j = 0; j < PhisicalMapSize - 1; j++)
+                    Map[i, j] = PhisicalMap[i + 1, j + 1];
+            return Map;
         }
-        public static void SetFieldProp(Point PhisicalPos, int c = -1, int t = -1, int d = -1, bool Dragged = false, bool Base = false)
+        public static FieldModel GetField(string FieldType = "")
         {
-            if (Base)
+            switch(FieldType)
             {
-                if (PhisicalPos.X > 0 && PhisicalPos.Y > 0)
+                case "Base": return BaseField;
+                case "Dragged": return DraggedField;
+                default:
                 {
-                    PhisicalMap[PhisicalPos.X, PhisicalPos.Y].Category = BaseField.Category;
-                    PhisicalMap[PhisicalPos.X, PhisicalPos.Y].Type = BaseField.Type;
-                    PhisicalMap[PhisicalPos.X, PhisicalPos.Y].Duration = BaseField.Duration;
+                    if (SelectedFields.Count == 0) return PhisicalMap[RealPos(VSP).X, RealPos(VSP).Y];
+                    else return PhisicalMap[SelectedFields[0].X, SelectedFields[0].Y];
                 }
-                else BaseField = new FieldModel(c, t, d);
-                return;
             }
-            if (Dragged)
-            {
-                if (PhisicalPos.X > 0 && PhisicalPos.Y > 0)
-                {
-                    DraggedPosition = new Point(PhisicalPos.X, PhisicalPos.Y);
-                    DraggedField = new FieldModel(PhisicalMap[PhisicalPos.X, PhisicalPos.Y]);
-                }
-                else DraggedField = null;
-                return;
-            }
-            if (c >= 0) PhisicalMap[PhisicalPos.X, PhisicalPos.Y].Category = c;
-            if (t >= 0) PhisicalMap[PhisicalPos.X, PhisicalPos.Y].Type = t;
-            if (d >= 0) PhisicalMap[PhisicalPos.X, PhisicalPos.Y].Duration = d;
-        }
-        public static int[,,] GetMap()
-        {
-            for (int i = 1; i < PhisicalMapSize; i++)
-                for (int j = 1; j < PhisicalMapSize; j++)
-                {
-                    SimpleMap[i - 1, j - 1, 0] = PhisicalMap[i, j].Category;
-                    SimpleMap[i - 1, j - 1, 1] = PhisicalMap[i, j].Type;
-                    SimpleMap[i - 1, j - 1, 2] = PhisicalMap[i, j].Duration;
-                }
-            return SimpleMap;
-        }
-        public static void SetMap(int[,,] Map)
-        {
-            SimpleMap = Map;
         }
         #endregion
 
         #region PROTECTED MANAGEMENT
-        protected static void SetFieldsData()
+        protected static void SetField(Point PhisicalPos, FieldModel NewField, string FieldType = "")
         {
-            char[] MyChar = { '´', '\r', '\n' };
-            List<string>[] singleLineViews = XF.GetFields();
-            FieldViews = new List<List<string>>[singleLineViews.Length];
-            FSP = new List<List<int>>[singleLineViews.Length];
-            for (int k = 0; k < singleLineViews.Length; k++) // kazda kategoria
+            switch (FieldType)
             {
-                FieldViews[k] = new List<List<string>>();
-                FSP[k] = new List<List<int>>();
-                for (int i = 0; i < singleLineViews[k].Count; i++) // kazde pole w danej kategorii
-                {
-                    List<string> _FieldView = new List<string>();
-                    List<int> _FieldStartPos = new List<int>();
-                    string[] singleFieldView = singleLineViews[k][i].Split('@');
-                    for (int j = 0; j < singleFieldView.Length - 1; j++) // kazda grafika danego pola
+                case "Base":
+                    if (PhisicalPos.X > 0 && PhisicalPos.Y > 0)
+                        PhisicalMap[PhisicalPos.X, PhisicalPos.Y] = BaseField;
+                    else BaseField = new FieldModel(NewField); break;
+                case "Dragged":
+                    if (PhisicalPos.X > 0 && PhisicalPos.Y > 0)
                     {
-                        int countChar = 0;
-                        string line = singleFieldView[j].Trim(MyChar).Substring(4);
-                        while (line[countChar] == '´') countChar++;
-                        _FieldStartPos.Add(countChar);
-                        _FieldView.Add(line.TrimStart(MyChar));
+                        DraggedPosition = new Point(PhisicalPos.X, PhisicalPos.Y);
+                        DraggedField = new FieldModel(PhisicalMap[PhisicalPos.X, PhisicalPos.Y]);
                     }
-                    FieldViews[k].Add(_FieldView);
-                    FSP[k].Add(_FieldStartPos);
-                }
+                    else DraggedField = null; break;
+                default: if (NewField != null) PhisicalMap[PhisicalPos.X, PhisicalPos.Y] = NewField; break;
             }
         }
         protected static void SetMapBorders()
@@ -212,16 +147,16 @@ namespace FarmConsole.Body.Services
             LeftBorder = 0;
             RightBorder = Console.WindowWidth - 1;
         }
-        protected static void InitializePhisicalMap()
+        protected static void InitializePhisicalMap(FieldModel[,] Map)
         {
-            PhisicalMapSize = Convert.ToInt32(Math.Sqrt(Convert.ToDouble(SimpleMap.Length / 3))) + 1;
+            PhisicalMapSize = Convert.ToInt32(Math.Sqrt(Convert.ToDouble(Map.Length))) + 1;
             PhisicalMapPosition = new Point(Console.WindowWidth / 2 - 12, (Console.WindowHeight - 8) / 2 - PhisicalMapSize * 3 + 1);
             PhisicalMap = new FieldModel[PhisicalMapSize, PhisicalMapSize];
-            PhisicalMap[0, 0] = new FieldModel(0, 0);
-            PhisicalMap[0, 1] = new FieldModel(0, 1);
+            PhisicalMap[0, 0] = new FieldModel(ProductModel.GetProduct("emptiness"));
+            PhisicalMap[0, 1] = new FieldModel(ProductModel.GetProduct("rubber"));
             for (int x = 0; x < PhisicalMapSize - 1; x++)
                 for (int y = 0; y < PhisicalMapSize - 1; y++)
-                    PhisicalMap[x+1, y+1] = new FieldModel(SimpleMap[x, y, 0], SimpleMap[x, y, 1], SimpleMap[x, y, 2]);
+                    PhisicalMap[x + 1, y + 1] = new FieldModel(Map[x, y]);
         }
         protected static void InitializeVisualMap()
         {
@@ -246,11 +181,11 @@ namespace FarmConsole.Body.Services
         }
         protected static void InitializeMapExtremePoints()
         {
-            MapExtremePoints = new List<Point>();
-            for (int x = 0; x < VisualMapSize; x++) MapExtremePoints.Add(new Point(x, 0));
-            for (int x = 0; x < VisualMapSize; x++) MapExtremePoints.Add(new Point(x, VisualMapSize - 1));
-            for (int y = 1; y < VisualMapSize - 1; y++) MapExtremePoints.Add(new Point(0, y));
-            for (int y = 1; y < VisualMapSize - 1; y++) MapExtremePoints.Add(new Point(VisualMapSize - 1, y));
+            PhisicalMapExtremePoints = new List<Point>();
+            for (int x = 0; x < VisualMapSize; x++) PhisicalMapExtremePoints.Add(new Point(x, 0));
+            for (int x = 0; x < VisualMapSize; x++) PhisicalMapExtremePoints.Add(new Point(x, VisualMapSize - 1));
+            for (int y = 1; y < VisualMapSize - 1; y++) PhisicalMapExtremePoints.Add(new Point(0, y));
+            for (int y = 1; y < VisualMapSize - 1; y++) PhisicalMapExtremePoints.Add(new Point(VisualMapSize - 1, y));
         }
         protected static void ShowVisualMap()
         {   
@@ -278,10 +213,10 @@ namespace FarmConsole.Body.Services
                 {
                     case 0: VisualPoint.X--; VisualPoint.Y--; WriteSingleField(VisualPoint); VisualPoint.X++; break;
                     case 1: WriteSingleField(VisualPoint, LB: Border.X + 12); VisualPoint.X--; VisualPoint.Y++; break;
-                    case 2: WriteSingleField(VisualPoint, RB: Border.X + 9); VisualPoint.X++; break;
+                    case 2: WriteSingleField(VisualPoint, RB: Border.X + 10); VisualPoint.X++; break;
                     case 3: WriteSingleField(VisualPoint); VisualPoint.X++; break;
                     case 4: WriteSingleField(VisualPoint, LB: Border.X + 12, BB: Border.Y + 4); VisualPoint.X--; VisualPoint.Y++; break;
-                    case 5: WriteSingleField(VisualPoint, RB: Border.X + 9, BB: Border.Y + 4); VisualPoint.X++; break;
+                    case 5: WriteSingleField(VisualPoint, RB: Border.X + 10, BB: Border.Y + 4); VisualPoint.X++; break;
                     case 6: WriteSingleField(VisualPoint, BB: Border.Y + 1); VisualPoint.X++; break;
                     case 7: WriteSingleField(VisualPoint, BB: Border.Y - 2); VisualPoint.X--; VisualPoint.Y++; break;
                     case 8: WriteSingleField(VisualPoint, BB: Border.Y - 2); break;
@@ -361,49 +296,41 @@ namespace FarmConsole.Body.Services
         }
         private static void WriteSingleField(Point VisualPoint, int LB = -1, int RB = 1000, int TB = -1, int BB = 1000)
         {
-            if (TB < TopBorder) TB = TopBorder;
-            if (BB < TopBorder) BB = TopBorder;
-            if (LB < LeftBorder) LB = LeftBorder;
-            if (RB < LeftBorder) RB = LeftBorder;
-
-            if (TB > BotBorder) TB = BotBorder;
-            if (BB > BotBorder) BB = BotBorder;
-            if (LB >= RightBorder) LB = RightBorder;
-            if (RB > RightBorder) RB = RightBorder;
+            TB = TB < TopBorder ? TopBorder : TB > BotBorder ? BotBorder : TB;
+            BB = BB < TopBorder ? TopBorder : BB > BotBorder ? BotBorder : BB;
+            RB = RB > RightBorder ? RightBorder : RB < LeftBorder ? LeftBorder : RB;
+            LB = LB > RightBorder ? RightBorder : LB < LeftBorder ? LeftBorder : LB;
 
             Point P = RealPos(VisualPoint);
-
-            int X = VisualMapPosition.X + (VisualPoint.Y - VisualPoint.X) * 12;
-            int Y = VisualMapPosition.Y + (VisualPoint.Y + VisualPoint.X) * 3;
-            int K = PhisicalMap[P.X, P.Y].Category;
-            int T = PhisicalMap[P.X, P.Y].Type;
-            int H = FSP[K][T].Count;
-            int C = StandardFieldHeight - H;
+            ProductModel Product = ProductModel.GetProduct(PhisicalMap[P.X, P.Y]);
 
             if (VSP == VisualPoint)
             {
                 if (DraggedField != null)
                 {
-                    Console.ForegroundColor = GetFieldColor(-1, 0);
-                    K = DraggedField.Category;
-                    T = DraggedField.Type;
-                    H = FSP[K][T].Count;
-                    C = StandardFieldHeight - H;
+                    Product = ProductModel.GetProduct(DraggedField);
+                    Console.ForegroundColor = GetFieldColor("Selected");
                 }
-                else Console.ForegroundColor = GetFieldColor(-1, 1);
+                else Console.ForegroundColor = GetFieldColor("Stand");
             }
-            else if (SelectedFields.Contains(P)) Console.ForegroundColor = GetFieldColor(-1, 0);
-            else Console.ForegroundColor = GetFieldColor(K, T);
+            else if (SelectedFields.Contains(P)) Console.ForegroundColor = GetFieldColor("Selected");
+            else Console.ForegroundColor = Product.Color;
+
+            int X = VisualMapPosition.X + (VisualPoint.Y - VisualPoint.X) * 12;
+            int Y = VisualMapPosition.Y + (VisualPoint.Y + VisualPoint.X) * 3;
+            int C = StandardFieldHeight - Product.View.Length;
 
             int startIndex, lenght, left;
-            for (int i = 0; i < H; i++)
-                if (Y + i + C > TB && BB > Y + i + C && X + FSP[K][T][i] + FieldViews[K][T][i].Length > LB && RB > X + FSP[K][T][i])
+            for (int Line = 0; Line < Product.View.Length; Line++)
+                if (Y + Line + C > TB && BB > Y + Line + C &&
+                    X + Product.ViewStartPos[Line] + Product.View[Line].Length > LB && RB > X + Product.ViewStartPos[Line])
                 {
-                    startIndex = X + FSP[K][T][i] < LB ? LB - X - FSP[K][T][i] : 0;
-                    left = X + startIndex + FSP[K][T][i];
-                    lenght = FieldViews[K][T][i].Length - startIndex > RB - left + 1 ? RB - left + 1 : FieldViews[K][T][i].Length - startIndex;
-                    Console.SetCursorPosition(left, Y + i + C);
-                    Console.Write(FieldViews[K][T][i].Substring(startIndex, lenght));
+                    startIndex = X + Product.ViewStartPos[Line] < LB ? LB - X - Product.ViewStartPos[Line] : 0;
+                    left = X + startIndex + Product.ViewStartPos[Line];
+                    lenght = Product.View[Line].Length - startIndex > RB - left + 1 ?
+                        RB - left + 1 : Product.View[Line].Length - startIndex;
+                    Console.SetCursorPosition(left, Y + Line + C);
+                    Console.Write(Product.View[Line].Substring(startIndex, lenght));
                 }
             Console.ResetColor();
         }
@@ -420,82 +347,12 @@ namespace FarmConsole.Body.Services
         {
             return new Point((4 * (MapCoord.Y - StartPos.Y) + StartPos.X - MapCoord.X) / 24, (4 * (MapCoord.Y - StartPos.Y) + MapCoord.X - StartPos.X) / 24);
         }
-        private static ConsoleColor GetFieldColor(int Category, int Type)
+        private static ConsoleColor GetFieldColor(string Type)
         {
-            switch (Category)
+            switch(Type)
             {
-                case -1:
-                    switch (Type) // kolory selekcyjne
-                    {
-                        case 0: return ConsoleColor.Yellow; // SelectedFieldColor
-                        case 1: return ConsoleColor.Magenta; // CurrentStandFieldColor
-                        default: return ConsoleColor.Magenta; // undefined
-                    }
-                case 0: // pola nieużytkowe
-                    switch (Type)
-                    {
-                        case 0: return ConsoleColor.White; // air field
-                        case 1: return ConsoleColor.White; // black field
-                        case 2: return ConsoleColor.White; // pointer field
-                        default: return ConsoleColor.Magenta; // undefined
-                    }
-                case 1: // pola nieużytkowe
-                    switch (Type)
-                    {
-                        case 0: return ConsoleColor.White; // air
-                        case 1: return ConsoleColor.White; // empty field
-                        case 2: return ConsoleColor.Green; // grass
-                        default: return ConsoleColor.Magenta; // undefined
-                    }
-                case 2:  // pola uprawne
-                    switch (Type)
-                    {
-                        case 0: return ConsoleColor.DarkRed; // zaorane pole
-                        default: return ConsoleColor.Magenta; // undefined
-                    }
-                case 3:  // pola posiane
-                    switch (Type)
-                    {
-                        case 0: return ConsoleColor.DarkGreen; // przenica
-                        default: return ConsoleColor.Magenta; // undefined
-                    }
-                case 4:  // pola rosnące
-                    switch (Type)
-                    {
-                        case 0: return ConsoleColor.DarkYellow; // przenica
-                        default: return ConsoleColor.Magenta; // undefined
-                    }
-                case 5:  // pola dojrzałe
-                    switch (Type)
-                    {
-                        case 0: return ConsoleColor.Yellow; // przenica
-                        default: return ConsoleColor.Magenta; // undefined
-                    }
-                case 6:  // pola zgniłe
-                    switch (Type)
-                    {
-                        case 0: return ConsoleColor.DarkYellow; // przenica
-                        default: return ConsoleColor.Magenta; // undefined
-                    }
-                case 7:  // budynki użytkowe
-                    switch (Type)
-                    {
-                        case 0: return ConsoleColor.Gray; // dom
-                        default: return ConsoleColor.Magenta; // undefined
-                    }
-                case 8:  // dekoracje statyczne
-                    switch (Type)
-                    {
-                        case 0: return ConsoleColor.DarkGray; // silos
-                        case 1: return ConsoleColor.DarkGray; // wieza
-                        default: return ConsoleColor.Magenta; // undefined
-                    }
-                case 9:  // maszyny rolne
-                    switch (Type)
-                    {
-                        case 0: return ConsoleColor.DarkCyan; // traktor
-                        default: return ConsoleColor.Magenta; // undefined
-                    }
+                case "Selected": return ConsoleColor.Yellow;
+                case "Stand": return ConsoleColor.White;
                 default: return ConsoleColor.Magenta;
             }
         }

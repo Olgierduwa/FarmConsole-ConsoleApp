@@ -8,7 +8,7 @@ namespace FarmConsole.Body.Views.MenuViews
 {
     public class MenuLeftView : MainViewService
     {
-        public static void Show(List<string> component_list, int selected, bool extended = false, bool refresh = false)
+        public static void Show(string[] component_list, string Title, int selected, bool extended = false)
         {
             ClearList(false);
             Endl(6);
@@ -16,7 +16,7 @@ namespace FarmConsole.Body.Views.MenuViews
 
             GroupStart(1);
             Endl(2);
-            for (int i = 0; i < component_list.Count; i++)
+            for (int i = 0; i < component_list.Length; i++)
                 if (i < (Console.WindowHeight - 13) / 3)
                     TextBox(component_list[i], Console.WindowWidth / 5 - 1, margin: 0);
                 else TextBox(component_list[i], Console.WindowWidth / 5 - 1, false, margin: 0);
@@ -24,6 +24,10 @@ namespace FarmConsole.Body.Views.MenuViews
 
             GroupStart(1);
             LeftBar();
+            GroupEnd();
+
+            GroupStart(1);
+            GraphicBox(new string[] { Title }, color: ConsoleColor.Gray);
             GroupEnd();
 
             GroupStart(1, 10);
@@ -39,8 +43,8 @@ namespace FarmConsole.Body.Views.MenuViews
             GroupEnd();
 
             GroupEnd();
-            if (!refresh) PrintList();
-            UpdateSelect(selected, selected, component_list.Count);
+            PrintList();
+            UpdateSelect(selected, selected, component_list.Length);
         }
 
         public static void Clean()

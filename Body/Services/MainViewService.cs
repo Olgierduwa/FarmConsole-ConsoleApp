@@ -78,10 +78,10 @@ namespace FarmConsole.Body.Services
                 if (i < (Console.WindowHeight - 13) / 3)
                 {
                     idStartFrom++;
-                    TextBox(component_list[category][i].amount + "x " + component_list[category][i].name, Console.WindowWidth / 5 - 1, margin: 0);
+                    TextBox(component_list[category][i].Amount + "x " + component_list[category][i].ProductName, Console.WindowWidth / 5 - 1, margin: 0);
                     Print(CLIST[idStartFrom]);
                 }
-                else TextBox(component_list[category][i].name, Console.WindowWidth / 5 - 1, false, margin: 0);
+                else TextBox(component_list[category][i].ProductName, Console.WindowWidth / 5 - 1, false, margin: 0);
             GroupEnd();
             GroupEnd();
         }

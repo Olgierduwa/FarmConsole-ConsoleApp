@@ -9,7 +9,7 @@ namespace FarmConsole.Body.Views.MenuViews
 {
     public class MenuRightView : MainViewService
     {
-        public static void Show(List<ProductModel>[] component_list, int category, int selected, bool extended = false, bool refresh = false)
+        public static void Show(List<ProductModel> component_list, int selected, bool extended = false)
         {
             ClearList(false);
             Endl(6);
@@ -31,7 +31,7 @@ namespace FarmConsole.Body.Views.MenuViews
             else TextBox("WYJDŹ E", Console.WindowWidth / 10 - 1, color1: ConsoleColor.Gray, margin: 0);
             GroupEnd();
 
-            if (component_list[category].Count == 0)
+            if (component_list.Count == 0)
             {
                 GroupStart(5);
                 Endl(3);
@@ -40,16 +40,16 @@ namespace FarmConsole.Body.Views.MenuViews
             }
 
             GroupStart(5);
-            GraphicBox(new string[] { XF.GetProductCategoryName()[category], "", }, color: ConsoleColor.Gray);
-            for (int i = 0; i < component_list[category].Count; i++)
+            GraphicBox(new string[] { "Ekwipunek", "", }, color: ConsoleColor.Gray);
+            for (int i = 0; i < component_list.Count; i++)
                 if (i < (Console.WindowHeight - 13) / 3)
-                    TextBox(component_list[category][i].amount + "x " + component_list[category][i].name, Console.WindowWidth / 5 - 1, margin: 0);
-                else TextBox(component_list[category][i].amount + "x " + component_list[category][i].name, Console.WindowWidth / 5 - 1, false, margin: 0);
+                    TextBox(component_list[i].Amount + "x " + component_list[i].ProductName, Console.WindowWidth / 5 - 1, margin: 0);
+                else TextBox(component_list[i].Amount + "x " + component_list[i].ProductName, Console.WindowWidth / 5 - 1, false, margin: 0);
             GroupEnd();
 
             GroupEnd();
-            if (!refresh) PrintList();
-            UpdateSelect(selected, selected, component_list[category].Count, 5);
+            PrintList();
+            UpdateSelect(selected, selected, component_list.Count, 5);
         }
 
         public static void Clean()

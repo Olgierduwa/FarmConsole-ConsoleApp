@@ -1,9 +1,6 @@
 ﻿using FarmConsole.Body.Services;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Xml;
 
 namespace FarmConsole.Body.Models
@@ -16,12 +13,12 @@ namespace FarmConsole.Body.Models
         public string Lastplay { get; set; }
         public decimal Wallet { get; set; }
 
-        private int[,,] Map;
-        public int[,,] GetMap() { return Map; }
-        public void SetMap(int[,,] map) { Map = map; }
+        private FieldModel [,] Map;
+        public FieldModel[,] GetMap() { return Map; }
+        public void SetMap(FieldModel[,] map) { Map = map; }
 
-        private List<ProductModel>[] Inventory;
-        public List<ProductModel>[] GetInventory() { return Inventory; }
+        private List<ProductModel> Inventory;
+        public List<ProductModel> GetInventory() { return Inventory; }
 
         public SaveModel(string id, string lvl, string name, string lastplay, string wallet)
         {
@@ -30,65 +27,55 @@ namespace FarmConsole.Body.Models
             Name = name;
             Lastplay = lastplay;
             Wallet = Convert.ToDecimal(wallet);
-        } // gost constructor
+        }
         public SaveModel(string name)
         {
             ID = 0;
             LVL = 0;
             Name = name;
             Wallet = 420.0M;
-            Map = new int[4, 4, 3];
-            Inventory = new List<ProductModel>[9];
+            Map = new FieldModel[4, 4];
+            Inventory = new List<ProductModel>();
 
             for (int i = 0; i < 4; i++)
                 for (int j = 0; j < 4; j++)
-                {
-                    Map[i, j, 0] = 1;
-                    Map[i, j, 1] = 2;
-                    Map[i, j, 2] = 0;
-                }
-            Map[0, 0, 0] = 7; Map[0, 0, 1] = 0;
-            Map[2, 0, 0] = 8; Map[2, 0, 1] = 0;
-            Map[3, 0, 0] = 8; Map[3, 0, 1] = 0;
-            Map[0, 2, 0] = 8; Map[0, 2, 1] = 1;
+                    Map[i, j] = new FieldModel(1,0,0);
 
-            for (int i = 0; i < Inventory.Length; i++) Inventory[i] = new List<ProductModel>();
-            Inventory[1].Add(XF.GetProduct(1, 0)); Inventory[1][0].amount = 10;
-            Inventory[2].Add(XF.GetProduct(2, 0)); Inventory[2][0].amount = 10;
-            Inventory[2].Add(XF.GetProduct(2, 1)); Inventory[2][1].amount = 10;
-            Inventory[3].Add(XF.GetProduct(3, 0)); Inventory[3][0].amount = 10;
-            Inventory[4].Add(XF.GetProduct(4, 0)); Inventory[4][0].amount = 10;
-            Inventory[5].Add(XF.GetProduct(5, 0)); Inventory[5][0].amount = 10;
-            Inventory[6].Add(XF.GetProduct(6, 0)); Inventory[6][0].amount = 10;
-            Inventory[7].Add(XF.GetProduct(7, 0)); Inventory[7][0].amount = 10;
-            Inventory[8].Add(XF.GetProduct(8, 0)); Inventory[8][0].amount = 10;
+            Map[0, 0] = new FieldModel(ProductModel.GetProduct("Dom"));
+            Map[2, 0] = new FieldModel(ProductModel.GetProduct("Silos"));
+            Map[3, 0] = new FieldModel(ProductModel.GetProduct("Silos"));
+            Map[0, 2] = new FieldModel(ProductModel.GetProduct("Wieża Ciśnień"));
 
-        } // new constructor
-        public SaveModel() { } // empty constructor
+            Inventory.Add(ProductModel.GetProduct("Dom")); Inventory[0].Amount = 10;
+            Inventory.Add(ProductModel.GetProduct("Silos")); Inventory[1].Amount = 10;
+            Inventory.Add(ProductModel.GetProduct("Wieża Ciśnień")); Inventory[2].Amount = 10;
+            Inventory.Add(ProductModel.GetProduct("Nasiona Przenicy")); Inventory[3].Amount = 10;
+            Inventory.Add(ProductModel.GetProduct("Sadzonka Drzewa")); Inventory[4].Amount = 10;
+            Inventory.Add(ProductModel.GetProduct("Nasiona Rzepaku")); Inventory[5].Amount = 10;
+            Inventory.Add(ProductModel.GetProduct("Naturalny Nawóz")); Inventory[6].Amount = 10;
+            Inventory.Add(ProductModel.GetProduct("Syntetyczny Nawóz")); Inventory[7].Amount = 10;
+        }
+        public SaveModel()
+        {
+            ID = 0;
+            LVL = 0;
+            Name = "- NOBODY -";
+            Lastplay = "- NEVER -";
+            Wallet = 0;
+        }
 
         public void Update(int _id)
         {
-            string fieldCategory = "";
-            string fieldType = "";
-            string fieldDuration = "";
-            string inventory = "";
+            string mapString = "";
+            string inventoryString = "";
+            int mapLength = Convert.ToInt32(Math.Sqrt(Convert.ToDouble(Map.Length)));
 
-            int mapLength = Convert.ToInt32(Math.Sqrt(Convert.ToDouble(Map.Length / 3)));
-            for (int i = 0; i < mapLength; i++)
-                for (int j = 0; j < mapLength; j++)
-                {
-                    fieldCategory = fieldCategory + Map[i, j, 0].ToString() + " ";
-                    fieldType = fieldType + Map[i, j, 1].ToString() + " ";
-                    fieldDuration = fieldDuration + Map[i, j, 2].ToString() + " ";
-                }
+            for (int x = 0; x < mapLength; x++)
+                for (int y = 0; y < mapLength; y++)
+                    mapString += Map[x, y].ToString();
 
-            for (int i = 0; i < Inventory.Length; i++)
-                for (int j = 0; j < Inventory[i].Count; j++)
-                {
-                    inventory = inventory + Inventory[i][j].category + " ";
-                    inventory = inventory + Inventory[i][j].type + " ";
-                    inventory = inventory + Inventory[i][j].amount + " ";
-                }
+            for (int i = 0; i < Inventory.Count; i++)
+                inventoryString += Inventory[i].ToString();
 
             string[] list = new string[]
             {
@@ -96,10 +83,8 @@ namespace FarmConsole.Body.Models
                 "name", Name,
                 "lastplay", Lastplay,
                 "wallet", Wallet.ToString(),
-                "field-category", fieldCategory,
-                "field-type", fieldType,
-                "field-duration", fieldDuration,
-                "inventory", inventory
+                "map", mapString,
+                "inventory", inventoryString
             };
             if (_id == 0) XF.AddSave(list);
             else XF.UpdateSave(list, _id);
@@ -107,39 +92,24 @@ namespace FarmConsole.Body.Models
         public void Load(int _id)
         {
             XmlNode save = XF.GetSave(_id);
+            Inventory = new List<ProductModel>();
             ID = int.Parse(save.Attributes["id"].Value);
             LVL = int.Parse(save["lvl"].InnerText);
             Name = save["name"].InnerText;
             Lastplay = save["lastplay"].InnerText;
             Wallet = decimal.Parse(save["wallet"].InnerText);
-            Inventory = new List<ProductModel>[9];
-            for (int i = 0; i < Inventory.Length; i++) Inventory[i] = new List<ProductModel>();
 
-            string[] fieldCategory = Regex.Replace(save["field-category"].InnerText, @"\s+", " ", RegexOptions.Multiline).Split(' ');
-            string[] fieldType = Regex.Replace(save["field-type"].InnerText, @"\s+", " ", RegexOptions.Multiline).Split(' ');
-            string[] fieldDuration = Regex.Replace(save["field-duration"].InnerText, @"\s+", " ", RegexOptions.Multiline).Split(' ');
-            string[] inventory = Regex.Replace(save["inventory"].InnerText, @"\s+", " ", RegexOptions.Multiline).Split(' ');
+            string mapString = save["map"].InnerText;
+            string inventoryString = save["inventory"].InnerText;
+            int mapLength = Convert.ToInt32(Math.Sqrt(Convert.ToDouble(mapString.Length/5)));
 
-            for (int i = 0; i < inventory.Length - 1; i += 3)
-            {
-                int productCategory = int.Parse(inventory[i]);
-                int productType = int.Parse(inventory[i + 1]);
-                int productAmount = int.Parse(inventory[i + 2]);
-                ProductModel p = XF.GetProduct(productCategory, productType);
-                p.amount = productAmount;
-                Inventory[productCategory].Add(p);
-            }
+            Map = new FieldModel[mapLength, mapLength];
+            for (int x = 0; x < mapLength; x++)
+                for (int y = 0; y < mapLength; y++)
+                    Map[x, y] = new FieldModel(mapString.Substring((x + y) * 5, 5), 0);
 
-            int mapLength = Convert.ToInt32(Math.Sqrt(Convert.ToDouble(fieldCategory.Length)));
-            Map = new int[mapLength, mapLength, 3];
-            int k = 0;
-            for (int i = 0; i < mapLength; i++)
-                for (int j = 0; j < mapLength; j++, k++)
-                {
-                    Map[i, j, 0] = int.Parse(fieldCategory[k]);
-                    Map[i, j, 1] = int.Parse(fieldType[k]);
-                    Map[i, j, 2] = int.Parse(fieldDuration[k]);
-                }
+            for (int index = 0; index < inventoryString.Length; index += 5)
+                Inventory.Add(new ProductModel(inventoryString.Substring(index, 5)));
         }
         public void Delete() { XF.DeleteSave(ID); }
     }

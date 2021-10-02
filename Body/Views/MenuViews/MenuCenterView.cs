@@ -9,7 +9,7 @@ namespace FarmConsole.Body.Views.MenuViews
 {
     public class MenuCenterView : MainViewService
     {
-        public static void Show(string type, string name, int duration = 0, string opis = "")
+        public static void Show(string type, string content, int duration = 0, string opis = "")
         {
             ClearList(false);
             Endl(10);
@@ -21,12 +21,12 @@ namespace FarmConsole.Body.Views.MenuViews
             {
                 case "warrning":
                     text = new string[] { " ", "OSTRZEZENIE!", " " };
-                    text2 = TextBoxView(name, 30);
+                    text2 = TextBoxView(content, 30);
                     text = text.Concat(text2.Concat(new string[] { " " }).ToArray()).ToArray();
                     TextBoxLines(text, color1: ConsoleColor.Red); break;
                 case "field":
                     text = new string[] {
-                        " ", "Nazwa Pola: " + name,
+                        " ", "Nazwa Pola: " + content,
                         " ", "Czas Trwania: " + duration.ToString() + " dni",
                         " ", "Drobny Opis: ", " "
                     };
@@ -36,7 +36,7 @@ namespace FarmConsole.Body.Views.MenuViews
                     break;
                 case "item":
                     text = new string[] {
-                        " ", "Nazwa Przedmiotu: " + name,
+                        " ", "Nazwa Przedmiotu: " + content,
                         " ", "Posiadana Ilosc: " + duration.ToString() + "x",
                         " ", "Drobny Opis: ", " "
                     };

@@ -18,8 +18,8 @@ namespace FarmConsole.Body.Controlers
             bool ShiftPressed;
             GameView.Show(save.Name);
             FarmView.InitializeFarmView(save.GetMap());
+            SideMenuController.Initializate();
             FarmView.ShowMap();
-            SideMenuController.Initialize();
             while (openScreen == "Farm")
             {
                 if (Console.KeyAvailable)
@@ -29,7 +29,7 @@ namespace FarmConsole.Body.Controlers
 
                     switch (cki.Key)
                     {
-                        case ConsoleKey.Escape: save.SetMap(FarmView.GetMap()); openScreen = "Escape"; S.Play("K2"); break;
+                        case ConsoleKey.Escape: MapView.Drop(false); save.SetMap(FarmView.GetMap()); openScreen = "Escape"; S.Play("K2"); break;
                         case ConsoleKey.Q: SideMenuController.Open(cki.Key); break;
                         case ConsoleKey.E: SideMenuController.Open(cki.Key); break;
 

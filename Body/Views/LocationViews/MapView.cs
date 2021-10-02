@@ -11,16 +11,15 @@ namespace FarmConsole.Body.Views.LocationViews
     {
         public static void GlobalMapInitializate()
         {
-            SetFieldsData();
+            ProductModel.SetProducts();
             SetMapBorders();
         }
 
-        public static void InitializeMap(int[,,] Map, int C, int T, int D)
+        public static void InitializeMap(FieldModel[,] Map, FieldModel BaseField)
         {
-            SetMap(Map);
-            SetFieldProp(new Point(), C, T, D, Base: true);
+            SetField(new Point(), BaseField, "Base");
             SetMapBorders();
-            InitializePhisicalMap();
+            InitializePhisicalMap(Map);
             InitializeVisualMap();
             InitializeMapExtremePoints();
         }
@@ -35,46 +34,67 @@ namespace FarmConsole.Body.Views.LocationViews
             ClearVisualMap();
         }
 
-        public static void Build(int Category, int Type)
+        public static bool Build(ProductModel BuildProduct)
         {
+            if (ProductModel.GetProduct(GetField()).Category == 3) return false;
             if (GetSelectedFieldCount() > 0)
             {
                 CenterMapOnPos(GetPos());
                 ClearSelected();
             }
-            SetFieldProp(GetPos(), Category, Type, 0);
+            SetField(GetPos(), new FieldModel(BuildProduct));
+            ShowPhisicalField(GetPos());
+            return true;
         }
 
         public static void Dragg()
         {
-            SetFieldProp(GetPos(), Dragged: true);
-            Destroy();
-            ShowVisualField(GetPos());
+            SetField(GetPos(), new FieldModel(), "Dragged");
+            Destroy(1);
+            ClearSelected();
+            ShowPhisicalField(GetPos());
         }
 
         public static void Drop(bool ConfirmDrop = true)
         {
-            if (ConfirmDrop) SetFieldProp(GetPos(), GetFieldProp("category", true), GetFieldProp("type", true), GetFieldProp("duration", true));
-            else
+            if(GetField("Dragged") != null)
             {
-                Point PhisicalPos = new Point(GetPos(Dragged: true).X, GetPos(Dragged: true).Y);
-                SetFieldProp(PhisicalPos, GetFieldProp("category", true), GetFieldProp("type", true), GetFieldProp("duration", true));
-                ShowPhisicalField(PhisicalPos);
+                if (ConfirmDrop) SetField(GetPos(), GetField("Dragged"));
+                else
+                {
+                    Point PhisicalPos = GetPos(Dragged: true);
+                    SetField(PhisicalPos, GetField("Dragged"));
+                    ShowPhisicalField(PhisicalPos);
+                }
+                SetField(new Point(), new FieldModel(), "Dragged");
+                ShowPhisicalField(GetPos());
             }
-            SetFieldProp(new Point(), Dragged: true);
-            ShowVisualField(GetPos(), true);
         }
 
-        public static void Destroy()
+        public static void Destroy(int CountToRemove = 0)
         {
+            if (CountToRemove == 0) CountToRemove = GetSelectedFieldCount();
             do
             {
+                CountToRemove--;
                 Point PhisicalPos = GetPos();
                 ClearSelected(1);
-                SetFieldProp(PhisicalPos, Base: true);
+                SetField(PhisicalPos, new FieldModel(), "Base");
                 ShowPhisicalField(PhisicalPos);
             }
-            while (GetSelectedFieldCount() > 0);
+            while (CountToRemove > 0 && GetSelectedFieldCount() > 0);
+        }
+
+        public static void ComeIn()
+        {
+            ProductModel Product = new ProductModel(GetField());
+            // wczytaj odpowiednią mapę na podstawie wybranego budynku (Product.ProductName)
+        }
+
+        public static void Rotate()
+        {
+            FieldModel Field = GetField();
+            // obróć wybrane pole w zależności od stanu w którym się znajduje (Field.State)
         }
     }
 }

@@ -36,7 +36,7 @@ namespace FarmConsole.Body.Services
                 DeleteMenu(sysMenu, SC_MAXIMIZE, MF_BYCOMMAND);
                 DeleteMenu(sysMenu, SC_SIZE, MF_BYCOMMAND);
             }
-            Console.Title = XF.GetString(0);
+            Console.Title = XF.GetString("title");
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.White;
 

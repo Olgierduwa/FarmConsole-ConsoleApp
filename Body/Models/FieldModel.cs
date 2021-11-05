@@ -1,5 +1,6 @@
 ﻿using FarmConsole.Body.Services;
 using System;
+using System.Drawing;
 
 namespace FarmConsole.Body.Models
 {
@@ -10,15 +11,8 @@ namespace FarmConsole.Body.Models
         public int Type { get; set; }
         public int State { get; set; }
         public int Duration { get; set; }
+        public Color Color { get; set; }
 
-        public FieldModel(int category, int scale, int type, int state = 0, int duration = 0)
-        {
-            Category = category;
-            Scale = scale;
-            Type = type;
-            State = state;
-            Duration = duration;
-        }
         public FieldModel(FieldModel field)
         {
             Category = field.Category;
@@ -26,6 +20,7 @@ namespace FarmConsole.Body.Models
             Type = field.Type;
             State = field.State;
             Duration = field.Duration;
+            Color = field.Color;
         }
         public FieldModel(ProductModel product)
         {
@@ -33,6 +28,7 @@ namespace FarmConsole.Body.Models
             Scale = product.Scale;
             Type = product.Type;
             State = product.State;
+            Color = product.Color;
             Duration = 0;
         }
         public FieldModel(string ModelAsString, int scale)
@@ -43,6 +39,7 @@ namespace FarmConsole.Body.Models
             Type = Values[2];
             Duration = Values[3];
             Scale = scale;
+            Color = ProductModel.GetProduct(Category, Scale, Type, State).Color;
         }
         public FieldModel() { }
 

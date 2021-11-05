@@ -3,119 +3,208 @@ using FarmConsole.Body.Views.MenuViews;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace FarmConsole.Body.Controlers.MenuControlers
 {
     static class AnimationController
     {
+        private static string GraphicName;
+        private static string[] GraphicView;
+        private static int[] ColumnDivision;
+        private static int[] ColorIds;
+        private static double[] CrossSleepTime = new double[] { 50, 2000, 50 };
+        private static double[] SlideSleepTime = new double[] { 20, 1500, 20 };
+        private static double[] PopupSleepTime = new double[] { 10, 1000, 10 };
+        private static int Stage;
+        private static int CurrentColorID;
+        private static DateTime Now;
 
-        private readonly static ConsoleColor[] colors = (ConsoleColor[])Enum.GetValues(typeof(ConsoleColor));
-        private static int[] GetColors(string effectColor)
+        public static void Effect(string Effect = "", string GN = null, string[] GV = null, int[] CD = null, int[] CID = null, double? ST = null, int? S = null)
         {
-            int[] idColors = new int[] { 8, 7, 15, 7, 8, 0 };
-            switch (effectColor)
+            GraphicName = GN != null ? GN : "";
+            GraphicView = GN != null ? XF.GetGraphic(GN) : GV != null ? GV : new string[] { "" };
+            ColumnDivision = CD != null ? CD : new int[] { 50, 100 };
+            ColorIds = CID != null ? CID : ColorService.WhiteEffect;
+            CrossSleepTime[1] = ST != null ? (double)ST : CrossSleepTime[1];
+            SlideSleepTime[1] = ST != null ? (double)ST : SlideSleepTime[1];
+            PopupSleepTime[1] = ST != null ? (double)ST : PopupSleepTime[1];
+            Stage = S != null ? (int)S : 0;
+            CurrentColorID = 0;
+            Now = DateTime.Now;
+            switch (Effect)
             {
-                case "purple": idColors = new int[] { 0, 5, 13, 5, 0, 0 }; break;
-                case "red": idColors = new int[] { 0, 4, 12, 4, 0, 0 }; break;
-                case "yellow": idColors = new int[] { 0, 6, 14, 6, 0, 0 }; break;
-                case "green": idColors = new int[] { 0, 2, 10, 2, 0, 0 }; break;
-                case "blue": idColors = new int[] { 1, 3, 11, 3, 1, 0 }; break;
-                case "white": idColors = new int[] { 8, 7, 15, 7, 8, 0 }; break;
+                case "CrossEffect": CrossInEffect(); CrossOutEffect(); break;
+                case "CrossInEffect": CrossInEffect(); break;
+                case "CrossOutEffect": CrossOutEffect(); break;
+                case "HorizontalSlideEffect": HorizontalSlideInEffect(); HorizontalSlideOutEffect(); break;
+                case "VerticalSlideEffect": VerticalSlideInEffect(); VerticalSlideOutEffect(); break;
+                case "VerticalSlideInEffect": VerticalSlideInEffect(); break;
+                case "VerticalSlideOutEffect": VerticalSlideOutEffect(); break;
             }
-            return idColors;
         }
-
-        public static void CrossEffect(int graphicID, string effectColor = "red", double middleTime = 1600)
+        public static void DateChangeEffect(string OldDate, string NewDate)
         {
-            AnimationView.Centrum(graphicID);
-            DateTime Now = DateTime.Now;
-            int[] idColors = GetColors(effectColor);
-            double[] sleep = new double[] { 500, 100, middleTime, 100, 500 };
-            int currentColorId = 0;
-            int stage = 0;
+            string[] OldDateValues = OldDate.Split('-');
+            string[] NewDateValues = NewDate.Split('-');
+            bool[] DifferentValues = new bool[3];
+            int[] columns = new int[] { 23, 56, 83 };
+            
+            for (int i = 0; i < 3; i++)
+                if (OldDateValues[i] != NewDateValues[i])
+                    DifferentValues[i] = true;
 
-            while (stage < 5)
+            List<string[]> OldGraphicViews = new List<string[]>();
+            List<string[]> NewGraphicViews = new List<string[]>();
+            for (int i = 0; i < OldDateValues.Length; i++)
             {
-                if (Console.KeyAvailable) Console.ReadKey(true);
-                if ((DateTime.Now - Now).TotalMilliseconds >= sleep[stage])
+                OldGraphicViews.Add(XF.GetGraphic(OldDateValues[i][0].ToString()));
+                NewGraphicViews.Add(XF.GetGraphic(NewDateValues[i][0].ToString()));
+                for (int j = 1; j < OldDateValues[i].Length; j++)
                 {
-                    switch (stage)
-                    {
-                        case 0: stage++; break;
-                        case 1:
-                            AnimationView.UpdatGraphic(1, 1, color: colors[idColors[currentColorId]]);
-                            currentColorId++;
-                            if (currentColorId > 2) stage++;
-                            break;
-                        case 2: stage++; break;
-                        case 3:
-                            AnimationView.UpdatGraphic(1, 1, color: colors[idColors[currentColorId]]);
-                            currentColorId++;
-                            if (currentColorId > 5) stage++;
-                            break;
-                        case 4: stage++; break;
-                    }
-                    Now = DateTime.Now;
+                    OldGraphicViews[i] = AsciiPartViewService.ExtendGraphis(OldGraphicViews[i], XF.GetGraphic(OldDateValues[i][j].ToString()));
+                    NewGraphicViews[i] = AsciiPartViewService.ExtendGraphis(NewGraphicViews[i], XF.GetGraphic(NewDateValues[i][j].ToString()));
                 }
             }
-            AnimationView.ClearList();
-        }
 
-        public static void SlideEffect(int graphicID, string effectColor = "purple", double middleTime = 2000)
-        {
-            DateTime Now = DateTime.Now;
-            double[] sleep = new double[] { 30, middleTime, 30 };
-            int[] idColors = GetColors(effectColor);
-            int currentColorId = 0;
-            int stage = 0;
-            int columns = 9;
-            int extraColumn = Convert.ToInt32(Convert.ToDouble(XF.GetGraphic(graphicID)[0].Length / 2) / Convert.ToDouble(Console.WindowWidth / columns));
-            int column = 0 - extraColumn;
-
-            while (stage < 3)
-            {
-                if (Console.KeyAvailable) Console.ReadKey(true);
-                if ((DateTime.Now - Now).TotalMilliseconds >= sleep[stage])
+            Effect("CrossInEffect", GV: OldGraphicViews[0],     CD: new int[] { columns[0], 100 }, ST: 0);
+            Effect("CrossInEffect", GV: XF.GetGraphic("/"),  CD: new int[] { 43, 100 }, ST: 0);
+            Effect("CrossInEffect", GV: OldGraphicViews[1],     CD: new int[] { columns[1], 100 }, ST: 0);
+            Effect("CrossInEffect", GV: XF.GetGraphic("/"),  CD: new int[] { 70, 100 }, ST: 0);
+            Effect("CrossInEffect", GV: OldGraphicViews[2],     CD: new int[] { columns[2], 100 }, ST: 500);
+            
+            for (int i = OldGraphicViews.Count - 1; i >= 0; i--)
+                if(DifferentValues[i])
                 {
-                    switch (stage)
-                    {
-                        case 0:
-                            AnimationView.Column(graphicID, column, columns, colors[idColors[currentColorId]]);
-                            column++;
-                            if (column >= 0 && column % 3 == 1) currentColorId++;
-                            if (currentColorId > 5) currentColorId = 5;
-                            if (column == (columns + 1) / 2 + 1) stage++;
-                            break;
-                        case 1: stage++; break;
-                        case 2:
-                            AnimationView.Column(graphicID, column, columns, colors[idColors[currentColorId]]);
-                            column++;
-                            if (column % 3 == 1) currentColorId++;
-                            if (currentColorId > 5) currentColorId = 5;
-                            if (column == columns + extraColumn + 2) stage++;
-                            break;
-                    }
-                    Now = DateTime.Now;
+                    Effect("VerticalSlideOutEffect", GV: OldGraphicViews[i], CD: new int[] { columns[i], 100 }, ST: 0);
+                    Effect("VerticalSlideInEffect", GV: NewGraphicViews[i], CD: new int[] { columns[i], 100 }, ST: 500);
                 }
-            }
-            AnimationView.ClearList();
-        }
 
-        public static int PopUp(string[] text, int stage = 0, string effectColor = "green", double middleTime = 3000)
+            Effect("CrossOutEffect", GV: NewGraphicViews[0], CD: new int[] { columns[0], 100 });
+            Effect("CrossOutEffect", GV: XF.GetGraphic("/"), CD: new int[] { 43, 100 });
+            Effect("CrossOutEffect", GV: NewGraphicViews[1], CD: new int[] { columns[1], 100 });
+            Effect("CrossOutEffect", GV: XF.GetGraphic("/"), CD: new int[] { 70, 100 });
+            Effect("CrossOutEffect", GV: NewGraphicViews[2], CD: new int[] { columns[2], 100 });
+            Thread.Sleep(500);
+        }
+        public static int PopUp()
         {
-            int[] idColors = GetColors(effectColor);
             int currentColorId = 0, limit = 1;
-            stage++;
 
-            if (stage < 1 * limit) { currentColorId = 0; text = new string[] { text[0], text[1] }; }
-            else if (stage < 2 * limit) { currentColorId = 1; text = new string[] { text[0], text[1], text[2] }; }
-            else if (stage < 3 * limit + middleTime / 50) { currentColorId = 2; text = new string[] { text[0], text[1], text[2], text[3] }; }
-            else if (stage < 4 * limit + middleTime / 50) { currentColorId = 3; text = new string[] { text[0], text[1], text[2] }; }
-            else if (stage < 5 * limit + middleTime / 50) { currentColorId = 4; text = new string[] { text[0], text[1] }; }
-            else if (stage < 6 * limit + middleTime / 50) { currentColorId = 5; stage = -1; text = new string[] { text[0] }; }
+            if (Stage < 1 * limit) { currentColorId = 0; GraphicView = new string[] { GraphicView[0], GraphicView[1] }; }
+            else if (Stage < 2 * limit) { currentColorId = 1; GraphicView = new string[] { GraphicView[0], GraphicView[1], GraphicView[2] }; }
+            else if (Stage < 3 * limit + PopupSleepTime[1] / 50) { currentColorId = 2; GraphicView = new string[] { GraphicView[0], GraphicView[1], GraphicView[2], GraphicView[3] }; }
+            else if (Stage < 4 * limit + PopupSleepTime[1] / 50) { currentColorId = 3; GraphicView = new string[] { GraphicView[0], GraphicView[1], GraphicView[2] }; }
+            else if (Stage < 5 * limit + PopupSleepTime[1] / 50) { currentColorId = 4; GraphicView = new string[] { GraphicView[0], GraphicView[1] }; }
+            else if (Stage < 6 * limit + PopupSleepTime[1] / 50) { currentColorId = 5; Stage = -1; GraphicView = new string[] { GraphicView[0] }; }
 
-            AnimationView.PopUp(text, colors[idColors[currentColorId]]);
-            return stage;
+            AnimationView.PopUp(AnimationController.GraphicView, ColorService.GetColor(ColorIds[currentColorId]));
+            return Stage;
+        }
+
+        private static void CrossInEffect()
+        {
+            while (Stage < 2)
+            {
+                if (Console.KeyAvailable) Console.ReadKey(true);
+                if ((DateTime.Now - Now).TotalMilliseconds >= CrossSleepTime[Stage])
+                {
+                    AnimationView.DisplayGraphic(GraphicView, ColumnDivision[0], ColumnDivision[1], 5, ColorService.GetColor(ColorIds[CurrentColorID]));
+                    if (CurrentColorID == 2 || CurrentColorID == 3) Stage++;
+                    else CurrentColorID++;
+                    Now = DateTime.Now;
+                }
+            }
+            AnimationView.ClearList(false);
+        }
+        private static void CrossOutEffect()
+        {
+            Stage = 2;
+            CurrentColorID = 2;
+            while (Stage < 3)
+            {
+                if (Console.KeyAvailable) Console.ReadKey(true);
+                if ((DateTime.Now - Now).TotalMilliseconds >= CrossSleepTime[Stage])
+                {
+                    AnimationView.DisplayGraphic(GraphicView, ColumnDivision[0], ColumnDivision[1], 5, ColorService.GetColor(ColorIds[CurrentColorID]));
+                    if (CurrentColorID == 5) Stage++;
+                    CurrentColorID++;
+                    Now = DateTime.Now;
+                }
+            }
+            AnimationView.ClearList();
+        }
+        private static void HorizontalSlideInEffect()
+        {
+            int C = 8;
+            while (Stage < 2)
+            {
+                if (Console.KeyAvailable) Console.ReadKey(true);
+                if ((DateTime.Now - Now).TotalMilliseconds >= SlideSleepTime[Stage])
+                {
+                    AnimationView.DisplayGraphic(GraphicView, ColumnDivision[0] - C * 10, ColumnDivision[1], 5, ColorService.GetColor(ColorIds[CurrentColorID]), true);
+                    if (C == 6 || C == 2) CurrentColorID++;
+                    if (C == 0) { Stage++; C++; }
+                    C--;
+                    Now = DateTime.Now;
+                }
+            }
+            AnimationView.ClearList(false);
+        }
+        private static void HorizontalSlideOutEffect()
+        {
+            int C = 0;
+            Stage = 2;
+            CurrentColorID = 2;
+            while (Stage < 3)
+            {
+                if (Console.KeyAvailable) Console.ReadKey(true);
+                if ((DateTime.Now - Now).TotalMilliseconds >= SlideSleepTime[Stage])
+                {
+                    AnimationView.DisplayGraphic(GraphicView, ColumnDivision[0] + C * 10, ColumnDivision[1], 5, ColorService.GetColor(ColorIds[CurrentColorID]), true);
+                    if (C == 3 || C == 5) CurrentColorID++;
+                    if (C == 8) Stage++;
+                    C++;
+                    Now = DateTime.Now;
+                }
+            }
+            AnimationView.ClearList();
+        }
+        private static void VerticalSlideInEffect()
+        {
+            int R = 2;
+            while (Stage < 2)
+            {
+                if (Console.KeyAvailable) Console.ReadKey(true);
+                if ((DateTime.Now - Now).TotalMilliseconds >= SlideSleepTime[Stage])
+                {
+                    AnimationView.DisplayGraphic(GraphicView, ColumnDivision[0], ColumnDivision[1], R, ColorService.GetColor(ColorIds[CurrentColorID]), true);
+                    if (R == 3 || R == 4) CurrentColorID++;
+                    if (R == 5) Stage++;
+                    else R++;
+                    Now = DateTime.Now;
+                }
+            }
+            AnimationView.ClearList(false);
+        }
+        private static void VerticalSlideOutEffect()
+        {
+            int R = 5;
+            Stage = 2;
+            CurrentColorID = 2;
+            while (Stage < 3)
+            {
+                if (Console.KeyAvailable) Console.ReadKey(true);
+                if ((DateTime.Now - Now).TotalMilliseconds >= SlideSleepTime[Stage])
+                {
+                    AnimationView.DisplayGraphic(GraphicView, ColumnDivision[0], ColumnDivision[1], R, ColorService.GetColor(ColorIds[CurrentColorID]), true);
+                    if (R == 6 || R == 7) CurrentColorID++;
+                    if (R == 9) Stage++;
+                    else R++;
+                    Now = DateTime.Now;
+                }
+            }
+            AnimationView.ClearList();
         }
     }
 }

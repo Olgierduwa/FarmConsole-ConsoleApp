@@ -15,5 +15,9 @@ namespace FarmConsole.Body.Views.MenuViews
             Foot(foot);
             PrintList();
         }
+        public static void Clean()
+        {
+            ClearList();
+        }
     }
 }

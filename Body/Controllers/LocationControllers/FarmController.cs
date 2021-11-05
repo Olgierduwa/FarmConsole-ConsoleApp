@@ -14,12 +14,12 @@ namespace FarmConsole.Body.Controlers
         public static void Open()
         {
             HelpService.CLEAR_TIMERS();
-
             bool ShiftPressed;
-            GameView.Show(save.Name);
-            FarmView.InitializeFarmView(save.GetMap());
-            SideMenuController.Initializate();
-            FarmView.ShowMap();
+            GameView.Show(GameInstance.UserName);
+            FarmView.InitializeFarmView(GameInstance.FarmMap);
+            SideMenuController.Initializate(0);
+            MapView.ShowMap();
+            escapeScreen = "Farm";
             while (openScreen == "Farm")
             {
                 if (Console.KeyAvailable)
@@ -29,19 +29,22 @@ namespace FarmConsole.Body.Controlers
 
                     switch (cki.Key)
                     {
-                        case ConsoleKey.Escape: MapView.Drop(false); save.SetMap(FarmView.GetMap()); openScreen = "Escape"; S.Play("K2"); break;
+                        case ConsoleKey.Escape: MapView.Drop(false); openScreen = "Escape"; S.Play("K2"); break;
                         case ConsoleKey.Q: SideMenuController.Open(cki.Key); break;
                         case ConsoleKey.E: SideMenuController.Open(cki.Key); break;
 
-                        case ConsoleKey.W: FarmView.MoveStandPosition(new Point(-1, 0), ShiftPressed); break;
-                        case ConsoleKey.S: FarmView.MoveStandPosition(new Point(1, 0), ShiftPressed); break;
-                        case ConsoleKey.A: FarmView.MoveStandPosition(new Point(0, -1), ShiftPressed); break;
-                        case ConsoleKey.D: FarmView.MoveStandPosition(new Point(0, 1), ShiftPressed); break;
+                        case ConsoleKey.W: MapService.MoveStandPosition(new Point(-1, 0), ShiftPressed); break;
+                        case ConsoleKey.S: MapService.MoveStandPosition(new Point(1, 0), ShiftPressed); break;
+                        case ConsoleKey.A: MapService.MoveStandPosition(new Point(0, -1), ShiftPressed); break;
+                        case ConsoleKey.D: MapService.MoveStandPosition(new Point(0, 1), ShiftPressed); break;
 
-                        case ConsoleKey.UpArrow: FarmView.MoveMapPosition(new Point(-1, -1)); break;
-                        case ConsoleKey.DownArrow: FarmView.MoveMapPosition(new Point(1, 1)); break;
-                        case ConsoleKey.LeftArrow: FarmView.MoveMapPosition(new Point(1, -1)); break;
-                        case ConsoleKey.RightArrow: FarmView.MoveMapPosition(new Point(-1, 1)); break;
+                        case ConsoleKey.UpArrow: MapService.MoveMapPosition(new Point(-1, -1)); break;
+                        case ConsoleKey.DownArrow: MapService.MoveMapPosition(new Point(1, 1)); break;
+                        case ConsoleKey.LeftArrow: MapService.MoveMapPosition(new Point(1, -1)); break;
+                        case ConsoleKey.RightArrow: MapService.MoveMapPosition(new Point(-1, 1)); break;
+
+                        case ConsoleKey.R: MapView.GlobalMapInitializate(); MapView.HideMap(); MapView.ShowMap(); break;
+                        case ConsoleKey.F: GameService.GrowingUp(); FarmView.InitializeFarmView(GameInstance.FarmMap); MapView.ShowMap(); break;
                     }
                 }
                 else if ((DateTime.Now - Now).TotalMilliseconds >= 50)
@@ -50,8 +53,9 @@ namespace FarmConsole.Body.Controlers
                     Now = DateTime.Now;
                 }
             }
-            GameView.ClearList();
-            FarmView.HideMap();
+            GameInstance.FarmMap = MapService.GetMap();
+            GameView.Clean();
+            MapView.HideMap();
         }
     }
 }

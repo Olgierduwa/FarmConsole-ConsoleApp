@@ -8,42 +8,35 @@ namespace FarmConsole.Body.Views.MenuViews
 {
     public class MenuLeftView : MainViewService
     {
-        public static void Show(string[] component_list, string Title, int selected, bool extended = false)
+        public static void Display(string[] component_list, string Title, int selected, bool extended = false, bool print = true)
         {
             ClearList(false);
             Endl(6);
             GroupStart(0);
+            LeftBar();
 
             GroupStart(1);
-            Endl(2);
+            GraphicBox(new string[] { Title, "" }, color: ConsoleColor.Gray);
             for (int i = 0; i < component_list.Length; i++)
                 if (i < (Console.WindowHeight - 13) / 3)
                     TextBox(component_list[i], Console.WindowWidth / 5 - 1, margin: 0);
                 else TextBox(component_list[i], Console.WindowWidth / 5 - 1, false, margin: 0);
             GroupEnd();
 
-            GroupStart(1);
-            LeftBar();
-            GroupEnd();
-
-            GroupStart(1);
-            GraphicBox(new string[] { Title }, color: ConsoleColor.Gray);
-            GroupEnd();
-
             GroupStart(1, 10);
             Endl(Console.WindowHeight - 12);
-            if (extended) TextBox("WYKONAJ Q", Console.WindowWidth / 10 - 1, color1: ConsoleColor.Gray, margin: 0);
-            else TextBox("WYJDŹ Q", Console.WindowWidth / 10 - 1, color1: ConsoleColor.Gray, margin: 0);
+            if (extended) TextBox("WYKONAJ Q", Console.WindowWidth / 10 - 1, background: ConsoleColor.Gray, margin: 0);
+            else TextBox("WYJDŹ Q", Console.WindowWidth / 10 - 1, background: ConsoleColor.Gray, margin: 0);
             GroupEnd();
 
             GroupStart(2, 10);
             Endl(Console.WindowHeight - 12);
-            if (extended) TextBox("WRÓĆ E", Console.WindowWidth / 10 - 1, color1: ConsoleColor.Gray, margin: 0);
-            else TextBox("WYKONAJ E", Console.WindowWidth / 10 - 1, color1: ConsoleColor.Gray, margin: 0);
+            if (extended) TextBox("WRÓĆ E", Console.WindowWidth / 10 - 1, background: ConsoleColor.Gray, margin: 0);
+            else TextBox("WYKONAJ E", Console.WindowWidth / 10 - 1, background: ConsoleColor.Gray, margin: 0);
             GroupEnd();
 
             GroupEnd();
-            PrintList();
+            if(print) PrintList();
             UpdateSelect(selected, selected, component_list.Length);
         }
 

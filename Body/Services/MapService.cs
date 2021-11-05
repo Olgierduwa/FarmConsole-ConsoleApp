@@ -1,4 +1,5 @@
 ﻿using FarmConsole.Body.Models;
+using Pastel;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -41,7 +42,9 @@ namespace FarmConsole.Body.Services
             {
                 Point StandPos = RealPos(VSP);
                 if (SelectedFields.Contains(StandPos)) SelectedFields.Remove(StandPos);
-                else if (SelectedFields.Count == 0 || GetField().Category == PhisicalMap[StandPos.X, StandPos.Y].Category) SelectedFields.Add(StandPos);
+                else if (SelectedFields.Count == 0 ||
+                    GetField().Category == PhisicalMap[StandPos.X, StandPos.Y].Category &&
+                    GetField().Type == PhisicalMap[StandPos.X, StandPos.Y].Type) SelectedFields.Add(StandPos);
             }
             Point PSP = new Point(VSP.X, VSP.Y); // past stand point
             TryMoveCSP(Vector);
@@ -82,7 +85,7 @@ namespace FarmConsole.Body.Services
             ShowVisualMap();
 
             // extra write:
-            ShowInfo_VisualMapContent();
+            //ShowInfo_VisualMapContent();
             ShowInfo_Positions();
         }
         public static void ShowMapFragment(string type)
@@ -97,6 +100,10 @@ namespace FarmConsole.Body.Services
             for (int x = 0; x < VisualMapSize; x++)
                 for (int y = 0; y < VisualMapSize; y++)
                     WriteSingleField(new Point(x, y), LB, RB, TB, BB);
+        }
+        public static int GetSelectedFieldCount()
+        {
+            return SelectedFields.Count;
         }
         public static FieldModel[,] GetMap()
         {
@@ -118,6 +125,13 @@ namespace FarmConsole.Body.Services
                     else return PhisicalMap[SelectedFields[0].X, SelectedFields[0].Y];
                 }
             }
+        }
+
+        public static void SetColors()
+        {
+            for (int i = 1; i < PhisicalMapSize; i++)
+                for (int j = 1; j < PhisicalMapSize; j++)
+                    PhisicalMap[i, j].Color = ProductModel.GetProduct(PhisicalMap[i, j]).Color;
         }
         #endregion
 
@@ -212,11 +226,11 @@ namespace FarmConsole.Body.Services
                 switch (i)
                 {
                     case 0: VisualPoint.X--; VisualPoint.Y--; WriteSingleField(VisualPoint); VisualPoint.X++; break;
-                    case 1: WriteSingleField(VisualPoint, LB: Border.X + 12); VisualPoint.X--; VisualPoint.Y++; break;
-                    case 2: WriteSingleField(VisualPoint, RB: Border.X + 10); VisualPoint.X++; break;
+                    case 1: WriteSingleField(VisualPoint, LB: Border.X + 11); VisualPoint.X--; VisualPoint.Y++; break;
+                    case 2: WriteSingleField(VisualPoint, RB: Border.X + 11); VisualPoint.X++; break;
                     case 3: WriteSingleField(VisualPoint); VisualPoint.X++; break;
-                    case 4: WriteSingleField(VisualPoint, LB: Border.X + 12, BB: Border.Y + 4); VisualPoint.X--; VisualPoint.Y++; break;
-                    case 5: WriteSingleField(VisualPoint, RB: Border.X + 10, BB: Border.Y + 4); VisualPoint.X++; break;
+                    case 4: WriteSingleField(VisualPoint, LB: Border.X + 11, BB: Border.Y + 4); VisualPoint.X--; VisualPoint.Y++; break;
+                    case 5: WriteSingleField(VisualPoint, RB: Border.X + 11, BB: Border.Y + 4); VisualPoint.X++; break;
                     case 6: WriteSingleField(VisualPoint, BB: Border.Y + 1); VisualPoint.X++; break;
                     case 7: WriteSingleField(VisualPoint, BB: Border.Y - 2); VisualPoint.X--; VisualPoint.Y++; break;
                     case 8: WriteSingleField(VisualPoint, BB: Border.Y - 2); break;
@@ -240,10 +254,6 @@ namespace FarmConsole.Body.Services
             if (Dragged) return DraggedPosition;
             if (SelectedFields.Count > 0) return new Point(SelectedFields[0].X, SelectedFields[0].Y);
             else return RealPos(VSP);
-        }
-        protected static int GetSelectedFieldCount()
-        {
-            return SelectedFields.Count;
         }
         protected static void ClearSelected(int CountToRemove = 0)
         {
@@ -303,18 +313,19 @@ namespace FarmConsole.Body.Services
 
             Point P = RealPos(VisualPoint);
             ProductModel Product = ProductModel.GetProduct(PhisicalMap[P.X, P.Y]);
+            Color color;
 
             if (VSP == VisualPoint)
             {
                 if (DraggedField != null)
                 {
                     Product = ProductModel.GetProduct(DraggedField);
-                    Console.ForegroundColor = GetFieldColor("Selected");
+                    color = ColorService.GetColorByName("selected");
                 }
-                else Console.ForegroundColor = GetFieldColor("Stand");
+                else color = ColorService.Brighten(PhisicalMap[P.X, P.Y].Color);
             }
-            else if (SelectedFields.Contains(P)) Console.ForegroundColor = GetFieldColor("Selected");
-            else Console.ForegroundColor = Product.Color;
+            else if (SelectedFields.Contains(P)) color = ColorService.GetColorByName("selected");
+            else color = PhisicalMap[P.X, P.Y].Color;
 
             int X = VisualMapPosition.X + (VisualPoint.Y - VisualPoint.X) * 12;
             int Y = VisualMapPosition.Y + (VisualPoint.Y + VisualPoint.X) * 3;
@@ -323,14 +334,14 @@ namespace FarmConsole.Body.Services
             int startIndex, lenght, left;
             for (int Line = 0; Line < Product.View.Length; Line++)
                 if (Y + Line + C > TB && BB > Y + Line + C &&
-                    X + Product.ViewStartPos[Line] + Product.View[Line].Length > LB && RB > X + Product.ViewStartPos[Line])
+                    X + Product.ViewStartPos[Line] + Product.View[Line].Length > LB && RB >= X + Product.ViewStartPos[Line])
                 {
                     startIndex = X + Product.ViewStartPos[Line] < LB ? LB - X - Product.ViewStartPos[Line] : 0;
                     left = X + startIndex + Product.ViewStartPos[Line];
                     lenght = Product.View[Line].Length - startIndex > RB - left + 1 ?
                         RB - left + 1 : Product.View[Line].Length - startIndex;
                     Console.SetCursorPosition(left, Y + Line + C);
-                    Console.Write(Product.View[Line].Substring(startIndex, lenght));
+                    Console.Write(Product.View[Line].Substring(startIndex, lenght).Pastel(color));
                 }
             Console.ResetColor();
         }
@@ -346,15 +357,6 @@ namespace FarmConsole.Body.Services
         private static Point GetPosByCoord(Point MapCoord, Point StartPos)
         {
             return new Point((4 * (MapCoord.Y - StartPos.Y) + StartPos.X - MapCoord.X) / 24, (4 * (MapCoord.Y - StartPos.Y) + MapCoord.X - StartPos.X) / 24);
-        }
-        private static ConsoleColor GetFieldColor(string Type)
-        {
-            switch(Type)
-            {
-                case "Selected": return ConsoleColor.Yellow;
-                case "Stand": return ConsoleColor.White;
-                default: return ConsoleColor.Magenta;
-            }
         }
         private static void ShowInfo_FieldsID()
         {

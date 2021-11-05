@@ -52,5 +52,15 @@ namespace FarmConsole.Body.Services
         {
             return "".PadRight(lenght, c);
         }
+        public static string[] ExtendGraphis(string[] baseContent, string[] extendedContent)
+        {
+            string[] content = extendedContent.Length > baseContent.Length ? new string[extendedContent.Length] : new string[baseContent.Length];
+            for (int i = 0; i < content.Length; i++)
+            {
+                content[i] = i < baseContent.Length ? baseContent[i] : "".PadLeft(baseContent[0].Length, ' ');
+                content[i] += i < extendedContent.Length ? extendedContent[i] : "".PadLeft(extendedContent[0].Length);
+            }
+            return content;
+        }
     }
 }

@@ -1,50 +1,48 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <StrigsCollection>
-  <String id="0">Farm Console</String>
-  <String id="1">* FC copyright 2021 *</String>
-  <String id="2">╔ Ô</String>
-
-  <!-- Aktywności związane z polami -->
-  
-  <String id="100">Opis</String>
-  <String id="101">Zniszcz</String>
-  <String id="102">Postaw</String>
-  <String id="103">Użyj</String>
-  <String id="104">Schowaj</String>
-  <String id="105">Przenieś</String>
-  <String id="106">Wejdź</String>
-  <String id="107">Zaoraj</String>
-  <String id="108">Posiej</String>
-  <String id="109">Podlej</String>
-  <String id="110">Użyźnij</String>
-  <String id="111">Zbierz</String>
-  <String id="112">Zrób nawóz</String>
-  
-  <!-- Aktywności związane z przedmiotami -->
-  
-  <String id="200">Opis</String>
-  <String id="201">Zniszcz</String>
-  <String id="202">Postaw</String>
-  <String id="203">Użyj</String>
+  <String name="title">Farm Console</String>
+  <String name="foot">* FC copyright 2021 *</String>
+  <String name="key">╔ Ô</String>
   
   <!-- PopUpText -->
   
-  <String id="301">Wybieranie elementu Menu: W/S Zatwierdzenie lub wycofanie: E/Q Wybór wartości suwaka: A/D</String>
-  <String id="302"></String>
-  <String id="303"></String>
+  <String name="401">Wybieranie elementu Menu: W/S Zatwierdzenie lub wycofanie: E/Q Wybór wartości suwaka: A/D</String>
+  <String name="402"></String>
+  <String name="403"></String>
   
   <!-- Warrnings -->
 
-  <String id="401">"Nie posiadasz odpowiedniej maszyny, aby zaorac tyle pól jednocześnie!"</String>
-  <String id="402">"Nie posiadasz odpowiedniej maszyny, aby podlać tyle pól jednocześnie!"</String>
-  <String id="403">"Nie posiadasz odpowiedniej maszyny, aby zebrać tyle plonów jednocześnie!"</String>
-  <String id="404">"Nie posiadasz odpowiedniej maszyny, aby zrobić nawóz z tylu pól jednocześnie!"</String>
-  <String id="405">"Nie posiadasz odpowiedniej maszyny, aby posiać tyle pól jednocześnie!"</String>
-  <String id="406">"Nie posiadasz odpowiedniej maszyny, aby użyźnić tyle pól jednocześnie!"</String>
-  <String id="407">"Nie możesz postawić nic na istniejącym już budynku!"</String>
-  <String id="408">"Nie możesz posiać tych nasion na polu innym niż zaorane!"</String>
-  <String id="409">"Nie możesz użyć nawozu na polu innym niż pole z rosnącymi roślinami!"</String>
-  <String id="410"></String>
-  <String id="411"></String>
+  <String name="done">"Zrobione"</String>
+	
+  <String name="unknown action">"Nieznana akcja"</String>
+	
+  <String name="search">Szukaj...</String>
+	
+  <String name="no money">"Nie posiadasz wystarczającej ilości pieniędzy!"</String>
+  
+  <String name="multi mowing">"Nie posiadasz odpowiedniej maszyny, aby skosić tyle traw jednocześnie!"</String>
+	
+  <String name="multi_plowing">"Nie posiadasz odpowiedniej maszyny, aby zaorac tyle pól jednocześnie!"</String>
+	
+  <String name="multi watering">"Nie posiadasz odpowiedniej maszyny, aby podlać tyle pól jednocześnie!"</String>
+	
+  <String name="multi collecting">"Nie posiadasz odpowiedniej maszyny, aby zebrać tyle plonów jednocześnie!"</String>
+	
+  <String name="multi fertilize making">"Nie posiadasz odpowiedniej maszyny, aby zrobić nawóz z tylu pól jednocześnie!"</String>
+	
+  <String name="multi sowing">"Nie posiadasz odpowiedniej maszyny, aby posiać tyle pól jednocześnie!"</String>
+	
+  <String name="multi fertilizating">"Nie posiadasz odpowiedniej maszyny, aby użyźnić tyle pól jednocześnie!"</String>
+	
+  <String name="overwriting">"Nie możesz postawić nic więcej w tym samym miejscu!"</String>
+	
+  <String name="no plowed field">"Nie możesz posiać nic na polu innym niż zaorane!"</String>
+	
+  <String name="cant fertilizating">"Nie możesz użyć nawozu na polu innym niż pole z rosnącymi roślinami!"</String>
+  
+  <String name="already watered">"To pole jest już podlane!"</String>
+	
+  <String name="410"></String>
+  <String name="411"></String>
   
 </StrigsCollection>

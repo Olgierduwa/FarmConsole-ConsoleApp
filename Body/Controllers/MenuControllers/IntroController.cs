@@ -11,17 +11,18 @@ namespace FarmConsole.Body.Controlers
     {
         public static void Open()
         {
-            AnimationController.SlideEffect(2, "purple");
-            AnimationController.SlideEffect(3, "red");
-            AnimationController.SlideEffect(0, "yellow");
-            AnimationController.SlideEffect(3, "green");
-            AnimationController.SlideEffect(1, "blue");
-            AnimationController.SlideEffect(0, "white");
-            AnimationController.CrossEffect(0, "red");
-            AnimationController.CrossEffect(1, "green");
-            AnimationController.CrossEffect(0, "blue");
-            AnimationController.CrossEffect(1, "purple");
-            AnimationController.CrossEffect(0, "white");
+            AnimationController.Effect("VerticalSlideEffect", GN: "blant", CID: ColorService.PurpleEffect);
+            AnimationController.Effect("HorizontalSlideEffect", GN: "dreamworks", CID: ColorService.RedEffect);
+            AnimationController.Effect("VerticalSlideEffect", GN: "farmconsole", CID: ColorService.YellowEffect);
+            AnimationController.Effect("HorizontalSlideEffect", GN: "dreamworks", CID: ColorService.GreenEffect);
+            AnimationController.Effect("VerticalSlideEffect", GN: "potion", CID: ColorService.BlueEffect);
+            AnimationController.Effect("HorizontalSlideEffect", GN: "farmconsole");
+
+            AnimationController.Effect("CrossEffect", GN: "farmconsole", CID: ColorService.RedEffect);
+            AnimationController.Effect("CrossEffect", GN: "potion", CID: ColorService.GreenEffect);
+            AnimationController.Effect("CrossEffect", GN: "farmconsole", CID: ColorService.BlueEffect);
+            AnimationController.Effect("CrossEffect", GN: "potion", CID: ColorService.PurpleEffect);
+            AnimationController.Effect("CrossEffect", GN: "farmconsole", CID: ColorService.RedEffect);
         }
     }
 }

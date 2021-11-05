@@ -12,7 +12,7 @@ namespace FarmConsole.Body.Controlers
     {
         public static void Open()
         {
-            SaveModel[] saves = XF.GetSaves();
+            GameInstanceModel[] saves = XF.GetGameInstances();
             int selected = 1, selCount = saves.Length + 1, selStart = 1;
             GameSaveView.Show(saves); GameSaveView.UpdateSelect(selected, selected, selCount);
             while (openScreen == "Save")
@@ -28,8 +28,8 @@ namespace FarmConsole.Body.Controlers
                         case ConsoleKey.E:
                             if (selected == 1 || GameSaveView.Warning() == true)
                             {
-                                save.Update(selected - 1);
-                                saves = XF.GetSaves();
+                                GameInstance.Update(selected - 1);
+                                saves = XF.GetGameInstances();
                                 selected = 1;
                                 selCount = saves.Length + 1;
                                 GameSaveView.ClearList();

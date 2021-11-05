@@ -25,6 +25,7 @@ namespace FarmConsole
                     case "Save": GameSaveController.Open(); break;
                     case "Help": HelpController.Open(); break;
                     case "Farm": FarmController.Open(); break;
+                    case "House": HouseController.Open(); break;
                 }
             }
         }

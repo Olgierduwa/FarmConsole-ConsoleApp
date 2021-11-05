@@ -1,24 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Saves>
   <save id="1">
-    <lvl>100</lvl>
-    <name>Malcolm Aron</name>
-    <lastplay>20/11/06 20:15</lastplay>
-    <wallet>4200</wallet>
-    <field-category>7 1 8 8 1 1 1 1 1 1 1 1 1 1 1 1 1 1 8 1 1 2 2 2 7 1 1 2 2 2 7 1 1 2 2 2 </field-category>
-    <field-type>0 2 0 0 2 2 2 2 2 2 2 2 2 2 2 2 2 2 1 2 2 0 0 0 0 2 2 0 0 0 0 2 2 0 0 0 </field-type>
-    <field-duration>0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </field-duration>
-    <inventory>1 0 1 2 0 10 2 1 10 3 0 10 4 0 10 5 0 10 6 0 10 7 0 10 8 0 10 </inventory>
-  </save>
-  <save id="2">
     <lvl>0</lvl>
-    <name>Olgierduwa</name>
-    <lastplay>
-    </lastplay>
+    <username>Locha</username>
+    <gamedate>10.10.2020</gamedate>
+    <lastplay>04.11.2021 11:00:02</lastplay>
     <wallet>420,0</wallet>
-    <map>I2lml6KvFa6KvFa6KvFa</map>
-	  <!-- musisz znaleźć przyczynę ucinania mapy przy zapisie -->
-    <inventory>I2lmvI2oIeI2qpNONh3VONjZEONm5yONobhONr8Q</inventory>
+    <farmmap>I2lml6KvFaI2qpD6KvFa6KvFa6KvFa6KvFa6KvFa6KvFa6KvFaEDrKLEDrKLEDrKLEDrKL6KvFa6KvFaI2oIUEDrKLEDrLmEDrLmEDrLmEDrKLEDrKL6KvFaI2oIUEDrKLEDrLmI2oIUEDrLmEDrKLEDrKL6KvFa6KvFaEDrKLEDrLmEDrLmI2lmlEDrKLEDrKL6KvFa6KvFaEDrKLEDrKLEDrKLEDrKLEDrKLEDrKL6KvFa6KvFa6KvFaEDrKLEDrKLEDrKLEDrKL6KvFa6KvFa6KvFa6KvFa6KvFa6KvFa6KvFa6KvFa6KvFa6KvFa</farmmap>
+    <housemap>IfnpeIflIvIfss7IflIvIflIvJInLoI2lml6KvFa6KvFa6KvFa6KvFaJIkq5I2tKx6KvFa6KvFa6KvFa6KvFaJIsOGI2lml6KvFa6KvFaI2vrg6KvFaJIpsXI2lml6KvFa6KvFa6KvFa6KvFaJIkq5I2oIUJwkMEJwrvQJwrvQJwkMEJwmsy</housemap>
+    <inventory>Peg6gI2loKI2oK4I2qqoONh4HONjafONm7OONod8ONr9rIflKVIfnrEIfvPQIfqMy</inventory>
   </save>
 </Saves>
 <!--

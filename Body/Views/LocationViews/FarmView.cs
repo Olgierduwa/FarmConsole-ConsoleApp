@@ -15,69 +15,82 @@ namespace FarmConsole.Body.Views.LocationViews
             InitializeMap(Map, new FieldModel(ProductModel.GetProduct("Trawa")));
         }
 
-        public static bool MowGrass()
+        public static string MowGrass()
         {
-            if (GetSelectedFieldCount() > 1) { ClearSelected(); return false; }
+            if (GetSelectedFieldCount() > 1) { ClearSelected(); return XF.GetString("multi mowing"); }
             FieldModel Field = GetField();
             Field.State = 0;
             SetField(GetPos(), Field);
             ShowPhisicalField(GetPos());
-            return true;
+            return XF.GetString("done");
         }
 
-        public static bool Plow()
+        public static string Plow()
         {
-            if (GetSelectedFieldCount() > 1) { ClearSelected(); return false; }
-
-            var PhisicalPos = GetPos();
-            SetField(PhisicalPos, new FieldModel(ProductModel.GetProduct("Pole")));
-            ClearSelected();
-            ShowPhisicalField(GetPos());
-            return true;
+            if (GetSelectedFieldCount() > 1) { ClearSelected(); return XF.GetString("multi_plowing"); }
+            SetField(GetPos(), new FieldModel(ProductModel.GetProduct("Pole")));
+            if (GetSelectedFieldCount() > 0)
+            {
+                CenterMapOnPos(GetPos());
+                ClearSelected();
+            }
+            else ShowPhisicalField(GetPos());
+            return XF.GetString("done");
         }
 
-        public static bool Sow(ProductModel Product)
+        public static string Sow(ProductModel Product)
         {
-            if (GetSelectedFieldCount() > 1) { ClearSelected(); return false; }
-            if (ProductModel.GetProduct(GetField()).ProductName != "Pole") return false;
-
-            var PhisicalPos = GetPos();
-            SetField(PhisicalPos, new FieldModel(ProductModel.GetRedirectProduct(Product)));
-            ClearSelected();
-            ShowPhisicalField(GetPos());
-            return true;
+            if (ProductModel.GetProduct(GetField()).ProductName != "Pole") return XF.GetString("no plowed field");
+            if (GetSelectedFieldCount() > 1) { ClearSelected(); return XF.GetString("multi sowing"); }
+            SetField(GetPos(), new FieldModel(ProductModel.GetRedirectProduct(Product)));
+            if (GetSelectedFieldCount() > 0)
+            {
+                CenterMapOnPos(GetPos());
+                ClearSelected();
+            }
+            else ShowPhisicalField(GetPos());
+            return XF.GetString("done");
         }
 
-        public static bool Fertilize(ProductModel Product)
+        public static string Fertilize(ProductModel Product)
         {
-            if (GetSelectedFieldCount() > 1) { ClearSelected(); return false; }
+            if (GetSelectedFieldCount() > 1) { ClearSelected(); return XF.GetString("multi fertilizating"); }
+            if (ProductModel.GetProduct(GetField()).Category == 2 &&
+                ProductModel.GetProduct(GetField()).Category > 0)
+            {
 
-            return true;
+            }
+            else return XF.GetString("cant fertilizating");
+            return XF.GetString("done");
         }
 
-        public static bool WaterIt()
+        public static string WaterIt()
         {
-            if (GetSelectedFieldCount() > 1) { ClearSelected(); return false; }
-            var PhisicalPos = GetPos();
-            //PhisicalMap[point.X, point.Y].Category = ?;
-            //PhisicalMap[point.X, point.Y].Type = ?;
-            ClearSelected();
-            ShowPhisicalField(GetPos());
-            return true;
+            if (GetSelectedFieldCount() > 1) { ClearSelected(); return XF.GetString("multi watering"); }
+            FieldModel Field = GetField();
+            if(Field.Duration < 50)
+            {
+                Field.Duration += 50;
+                Field.Color = ColorService.Darken(Field.Color);
+                SetField(GetPos(), Field);
+                ClearSelected();
+                ShowPhisicalField(GetPos());
+            }
+            return XF.GetString("done");
         }
 
-        public static bool Collect()
+        public static string Collect()
         {
-            if (GetSelectedFieldCount() > 1) { ClearSelected(); return false; }
+            if (GetSelectedFieldCount() > 1) { ClearSelected(); return XF.GetString("multi collecting"); }
 
-            return true;
+            return XF.GetString("done");
         }
 
-        public static bool MakeFertilize()
+        public static string MakeFertilize()
         {
-            if (GetSelectedFieldCount() > 1) { ClearSelected(); return false; }
+            if (GetSelectedFieldCount() > 1) { ClearSelected(); return XF.GetString("multi fertilize making"); }
 
-            return true;
+            return XF.GetString("done");
         }
     }
 }

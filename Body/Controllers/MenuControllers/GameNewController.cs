@@ -27,8 +27,8 @@ namespace FarmConsole.Body.Controlers
                         case ConsoleKey.E:
                             switch (selected)
                             {
-                                case 1: S.Play("K2"); openScreen = "Farm"; save = new SaveModel("Locha"); break;
-                                case 2: S.Play("K2"); openScreen = "Farm"; save = new SaveModel("Turbo Kox"); break;
+                                case 1: S.Play("K2"); openScreen = "Farm"; GameInstance = new GameInstanceModel("Locha"); break;
+                                case 2: S.Play("K2"); openScreen = "Farm"; GameInstance = new GameInstanceModel("Turbo Kox"); break;
                             }
                             break;
                     }

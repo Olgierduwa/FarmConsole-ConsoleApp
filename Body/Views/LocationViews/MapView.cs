@@ -11,10 +11,11 @@ namespace FarmConsole.Body.Views.LocationViews
     {
         public static void GlobalMapInitializate()
         {
+            ColorService.SetColorPalette();
             ProductModel.SetProducts();
+            SetColors();
             SetMapBorders();
         }
-
         public static void InitializeMap(FieldModel[,] Map, FieldModel BaseField)
         {
             SetField(new Point(), BaseField, "Base");
@@ -23,30 +24,27 @@ namespace FarmConsole.Body.Views.LocationViews
             InitializeVisualMap();
             InitializeMapExtremePoints();
         }
-
         public static void ShowMap()
         {
             ShowVisualMap();
         }
-
         public static void HideMap()
         {
             ClearVisualMap();
         }
 
-        public static bool Build(ProductModel BuildProduct)
+        public static string Build(ProductModel BuildProduct)
         {
-            if (ProductModel.GetProduct(GetField()).Category == 3) return false;
+            if (ProductModel.GetProduct(GetField()).Category == 3) return XF.GetString("overwriting");
+            SetField(GetPos(), new FieldModel(BuildProduct));
             if (GetSelectedFieldCount() > 0)
             {
                 CenterMapOnPos(GetPos());
                 ClearSelected();
             }
-            SetField(GetPos(), new FieldModel(BuildProduct));
-            ShowPhisicalField(GetPos());
-            return true;
+            else ShowPhisicalField(GetPos());
+            return XF.GetString("done");
         }
-
         public static void Dragg()
         {
             SetField(GetPos(), new FieldModel(), "Dragged");
@@ -54,7 +52,6 @@ namespace FarmConsole.Body.Views.LocationViews
             ClearSelected();
             ShowPhisicalField(GetPos());
         }
-
         public static void Drop(bool ConfirmDrop = true)
         {
             if(GetField("Dragged") != null)
@@ -70,7 +67,6 @@ namespace FarmConsole.Body.Views.LocationViews
                 ShowPhisicalField(GetPos());
             }
         }
-
         public static void Destroy(int CountToRemove = 0)
         {
             if (CountToRemove == 0) CountToRemove = GetSelectedFieldCount();
@@ -84,17 +80,13 @@ namespace FarmConsole.Body.Views.LocationViews
             }
             while (CountToRemove > 0 && GetSelectedFieldCount() > 0);
         }
-
-        public static void ComeIn()
-        {
-            ProductModel Product = new ProductModel(GetField());
-            // wczytaj odpowiednią mapę na podstawie wybranego budynku (Product.ProductName)
-        }
-
         public static void Rotate()
         {
-            FieldModel Field = GetField();
-            // obróć wybrane pole w zależności od stanu w którym się znajduje (Field.State)
+            FieldModel OldField = GetField();
+            OldField.State++;
+            if (ProductModel.GetProduct(OldField).ProductName != "error") SetField(GetPos(), OldField);
+            else { OldField.State = 0; SetField(GetPos(), OldField); }
+            ShowPhisicalField(GetPos());
         }
     }
 }

@@ -7,21 +7,22 @@ namespace FarmConsole.Body.Views.MenuViews
 {
     public class AnimationView : MainViewService
     {
-        public static void Centrum(int graphicID)
+        public static void Centrum(string[] GraphicView)
         {
-            Endl((Console.WindowHeight - XF.GetGraphic(graphicID).Length) / 2 - 1);
+            ClearList(false);
+            Endl((Console.WindowHeight - GraphicView.Length) / 2 - 1);
             GroupStart(3);
             Endl(1);
-            GraphicBox(XF.GetGraphic(graphicID), color: ConsoleColor.Black);
+            GraphicBox(GraphicView, color: ConsoleColor.Black);
             GroupEnd();
         }
-        public static void Column(int graphicID, int column, int columns, ConsoleColor color = ConsoleColor.Black)
+        public static void DisplayGraphic(string[] GraphicView, int column, int columns, int row = 5, ConsoleColor color = ConsoleColor.Black, bool cleaning = false)
         {
-            ClearList();
-            Endl((Console.WindowHeight - XF.GetGraphic(graphicID).Length) / 2 - 1);
+            ClearList(cleaning);
+            Endl((Console.WindowHeight - GraphicView.Length) * row / 10 - 1);
             GroupStart(column, columns);
             Endl(1);
-            GraphicBox(XF.GetGraphic(graphicID), color: color);
+            GraphicBox(GraphicView, color: color);
             GroupEnd(columns);
             PrintList();
         }

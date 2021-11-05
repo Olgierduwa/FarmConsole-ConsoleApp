@@ -25,14 +25,14 @@ namespace FarmConsole.Body.Controlers
                     {
                         case ConsoleKey.W: if (selected > selStart) { S.Play("K1"); selected--; EscapeView.UpdateSelect(selected, selected + 1, selCount); } break;
                         case ConsoleKey.S: if (selected < selCount) { S.Play("K1"); selected++; EscapeView.UpdateSelect(selected, selected - 1, selCount); } break;
-                        case ConsoleKey.Escape: S.Play("K3"); openScreen = "Farm"; EscapeView.ClearList(); break;
-                        case ConsoleKey.Q: S.Play("K3"); openScreen = "Farm"; break;
+                        case ConsoleKey.Escape: S.Play("K3"); openScreen = escapeScreen; EscapeView.ClearList(); break;
+                        case ConsoleKey.Q: S.Play("K3"); openScreen = escapeScreen; break;
                         case ConsoleKey.E:
                             switch (selected)
                             {
-                                case 1: S.Play("K3"); openScreen = "Farm"; break;
+                                case 1: S.Play("K3"); openScreen = escapeScreen; break;
                                 case 2: S.Play("K2"); openScreen = "Save"; break;
-                                case 3: if (EscapeView.Warning() == true) { openScreen = lastScreen = "Menu"; save = new SaveModel(); } break;
+                                case 3: if (EscapeView.Warning() == true) { openScreen = lastScreen = "Menu"; GameInstance = new GameInstanceModel(); } break;
                                 case 4: S.Play("K2"); openScreen = "Options"; break;
                                 case 5: S.Play("K2"); openScreen = "Help"; break;
                             }

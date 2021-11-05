@@ -9,7 +9,7 @@ namespace FarmConsole.Body.Views.MenuViews
 {
     public class GameSaveView : MainViewService
     {
-        public static void Show(SaveModel[] saves)
+        public static void Show(GameInstanceModel[] saves)
         {
             int savesCount = saves.Length;
             int freeSpace = Console.WindowHeight - 15;
@@ -28,8 +28,8 @@ namespace FarmConsole.Body.Views.MenuViews
             TextBox("P U S T Y   Z A P I S");
             for (int i = 0; i < savesCount; i++)
                 if (i < showCount)
-                    TextBox(saves[i].Name);
-                else TextBox(saves[i].Name, show: false);
+                    TextBox(saves[i].UserName);
+                else TextBox(saves[i].UserName, show: false);
             GroupEnd();
 
             GroupStart(4);
@@ -77,13 +77,13 @@ namespace FarmConsole.Body.Views.MenuViews
             PrintList();
             return choice;
         }
-        public static void SetPreview(SaveModel[] saves, int selected)
+        public static void SetPreview(GameInstanceModel[] saves, int selected)
         {
             if (selected > 1)
             {
                 var save = saves[selected - 2];
                 UpdateBox(3, 1, ". . ." + " ---------------------------------- " +
-                "Nazwa Gracza - " + save.Name.ToString() + " ---------------------------------- " +
+                "Nazwa Gracza - " + save.UserName.ToString() + " ---------------------------------- " +
                 "Osiągniety Poziom - " + save.LVL.ToString() + " ---------------------------------- " +
                 "Posiadany Majątek - " + save.Wallet.ToString() + " ---------------------------------- " +
                 "Ostatni Zapis - " + save.Lastplay.ToString() + " ---------------------------------- . . .");

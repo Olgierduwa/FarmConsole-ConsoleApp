@@ -8,8 +8,8 @@ namespace FarmConsole.Body.Services
 {
     public class MainViewService
     {
-        public static readonly string title = XF.GetString(0);
-        public static readonly string foot = XF.GetString(1);
+        public static readonly string title = XF.GetString("title");
+        public static readonly string foot = XF.GetString("foot");
         public static readonly string controlsText = XF.GetText(1);
         public static readonly string fromAuthorText = XF.GetText(2);
         public static readonly string exitQuestion = XF.GetText(100);
@@ -50,7 +50,7 @@ namespace FarmConsole.Body.Services
                     }
             //ShowComponentList();
         }
-        public static void UpdateItemList(List<ProductModel>[] component_list, int category, int id_group = 5)
+        public static void UpdateItemList(List<ProductModel> component_list, int id_group = 5)
         {
             int t = 0, idStartFrom = 4, count = CLIST.Count;
             while (CLIST[idStartFrom].ID_group != id_group) idStartFrom++;
@@ -63,25 +63,25 @@ namespace FarmConsole.Body.Services
                         case null: t = 0; break;
                     }
             for (int i = idStartFrom + 1; i < count; i++) CLIST.RemoveAt(idStartFrom + 1);
-            GraphicBox(new string[] { XF.GetProductCategoryName()[category], "" }, color: ConsoleColor.Gray);
+            GraphicBox(new string[] { "Ekwipunek", "" }, color: ConsoleColor.Gray);
             Print(name);
             Print(CLIST[++idStartFrom]);
 
-            if (component_list[category].Count == 0)
+            if (component_list.Count == 0)
             {
                 idStartFrom += 2;
                 Endl(1);
                 GraphicBox(new string[] { "NIC TU NIE MA" });
                 Print(CLIST[idStartFrom]);
             }
-            for (int i = 0; i < component_list[category].Count; i++)
+            for (int i = 0; i < component_list.Count; i++)
                 if (i < (Console.WindowHeight - 13) / 3)
                 {
                     idStartFrom++;
-                    TextBox(component_list[category][i].Amount + "x " + component_list[category][i].ProductName, Console.WindowWidth / 5 - 1, margin: 0);
+                    TextBox(component_list[i].Amount + "x " + component_list[i].ProductName, Console.WindowWidth / 5 - 1, margin: 0);
                     Print(CLIST[idStartFrom]);
                 }
-                else TextBox(component_list[category][i].ProductName, Console.WindowWidth / 5 - 1, false, margin: 0);
+                else TextBox(component_list[i].ProductName, Console.WindowWidth / 5 - 1, false, margin: 0);
             GroupEnd();
             GroupEnd();
         }
@@ -129,7 +129,7 @@ namespace FarmConsole.Body.Services
                 }
             Console.SetCursorPosition(0, 0);
         }
-        public static void UpdatGraphic(int id_group, int id_object, string[] content = null, ConsoleColor color = static_base_color)
+        public static void UpdateGraphic(int id_group, int id_object, string[] content = null, ConsoleColor color = static_base_color)
         {
             int id = 0;
             for (int i = 0; i < CLIST.Count; i++) if (CLIST[i].ID_group == id_group && CLIST[i].ID_object == id_object) { id = i; break; }
@@ -171,10 +171,11 @@ namespace FarmConsole.Body.Services
         private static void Clear(CC c, int y = 0)
         {
             for (int i = 0; i < c.Height; i++)
-            {
-                Console.SetCursorPosition(c.PosX, c.PosY + i - y);
-                Console.Write(("").PadRight(c.Width, ' '));
-            }
+                if (c.PosY + i - y < Console.WindowHeight)
+                {
+                    Console.SetCursorPosition(c.PosX, c.PosY + i - y);
+                    Console.Write(("").PadRight(c.Width, ' '));
+                }
             Console.SetCursorPosition(0, 0);
         }
         private static void Print(CC c, int y = 0, bool enable = true)
@@ -185,10 +186,12 @@ namespace FarmConsole.Body.Services
 
             Console.ForegroundColor = base_color;
             for (int i = 0; i < c.Height; i++)
-            {
-                Console.SetCursorPosition(c.PosX, c.PosY + i - y);
-                Console.Write(c.View[i]);
-            }
+                if (c.PosY + i - y < Console.WindowHeight)
+                {
+                    Console.SetCursorPosition(c.PosX, c.PosY + i - y);
+                    Console.Write(c.View[i]);
+                }
+
             //Thread.Sleep(500);
             if (c.View[0].Length > 1)
             {
@@ -225,9 +228,10 @@ namespace FarmConsole.Body.Services
                 if ((c.ID_group == id_group && id_object == 0 && c.ID_object > 0) || (c.ID_group == id_group && c.ID_object == id_object))
                     if (show == true) { c.Show = true; Print(c); } else { c.Show = false; Clear(c); }
         }
-        private static void AddComponent(string name, string[] view, bool show = true, int prop = 0, ConsoleColor color1 = static_base_color, ConsoleColor color2 = static_content_color, bool cut = false)
+        private static void AddComponent(string name, string[] view, bool show = true, int prop = 0, ConsoleColor background = static_base_color, ConsoleColor foreground = static_content_color, bool cut = false)
         {
-            int id_group = 0, id_object = 0, posY = 0, posX = 0, width = view[0].Length, height = view.Length, difference = 0;
+            string[] componentView = (string[])view.Clone();
+            int id_group = 0, id_object = 0, posY = 0, posX = 0, width = componentView[0].Length, height = componentView.Length, difference = 0;
             if (CLIST.Count > 0)
             {
                 /// ustalanie id_group ///
@@ -262,8 +266,8 @@ namespace FarmConsole.Body.Services
                                 {
                                     difference = 0 - posX;
                                     if (difference > width) difference = width - 1;
-                                    for (int j = 0; j < view.Length; j++)
-                                        view[j] = view[j].Substring(difference);
+                                    for (int j = 0; j < componentView.Length; j++)
+                                        componentView[j] = componentView[j].Substring(difference);
                                 }
                                 posX = 0;
                             }
@@ -277,16 +281,16 @@ namespace FarmConsole.Body.Services
                                         difference = 0;
                                         posX = Console.WindowWidth - 1;
                                     }
-                                    for (int j = 0; j < view.Length; j++)
-                                        view[j] = view[j].Substring(0, difference);
+                                    for (int j = 0; j < componentView.Length; j++)
+                                        componentView[j] = componentView[j].Substring(0, difference);
 
                                 }
-                                else posX = Console.WindowWidth - view[0].Length;
+                                else posX = Console.WindowWidth - componentView[0].Length;
                             }
                         }
             }
             if (name == "EN") posX = 0;
-            CLIST.Add(new CC(id_group, id_object, posX, posY, width, height, view, name, prop, show, color1, color2));
+            CLIST.Add(new CC(id_group, id_object, posX, posY, width, height, componentView, name, prop, show, background, foreground));
         }
         public static void GroupStart(int selColumn, int column = 5)
         {
@@ -367,7 +371,7 @@ namespace FarmConsole.Body.Services
         {
             AddComponent("GB", content, show, 0, color, color, true);
         }
-        public static void TextBox(string text, int width = 40, bool show = true, ConsoleColor color1 = static_base_color, ConsoleColor color2 = static_content_color, int margin = 3)
+        public static void TextBox(string text, int width = 40, bool show = true, ConsoleColor background = static_base_color, ConsoleColor foreground = static_content_color, int margin = 3)
         {
             string line = "";
             List<string> content = new List<string>();
@@ -380,11 +384,15 @@ namespace FarmConsole.Body.Services
                     line = " " + word;
                 }
             }
-            content.Add(("").PadRight((width - 2 - line.Length) / 2, ' ') + line + ("").PadRight(width - 2 - line.Length - (width - 2 - line.Length) / 2, ' '));
+            int LeftLenght = (width - 2 - line.Length) / 2;
+            int RightLenght = width - 2 - line.Length - (width - 2 - line.Length) / 2;
+            RightLenght = RightLenght < 0 ? 0 : RightLenght;
+            LeftLenght = LeftLenght < 0 ? 0 : LeftLenght;
+            content.Add(("").PadRight(LeftLenght, ' ') + line + ("").PadRight(RightLenght, ' '));
             string[] view1 = new string[] { AsciiPartViewService.Top(width) };
             string[] view2 = AsciiPartViewService.Sides(content);
             string[] view3 = new string[] { AsciiPartViewService.Bot(width) };
-            AddComponent("TB", view1.Concat(view2.Concat(view3).ToArray()).ToArray(), show, 0, color1, color2);
+            AddComponent("TB", view1.Concat(view2.Concat(view3).ToArray()).ToArray(), show, 0, background, foreground);
         }
         public static void TextBoxLines(string[] lines, int width = 40, bool show = true, ConsoleColor color1 = static_base_color, ConsoleColor color2 = static_content_color)
         {

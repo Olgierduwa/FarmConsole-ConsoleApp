@@ -1,6 +1,7 @@
 ﻿using FarmConsole.Body.Models;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml;
@@ -17,17 +18,17 @@ namespace FarmConsole.Body.Services
         private static readonly string long_path = loc + "longtexts.xml";
         private static readonly string options_path = loc + "options.xml";
         private static readonly string saves_path = loc + "saves.xml";
-        private static readonly string fields_save = loc + "fields.xml";
-        private static readonly string graphics_save = loc + "graphics.xml";
+        private static readonly string fields_path = loc + "fields.xml";
+        private static readonly string graphics_path = loc + "graphics.xml";
+        private static readonly string colors_path = loc + "colors.xml";
 
-        public static string GetString(int id)
+        public static string GetString(string Name)
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(string_path);
-            XmlNodeList list = doc.SelectNodes("/StrigsCollection/String[@id=" + id.ToString() + "]");
-            XmlNode node = list[0];
+            XmlNode node = doc.SelectSingleNode("/StrigsCollection/String[@name='"+Name+"']");
             string text = "- BRAK STRINGA -";
-            if (list.Count < 1) { return text; }
+            if (node == null) { return text; }
             text = Regex.Replace(node.InnerText, @"\s+", " ", RegexOptions.Multiline);
             return text;
         }
@@ -42,25 +43,26 @@ namespace FarmConsole.Body.Services
             text = Regex.Replace(node.InnerText, @"\s+", " ", RegexOptions.Multiline);
             return text;
         }
-        public static string[] GetGraphic(int id)
+        public static string[] GetGraphic(string GraphicName)
         {
             XmlDocument doc = new XmlDocument();
-            doc.Load(graphics_save);
-            XmlNodeList list = doc.SelectNodes("/graphics/graphic[@id=" + id.ToString() + "]");
+            doc.Load(graphics_path);
+            XmlNodeList list = doc.SelectNodes("/graphics/graphic[@id='" + GraphicName + "']");
             XmlNode node = list[0];
             if (list.Count < 1) { return new string[] { "- BRAK GRAFIKI -" }; }
 
             char[] MyChar = { '\r', '\n' };
-            string[] graphic = node.InnerText.Split('@');
+            string[] oryginalgraphic = node.InnerText.Split('@');
+            string[] graphic = new string[oryginalgraphic.Length - 1];
             for (int i = 0; i < graphic.Length; i++)
-                graphic[i] = graphic[i].Trim(MyChar).Substring(4);
+                graphic[i] = oryginalgraphic[i].Trim(MyChar).Substring(4);
 
             return graphic;
         }
         public static List<ProductModel> GetProducts()
         {
             XmlDocument doc = new XmlDocument();
-            doc.Load(fields_save);
+            doc.Load(fields_path);
             List<ProductModel> Products = new List<ProductModel>();
             XmlNodeList Categories = doc.SelectNodes("/FieldsCollection/category");
             for (int Category = 0; Category < Categories.Count; Category++)
@@ -93,15 +95,23 @@ namespace FarmConsole.Body.Services
                             Product.ProductName = Field.Attributes["name"].Value;
                             Product.Property = Field.Attributes["property"].Value;
                             Product.Price = Convert.ToDecimal(Price == "" ? "0" : Price);
-                            Product.Color = GetColorByID(Colors.Length < State + 1 || Colors[State] == "" ? 13 : Convert.ToInt16(Colors[State]));
+
+                            Product.Color = Colors[0] == "" ? ColorService.GetColorByID(0) : State < Colors.Length ?
+                                IsNumber(Colors[State]) ? ColorService.GetColorByName(Colors[State]) : ColorService.GetColorByID(Convert.ToInt16(Colors[State])) :
+                                IsNumber(Colors[0]) ? ColorService.GetColorByName(Colors[0]) : ColorService.GetColorByID(Convert.ToInt16(Colors[0]));
+
                             Product.MenuActions = MenuActs[0] != "" ?
-                                MenuActs[MenuActs.Length < State + 1 ? 0 : State].Split(',') : Product.MenuActions;
+                                MenuActs[State < MenuActs.Length ? State : 0].Split(',') : Product.MenuActions;
+
                             Product.MenuActions = MainMenuAct[0] != "" ?
                                 Product.MenuActions.Concat(MainMenuAct).ToArray() : Product.MenuActions;
+
                             Product.MapActions = MapActs[0] != "" ?
-                                MapActs[MapActs.Length < State + 1 ? 0 : State].Split(',') : Product.MapActions;
+                                MapActs[State < MapActs.Length ? State : 0].Split(',') : Product.MapActions;
+
                             Product.MapActions = MainMapAct[0] != "" ?
                                 Product.MapActions.Concat(MainMapAct).ToArray() : Product.MapActions;
+
                             Product.View = new string[(View.Length - 1) / States.Length];
                             int Line = 0 + State, Index = 0;
                             while (Line < View.Length - 1) { Product.View[Index] = View[Line]; Index++; Line += States.Length; }
@@ -113,45 +123,19 @@ namespace FarmConsole.Body.Services
             }
             return Products;
         }
-        
-        public static List<string>[] GetFields()
+        public static string[] GetColors()
         {
             XmlDocument doc = new XmlDocument();
-            doc.Load(fields_save);
-            XmlNodeList listOfCategory = doc.SelectNodes("/FieldsCollection/category");
-            List<string>[] fields = new List<string>[listOfCategory.Count];
-            for (int i = 0; i < listOfCategory.Count; i++)
-            {
-                fields[i] = new List<string>();
-                XmlNode nodeOfCategory = listOfCategory[i];
-                for (int j = 0; j < nodeOfCategory.ChildNodes.Count; j++)
-                {
-                    XmlNodeList nodeOfField = nodeOfCategory.SelectNodes("field[@id=" + j.ToString() + "]");
-                    XmlNode node = nodeOfField[0];
-                    fields[i].Add(node.InnerText);
-                }
-            }
-            return fields;
-        }
-        public static string GetFieldName(int cat, int id)
-        {
-            XmlDocument doc = new XmlDocument();
-            doc.Load(fields_save);
-            XmlNodeList category = doc.SelectNodes("/FieldsCollection/category[@cat=" + cat.ToString() + "]");
-            XmlNode nodeCategory = category[0];
-            XmlNodeList fields = nodeCategory.SelectNodes("field[@id=" + id.ToString() + "]");
-            XmlNode nodeField = fields[0];
-            return nodeField.Attributes["name"].Value;
-        }
-        public static string GetFieldDescription(int cat, int id)
-        {
-            XmlDocument doc = new XmlDocument();
-            doc.Load(fields_save);
-            XmlNodeList category = doc.SelectNodes("/FieldsCollection/category[@cat=" + cat.ToString() + "]");
-            XmlNode nodeCategory = category[0];
-            XmlNodeList fields = nodeCategory.SelectNodes("field[@id=" + id.ToString() + "]");
-            XmlNode nodeField = fields[0];
-            return nodeField.Attributes["opis"].Value;
+            doc.Load(colors_path);
+            XmlNodeList colors = doc.SelectNodes("/colors/color");
+            int index = 0;
+            string[] ColorsString = new string[colors.Count];
+            foreach(XmlNode color in colors)
+                ColorsString[index++] =
+                    color.Attributes["id"].Value + " " +
+                    color.Attributes["name"].Value + " " +
+                    color.Attributes["value"].Value;
+            return ColorsString;
         }
 
         public static int GetOptionsCount()
@@ -187,19 +171,64 @@ namespace FarmConsole.Body.Services
             doc.Save(options_path);
         }
 
-        public static string[] GetProductCategoryName()
+        public static GameInstanceModel[] GetGameInstances()
         {
             XmlDocument doc = new XmlDocument();
-            doc.Load(product_path);
-            XmlNodeList listOfCategory = doc.SelectNodes("/ProductsCollection/category");
-            string[] categoryList = new string[listOfCategory.Count];
-            for (int i = 0; i < listOfCategory.Count; i++)
-            {
-                XmlNode node = listOfCategory[i];
-                categoryList[i] = node.Attributes["name"].Value;
-            }
-            return categoryList;
+            doc.Load(saves_path);
+            XmlNodeList list = doc.SelectNodes("/Saves/save");
+            GameInstanceModel[] saves = new GameInstanceModel[list.Count];
+            for (int i = 0; i < list.Count; i++)
+                saves[i] = new GameInstanceModel(
+                    list[i].Attributes["id"].Value, list[i]["lvl"].InnerText, list[i]["username"].InnerText,
+                    list[i]["lastplay"].InnerText, list[i]["wallet"].InnerText);
+            return saves;
         }
+        public static XmlNode GetGameInstance(int id)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(saves_path);
+            return doc.SelectNodes("/Saves/save[@id=" + id.ToString() + "]")[0];
+        }
+        public static void UpdateGameInstance(string[] list, int id)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(saves_path);
+            XmlNode node = doc.SelectSingleNode("/Saves/save[@id=" + id.ToString() + "]");
+            for (int i = 0; i < list.Length; i += 2) node[list[i]].InnerText = list[i + 1];
+            doc.Save(saves_path);
+        }
+        public static void AddGameInstance(string[] list)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(saves_path);
+            int lastId = 0;
+            if (doc.SelectSingleNode("/Saves").InnerText != "")
+                lastId = XElement.Load(saves_path).Descendants("save").Select(x => int.Parse(x.Attribute("id").Value)).Last();
+            XmlNode root = doc.DocumentElement;
+            XmlElement save = doc.CreateElement("save");
+            save.SetAttribute("id", (lastId + 1).ToString());
+            int i = 0, j = 1;
+            for (; i < list.Length; i += 2, j++)
+            {
+                XmlElement node = doc.CreateElement(list[i]);
+                node.InnerText = list[i + 1];
+                save.AppendChild(node);
+            }
+            root.AppendChild(save);
+            doc.Save(saves_path);
+        }
+        public static void DeleteGameInstance(int id)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(saves_path);
+            var lastID = XElement.Load(saves_path).Descendants("save").Select(x => int.Parse(x.Attribute("id").Value)).Last();
+            XmlNode node = doc.SelectSingleNode("/Saves/save[@id=" + id.ToString() + "]");
+            node.ParentNode.RemoveChild(node);
+            for (int i = id + 1; i <= lastID; i++)
+                doc.SelectSingleNode("/Saves/save[@id=" + i.ToString() + "]").Attributes["id"].Value = (i - 1).ToString();
+            doc.Save(saves_path);
+        }
+
         public static void AddProduct(ProductModel _product)
         {
             XmlDocument doc = new XmlDocument();
@@ -218,84 +247,10 @@ namespace FarmConsole.Body.Services
             doc.Save(product_path);
         }
 
-        public static SaveModel[] GetSaves()
+        private static bool IsNumber(string Text)
         {
-            XmlDocument doc = new XmlDocument();
-            doc.Load(saves_path);
-            XmlNodeList list = doc.SelectNodes("/Saves/save");
-            SaveModel[] saves = new SaveModel[list.Count];
-            for (int i = 0; i < list.Count; i++)
-                saves[i] = new SaveModel(
-                    list[i].Attributes["id"].Value, list[i]["lvl"].InnerText, list[i]["name"].InnerText,
-                    list[i]["lastplay"].InnerText, list[i]["wallet"].InnerText);
-            return saves;
-        }
-        public static XmlNode GetSave(int id)
-        {
-            XmlDocument doc = new XmlDocument();
-            doc.Load(saves_path);
-            return doc.SelectNodes("/Saves/save[@id=" + id.ToString() + "]")[0];
-        }
-        public static void UpdateSave(string[] list, int id)
-        {
-            XmlDocument doc = new XmlDocument();
-            doc.Load(saves_path);
-            XmlNode node = doc.SelectSingleNode("/Saves/save[@id=" + id.ToString() + "]");
-            for (int i = 0; i < list.Length; i += 2) node[list[i]].InnerText = list[i + 1];
-            doc.Save(saves_path);
-        }
-        public static void AddSave(string[] list)
-        {
-            XmlDocument doc = new XmlDocument();
-            doc.Load(saves_path);
-            var lastId = XElement.Load(saves_path).Descendants("save").Select(x => int.Parse(x.Attribute("id").Value)).Last();
-            XmlNode root = doc.DocumentElement;
-            XmlElement save = doc.CreateElement("save");
-            save.SetAttribute("id", (lastId + 1).ToString());
-            int i = 0, j = 1;
-            for (; i < list.Length; i += 2, j++)
-            {
-                XmlElement node = doc.CreateElement(list[i]);
-                node.InnerText = list[i + 1];
-                save.AppendChild(node);
-            }
-            root.AppendChild(save);
-            doc.Save(saves_path);
-        }
-        public static void DeleteSave(int id)
-        {
-            XmlDocument doc = new XmlDocument();
-            doc.Load(saves_path);
-            var lastID = XElement.Load(saves_path).Descendants("save").Select(x => int.Parse(x.Attribute("id").Value)).Last();
-            XmlNode node = doc.SelectSingleNode("/Saves/save[@id=" + id.ToString() + "]");
-            node.ParentNode.RemoveChild(node);
-            for (int i = id + 1; i <= lastID; i++)
-                doc.SelectSingleNode("/Saves/save[@id=" + i.ToString() + "]").Attributes["id"].Value = (i - 1).ToString();
-            doc.Save(saves_path);
-        }
-
-        private static ConsoleColor GetColorByID(int colorID)
-        {
-            switch (colorID)
-            {
-                case 0: return ConsoleColor.Black;
-                case 1: return ConsoleColor.DarkBlue;
-                case 2: return ConsoleColor.DarkGreen;
-                case 3: return ConsoleColor.DarkCyan;
-                case 4: return ConsoleColor.DarkRed;
-                case 5: return ConsoleColor.DarkMagenta;
-                case 6: return ConsoleColor.DarkYellow;
-                case 7: return ConsoleColor.Gray; 
-                case 8: return ConsoleColor.DarkGray;
-                case 9: return ConsoleColor.Blue;
-                case 10: return ConsoleColor.Green;
-                case 11: return ConsoleColor.Cyan;
-                case 12: return ConsoleColor.Red;
-                case 13: return ConsoleColor.Magenta;
-                case 14: return ConsoleColor.Yellow;
-                case 15: return ConsoleColor.White;
-                default: return ConsoleColor.White;
-            }
+            Regex reg = new Regex("[^0-9]");
+            return reg.IsMatch(Text);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using FarmConsole.Body.Services;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace FarmConsole.Body.Models
 {
@@ -13,7 +14,7 @@ namespace FarmConsole.Body.Models
         public string ProductName { get; set; }
         public string Property { get; set; }
         public decimal Price { get; set; }
-        public ConsoleColor Color { get; set; }
+        public Color Color { get; set; }
         public string[] MenuActions { get; set; }
         public string[] MapActions { get; set; }
         public string[] View { get; set; }
@@ -34,7 +35,7 @@ namespace FarmConsole.Body.Models
             ProductName = "- NAZWA NIEZNANA -";
             Property = "";
             Price = 0;
-            Color = ConsoleColor.Magenta;
+            Color = Color.FromName("Magenta");
             Duration = 0;
             Amount = 1;
             MenuActions = new string[0];
@@ -101,12 +102,14 @@ namespace FarmConsole.Body.Models
                 Product.ViewStartPos = StartViewPos;
             }
         }
-        public static ProductModel GetProduct(string ProductName)
+        public static ProductModel GetProduct(string _ProductName, int _State = 0, string _StateName = "")
         {
             int Index = 0;
             while (Index < Products.Count)
             {
-                if (Products[Index].ProductName == ProductName) break;
+                if (Products[Index].ProductName == _ProductName &&
+                  ((_StateName != "" && Products[Index].StateName == _StateName) ||
+                   (_StateName == "" && Products[Index].State == _State))) break;
                 Index++;
             }
             if (Index == Products.Count) return Products[3]; // error
@@ -154,7 +157,7 @@ namespace FarmConsole.Body.Models
         {
             List<ProductModel> SelectedProducts = new List<ProductModel>();
             foreach (var P in List)
-                if (P.MenuActions[0] == Action)
+                if (P.MenuActions.Length > 0 && P.MenuActions[0] == Action)
                     SelectedProducts.Add(P);
             return SelectedProducts;
         }

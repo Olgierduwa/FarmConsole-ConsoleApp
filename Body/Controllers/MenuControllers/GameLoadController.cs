@@ -12,12 +12,11 @@ namespace FarmConsole.Body.Controlers
     {
         public static void Open()
         {
-            SaveModel[] saves = XF.GetSaves();
+            GameInstanceModel[] saves = XF.GetGameInstances();
             int selected = 1, selCount = saves.Length + 1, selStart = 1;
             GameLoadView.Show(saves); GameLoadView.UpdateSelect(selected, selected, selCount);
             while (openScreen == "Load")
             {
-
                 if (Console.KeyAvailable)
                 {
                     switch (Console.ReadKey(true).Key)
@@ -26,12 +25,12 @@ namespace FarmConsole.Body.Controlers
                         case ConsoleKey.S: if (selected < selCount) { S.Play("K1"); selected++; GameLoadView.UpdateSelect(selected, selected - 1, selCount); } break;
                         case ConsoleKey.Escape:
                         case ConsoleKey.Q: S.Play("K3"); openScreen = "Menu"; break;
-                        case ConsoleKey.E: S.Play("K2"); switch (selected) { case 1: openScreen = "NewGame"; break; default: MainControllerService.save.Load(selected - 1); openScreen = "Farm"; break; } break;
+                        case ConsoleKey.E: S.Play("K2"); switch (selected) { case 1: openScreen = "NewGame"; break; default: MainControllerService.GameInstance.Load(selected - 1); openScreen = "Farm"; break; } break;
                         case ConsoleKey.D:
                             if (selected > 1 && GameLoadView.Warning() == true)
                             {
                                 saves[selected - 2].Delete();
-                                saves = XF.GetSaves();
+                                saves = XF.GetGameInstances();
                                 selected = 1;
                                 selCount = saves.Length + 1;
                                 GameLoadView.ClearList();

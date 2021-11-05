@@ -8,7 +8,7 @@ namespace FarmConsole.Body.Services
 {
     public class MainControllerService
     {
-        protected static SaveModel save;
+        protected static GameInstanceModel GameInstance;
 
         public static string POPUPTEXT = "";
         public static int POPUPSTAGE = -1;
@@ -16,18 +16,23 @@ namespace FarmConsole.Body.Services
         public static DateTime Now = DateTime.Now;
         public static string openScreen = "Menu";
         public static string lastScreen = "Menu";
+        public static string escapeScreen = "Menu";
 
         public static void PopUp(int id, string text)
         {
             string popupText = text;
-            if (id > 0) popupText = XF.GetString(300 + id);
-            if (POPUPSTAGE >= 0) POPUPSTAGE = AnimationController.PopUp(MainViewService.TextBoxView(popupText), POPUPSTAGE);
+            if (id > 0) popupText = XF.GetString((400 + id).ToString());
+            if (POPUPSTAGE >= 0)
+            {
+                AnimationController.Effect(GV: MainViewService.TextBoxView(popupText), S: POPUPSTAGE);
+                POPUPSTAGE = AnimationController.PopUp();
+            }
             if (POPUPSTAGE < 0) POPUPID = 0;
         }
 
         static MainControllerService()
         {
-            save = new SaveModel();
+            GameInstance = new GameInstanceModel();
         }
     }
 }

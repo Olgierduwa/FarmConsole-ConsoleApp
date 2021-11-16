@@ -1,12 +1,13 @@
 ﻿using FarmConsole.Body.Models;
+using FarmConsole.Body.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FarmConsole.Body.Services
+namespace FarmConsole.Body.Engines
 {
-    public class MainViewService
+    public class ComponentEngine
     {
         public static readonly string title = XF.GetString("title");
         public static readonly string foot = XF.GetString("foot");
@@ -17,10 +18,12 @@ namespace FarmConsole.Body.Services
         public static readonly string updateQuestion = XF.GetText(102);
         public static readonly string exitQuestion3 = XF.GetText(103);
 
-        private static readonly List<CC> CLIST = new List<CC>();
+        private static List<CM> CLIST = new List<CM>();
         private const ConsoleColor static_base_color = ConsoleColor.DarkGray;
         private const ConsoleColor static_content_color = ConsoleColor.White;
-        
+
+        public static List<CM> ComponentList { get => CLIST; set => CLIST = value; }
+
         #region ComponentsControl
         public static void UpdateSelect(int c1, int c0, int count, int id_group = 2, int rangeProp = 13)
         {
@@ -42,7 +45,7 @@ namespace FarmConsole.Body.Services
             CLIST[idStartFrom + c0].Base_color = static_base_color;
             CLIST[idStartFrom + c1].Prop = 1;
             CLIST[idStartFrom + c1].Base_color = ConsoleColor.Yellow;
-            foreach (CC c in CLIST) if (c.ID_group == id_group && c.ID_object > 0) switch (c.Show)
+            foreach (CM c in CLIST) if (c.ID_group == id_group && c.ID_object > 0) switch (c.Show)
                     {
                         case true: Print(c, t * c.Height); break;
                         case false: t++; break;
@@ -54,9 +57,9 @@ namespace FarmConsole.Body.Services
         {
             int t = 0, idStartFrom = 4, count = CLIST.Count;
             while (CLIST[idStartFrom].ID_group != id_group) idStartFrom++;
-            CC name = CLIST[idStartFrom + 1]; name.Base_color = ConsoleColor.DarkGray;
+            CM name = CLIST[idStartFrom + 1]; name.Base_color = ConsoleColor.DarkGray;
             name.View = new string[] { "".PadRight(name.View[0].Length, '─') }; name.Height = 1;
-            foreach (CC c in CLIST) if (c.ID_group == id_group && c.ID_object >= 0) switch (c.Show)
+            foreach (CM c in CLIST) if (c.ID_group == id_group && c.ID_object >= 0) switch (c.Show)
                     {
                         case true: Clear(c, t * c.Height); break;
                         case false: t++; break;
@@ -103,9 +106,9 @@ namespace FarmConsole.Body.Services
                 }
             }
             content.Add(("").PadRight((width - line.Length) / 2 - 1, ' ') + line + ("").PadRight(width - line.Length - (width - line.Length) / 2 - 1, ' '));
-            string[] view1 = new string[] { AsciiPartViewService.Top(width) };
-            string[] view2 = AsciiPartViewService.Sides(content);
-            string[] view3 = new string[] { AsciiPartViewService.Bot(width) };
+            string[] view1 = new string[] { ComponentViewService.Top(width) };
+            string[] view2 = ComponentViewService.Sides(content);
+            string[] view3 = new string[] { ComponentViewService.Bot(width) };
             string[] view = view1.Concat(view2.Concat(view3).ToArray()).ToArray();
             if (CLIST[id].Height != view.Length) Clear(CLIST[id]);
             CLIST[id].View = view;
@@ -119,11 +122,11 @@ namespace FarmConsole.Body.Services
                 {
                     int tick = CLIST[i].Width / (count) * value + 1;
                     Console.SetCursorPosition(CLIST[i].PosX, CLIST[i].PosY);
-                    Console.Write(" " + AsciiPartViewService.Fragment(CLIST[i].Width - 2, '_'));
+                    Console.Write(" " + ComponentViewService.Fragment(CLIST[i].Width - 2, '_'));
                     Console.SetCursorPosition(CLIST[i].PosX + tick, CLIST[i].PosY);
                     Console.Write("||");
                     Console.SetCursorPosition(CLIST[i].PosX, CLIST[i].PosY + 1);
-                    Console.Write("|" + AsciiPartViewService.Fragment(CLIST[i].Width - 2, '_') + "|");
+                    Console.Write("|" + ComponentViewService.Fragment(CLIST[i].Width - 2, '_') + "|");
                     Console.SetCursorPosition(CLIST[i].PosX + tick, CLIST[i].PosY + 1);
                     Console.Write("||");
                 }
@@ -148,7 +151,7 @@ namespace FarmConsole.Body.Services
             if (cleaning)
             {
                 int t = 0;
-                foreach (CC c in CLIST) switch (c.Show)
+                foreach (CM c in CLIST) switch (c.Show)
                     {
                         case true: Clear(c, t * c.Height); break;
                         case false: t++; break;
@@ -160,7 +163,7 @@ namespace FarmConsole.Body.Services
         public static void PrintList()
         {
             int t = 0;
-            foreach (CC c in CLIST) switch (c.Show)
+            foreach (CM c in CLIST) switch (c.Show)
                 {
                     case true: Print(c, t * c.Height); break;
                     case false: t++; break;
@@ -168,7 +171,7 @@ namespace FarmConsole.Body.Services
                 }
             Console.ResetColor();
         }
-        private static void Clear(CC c, int y = 0)
+        private static void Clear(CM c, int y = 0)
         {
             for (int i = 0; i < c.Height; i++)
                 if (c.PosY + i - y < Console.WindowHeight)
@@ -178,7 +181,7 @@ namespace FarmConsole.Body.Services
                 }
             Console.SetCursorPosition(0, 0);
         }
-        private static void Print(CC c, int y = 0, bool enable = true)
+        private static void Print(CM c, int y = 0, bool enable = true)
         {
             ConsoleColor base_color = c.Base_color;
             ConsoleColor content_color = c.Content_color;
@@ -199,7 +202,7 @@ namespace FarmConsole.Body.Services
                 for (int i = 1; i < c.Height - 1; i++)
                 {
                     Console.SetCursorPosition(c.PosX + 1, c.PosY + i - y);
-                    Console.Write(c.View[i].Substring(1, c.View[i].Length - 2));
+                    Console.Write(c.View[i][1..^1]);
                 }
             }
             Console.SetCursorPosition(0, 0);
@@ -207,7 +210,7 @@ namespace FarmConsole.Body.Services
         public static void Focus(int id_group)
         {
             int t = 0;
-            foreach (CC c in CLIST)
+            foreach (CM c in CLIST)
             {
                 if ((c.ID_group >= id_group) && c.ID_object >= 0)
                 {
@@ -224,14 +227,14 @@ namespace FarmConsole.Body.Services
         }
         public static void Showability(int id_group, int id_object, bool show)
         {
-            foreach (CC c in CLIST)
+            foreach (CM c in CLIST)
                 if ((c.ID_group == id_group && id_object == 0 && c.ID_object > 0) || (c.ID_group == id_group && c.ID_object == id_object))
                     if (show == true) { c.Show = true; Print(c); } else { c.Show = false; Clear(c); }
         }
         private static void AddComponent(string name, string[] view, bool show = true, int prop = 0, ConsoleColor background = static_base_color, ConsoleColor foreground = static_content_color, bool cut = false)
         {
             string[] componentView = (string[])view.Clone();
-            int id_group = 0, id_object = 0, posY = 0, posX = 0, width = componentView[0].Length, height = componentView.Length, difference = 0;
+            int id_group = 0, id_object = 0, posY = 0, posX = 0, width = componentView[0].Length, height = componentView.Length;
             if (CLIST.Count > 0)
             {
                 /// ustalanie id_group ///
@@ -260,6 +263,7 @@ namespace FarmConsole.Body.Services
                         if (CLIST[i].ID_group == id_group && CLIST[i].ID_object == -1)
                         {
                             posX = CLIST[i].PosX + ((CLIST[i].Width - width) / 2);
+                            int difference;
                             if (posX < 0)
                             {
                                 if (cut)
@@ -267,7 +271,7 @@ namespace FarmConsole.Body.Services
                                     difference = 0 - posX;
                                     if (difference > width) difference = width - 1;
                                     for (int j = 0; j < componentView.Length; j++)
-                                        componentView[j] = componentView[j].Substring(difference);
+                                        componentView[j] = componentView[j][difference..];
                                 }
                                 posX = 0;
                             }
@@ -290,7 +294,7 @@ namespace FarmConsole.Body.Services
                         }
             }
             if (name == "EN") posX = 0;
-            CLIST.Add(new CC(id_group, id_object, posX, posY, width, height, componentView, name, prop, show, background, foreground));
+            CLIST.Add(new CM(id_group, id_object, posX, posY, width, height, componentView, name, prop, show, background, foreground));
         }
         public static void GroupStart(int selColumn, int column = 5)
         {
@@ -308,7 +312,7 @@ namespace FarmConsole.Body.Services
                     if (selColumn > 0 && counter > 0) posY = CLIST[i].PosY + CLIST[i].Height;
                     id_group = CLIST[i].ID_group + 1; break;
                 }
-            CLIST.Add(new CC(id_group, -1, posX, posY, Console.WindowWidth / column, 0, new string[] { "" }, "GS", 0, null));
+            CLIST.Add(new CM(id_group, -1, posX, posY, Console.WindowWidth / column, 0, new string[] { "" }, "GS", 0, null));
         }
         public static void GroupEnd(int column = 5)
         {
@@ -329,7 +333,7 @@ namespace FarmConsole.Body.Services
                     if (group == 0 || CLIST[i].ID_group == 0) { id_group = CLIST[i].ID_group; break; }
                 }
 
-            CLIST.Add(new CC(id_group, -2, posX, posY, Console.WindowWidth / column, 0, new string[] { "" }, "GE", 0, null));
+            CLIST.Add(new CM(id_group, -2, posX, posY, Console.WindowWidth / column, 0, new string[] { "" }, "GE", 0, null));
         }
         #endregion
 
@@ -338,28 +342,28 @@ namespace FarmConsole.Body.Services
         {
             AddComponent("H1", new string[]
             {
-                AsciiPartViewService.DoubleLine(),
-                AsciiPartViewService.CenteredText(Console.WindowWidth, text),
-                AsciiPartViewService.DoubleLine()
+                ComponentViewService.DoubleLine(),
+                ComponentViewService.CenteredText(Console.WindowWidth, text),
+                ComponentViewService.DoubleLine()
             });
         }
         public static void H2(string text)
         {
             AddComponent("H2", new string[]
             {
-                AsciiPartViewService.CenteredText(Console.WindowWidth, text),
-                AsciiPartViewService.SingleLine(),
+                ComponentViewService.CenteredText(Console.WindowWidth, text),
+                ComponentViewService.SingleLine(),
             });
         }
         public static void Foot(string text)
         {
             string[] view = new string[]
             {
-                AsciiPartViewService.SingleLine(),
-                AsciiPartViewService.CenteredText(Console.WindowWidth, text),
-                AsciiPartViewService.SingleLine(1)
+                ComponentViewService.SingleLine(),
+                ComponentViewService.CenteredText(Console.WindowWidth, text),
+                ComponentViewService.SingleLine(1)
             };
-            CLIST.Add(new CC(0, 0, 0, Console.WindowHeight - 3, Console.WindowWidth, 3, view, "FT"));
+            CLIST.Add(new CM(0, 0, 0, Console.WindowHeight - 3, Console.WindowWidth, 3, view, "FT"));
         }
         public static void Endl(int x)
         {
@@ -389,9 +393,9 @@ namespace FarmConsole.Body.Services
             RightLenght = RightLenght < 0 ? 0 : RightLenght;
             LeftLenght = LeftLenght < 0 ? 0 : LeftLenght;
             content.Add(("").PadRight(LeftLenght, ' ') + line + ("").PadRight(RightLenght, ' '));
-            string[] view1 = new string[] { AsciiPartViewService.Top(width) };
-            string[] view2 = AsciiPartViewService.Sides(content);
-            string[] view3 = new string[] { AsciiPartViewService.Bot(width) };
+            string[] view1 = new string[] { ComponentViewService.Top(width) };
+            string[] view2 = ComponentViewService.Sides(content);
+            string[] view3 = new string[] { ComponentViewService.Bot(width) };
             AddComponent("TB", view1.Concat(view2.Concat(view3).ToArray()).ToArray(), show, 0, background, foreground);
         }
         public static void TextBoxLines(string[] lines, int width = 40, bool show = true, ConsoleColor color1 = static_base_color, ConsoleColor color2 = static_content_color)
@@ -399,9 +403,9 @@ namespace FarmConsole.Body.Services
             List<string> content = new List<string>();
             foreach (string line in lines)
                 content.Add(("").PadRight((width - line.Length) / 2 - 1, ' ') + line + ("").PadRight(width - line.Length - (width - line.Length) / 2 - 1, ' '));
-            string[] view1 = new string[] { AsciiPartViewService.Top(width) };
-            string[] view2 = AsciiPartViewService.Sides(content);
-            string[] view3 = new string[] { AsciiPartViewService.Bot(width) };
+            string[] view1 = new string[] { ComponentViewService.Top(width) };
+            string[] view2 = ComponentViewService.Sides(content);
+            string[] view3 = new string[] { ComponentViewService.Bot(width) };
             AddComponent("TBL", view1.Concat(view2.Concat(view3).ToArray()).ToArray(), show, 0, color1, color2);
         }
         public static void Slider(int count, int value, bool show = true)
@@ -409,31 +413,31 @@ namespace FarmConsole.Body.Services
             int width = 36, left = width / count * value, right = width - left;
             AddComponent("SL", new string[]
             {
-                " " + AsciiPartViewService.Fragment(left, '_') + "||" + AsciiPartViewService.Fragment(right, '_') + " ",
-                "|" + AsciiPartViewService.Fragment(left, '.') + "||" + AsciiPartViewService.Fragment(right, '.') + "|", ""
+                " " + ComponentViewService.Fragment(left, '_') + "||" + ComponentViewService.Fragment(right, '_') + " ",
+                "|" + ComponentViewService.Fragment(left, '.') + "||" + ComponentViewService.Fragment(right, '.') + "|", ""
             }, show, 0, ConsoleColor.White);
         }
-        public static void RightBar(bool show = true, int extra = 0)
+        public static void RightBar(int height, bool show = true)
         {
-            string[] view1 = new string[] { AsciiPartViewService.Top(Console.WindowWidth / 5 + 2, true, false) };
-            string[] view2 = AsciiPartViewService.SideRight(Console.WindowWidth / 5 + 1, Console.WindowHeight - 12 + extra);
-            string[] view3 = new string[] { AsciiPartViewService.Bot(Console.WindowWidth / 5 + 2, true, false) };
+            string[] view1 = new string[] { ComponentViewService.Top(Console.WindowWidth / 5 + 2, true, false) };
+            string[] view2 = ComponentViewService.SideRight(Console.WindowWidth / 5 + 1, height - 2);
+            string[] view3 = new string[] { ComponentViewService.Bot(Console.WindowWidth / 5 + 2, true, false) };
             string[] view = view1.Concat(view2.Concat(view3).ToArray()).ToArray();
             AddComponent("RB", view, show);
         }
-        public static void LeftBar(bool show = true, int extra = 0)
+        public static void LeftBar(int height, bool show = true)
         {
-            string[] view1 = new string[] { AsciiPartViewService.Top(Console.WindowWidth / 5 + 1, false, true) };
-            string[] view2 = AsciiPartViewService.SideLeft(Console.WindowWidth / 5 + 0, Console.WindowHeight - 12 + extra);
-            string[] view3 = new string[] { AsciiPartViewService.Bot(Console.WindowWidth / 5 + 1, false, true) };
+            string[] view1 = new string[] { ComponentViewService.Top(Console.WindowWidth / 5 + 1, false, true) };
+            string[] view2 = ComponentViewService.SideLeft(Console.WindowWidth / 5 + 0, height - 2);
+            string[] view3 = new string[] { ComponentViewService.Bot(Console.WindowWidth / 5 + 1, false, true) };
             string[] view = view1.Concat(view2.Concat(view3).ToArray()).ToArray();
             AddComponent("LB", view, show);
         }
         public static void CenterBar(bool show = true)
         {
-            string[] view1 = new string[] { AsciiPartViewService.Top(40, true, true) };
-            string[] view2 = AsciiPartViewService.SideLeft(40, Console.WindowHeight - 10);
-            string[] view3 = new string[] { AsciiPartViewService.Bot(40, true, true) };
+            string[] view1 = new string[] { ComponentViewService.Top(40, true, true) };
+            string[] view2 = ComponentViewService.SideLeft(40, Console.WindowHeight - 10);
+            string[] view3 = new string[] { ComponentViewService.Bot(40, true, true) };
             string[] view = view1.Concat(view2.Concat(view3).ToArray()).ToArray();
             AddComponent("CB", view, show);
         }
@@ -451,10 +455,7 @@ namespace FarmConsole.Body.Services
                 }
             }
             content.Add(("").PadRight((width - 2 - line.Length) / 2, ' ') + line + ("").PadRight(width - 2 - line.Length - (width - 2 - line.Length) / 2, ' '));
-            string[] view1 = new string[] { AsciiPartViewService.Top(width) };
-            string[] view2 = AsciiPartViewService.Sides(content);
-            string[] view3 = new string[] { AsciiPartViewService.Bot(width) };
-            return view1.Concat(view2.Concat(view3).ToArray()).ToArray();
+            return content.ToArray();
         }
         #endregion
 
@@ -463,7 +464,7 @@ namespace FarmConsole.Body.Services
             int i = 3, od = 20;
             Console.SetCursorPosition(od, 0);
             Console.WriteLine("G | S |name| X | Y | W | H |prop|swow");
-            foreach (CC c in CLIST)
+            foreach (CM c in CLIST)
             {
                 i++;
                 if (i + 2 > Console.WindowHeight) { Console.SetCursorPosition(od, i); Console.Write("> > > WIECEJ SIE NIE ZMIESCI < < <"); return; }

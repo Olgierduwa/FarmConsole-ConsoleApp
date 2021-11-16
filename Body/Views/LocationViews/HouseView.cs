@@ -8,9 +8,5 @@ namespace FarmConsole.Body.Views.LocationViews
 {
     class HouseView : MapView
     {
-        public static void InitializeHouseView(FieldModel[,] Map)
-        {
-            InitializeMap(Map, new FieldModel(ProductModel.GetProduct("Drewniana Podłoga")));
-        }
     }
 }

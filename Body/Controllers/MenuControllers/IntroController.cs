@@ -1,13 +1,11 @@
-﻿
-using FarmConsole.Body.Controlers.MenuControlers;
-using FarmConsole.Body.Services;
+﻿using FarmConsole.Body.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace FarmConsole.Body.Controlers
 {
-    public class IntroController : MainControllerService
+    public class IntroController : MainController
     {
         public static void Open()
         {

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FarmConsole.Body.Services
 {
-    static class AsciiPartViewService
+    static class ComponentViewService
     {
         public static string SingleLine(int diff = 0)
         {

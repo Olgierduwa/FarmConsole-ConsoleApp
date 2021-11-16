@@ -1,4 +1,5 @@
-﻿using FarmConsole.Body.Resources.Sounds;
+﻿using FarmConsole.Body.Engines;
+using FarmConsole.Body.Resources.Sounds;
 using FarmConsole.Body.Services;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Text;
 
 namespace FarmConsole.Body.Views.MenuViews
 {
-    public class HelpView : MainViewService
+    public class HelpView : ComponentEngine
     {
         public static void Show()
         {

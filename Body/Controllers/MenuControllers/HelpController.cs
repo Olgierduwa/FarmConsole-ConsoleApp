@@ -7,7 +7,7 @@ using System.Text;
 
 namespace FarmConsole.Body.Controlers
 {
-    public class HelpController : MainControllerService
+    public class HelpController : MainController
     {
         public static void Open()
         {

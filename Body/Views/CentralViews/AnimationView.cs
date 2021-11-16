@@ -1,11 +1,12 @@
-﻿using FarmConsole.Body.Services;
+﻿using FarmConsole.Body.Engines;
+using FarmConsole.Body.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace FarmConsole.Body.Views.MenuViews
+namespace FarmConsole.Body.Views
 {
-    public class AnimationView : MainViewService
+    public class AnimationView : ComponentEngine
     {
         public static void Centrum(string[] GraphicView)
         {

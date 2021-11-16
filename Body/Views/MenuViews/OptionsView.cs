@@ -1,11 +1,12 @@
-﻿using FarmConsole.Body.Services;
+﻿using FarmConsole.Body.Engines;
+using FarmConsole.Body.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace FarmConsole.Body.Views.MenuViews
 {
-    public class OptionsView : MainViewService
+    public class OptionsView : ComponentEngine
     {
         public static void Show()
         {

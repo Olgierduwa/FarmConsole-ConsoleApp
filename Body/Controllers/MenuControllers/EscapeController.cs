@@ -8,7 +8,7 @@ using FarmConsole.Body.Services;
 
 namespace FarmConsole.Body.Controlers
 {
-    public class EscapeController : MainControllerService
+    public class EscapeController : MainController
     {
         public static void Open()
         {
@@ -32,7 +32,7 @@ namespace FarmConsole.Body.Controlers
                             {
                                 case 1: S.Play("K3"); openScreen = escapeScreen; break;
                                 case 2: S.Play("K2"); openScreen = "Save"; break;
-                                case 3: if (EscapeView.Warning() == true) { openScreen = lastScreen = "Menu"; GameInstance = new GameInstanceModel(); } break;
+                                case 3: if (EscapeView.Warning() == true) { openScreen = lastScreen = "Menu"; GameInstance = null; } break;
                                 case 4: S.Play("K2"); openScreen = "Options"; break;
                                 case 5: S.Play("K2"); openScreen = "Help"; break;
                             }

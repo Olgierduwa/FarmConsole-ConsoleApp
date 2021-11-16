@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FarmConsole.Body.Models
 {
-    class CC
+    public class CM
     {
         private const ConsoleColor static_base_color = ConsoleColor.DarkGray;
         private const ConsoleColor static_content_color = ConsoleColor.White;
@@ -22,7 +22,7 @@ namespace FarmConsole.Body.Models
         public ConsoleColor Base_color { get; set; }
         public ConsoleColor Content_color { get; set; }
 
-        public CC(int id_group, int id_object, int posX, int posY, int width, int height, string[] view, string name, int prop = 0, bool? show = true,
+        public CM(int id_group, int id_object, int posX, int posY, int width, int height, string[] view, string name, int prop = 0, bool? show = true,
                          ConsoleColor color1 = static_base_color, ConsoleColor color2 = static_content_color)
         {
             this.ID_group = id_group;

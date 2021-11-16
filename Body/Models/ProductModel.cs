@@ -143,6 +143,20 @@ namespace FarmConsole.Body.Models
             if (Index == Products.Count) return Products[3]; // error
             return Products[Index];
         }
+        public static List<ProductModel> GetProducts(int? Category = null, int? Scale = null, int? Type = null, int? State = null)
+        {
+            List<ProductModel> products = new List<ProductModel>();
+            if (Category != null || Scale != null || Type != null || State != null)
+                foreach (var p in Products)
+                {
+                    if ((Category == null || p.Category == Category) &&
+                        (Scale == null || p.Scale == Scale) &&
+                        (Type == null || p.Type == Type) &&
+                        (State == null || p.State == State))
+                        products.Add(p);
+                }
+            return products;
+        }
         public static ProductModel GetRedirectProduct(ProductModel Product)
         {
             string RedirectString = Product.Property;
@@ -150,7 +164,7 @@ namespace FarmConsole.Body.Models
             int category = Convert.ToInt32(RedirectString.Substring(0, 1));
             int scale = Convert.ToInt32(RedirectString.Substring(1, 1));
             int state = Convert.ToInt32(RedirectString.Substring(2, 1));
-            int type = Convert.ToInt32(RedirectString.Substring(3));
+            int type = Convert.ToInt32(RedirectString[3..]);
             return GetProduct(category, scale, type, state);
         }
         public static List<ProductModel> GetProductsByAction(List<ProductModel> List, string Action)

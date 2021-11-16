@@ -1,4 +1,5 @@
-﻿using FarmConsole.Body.Models;
+﻿using FarmConsole.Body.Engines;
+using FarmConsole.Body.Models;
 using FarmConsole.Body.Resources.Sounds;
 using FarmConsole.Body.Services;
 using System;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace FarmConsole.Body.Views.MenuViews
 {
-    public class GameLoadView : MainViewService
+    public class GameLoadView : ComponentEngine
     {
         public static void Show(GameInstanceModel[] saves)
         {

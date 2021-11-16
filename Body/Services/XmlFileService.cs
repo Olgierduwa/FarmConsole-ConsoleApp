@@ -55,13 +55,14 @@ namespace FarmConsole.Body.Services
             string[] oryginalgraphic = node.InnerText.Split('@');
             string[] graphic = new string[oryginalgraphic.Length - 1];
             for (int i = 0; i < graphic.Length; i++)
-                graphic[i] = oryginalgraphic[i].Trim(MyChar).Substring(4);
+                graphic[i] = oryginalgraphic[i].Trim(MyChar)[4..];
 
             return graphic;
         }
         public static List<ProductModel> GetProducts()
         {
             XmlDocument doc = new XmlDocument();
+            List<string> Attributes;
             doc.Load(fields_path);
             List<ProductModel> Products = new List<ProductModel>();
             XmlNodeList Categories = doc.SelectNodes("/FieldsCollection/category");
@@ -69,52 +70,55 @@ namespace FarmConsole.Body.Services
             {
                 XmlNodeList Scales = Categories[Category].ChildNodes;
                 XmlNode CurrentCategory = Categories[Category];
-                string[] MainMenuAct = CurrentCategory.Attributes["menuAct"].Value.Split(',');
-                string[] MainMapAct = CurrentCategory.Attributes["mapAct"].Value.Split(',');
+
+                Attributes = new List<string>();
+                foreach (XmlAttribute Attribute in CurrentCategory.Attributes) Attributes.Add(Attribute.Name);
+
+                string[] MainMenuAct = Attributes.Contains("menuAct") ? CurrentCategory.Attributes["menuAct"].Value.Split(',') : null;
+                string[] MainMapAct = Attributes.Contains("mapAct") ? CurrentCategory.Attributes["mapAct"].Value.Split(',') : null;
                 for (int Scale = 0; Scale < Scales.Count; Scale++)
                 {
                     XmlNodeList Fields = Scales[Scale].ChildNodes;
                     for (int Type = 0; Type < Fields.Count; Type++)
                     {
                         XmlNode Field = Fields[Type];
-                        string[] States = Field.Attributes["state"].Value.Split('/');
-                        string[] MenuActs = Field.Attributes["menuAct"].Value.Split('/');
-                        string[] MapActs = Field.Attributes["mapAct"].Value.Split('/');
-                        string[] Colors = Field.Attributes["colors"].Value.Split('/');
+
+                        Attributes = new List<string>();
+                        foreach (XmlAttribute Attribute in Field.Attributes) Attributes.Add(Attribute.Name);
+
+                        string[] States = Attributes.Contains("state") ? Field.Attributes["state"].Value.Split('/') : new string[] { "" };
+                        string[] Colors = Attributes.Contains("colors") ? Field.Attributes["colors"].Value.Split('/') : new string[] { "0" };
+                        string[] MenuActs = Attributes.Contains("menuAct") ? Field.Attributes["menuAct"].Value.Split('/') : null;
+                        string[] MapActs = Attributes.Contains("mapAct") ? Field.Attributes["mapAct"].Value.Split('/') : null;
                         string[] View = Field.InnerText.Replace("\r", "").Replace("\n", "").Replace("\t", "").Split('@');
-                        string Price = Field.Attributes["price"].Value;
+                        string Price = Attributes.Contains("price") ? Field.Attributes["price"].Value : "0";
+                        string Property = Attributes.Contains("property") && Field.Attributes["property"].Value != "" ? Field.Attributes["property"].Value : "0003";
 
                         for (int State = 0; State < States.Length; State++)
                         {
-                            ProductModel Product = new ProductModel();
-                            Product.Category = Category;
-                            Product.Scale = Scale;
-                            Product.Type = Type;
-                            Product.State = State;
-                            Product.StateName = States[State];
-                            Product.ProductName = Field.Attributes["name"].Value;
-                            Product.Property = Field.Attributes["property"].Value;
-                            Product.Price = Convert.ToDecimal(Price == "" ? "0" : Price);
+                            ProductModel Product = new ProductModel()
+                            {
+                                Category = Category,
+                                Scale = Scale,
+                                Type = Type,
+                                State = State,
+                                StateName = States[State],
+                                ProductName = Field.Attributes["name"].Value,
+                                Price = Convert.ToDecimal(Price),
+                                Property = Property,
+                                MenuActions = MenuActs == null ? new string[] { } : MenuActs[State < MenuActs.Length ? State : 0].Split(','),
+                                MapActions = MapActs == null ? new string[] { } : MapActs[State < MapActs.Length ? State : 0].Split(','),
+                                Color = State < Colors.Length ?
+                                    IsNumber(Colors[State]) ? ColorService.GetColorByName(Colors[State]) : ColorService.GetColorByID(Convert.ToInt16(Colors[State])) :
+                                    IsNumber(Colors[0]) ? ColorService.GetColorByName(Colors[0]) : ColorService.GetColorByID(Convert.ToInt16(Colors[0]))
+                            };
 
-                            Product.Color = Colors[0] == "" ? ColorService.GetColorByID(0) : State < Colors.Length ?
-                                IsNumber(Colors[State]) ? ColorService.GetColorByName(Colors[State]) : ColorService.GetColorByID(Convert.ToInt16(Colors[State])) :
-                                IsNumber(Colors[0]) ? ColorService.GetColorByName(Colors[0]) : ColorService.GetColorByID(Convert.ToInt16(Colors[0]));
-
-                            Product.MenuActions = MenuActs[0] != "" ?
-                                MenuActs[State < MenuActs.Length ? State : 0].Split(',') : Product.MenuActions;
-
-                            Product.MenuActions = MainMenuAct[0] != "" ?
-                                Product.MenuActions.Concat(MainMenuAct).ToArray() : Product.MenuActions;
-
-                            Product.MapActions = MapActs[0] != "" ?
-                                MapActs[State < MapActs.Length ? State : 0].Split(',') : Product.MapActions;
-
-                            Product.MapActions = MainMapAct[0] != "" ?
-                                Product.MapActions.Concat(MainMapAct).ToArray() : Product.MapActions;
-
+                            Product.MenuActions = MainMenuAct == null ? Product.MenuActions : Product.MenuActions.Concat(MainMenuAct).ToArray();
+                            Product.MapActions = MainMapAct == null ? Product.MapActions : Product.MapActions.Concat(MainMapAct).ToArray();
                             Product.View = new string[(View.Length - 1) / States.Length];
-                            int Line = 0 + State, Index = 0;
-                            while (Line < View.Length - 1) { Product.View[Index] = View[Line]; Index++; Line += States.Length; }
+
+                            int Line = State, Index = 0;
+                            while (Line < View.Length - 1) { Product.View[Index++] = View[Line]; Line += States.Length; }
 
                             Products.Add(Product);
                         }

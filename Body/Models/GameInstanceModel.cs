@@ -14,8 +14,26 @@ namespace FarmConsole.Body.Models
         public decimal Wallet { get; set; }
         public DateTime GameDate { get; set; }
 
-        public FieldModel[,] FarmMap { get; set; }
-        public FieldModel [,] HouseMap { get; set; }
+        public MapModel FarmMap { get; set; }
+        public MapModel HouseMap { get; set; }
+        public MapModel ShopMap { get; set; }
+        public MapModel StreetMap { get; set; }
+
+        private List<MapModel> Maps;
+        public MapModel GetMap(string Location)
+        {
+            int index = 0;
+            while (index < Maps.Count) if (Maps[index].Name == Location) break; else index++;
+            if (index == Maps.Count) return Maps[0];
+            return Maps[index];
+        }
+        public void SetMap(string Location, MapModel Map)
+        {
+            int index = 0;
+            while (index < Maps.Count) if (Maps[index].Name == Location) break; else index++;
+            if (index != Maps.Count) Maps[index] = Map;
+        }
+
         public List<ProductModel> Inventory { get; set; }
         public List<ProductModel> GetProductsByScale(int scale)
         {
@@ -49,109 +67,104 @@ namespace FarmConsole.Body.Models
             Wallet = 420.0M;
             GameDate = new DateTime(2020, 10, 10);
 
+            Maps = new List<MapModel>();
+
             BuildFarmMap();
             BuildHouseMap();
+
+            Maps.Add(new MapModel("Shop", "Drewniana Podłoga", 10));
+            Maps.Add(new MapModel("Street", "Trawa", 20));
+
             SetKitStart();
         }
 
         private void BuildFarmMap()
         {
-            int FarmMapSize = 8;
-            FarmMap = new FieldModel[FarmMapSize, FarmMapSize];
+            int Size = 8;
+            MapModel FarmMap = new MapModel("Farm", "Trawa", Size);
 
-            // trawa
-            for (int x = 0; x < FarmMapSize; x++)
-                for (int y = 0; y < FarmMapSize; y++)
-                    FarmMap[x, y] = new FieldModel(ProductModel.GetProduct("Trawa"));
+            FarmMap.Fields[1, 1] = new FieldModel(ProductModel.GetProduct("Dom"));
+            FarmMap.Fields[Size, Size - 2] = new FieldModel(ProductModel.GetProduct("Brama"));
 
-            FarmMap[0, 0] = new FieldModel(ProductModel.GetProduct("Dom"));
+            for (int x = 3; x < 5; x++)
+                FarmMap.Fields[x, 1] = new FieldModel(ProductModel.GetProduct("Silos"));
 
-            for (int x = 2; x < 4; x++)
-                FarmMap[x, 0] = new FieldModel(ProductModel.GetProduct("Silos"));
+            for (int y = 3; y < 4; y++)
+                FarmMap.Fields[1, y] = new FieldModel(ProductModel.GetProduct("Wieża Ciśnień"));
 
-            for (int y = 2; y < 3; y++)
-                FarmMap[0, y] = new FieldModel(ProductModel.GetProduct("Wieża Ciśnień"));
+            Maps.Add(FarmMap);
         }
         private void BuildHouseMap()
         {
-            int HouseMapSize = 6;
-            HouseMap = new FieldModel[HouseMapSize, HouseMapSize];
-
-            // podłoga
-            for (int x = 1; x < HouseMapSize; x++)
-                for (int y = 1; y < HouseMapSize; y++)
-                    HouseMap[x, y] = new FieldModel(ProductModel.GetProduct("Drewniana Podłoga"));
+            int Size = 6;
+            MapModel HouseMap = new MapModel("House", "Drewniana Podłoga", Size);
 
             // narożniki ścian
-            HouseMap[0, 0] = new FieldModel(ProductModel.GetProduct("Narożnik", 1));
-            HouseMap[HouseMapSize - 1, 0] = new FieldModel(ProductModel.GetProduct("Narożnik", 0));
-            HouseMap[0, HouseMapSize - 1] = new FieldModel(ProductModel.GetProduct("Narożnik", 2));
-            HouseMap[HouseMapSize - 1, HouseMapSize - 1] = new FieldModel(ProductModel.GetProduct("Narożnik", 3));
+            HouseMap.Fields[1, 1] = new FieldModel(ProductModel.GetProduct("Narożnik", 1));
+            HouseMap.Fields[Size, 1] = new FieldModel(ProductModel.GetProduct("Narożnik", 0));
+            HouseMap.Fields[1, Size] = new FieldModel(ProductModel.GetProduct("Narożnik", 2));
+            HouseMap.Fields[Size, Size] = new FieldModel(ProductModel.GetProduct("Narożnik", 3));
 
             // ściany zewnętrzne
-            for (int x = 1; x < HouseMapSize - 1; x++)
-                HouseMap[x, 0] = new FieldModel(ProductModel.GetProduct("Ściana", 0));
-            for (int y = 1; y < HouseMapSize - 1; y++)
-                HouseMap[0, y] = new FieldModel(ProductModel.GetProduct("Ściana", 1));
-            for (int x = 1; x < HouseMapSize - 1; x++)
-                HouseMap[x, HouseMapSize - 1] = new FieldModel(ProductModel.GetProduct("Ściana", 2));
-            for (int y = 1; y < HouseMapSize - 1; y++)
-                HouseMap[HouseMapSize - 1, y] = new FieldModel(ProductModel.GetProduct("Ściana", 3));
+            for (int x = 2; x < Size; x++)
+                HouseMap.Fields[x, 1] = new FieldModel(ProductModel.GetProduct("Ściana", 0));
+            for (int y = 2; y < Size; y++)
+                HouseMap.Fields[1, y] = new FieldModel(ProductModel.GetProduct("Ściana", 1));
+            for (int x = 2; x < Size; x++)
+                HouseMap.Fields[x, Size] = new FieldModel(ProductModel.GetProduct("Ściana", 2));
+            for (int y = 2; y < Size; y++)
+                HouseMap.Fields[Size, y] = new FieldModel(ProductModel.GetProduct("Ściana", 3));
 
             // drzwi wejściowe
-            HouseMap[3, 5] = new FieldModel(ProductModel.GetProduct("Drzwi wejściowe", 2));
+            HouseMap.Fields[4, 6] = new FieldModel(ProductModel.GetProduct("Drzwi wejściowe", 2));
 
             // okna
-            HouseMap[2, 0] = new FieldModel(ProductModel.GetProduct("Okno", 0));
-            HouseMap[0, 2] = new FieldModel(ProductModel.GetProduct("Okno", 1));
-            HouseMap[2, 5] = new FieldModel(ProductModel.GetProduct("Okno", 2));
-            HouseMap[5, 2] = new FieldModel(ProductModel.GetProduct("Okno", 3));
-            HouseMap[5, 3] = new FieldModel(ProductModel.GetProduct("Okno", 3));
+            HouseMap.Fields[3, 1] = new FieldModel(ProductModel.GetProduct("Okno", 0));
+            HouseMap.Fields[1, 3] = new FieldModel(ProductModel.GetProduct("Okno", 1));
+            HouseMap.Fields[3, 6] = new FieldModel(ProductModel.GetProduct("Okno", 2));
+            HouseMap.Fields[6, 3] = new FieldModel(ProductModel.GetProduct("Okno", 3));
+            HouseMap.Fields[6, 4] = new FieldModel(ProductModel.GetProduct("Okno", 3));
 
             // meble
-            HouseMap[3, 3] = new FieldModel(ProductModel.GetProduct("Łóżko"));
+            HouseMap.Fields[4, 4] = new FieldModel(ProductModel.GetProduct("Łóżko"));
+
+            Maps.Add(HouseMap);
         }
         private void SetKitStart()
         {
-            Inventory = new List<ProductModel>();
+            Inventory = new List<ProductModel>
+            {
+                ProductModel.GetProduct("Portfel"),
 
-            Inventory.Add(ProductModel.GetProduct("Portfel"));
+                ProductModel.GetProduct("Płot"),
+                ProductModel.GetProduct("Dom"),
+                ProductModel.GetProduct("Farma"),
+                ProductModel.GetProduct("Sklep Spożywczy"),
+                ProductModel.GetProduct("Silos"),
+                ProductModel.GetProduct("Wieża Ciśnień"),
 
-            Inventory.Add(ProductModel.GetProduct("Dom"));
-            Inventory.Add(ProductModel.GetProduct("Silos"));
-            Inventory.Add(ProductModel.GetProduct("Wieża Ciśnień"));
-            Inventory.Add(ProductModel.GetProduct("Nasiona Przenicy"));
-            Inventory.Add(ProductModel.GetProduct("Sadzonka Drzewa"));
-            Inventory.Add(ProductModel.GetProduct("Nasiona Rzepaku"));
-            Inventory.Add(ProductModel.GetProduct("Naturalny Nawóz"));
-            Inventory.Add(ProductModel.GetProduct("Syntetyczny Nawóz"));
-            Inventory.Add(ProductModel.GetProduct("Ściana"));
-            Inventory.Add(ProductModel.GetProduct("Narożnik"));
-            Inventory.Add(ProductModel.GetProduct("Łóżko"));
-            Inventory.Add(ProductModel.GetProduct("Drzwi wejściowe"));
+                ProductModel.GetProduct("Nasiona Przenicy"),
+                ProductModel.GetProduct("Nasiona Marchwi"),
+                ProductModel.GetProduct("Naturalny Nawóz"),
+                ProductModel.GetProduct("Syntetyczny Nawóz"),
 
-            for (int i = 1; i < Inventory.Count; i++) Inventory[i].Amount = 100;
+                ProductModel.GetProduct("Drzwi wejściowe"),
+                ProductModel.GetProduct("Filar"),
+                ProductModel.GetProduct("Ściana"),
+                ProductModel.GetProduct("Narożnik")
+            };
+
+            for (int i = 1; i < Inventory.Count; i++) Inventory[i].Amount = 20;
         }
         
         public void Update(int _id)
         {
-            string farmMapString = "", houseMapString = "", inventoryString = "";
-            int farmMapLength = Convert.ToInt32(Math.Sqrt(Convert.ToDouble(FarmMap.Length)));
-            int houseMapLength = Convert.ToInt32(Math.Sqrt(Convert.ToDouble(HouseMap.Length)));
-
-            for (int x = 0; x < farmMapLength; x++)
-                for (int y = 0; y < farmMapLength; y++)
-                    farmMapString += FarmMap[x, y].ToString();
-
-            for (int x = 0; x < houseMapLength; x++)
-                for (int y = 0; y < houseMapLength; y++)
-                    houseMapString += HouseMap[x, y].ToString();
-
-            for (int i = 0; i < Inventory.Count; i++)
-                inventoryString += Inventory[i].ToString();
-
             DateTime now = DateTime.Now;
             Lastplay = now.ToString();
+
+            string inventoryString = "";
+            for (int i = 0; i < Inventory.Count; i++)
+                inventoryString += Inventory[i].ToString();
 
             string[] list = new string[]
             {
@@ -160,8 +173,10 @@ namespace FarmConsole.Body.Models
                 "gamedate", GameDate.ToString("d"),
                 "lastplay", Lastplay,
                 "wallet", Wallet.ToString(),
-                "farmmap", farmMapString,
-                "housemap", houseMapString,
+                "farmmap", GetMap("Farm").ToString(),
+                "housemap", GetMap("House").ToString(),
+                "streetmap", GetMap("Street").ToString(),
+                "shopmap", GetMap("Shop").ToString(),
                 "inventory", inventoryString
             };
             if (_id == 0) XF.AddGameInstance(list);
@@ -178,22 +193,13 @@ namespace FarmConsole.Body.Models
             Lastplay = save["lastplay"].InnerText;
             Wallet = decimal.Parse(save["wallet"].InnerText);
 
-            string farmMapString = save["farmmap"].InnerText;
-            string houseMapString = save["housemap"].InnerText;
+            Maps = new List<MapModel>
+            {
+                new MapModel("Farm", save["farmmap"].InnerText),
+                new MapModel("House", save["housemap"].InnerText)
+            };
+
             string inventoryString = save["inventory"].InnerText;
-            int farmMapLength = Convert.ToInt32(Math.Sqrt(Convert.ToDouble(farmMapString.Length/5)));
-            int houseMapLength = Convert.ToInt32(Math.Sqrt(Convert.ToDouble(houseMapString.Length/5)));
-
-            FarmMap = new FieldModel[farmMapLength, farmMapLength];
-            for (int x = 0; x < farmMapLength; x++)
-                for (int y = 0; y < farmMapLength; y++)
-                    FarmMap[x, y] = new FieldModel(farmMapString.Substring(x * farmMapLength * 5 + y * 5, 5), 0);
-
-            HouseMap = new FieldModel[houseMapLength, houseMapLength];
-            for (int x = 0; x < houseMapLength; x++)
-                for (int y = 0; y < houseMapLength; y++)
-                    HouseMap[x, y] = new FieldModel(houseMapString.Substring(x * houseMapLength * 5 + y * 5, 5), 1);
-
             for (int index = 0; index < inventoryString.Length; index += 5)
                 Inventory.Add(new ProductModel(inventoryString.Substring(index, 5)));
         }

@@ -1,12 +1,13 @@
-﻿using FarmConsole.Body.Controlers.MenuControlers;
+﻿using FarmConsole.Body.Engines;
 using FarmConsole.Body.Models;
+using FarmConsole.Body.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace FarmConsole.Body.Services
+namespace FarmConsole.Body.Controlers
 {
-    public class MainControllerService
+    public class MainController
     {
         protected static GameInstanceModel GameInstance;
 
@@ -24,13 +25,13 @@ namespace FarmConsole.Body.Services
             if (id > 0) popupText = XF.GetString((400 + id).ToString());
             if (POPUPSTAGE >= 0)
             {
-                AnimationController.Effect(GV: MainViewService.TextBoxView(popupText), S: POPUPSTAGE);
+                AnimationController.Effect(GV: ComponentEngine.TextBoxView(popupText), S: POPUPSTAGE);
                 POPUPSTAGE = AnimationController.PopUp();
             }
             if (POPUPSTAGE < 0) POPUPID = 0;
         }
 
-        static MainControllerService()
+        static MainController()
         {
             GameInstance = new GameInstanceModel();
         }

@@ -8,7 +8,7 @@ using FarmConsole.Body.Views.MenuViews;
 
 namespace FarmConsole.Body.Controlers
 {
-    public class GameLoadController : MainControllerService
+    public class GameLoadController : MainController
     {
         public static void Open()
         {
@@ -25,7 +25,13 @@ namespace FarmConsole.Body.Controlers
                         case ConsoleKey.S: if (selected < selCount) { S.Play("K1"); selected++; GameLoadView.UpdateSelect(selected, selected - 1, selCount); } break;
                         case ConsoleKey.Escape:
                         case ConsoleKey.Q: S.Play("K3"); openScreen = "Menu"; break;
-                        case ConsoleKey.E: S.Play("K2"); switch (selected) { case 1: openScreen = "NewGame"; break; default: MainControllerService.GameInstance.Load(selected - 1); openScreen = "Farm"; break; } break;
+                        case ConsoleKey.E: S.Play("K2");
+                            switch (selected)
+                            {
+                                case 1: openScreen = "NewGame"; break;
+                                default: GameInstance = new GameInstanceModel(); GameInstance.Load(selected - 1); openScreen = "Farm"; break;
+                            }
+                            break;
                         case ConsoleKey.D:
                             if (selected > 1 && GameLoadView.Warning() == true)
                             {

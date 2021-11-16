@@ -8,7 +8,7 @@ using FarmConsole.Body.Services;
 
 namespace FarmConsole.Body.Controlers
 {
-    public class GameNewController : MainControllerService
+    public class GameNewController : MainController
     {
         public static void Open()
         {
@@ -27,8 +27,8 @@ namespace FarmConsole.Body.Controlers
                         case ConsoleKey.E:
                             switch (selected)
                             {
-                                case 1: S.Play("K2"); openScreen = "Farm"; GameInstance = new GameInstanceModel("Locha"); break;
-                                case 2: S.Play("K2"); openScreen = "Farm"; GameInstance = new GameInstanceModel("Turbo Kox"); break;
+                                case 1: S.Play("K2"); openScreen = "Farm"; GameInstance = new GameInstanceModel("Asia"); break;
+                                case 2: S.Play("K2"); openScreen = "Farm"; GameInstance = new GameInstanceModel("Olgierd"); break;
                             }
                             break;
                     }

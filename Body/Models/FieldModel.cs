@@ -11,6 +11,8 @@ namespace FarmConsole.Body.Models
         public int Type { get; set; }
         public int State { get; set; }
         public int Duration { get; set; }
+
+        public string FieldName { get; set; }
         public Color Color { get; set; }
 
         public FieldModel(FieldModel field)
@@ -20,6 +22,7 @@ namespace FarmConsole.Body.Models
             Type = field.Type;
             State = field.State;
             Duration = field.Duration;
+            FieldName = field.FieldName;
             Color = field.Color;
         }
         public FieldModel(ProductModel product)
@@ -29,6 +32,7 @@ namespace FarmConsole.Body.Models
             Type = product.Type;
             State = product.State;
             Color = product.Color;
+            FieldName = product.ProductName;
             Duration = 0;
         }
         public FieldModel(string ModelAsString, int scale)
@@ -39,6 +43,7 @@ namespace FarmConsole.Body.Models
             Type = Values[2];
             Duration = Values[3];
             Scale = scale;
+            FieldName = ProductModel.GetProduct(Category, Scale, Type, State).ProductName;
             Color = ProductModel.GetProduct(Category, Scale, Type, State).Color;
         }
         public FieldModel() { }

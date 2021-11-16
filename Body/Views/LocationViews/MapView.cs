@@ -1,4 +1,5 @@
-﻿using FarmConsole.Body.Models;
+﻿using FarmConsole.Body.Engines;
+using FarmConsole.Body.Models;
 using FarmConsole.Body.Services;
 using System;
 using System.Collections.Generic;
@@ -7,22 +8,22 @@ using System.Text;
 
 namespace FarmConsole.Body.Views.LocationViews
 {
-    public class MapView : MapService
+    public class MapView : MapEngine
     {
-        public static void GlobalMapInitializate()
+        public static void GlobalMapInit()
         {
             ColorService.SetColorPalette();
             ProductModel.SetProducts();
+            GameService.SetGrowCycle();
             SetColors();
             SetMapBorders();
         }
-        public static void InitializeMap(FieldModel[,] Map, FieldModel BaseField)
+        public static void InitMap(MapModel Map)
         {
-            SetField(new Point(), BaseField, "Base");
             SetMapBorders();
-            InitializePhisicalMap(Map);
-            InitializeVisualMap();
-            InitializeMapExtremePoints();
+            MapEngine.Map = Map;
+            InitVisualMap();
+            InitMapExtremePoints();
         }
         public static void ShowMap()
         {
@@ -47,6 +48,7 @@ namespace FarmConsole.Body.Views.LocationViews
         }
         public static void Dragg()
         {
+            if(GetField("Stand").Category == 3) ClearSelected(); 
             SetField(GetPos(), new FieldModel(), "Dragged");
             Destroy(1);
             ClearSelected();
@@ -82,10 +84,10 @@ namespace FarmConsole.Body.Views.LocationViews
         }
         public static void Rotate()
         {
-            FieldModel OldField = GetField();
-            OldField.State++;
-            if (ProductModel.GetProduct(OldField).ProductName != "error") SetField(GetPos(), OldField);
-            else { OldField.State = 0; SetField(GetPos(), OldField); }
+            FieldModel Field = GetField();
+            Field.State++;
+            if (ProductModel.GetProduct(Field).ProductName != "error") SetField(GetPos(), Field);
+            else { Field.State = 0; SetField(GetPos(), Field); }
             ShowPhisicalField(GetPos());
         }
     }

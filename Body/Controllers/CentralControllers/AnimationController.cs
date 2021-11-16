@@ -1,34 +1,32 @@
 ﻿using FarmConsole.Body.Services;
-using FarmConsole.Body.Views.MenuViews;
+using FarmConsole.Body.Views;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 
-namespace FarmConsole.Body.Controlers.MenuControlers
+namespace FarmConsole.Body.Controlers
 {
     static class AnimationController
     {
-        private static string GraphicName;
         private static string[] GraphicView;
         private static int[] ColumnDivision;
         private static int[] ColorIds;
-        private static double[] CrossSleepTime = new double[] { 50, 2000, 50 };
-        private static double[] SlideSleepTime = new double[] { 20, 1500, 20 };
-        private static double[] PopupSleepTime = new double[] { 10, 1000, 10 };
+        private static readonly double[] CrossSleepTime = new double[] { 50, 2000, 50 };
+        private static readonly double[] SlideSleepTime = new double[] { 20, 1500, 20 };
+        private static readonly double[] PopupSleepTime = new double[] { 10, 1000, 10 };
         private static int Stage;
         private static int CurrentColorID;
         private static DateTime Now;
 
         public static void Effect(string Effect = "", string GN = null, string[] GV = null, int[] CD = null, int[] CID = null, double? ST = null, int? S = null)
         {
-            GraphicName = GN != null ? GN : "";
-            GraphicView = GN != null ? XF.GetGraphic(GN) : GV != null ? GV : new string[] { "" };
-            ColumnDivision = CD != null ? CD : new int[] { 50, 100 };
-            ColorIds = CID != null ? CID : ColorService.WhiteEffect;
-            CrossSleepTime[1] = ST != null ? (double)ST : CrossSleepTime[1];
-            SlideSleepTime[1] = ST != null ? (double)ST : SlideSleepTime[1];
-            PopupSleepTime[1] = ST != null ? (double)ST : PopupSleepTime[1];
+            GraphicView = GN != null ? XF.GetGraphic(GN) : GV ?? (new string[] { "" });
+            ColumnDivision = CD ?? (new int[] { 50, 100 });
+            ColorIds = CID ?? ColorService.WhiteEffect;
+            CrossSleepTime[1] = ST == null ? CrossSleepTime[1] : (double)ST;
+            SlideSleepTime[1] = ST == null ? SlideSleepTime[1] : (double)ST;
+            PopupSleepTime[1] = ST == null ? PopupSleepTime[1] : (double)ST;
             Stage = S != null ? (int)S : 0;
             CurrentColorID = 0;
             Now = DateTime.Now;
@@ -62,8 +60,8 @@ namespace FarmConsole.Body.Controlers.MenuControlers
                 NewGraphicViews.Add(XF.GetGraphic(NewDateValues[i][0].ToString()));
                 for (int j = 1; j < OldDateValues[i].Length; j++)
                 {
-                    OldGraphicViews[i] = AsciiPartViewService.ExtendGraphis(OldGraphicViews[i], XF.GetGraphic(OldDateValues[i][j].ToString()));
-                    NewGraphicViews[i] = AsciiPartViewService.ExtendGraphis(NewGraphicViews[i], XF.GetGraphic(NewDateValues[i][j].ToString()));
+                    OldGraphicViews[i] = ComponentViewService.ExtendGraphis(OldGraphicViews[i], XF.GetGraphic(OldDateValues[i][j].ToString()));
+                    NewGraphicViews[i] = ComponentViewService.ExtendGraphis(NewGraphicViews[i], XF.GetGraphic(NewDateValues[i][j].ToString()));
                 }
             }
 

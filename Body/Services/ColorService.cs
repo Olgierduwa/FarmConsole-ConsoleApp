@@ -29,7 +29,7 @@ namespace FarmConsole.Body.Services
             if (index != Colors.Count) return Colors[index].Color;
             else return Colors[0].Color;
         }
-        public static Color Brighten(Color color, int procent = 40)
+        public static Color Brighter(Color color, int procent = 50)
         {
             int R = color.R + (255 - color.R) * procent / 100;
             int G = color.G + (255 - color.G) * procent / 100;
@@ -37,11 +37,27 @@ namespace FarmConsole.Body.Services
             color = Color.FromArgb(R, G, B);
             return color;
         }
-        public static Color Darken(Color color, int procent = 40)
+        public static Color Darker(Color color, int procent = 40)
         {
             int R = color.R - color.R * procent / 100;
             int G = color.G - color.G * procent / 100;
             int B = color.B - color.B * procent / 100;
+            color = Color.FromArgb(R, G, B);
+            return color;
+        }
+        public static Color Greener(Color color, int procent = 20)
+        {
+            int R = color.R - color.R * procent / 100;
+            int G = color.G + (255 - color.G) * procent / 100;
+            int B = color.B - color.B * procent / 100;
+            color = Color.FromArgb(R, G, B);
+            return color;
+        }
+        public static Color Bluer(Color color, int procent = 20)
+        {
+            int R = color.R - color.R * procent / 100;
+            int G = color.G - color.G * procent / 100;
+            int B = color.B + (255 - color.B) * procent / 100;
             color = Color.FromArgb(R, G, B);
             return color;
         }

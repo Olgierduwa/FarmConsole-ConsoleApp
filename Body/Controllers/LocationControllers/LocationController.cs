@@ -1,26 +1,26 @@
-﻿using FarmConsole.Body.Engines;
-using FarmConsole.Body.Resources.Sounds;
+﻿using FarmConsole.Body.Resources.Sounds;
+using FarmConsole.Body.Models;
 using FarmConsole.Body.Services;
-using FarmConsole.Body.Views.LocationViews;
-using FarmConsole.Body.Views.MenuViews;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
+using FarmConsole.Body.Views.MenuViews;
+using FarmConsole.Body.Views.LocationViews;
+using FarmConsole.Body.Engines;
 
 namespace FarmConsole.Body.Controlers
 {
-    public class HouseController : MainController
+    public class LocationController : MainController
     {
-        public static void Open()
+        public static void Open(string Location)
         {
             bool ShiftPressed;
             GameView.Show(GameInstance.UserName);
-            MapView.InitMap(GameInstance.HouseMap);
-            SideMenuController.Init(1);
+            MapView.InitMap(GameInstance.GetMap(Location));
+            SideMenuController.Init(GameInstance.GetMap(Location).Scale);
             MapView.ShowMap();
-            escapeScreen = "House";
-            while (openScreen == "House")
+            escapeScreen = Location;
+            while (openScreen == Location)
             {
                 if (Console.KeyAvailable)
                 {
@@ -44,6 +44,8 @@ namespace FarmConsole.Body.Controlers
                         case ConsoleKey.RightArrow: MapEngine.MoveMapPosition(new Point(-1, 1)); break;
 
                         case ConsoleKey.R: MapView.GlobalMapInit(); MapView.HideMap(); MapView.ShowMap(); break;
+                        case ConsoleKey.F: GameInstance.SetMap(Location,MapEngine.Map); GameService.GrowingUp();
+                                           MapView.InitMap(GameInstance.GetMap(Location)); MapView.ShowMap(); break;
                     }
                 }
                 else if ((DateTime.Now - Now).TotalMilliseconds >= 50)
@@ -52,9 +54,9 @@ namespace FarmConsole.Body.Controlers
                     Now = DateTime.Now;
                 }
             }
-            GameInstance.HouseMap = MapEngine.Map;
-            GameView.Clean();
+            GameInstance.SetMap(Location, MapEngine.Map);
             MapView.HideMap();
+            GameView.Clean();
         }
     }
 }

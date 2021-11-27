@@ -1,4 +1,5 @@
 ﻿using FarmConsole.Body.Engines;
+using FarmConsole.Body.Models;
 using FarmConsole.Body.Resources.Sounds;
 using FarmConsole.Body.Services;
 using System;
@@ -7,29 +8,32 @@ using System.Text;
 
 namespace FarmConsole.Body.Views.MenuViews
 {
-    public class HelpView : ComponentEngine
+    class HelpView : MenuManager
     {
-        public static void Show()
+        public static void Display()
         {
-            H1(title);
-            H2("Nie wiesz o co chodzi?");
-            Endl(Console.WindowHeight / 9);
+            Endl(3);
+            H2(StringService.Get("help label"));
+            Endl(Console.WindowHeight / 8);
             GroupStart(0);
             GroupStart(2);
-            TextBox("Sterowanie", 44);
+            TextBox(StringService.Get("control label"), 44);
             Endl(1);
             TextBox(controlsText, 44);
             GroupEnd();
             GroupStart(4);
-            TextBox("Od Autora", 44);
+            TextBox(StringService.Get("from the author label"), 44);
             Endl(1);
             TextBox(fromAuthorText, 44);
             GroupEnd();
             GroupEnd();
 
-            Foot(foot);
             PrintList();
             //showComponentList();
+
+            ComponentsDisplayed = new List<CM>();
+            ComponentsDisplayed.Add(GetComponentByName("GS",2));
+            ComponentsDisplayed.Add(GetComponentByName("GS",3));
         }
     }
 }

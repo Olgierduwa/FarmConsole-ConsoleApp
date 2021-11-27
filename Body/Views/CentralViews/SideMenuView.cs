@@ -2,6 +2,7 @@
 using FarmConsole.Body.Models;
 using FarmConsole.Body.Resources.Sounds;
 using FarmConsole.Body.Services;
+using FarmConsole.Body.Views.MenuViews;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -10,12 +11,12 @@ using System.Text;
 
 namespace FarmConsole.Body.Views
 {
-    public class SideMenuView : ComponentEngine
+    class SideMenuView : MenuManager
     {
         private static List<CM> LeftMenu;
         private static List<CM> RightMenu;
 
-        public static Point DisplayRightMenu(List<ProductModel> component_list, string title, int selected, bool extended = false, bool search = false)
+        public static CM DisplayRightMenu(List<ProductModel> component_list, string title, int selected, bool extended = false, bool search = false)
         {
             ClearList(false);
 
@@ -31,39 +32,39 @@ namespace FarmConsole.Body.Views
             GraphicBox(new string[] { " " });
 
             GroupStart(5);
-            GraphicBox(new string[] { title.ToUpper(), "" }, color: ConsoleColor.Gray);
+            GraphicBox(new string[] { title.ToUpper(), "" }, color: ColorService.GetColorByName("Gray"));
             if (component_list.Count > 0)
             {
-                if(search) TextBox(XF.GetString("search"), Console.WindowWidth / 5 - 1, margin: 0, foreground: ConsoleColor.Yellow);
+                if(search) TextBox(StringService.Get("search"), Console.WindowWidth / 5 - 1, margin: 0, foreground: ColorService.GetColorByName("Yellow"));
                 for (int i = 0; i < component_list.Count; i++)
                     if (i + searchHeight / 3 < (Console.WindowHeight - 14) / 3)
                         TextBox(component_list[i].Amount + "x " + component_list[i].ProductName, Console.WindowWidth / 5 - 1, margin: 0);
                     else TextBox(component_list[i].Amount + "x " + component_list[i].ProductName, Console.WindowWidth / 5 - 1, false, margin: 0);
             }
-            else GraphicBox(new string[] { "NIC TU NIE MA" });
+            else GraphicBox(new string[] { StringService.Get("nothing here") });
             GroupEnd();
 
             GroupStart(9, 10);
             Endl(Height - 2);
-            if (extended) TextBox("WRÓĆ Q", Console.WindowWidth / 10 - 1, background: ConsoleColor.Gray, margin: 0);
-            else TextBox("WTBIERZ Q", Console.WindowWidth / 10 - 1, background: ConsoleColor.Gray, margin: 0);
+            if (extended) TextBox(StringService.Get("go back", " Q"), Console.WindowWidth / 10 - 1, background: ColorService.GetColorByName("Gray"), margin: 0);
+            else TextBox(StringService.Get("choose", " Q"), Console.WindowWidth / 10 - 1, background: ColorService.GetColorByName("Gray"), margin: 0);
             GroupEnd();
 
             GroupStart(10, 10);
             Endl(Height - 2);
-            if (extended) TextBox("WYBIERZ E", Console.WindowWidth / 10 - 1, background: ConsoleColor.Gray, margin: 0);
-            else TextBox("WYJDŹ E", Console.WindowWidth / 10 - 1, background: ConsoleColor.Gray, margin: 0);
+            if (extended) TextBox(StringService.Get("choose", " E"), Console.WindowWidth / 10 - 1, background: ColorService.GetColorByName("Gray"), margin: 0);
+            else TextBox(StringService.Get("escape", " E"), Console.WindowWidth / 10 - 1, background: ColorService.GetColorByName("Gray"), margin: 0);
             GroupEnd();
 
             GroupEnd();
             PrintList();
-            UpdateSelect(selected, selected, component_list.Count - 5);
+            UpdateMenuSelect(selected, selected, component_list.Count);
 
             RightMenu = ComponentList.ToList();
 
-            return new Point(Width + 1, Height + 2);
+            return GetComponentByName("RB");
         }
-        public static Point DisplayLeftMenu(string[] component_list, string title, int selected, bool extended = false)
+        public static CM DisplayLeftMenu(string[] component_list, string title, int selected, bool extended = false)
         {
             ClearList(false);
             Endl(5);
@@ -75,45 +76,45 @@ namespace FarmConsole.Body.Views
 
             LeftBar(Height);
             GroupStart(1);
-            GraphicBox(new string[] { title.ToUpper(), "" }, color: ConsoleColor.Gray);
+            GraphicBox(new string[] { title.ToUpper(), "" }, color: ColorService.GetColorByName("Gray"));
             if (component_list.Length > 0)
             {
                 for (int i = 0; i < component_list.Length; i++)
                 if (i < (Console.WindowHeight - 14) / 3)
-                    TextBox(component_list[i], Width, margin: 0);
-                else TextBox(component_list[i], Width, false, margin: 0);
+                    TextBox(StringService.Get(component_list[i]), Width, margin: 0);
+                else TextBox(StringService.Get(component_list[i]), Width, false, margin: 0);
             }
-            else GraphicBox(new string[] { "NIC Z TYM NIE ZROBISZ" });
+            else GraphicBox(new string[] { StringService.Get("cant do anything") });
             GroupEnd();
 
             GroupStart(1, 10);
             Endl(Height - 2);
-            if (extended) TextBox("WYKONAJ Q", Console.WindowWidth / 10 - 1, background: ConsoleColor.Gray, margin: 0);
-            else TextBox("WYJDŹ Q", Console.WindowWidth / 10 - 1, background: ConsoleColor.Gray, margin: 0);
+            if (extended) TextBox(StringService.Get("do", " Q"), Console.WindowWidth / 10 - 1, background: ColorService.GetColorByName("Gray"), margin: 0);
+            else TextBox(StringService.Get("escape", " Q"), Console.WindowWidth / 10 - 1, background: ColorService.GetColorByName("Gray"), margin: 0);
             GroupEnd();
 
             GroupStart(2, 10);
             Endl(Height - 2);
-            if (extended) TextBox("WRÓĆ E", Console.WindowWidth / 10 - 1, background: ConsoleColor.Gray, margin: 0);
-            else TextBox("WYKONAJ E", Console.WindowWidth / 10 - 1, background: ConsoleColor.Gray, margin: 0);
+            if (extended) TextBox(StringService.Get("go back", " E"), Console.WindowWidth / 10 - 1, background: ColorService.GetColorByName("Gray"), margin: 0);
+            else TextBox(StringService.Get("do", " E"), Console.WindowWidth / 10 - 1, background: ColorService.GetColorByName("Gray"), margin: 0);
             GroupEnd();
 
             GroupEnd();
             PrintList();
-            UpdateSelect(selected, selected, component_list.Length);
+            UpdateMenuSelect(selected, selected, component_list.Length);
 
             LeftMenu = ComponentList.ToList();
 
-            return new Point(Width, Height + 2);
+            return GetComponentByName("LB");
         }
-        public static Point DisplayCenterMenu(string content)
+        public static CM DisplayCenterMenu(string content)
         {
             ClearList(false);
 
             string[] text, text2;
             int Width = 40;
 
-            text = new string[] { " ", "OSTRZEZENIE!", " " };
+            text = new string[] { " ", StringService.Get("warning"), " " };
             text2 = TextBoxView(content, Width);
             text = text.Concat(text2.Concat(new string[] { " " }).ToArray()).ToArray();
             
@@ -121,13 +122,13 @@ namespace FarmConsole.Body.Views
 
             Endl((Console.WindowHeight - Height) / 2);
             GroupStart(3);
-            TextBoxLines(text, Width, color1: ConsoleColor.Red);
+            TextBoxLines(text, Width, color1: ColorService.GetColorByName("Red"));
             GroupEnd();
             PrintList();
 
-            return new Point(Width, Height + 2);
+            return GetComponentByName("TBL");
         }
-        public static Point DisplaySearchRightMenu(List<ProductModel> component_list, string title, string SearchedPhrase)
+        public static CM DisplaySearchRightMenu(List<ProductModel> component_list, string title, string SearchedPhrase)
         {
             ClearList(false);
 
@@ -142,8 +143,8 @@ namespace FarmConsole.Body.Views
             GraphicBox(new string[] { "".PadRight(Console.WindowWidth / 5 - 1) });
 
             GroupStart(5);
-            GraphicBox(new string[] { title.ToUpper(), "" }, color: ConsoleColor.Gray);
-            TextBox(SearchedPhrase, Width, margin: 0, foreground: ConsoleColor.Yellow, background: ConsoleColor.Yellow);
+            GraphicBox(new string[] { title.ToUpper(), "" }, color: ColorService.GetColorByName("Gray"));
+            TextBox(SearchedPhrase, Width, margin: 0, foreground: ColorService.GetColorByName("Yellow"), background: ColorService.GetColorByName("Yellow"));
             if (component_list.Count > 0)
             {
                 for (int i = 0; i < component_list.Count; i++)
@@ -151,26 +152,20 @@ namespace FarmConsole.Body.Views
                         TextBox(component_list[i].Amount + "x " + component_list[i].ProductName, Width, margin: 0);
                     else TextBox(component_list[i].Amount + "x " + component_list[i].ProductName, Width, false, margin: 0);
             }
-            else { Endl(1); GraphicBox(new string[] { "NIC TU NIE MA" }); }
+            else { Endl(1); GraphicBox(new string[] { StringService.Get("nothing here") }); }
             GroupEnd();
 
             GroupStart(5);
             Endl(Height - 2);
-            TextBox("ZAKOŃCZ FILTR Q", Console.WindowWidth / 5 - 5, background: ConsoleColor.Gray, margin: 0);
+            TextBox(StringService.Get("finish filtering", " Q"), Console.WindowWidth / 5 - 5, background: ColorService.GetColorByName("Gray"), margin: 0);
             GroupEnd();
 
             GroupEnd();
             PrintList();
 
-            return new Point(Width + 1, Height + 1);
+            return GetComponentByName("RB");
         }
         public static void RestoreLeftMenu() => ComponentList = LeftMenu.ToList();
         public static void RestoreRightMenu() => ComponentList = RightMenu.ToList();
-
-
-        public static void Clean()
-        {
-            ClearList(false);
-        }
     }
 }

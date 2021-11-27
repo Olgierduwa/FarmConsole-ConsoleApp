@@ -5,16 +5,16 @@ using FarmConsole.Body.Views.LocationViews;
 
 namespace FarmConsole.Body.Services
 {
-    public class SideMenuService : MainController
+    class SideMenuService : MainController
     {
         public static int TradedQuantity { get; set; }
-        public static string DONE = XF.GetString("done");
+        public static string DONE = StringService.Get("done");
 
-        private static ProductModel P;
         private static void AddAmount(int Value)
         {
-            int Index = GameInstance.Inventory.FindIndex(x => x.Category == P.Category && x.Type == P.Type && x.Scale == P.Scale);
-            if (Index < 0) GameInstance.Inventory.Add(P); 
+            int Index = GameInstance.Inventory.FindIndex(x => x.Category == Action.SelectedProduct.Category
+            && x.Type == Action.SelectedProduct.Type && x.Scale == Action.SelectedProduct.Scale);
+            if (Index < 0) GameInstance.Inventory.Add(Action.SelectedProduct); 
             else
             {
                 GameInstance.Inventory[Index].Amount += Value;
@@ -23,77 +23,107 @@ namespace FarmConsole.Body.Services
         }
         private static decimal GetPrice()
         {
-            return GameInstance.Inventory[GameInstance.Inventory.IndexOf(P)].Price;
+            return GameInstance.Inventory[GameInstance.Inventory.IndexOf(Action.SelectedProduct)].Price;
         }
 
-        public static string DoInInventory(string ToDo, ProductModel Product = null)
+        private static string DoInInventory()
         {
             string s;
-            SideMenuService.P = Product;
-            switch(ToDo)
+            switch(Action.Name)
             {
                 // MapView Activities
-                case "Zniszcz": AddAmount(-1); break;
-                case "Postaw": s = MapView.Build(Product); if (s == DONE) AddAmount(-1); return s;
+                case "destroy": AddAmount(-1); break;
+                case "build": s = MapManager.Build(Action.SelectedProduct); if (s == DONE) AddAmount(-1); return s;
 
                 // FarmView Activities
-                case "Posiej": s = FarmView.Sow(Product); if (s == DONE) AddAmount(-1); return s;
-                case "Nawieź": s = FarmView.Fertilize(Product); if (s == DONE) AddAmount(-1); return s;
+                case "sow": s = FarmView.Sow(Action.SelectedProduct); if (s == DONE) AddAmount(-1); return s;
+                case "fertilize": s = FarmView.Fertilize(Action.SelectedProduct); if (s == DONE) AddAmount(-1); return s;
 
                 // HouseView Activities
-                case "Wypij": break;
+                case "drink": break;
 
                 // ShopView Activities
-                case "Kup": if (GetPrice() * TradedQuantity > GameInstance.Wallet) return XF.GetString("no money");
+                case "buy": if (GetPrice() * TradedQuantity > GameInstance.Wallet) return StringService.Get("no money");
                             GameInstance.Wallet -= TradedQuantity * GetPrice(); AddAmount(TradedQuantity); break;
 
-                case "Sprzedaj": GameInstance.Wallet += TradedQuantity * GetPrice(); AddAmount(-1 * TradedQuantity); break;
+                case "sell": GameInstance.Wallet += TradedQuantity * GetPrice(); AddAmount(-1 * TradedQuantity); break;
 
                 // Unknown Activities
-                default: return XF.GetString("unknown action");
+                default: return StringService.Get("unknown action");
             }
             return DONE;
         }
-        public static string DoOnMap(string ToDo)
+        private static string DoOnMap()
         {
             string s;
-            P = new ProductModel(MapView.GetField());
-            switch (ToDo)
+            Action.SelectedProduct = new ProductModel(MapManager.GetField());
+            switch (Action.Name)
             {
                 // MapView Activities
-                case "Zniszcz": MapView.Destroy(); break;
-                case "Przenieś": MapView.Dragg(); break;
-                case "Schowaj": int c = MapEngine.GetSelectedFieldCount(); AddAmount(c == 0 ? 1 : c); MapView.Destroy(); break;
-                case "Obróć": MapView.Rotate(); break;
-                case "Śpij":  GameService.Sleep(); break;
-                case "Wejdź": switch (P.ProductName)
+                case "destroy": return MapManager.Destroy();
+                case "move": MapManager.Dragg(); break;
+                case "hide": s = MapManager.Destroy(1); AddAmount(1); return s;
+                case "rotate": MapManager.Rotate(); break;
+                case "dig path": MapManager.MakePath(); break;
+                case "sleep": GameService.Sleep(); break;
+                case "come in": switch (Action.SelectedProduct.ProductName)
                     {
-                        case "Dom": openScreen = "House"; break;
-                        case "Farma": openScreen = "Farm"; break;
-                        case "Sklep Spożywczy": openScreen = "Shop"; break;
-                        case "Drzwi wejściowe": openScreen = lastScreen; break;
-                    } break;
-                case "Wyjdź": switch (escapeScreen)
+                        case "Dom": OpenScreen = "House"; break;
+                        case "Farma": OpenScreen = "Farm"; break;
+                        case "Sklep Spożywczy": OpenScreen = "Shop"; break;
+                        case "Drzwi wejściowe": OpenScreen = LastScreen; break;
+                    }
+                    break;
+                case "come out": switch (EscapeScreen)
                     {
-                        case "House": openScreen = "Farm"; break;
-                        case "Shop": openScreen = "Street"; break;
-                        case "Farm": openScreen = "Street"; break;
-                    } break;
+                        case "House": OpenScreen = "Farm"; break;
+                        case "Shop": OpenScreen = "Street"; break;
+                        case "Farm": OpenScreen = "Street"; break;
+                    }
+                    break;
+                case "check": switch (Action.SelectedProduct.ProductName)
+                    {
+                        case "Portfel": OpenScreen = "Portfel"; break;
+                        case "Telefon": OpenScreen = "Telefon"; break;
+                    }
+                    break;
 
                 // FarmView Activities
-                case "Zaoraj": return FarmView.Plow(); 
-                case "Podlej": return FarmView.WaterIt();
-                case "Skoś": return FarmView.MowGrass();
-                case "Zbierz": s = FarmView.Collect(); P = ProductModel.GetProduct(P.Property); if (s == DONE) AddAmount(1); return s;
-                case "Zrób nawóz": s = FarmView.MakeFertilize(); P = ProductModel.GetProduct("Naturalny Nawóz"); if(s == DONE) AddAmount(1); return s;
+                case "plow": return FarmView.Plow(); 
+                case "water it": return FarmView.WaterIt();
+                case "mow grass": return FarmView.MowGrass();
+                case "collect": s = FarmView.Collect(); Action.SetPropertyProduct(); if(s == DONE) AddAmount(1); return s;
+                case "make fertilizer": s = FarmView.MakeFertilize();
+                    Action.SelectedProduct = ProductModel.GetProduct("Naturalny Nawóz"); if(s == DONE) AddAmount(1); return s;
 
                 // HouseView Activities
-                case "Umyj": break;
+                case "wash": break;
 
                 // Unknown Activities
-                default: return XF.GetString("unknown action");
+                default: return StringService.Get("unknown action");
             }
             return DONE;
+        }
+
+        public static string TakeAction()
+        {
+            if (MapEngine.GetSelectedFieldCount() > 1)
+            {
+                if (GameInstance.Rules["multi " + Action.Name]) Action.IsInProcess = true;
+                else return StringService.Get("multi " + Action.Name);
+            }
+            return DoAction();
+        }
+        public static string DoAction()
+        {
+            string result = "unknown action type";
+            switch (Action.Type)
+            {
+                case "OnMap": result = DoOnMap(); break;
+                case "InInventory": result = DoInInventory(); break;
+            }
+            if(MapEngine.GetSelectedFieldCount() == 0) Action.IsInProcess = false;
+            return result;
         }
     }
 }

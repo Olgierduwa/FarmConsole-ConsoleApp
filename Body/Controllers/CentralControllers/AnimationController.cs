@@ -96,7 +96,7 @@ namespace FarmConsole.Body.Controlers
             else if (Stage < 5 * limit + PopupSleepTime[1] / 50) { currentColorId = 4; GraphicView = new string[] { GraphicView[0], GraphicView[1] }; }
             else if (Stage < 6 * limit + PopupSleepTime[1] / 50) { currentColorId = 5; Stage = -1; GraphicView = new string[] { GraphicView[0] }; }
 
-            AnimationView.PopUp(AnimationController.GraphicView, ColorService.GetColor(ColorIds[currentColorId]));
+            AnimationView.PopUp(AnimationController.GraphicView, ColorService.GetColorByID(ColorIds[currentColorId]));
             return Stage;
         }
 
@@ -107,13 +107,13 @@ namespace FarmConsole.Body.Controlers
                 if (Console.KeyAvailable) Console.ReadKey(true);
                 if ((DateTime.Now - Now).TotalMilliseconds >= CrossSleepTime[Stage])
                 {
-                    AnimationView.DisplayGraphic(GraphicView, ColumnDivision[0], ColumnDivision[1], 5, ColorService.GetColor(ColorIds[CurrentColorID]));
+                    AnimationView.DisplayGraphic(GraphicView, ColumnDivision[0], ColumnDivision[1], 5, ColorService.GetColorByID(ColorIds[CurrentColorID]));
                     if (CurrentColorID == 2 || CurrentColorID == 3) Stage++;
                     else CurrentColorID++;
                     Now = DateTime.Now;
                 }
             }
-            AnimationView.ClearList(false);
+            AnimationView.Clean(false);
         }
         private static void CrossOutEffect()
         {
@@ -124,13 +124,13 @@ namespace FarmConsole.Body.Controlers
                 if (Console.KeyAvailable) Console.ReadKey(true);
                 if ((DateTime.Now - Now).TotalMilliseconds >= CrossSleepTime[Stage])
                 {
-                    AnimationView.DisplayGraphic(GraphicView, ColumnDivision[0], ColumnDivision[1], 5, ColorService.GetColor(ColorIds[CurrentColorID]));
+                    AnimationView.DisplayGraphic(GraphicView, ColumnDivision[0], ColumnDivision[1], 5, ColorService.GetColorByID(ColorIds[CurrentColorID]));
                     if (CurrentColorID == 5) Stage++;
                     CurrentColorID++;
                     Now = DateTime.Now;
                 }
             }
-            AnimationView.ClearList();
+            AnimationView.Clean();
         }
         private static void HorizontalSlideInEffect()
         {
@@ -140,14 +140,14 @@ namespace FarmConsole.Body.Controlers
                 if (Console.KeyAvailable) Console.ReadKey(true);
                 if ((DateTime.Now - Now).TotalMilliseconds >= SlideSleepTime[Stage])
                 {
-                    AnimationView.DisplayGraphic(GraphicView, ColumnDivision[0] - C * 10, ColumnDivision[1], 5, ColorService.GetColor(ColorIds[CurrentColorID]), true);
+                    AnimationView.DisplayGraphic(GraphicView, ColumnDivision[0] - C * 10, ColumnDivision[1], 5, ColorService.GetColorByID(ColorIds[CurrentColorID]), true);
                     if (C == 6 || C == 2) CurrentColorID++;
                     if (C == 0) { Stage++; C++; }
                     C--;
                     Now = DateTime.Now;
                 }
             }
-            AnimationView.ClearList(false);
+            AnimationView.Clean(false);
         }
         private static void HorizontalSlideOutEffect()
         {
@@ -159,14 +159,14 @@ namespace FarmConsole.Body.Controlers
                 if (Console.KeyAvailable) Console.ReadKey(true);
                 if ((DateTime.Now - Now).TotalMilliseconds >= SlideSleepTime[Stage])
                 {
-                    AnimationView.DisplayGraphic(GraphicView, ColumnDivision[0] + C * 10, ColumnDivision[1], 5, ColorService.GetColor(ColorIds[CurrentColorID]), true);
+                    AnimationView.DisplayGraphic(GraphicView, ColumnDivision[0] + C * 10, ColumnDivision[1], 5, ColorService.GetColorByID(ColorIds[CurrentColorID]), true);
                     if (C == 3 || C == 5) CurrentColorID++;
                     if (C == 8) Stage++;
                     C++;
                     Now = DateTime.Now;
                 }
             }
-            AnimationView.ClearList();
+            AnimationView.Clean();
         }
         private static void VerticalSlideInEffect()
         {
@@ -176,14 +176,14 @@ namespace FarmConsole.Body.Controlers
                 if (Console.KeyAvailable) Console.ReadKey(true);
                 if ((DateTime.Now - Now).TotalMilliseconds >= SlideSleepTime[Stage])
                 {
-                    AnimationView.DisplayGraphic(GraphicView, ColumnDivision[0], ColumnDivision[1], R, ColorService.GetColor(ColorIds[CurrentColorID]), true);
+                    AnimationView.DisplayGraphic(GraphicView, ColumnDivision[0], ColumnDivision[1], R, ColorService.GetColorByID(ColorIds[CurrentColorID]), true);
                     if (R == 3 || R == 4) CurrentColorID++;
                     if (R == 5) Stage++;
                     else R++;
                     Now = DateTime.Now;
                 }
             }
-            AnimationView.ClearList(false);
+            AnimationView.Clean(false);
         }
         private static void VerticalSlideOutEffect()
         {
@@ -195,14 +195,14 @@ namespace FarmConsole.Body.Controlers
                 if (Console.KeyAvailable) Console.ReadKey(true);
                 if ((DateTime.Now - Now).TotalMilliseconds >= SlideSleepTime[Stage])
                 {
-                    AnimationView.DisplayGraphic(GraphicView, ColumnDivision[0], ColumnDivision[1], R, ColorService.GetColor(ColorIds[CurrentColorID]), true);
+                    AnimationView.DisplayGraphic(GraphicView, ColumnDivision[0], ColumnDivision[1], R, ColorService.GetColorByID(ColorIds[CurrentColorID]), true);
                     if (R == 6 || R == 7) CurrentColorID++;
                     if (R == 9) Stage++;
                     else R++;
                     Now = DateTime.Now;
                 }
             }
-            AnimationView.ClearList();
+            AnimationView.Clean();
         }
     }
 }

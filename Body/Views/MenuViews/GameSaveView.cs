@@ -4,13 +4,14 @@ using FarmConsole.Body.Resources.Sounds;
 using FarmConsole.Body.Services;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 
 namespace FarmConsole.Body.Views.MenuViews
 {
-    public class GameSaveView : ComponentEngine
+    class GameSaveView : MenuManager
     {
-        public static void Show(GameInstanceModel[] saves)
+        public static void Display(GameInstanceModel[] saves)
         {
             int savesCount = saves.Length;
             int freeSpace = Console.WindowHeight - 15;
@@ -19,14 +20,15 @@ namespace FarmConsole.Body.Views.MenuViews
             int detailsHeight = (Console.WindowHeight - 24) / 2;
             if (showCount >= savesCount + 1) endlCount += (showCount - savesCount + 1) * 3 / 2;
 
-            H1(title);
-            H2("Zapisz Giereczke");
+            Endl(3);
+            H2(StringService.Get("save game label"));
 
             GroupStart(0);
+
             GroupStart(2);
             if ((savesCount + 1) * 3 <= 17) Endl(detailsHeight);
             else Endl(endlCount);
-            TextBox("P U S T Y   Z A P I S");
+            TextBox(StringService.Get("empty save button"));
             for (int i = 0; i < savesCount; i++)
                 if (i < showCount)
                     TextBox(saves[i].UserName);
@@ -35,48 +37,35 @@ namespace FarmConsole.Body.Views.MenuViews
 
             GroupStart(4);
             Endl(detailsHeight);
-            TextBox("E / Utwórz Nowy Zapis");
+            TextBox(StringService.Get("new save button", " E"));
             Endl(11);
-            TextBox("E / Nadpisz Gre", show: false);
+            TextBox(StringService.Get("override save button", " E"), show: false);
             GroupEnd();
 
             GroupStart(Console.WindowWidth / 2, Console.WindowWidth);
             Endl(detailsHeight + 1);
-            TextBox(updateQuestion, 33, false, ConsoleColor.Red);
+            TextBox(updateQuestion, 33, false, ColorService.GetColorByName("Red"));
             GroupEnd();
             GroupStart(Console.WindowWidth / 2 - 9, Console.WindowWidth);
             Endl(detailsHeight + 9);
-            TextBox("Q / NIE", 15, false, ConsoleColor.Red, margin: 0);
+            TextBox(StringService.Get("no", " Q"), 15, false, ColorService.GetColorByName("Red"), margin: 0);
             GroupEnd();
             GroupStart(Console.WindowWidth / 2 + 9, Console.WindowWidth);
             Endl(detailsHeight + 9);
-            TextBox("E / TAK", 15, false, ConsoleColor.Red, margin: 0);
+            TextBox(StringService.Get("yes", " E"), 15, false, ColorService.GetColorByName("Red"), margin: 0);
             GroupEnd();
 
             GroupEnd();
-            Foot(foot);
             PrintList();
             //showComponentList();
-        }
-        public static bool? Warning()
-        {
-            S.Play("K2");
-            int focus = 4;
-            Focus(focus);
-            bool? choice = null;
-            while (choice == null)
-            {
-                switch (Console.ReadKey(true).Key)
-                {
-                    case ConsoleKey.Q: S.Play("K3"); choice = false; break;
-                    case ConsoleKey.E: S.Play("K2"); choice = true; break;
-                }
-            }
-            Showability(focus, 0, false);
-            Showability(focus + 1, 0, false);
-            Showability(focus + 2, 0, false);
-            PrintList();
-            return choice;
+
+            ComponentsDisplayed = new List<CM>();
+            ComponentsDisplayed.Add(GetComponentByName("GS", 2));
+            ComponentsDisplayed.Add(GetComponentByName("GS", 3));
+            ComponentsDisplayed.Add(GetComponentByName("GS", 4));
+            ComponentsDisplayed.Add(GetComponentByName("GS", 5));
+            ComponentsDisplayed.Add(GetComponentByName("GS", 6));
+            FocusGroupID = 4;
         }
         public static void SetPreview(GameInstanceModel[] saves, int selected)
         {
@@ -84,16 +73,18 @@ namespace FarmConsole.Body.Views.MenuViews
             {
                 var save = saves[selected - 2];
                 UpdateBox(3, 1, ". . ." + " ---------------------------------- " +
-                "Nazwa Gracza - " + save.UserName.ToString() + " ---------------------------------- " +
-                "Osiągniety Poziom - " + save.LVL.ToString() + " ---------------------------------- " +
-                "Posiadany Majątek - " + save.Wallet.ToString() + " ---------------------------------- " +
-                "Ostatni Zapis - " + save.Lastplay.ToString() + " ---------------------------------- . . .");
+                StringService.Get("nickname label") + " - " + save.UserName.ToString() + " ---------------------------------- " +
+                StringService.Get("lvl label") + " - " + save.LVL.ToString() + " ---------------------------------- " +
+                StringService.Get("wallet label") + " - " + save.Wallet.ToString() + " ---------------------------------- " +
+                StringService.Get("lastplay label") + " - " + save.Lastplay.ToString() + " ---------------------------------- . . .");
                 Showability(3, 0, true);
             }
             else
             {
-                UpdateBox(3, 1, "E / Rozpocznij Nową Grę");
                 Showability(3, 3, false);
+                UpdateBox(3, 1, StringService.Get("new save button", " E"));
+                MapEngine.ShowMapFragment(ComponentsDisplayed[1].Pos, ComponentsDisplayed[1].Size);
+                UpdateBox(3, 1, StringService.Get("new save button", " E"));
             }
         }
     }

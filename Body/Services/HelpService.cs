@@ -9,11 +9,13 @@ namespace FarmConsole.Body.Services
         private static System.Diagnostics.Stopwatch timer_1;
         private static long sum_timer_1 = 0;
         private static int timer_1_times;
+        private static long timer_1_ticks;
         private static long avg1;
 
         private static System.Diagnostics.Stopwatch timer_2;
         private static long sum_timer_2 = 0;
         private static int timer_2_times;
+        private static long timer_2_ticks;
         private static long avg2;
 
         /* STUFF TO COPY
@@ -40,6 +42,7 @@ namespace FarmConsole.Body.Services
         {
             timer_1.Stop();
             long ms = timer_1.ElapsedTicks;
+            timer_1_ticks = ms;
             timer_1_times++;
             sum_timer_1 += ms;
             avg1 = sum_timer_1 / timer_1_times;
@@ -48,6 +51,7 @@ namespace FarmConsole.Body.Services
         {
             timer_2.Stop();
             var ms = timer_2.ElapsedTicks;
+            timer_2_ticks = ms;
             timer_2_times++;
             sum_timer_2 += ms;
             avg2 = sum_timer_2 / timer_2_times;
@@ -62,7 +66,7 @@ namespace FarmConsole.Body.Services
             INFO(0, "avg1: " + avg1, "avg2: " + avg2);
             INFO(1, "times1: " + timer_1_times, "times2: " + timer_2_times);
             INFO(2, "sum1: " + sum_timer_1, "sum2: " + sum_timer_2);
-            INFO(3, "ct1: " + timer_1.ElapsedTicks, "ct2: " + timer_2.ElapsedTicks);
+            INFO(3, "ct1: " + timer_1_ticks, "ct2: " + timer_2_ticks);
         }
         public static void INFO(int x, string a, string b = "", string c = "", string d = "")
         {

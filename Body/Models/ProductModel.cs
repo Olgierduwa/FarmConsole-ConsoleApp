@@ -22,6 +22,7 @@ namespace FarmConsole.Body.Models
         public int State { get; set; }
         public int Duration { get; set; }
         public int Amount { get; set; }
+        public bool Fill { get; set; }
 
         private static List<ProductModel> Products;
 
@@ -38,6 +39,7 @@ namespace FarmConsole.Body.Models
             Color = Color.FromName("Magenta");
             Duration = 0;
             Amount = 1;
+            Fill = true;
             MenuActions = new string[0];
             MapActions = new string[0];
         }
@@ -56,12 +58,14 @@ namespace FarmConsole.Body.Models
             MenuActions = PM.MenuActions;
             MapActions = PM.MapActions;
             View = PM.View;
+            ViewStartPos = PM.ViewStartPos;
+            Fill = PM.Fill;
             Amount = 1;
             Duration = 0;
         }
         public ProductModel(string ModelAsString)
         {
-            int[] Values = ConvertService.ConvertToDecimalSystem(ModelAsString);
+            int[] Values = ConvertService.ConvertStringToProduct(ModelAsString);
             Category = Values[0];
             Scale = Values[1];
             Type = Values[2];
@@ -76,16 +80,18 @@ namespace FarmConsole.Body.Models
             MenuActions = PM.MenuActions;
             MapActions = PM.MapActions;
             View = PM.View;
+            ViewStartPos = PM.ViewStartPos;
+            Fill = PM.Fill;
             Duration = PM.Duration;
         }
         
         public override string ToString()
         {
-            return ConvertService.ConvertToSixtyTripleSystem(Category, Scale, Type, Amount);
+            return ConvertService.ConvertProductToString(Category, Scale, Type, Amount);
         }
         public static void SetProducts()
         {
-            Products = Services.XF.GetProducts();
+            Products = XF.GetProducts();
             foreach (var Product in Products)
             {
                 string[] View = Product.View;

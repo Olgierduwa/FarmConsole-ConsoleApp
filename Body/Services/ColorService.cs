@@ -18,7 +18,8 @@ namespace FarmConsole.Body.Services
         public static Color GetColorByName(string colorName)
         {
             int index = 0;
-            while (index < Colors.Count && Colors[index].ColorName != colorName) index++;
+            colorName = colorName.ToLower();
+            while (index < Colors.Count && Colors[index].ColorName.ToLower() != colorName) index++;
             if (index != Colors.Count) return Colors[index].Color;
             else return Colors[0].Color;
         }
@@ -61,9 +62,6 @@ namespace FarmConsole.Body.Services
             color = Color.FromArgb(R, G, B);
             return color;
         }
-
-        public static ConsoleColor[] GetColors { get { return (ConsoleColor[])Enum.GetValues(typeof(ConsoleColor)); } }
-        public static ConsoleColor GetColor(int ColorID) { return GetColors[ColorID]; }
 
         public static int[] PurpleEffect { get { return new int[] { 0, 5, 13, 5, 0, 0 }; } }
         public static int[] RedEffect { get { return new int[] { 0, 4, 12, 4, 0, 0 }; } }

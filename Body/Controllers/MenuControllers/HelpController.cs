@@ -7,15 +7,15 @@ using System.Text;
 
 namespace FarmConsole.Body.Controlers
 {
-    public class HelpController : MainController
+    class HelpController : MainController
     {
         public static void Open()
         {
-            HelpView.Show();
-            openScreen = lastScreen;
+            HelpView.Display();
+            OpenScreen = LastScreen;
             Console.ReadKey(true);
             S.Play("K3");
-            HelpView.ClearList();
+            HelpView.Clean();
         }
     }
 }

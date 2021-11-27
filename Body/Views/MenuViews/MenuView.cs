@@ -7,67 +7,46 @@ using System.Text;
 
 namespace FarmConsole.Body.Views.MenuViews
 {
-    public class MenuView : ComponentEngine
+    class MenuView : MenuManager
     {
-        public static void Show()
+        public static void Display()
         {
-            H1(title);
-            Endl((Console.WindowHeight - 20) / 2);
-
+            Endl(Console.WindowHeight / 2 - 9);
             GroupStart(0);
 
-            GroupStart(2);
-            Endl(1);
-            TextBox("Zacznij Rozgrywke");
-            TextBox("Kontynuuj Rozrywke");
-            TextBox("Ustaw Wlasne Opcje");
-            TextBox("Poznaj Zasady Gry");
-            GroupEnd();
+                GroupStart(2);
+                Endl(1);
+                TextBox(StringService.Get("start game button"));
+                TextBox(StringService.Get("load game button"));
+                TextBox(StringService.Get("options button"));
+                TextBox(StringService.Get("help button"));
+                GroupEnd();
 
-            GroupStart(4);
-            Endl(1);
-            TextBox("\"Swietny Tytul!!\"");
-            TextBox("\"Oto najlpesza gra konsolowa, o jakiej slyszal swiat!\"");
-            GroupEnd();
+                GroupStart(4);
+                Endl(1);
+                TextBox("\"" + StringService.Get("menu text 1") + "\"");
+                TextBox("\"" + StringService.Get("menu text 2") + "\"");
+                GroupEnd();
 
-            GroupStart(Console.WindowWidth / 2, Console.WindowWidth);
-            Endl(2);
-            TextBox(exitQuestion, 33, false, ConsoleColor.Red);
-            GroupEnd();
-            GroupStart(Console.WindowWidth / 2 - 9, Console.WindowWidth);
-            Endl(8);
-            TextBox("Q / NIE", 15, false, ConsoleColor.Red, margin: 0);
-            GroupEnd();
-            GroupStart(Console.WindowWidth / 2 + 9, Console.WindowWidth);
-            Endl(8);
-            TextBox("E / TAK", 15, false, ConsoleColor.Red, margin: 0);
-            GroupEnd();
+                GroupStart(Console.WindowWidth / 2, Console.WindowWidth);
+                Endl(2);
+                TextBox(exitQuestion, 33, false, ColorService.GetColorByName("Red"));
+                GroupEnd();
+
+                GroupStart(Console.WindowWidth / 2 - 9, Console.WindowWidth);
+                Endl(8);
+                TextBox(StringService.Get("no"," Q"), 15, false, ColorService.GetColorByName("Red"), margin: 0);
+                GroupEnd();
+
+                GroupStart(Console.WindowWidth / 2 + 9, Console.WindowWidth);
+                Endl(8);
+                TextBox(StringService.Get("yes", " E"), 15, false, ColorService.GetColorByName("Red"), margin: 0);
+                GroupEnd();
 
             GroupEnd();
-
-            Foot(foot);
             PrintList();
             //vt1.ShowComponentList();
-        }
-        public static bool? Warning()
-        {
-            S.Play("K2");
-            int focus = 4;
-            Focus(focus);
-            bool? choice = null;
-            while (choice == null)
-            {
-                switch (Console.ReadKey(true).Key)
-                {
-                    case ConsoleKey.Q: S.Play("K3"); choice = false; break;
-                    case ConsoleKey.E: S.Play("K2"); choice = true; break;
-                }
-            }
-            Showability(focus, 0, false);
-            Showability(focus + 1, 0, false);
-            Showability(focus + 2, 0, false);
-            PrintList();
-            return choice;
+            FocusGroupID = 4;
         }
     }
 }

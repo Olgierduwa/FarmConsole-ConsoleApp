@@ -7,18 +7,13 @@ using System.Text;
 
 namespace FarmConsole.Body.Views.MenuViews
 {
-    public class GameView : ComponentEngine
+    class GameView : MenuManager
     {
-        public static void Show(string name)
+        public static void Display(string name)
         {
-            H1(title);
-            H2("Witaj w grze " + name + "!");
-            Foot(foot);
+            Endl(3);
+            H2(StringService.Get("hello player") + ", " + name + "!");
             PrintList();
-        }
-        public static void Clean()
-        {
-            ClearList();
         }
     }
 }

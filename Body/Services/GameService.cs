@@ -7,7 +7,7 @@ using System.Text;
 
 namespace FarmConsole.Body.Services
 {
-    public class GameService : MainController
+    class GameService : MainController
     {
         private static int[,] GrowCycle;
         public static void SetGrowCycle()
@@ -26,10 +26,10 @@ namespace FarmConsole.Body.Services
 
         public static void Sleep()
         {
-            MapView.HideMap();
-            TimeLapse();
+            MapManager.HideMap();
             GrowingUp();
-            MapView.ShowMap();
+            TimeLapse();
+            MapManager.ShowMap();
         }
 
         private static void TimeLapse()
@@ -43,14 +43,13 @@ namespace FarmConsole.Body.Services
         public static void GrowingUp()
         {
             Random rnd = new Random();
-            int ChanceOfGrowing, Increase;
+            int Increase;
             for (int x = 0; x < GameInstance.GetMap("Farm").Size; x++)
                 for (int y = 0; y < GameInstance.GetMap("Farm").Size; y++)
-                    if (GameInstance.GetMap("Farm").Fields[x, y].Category == 2 && GameInstance.GetMap("Farm").Fields[x, y].Type > 0 &&
-                        ProductModel.GetProduct(GameInstance.GetMap("Farm").Fields[x, y]).StateName != "Zgniłe") // state fields
+                {
+                    FieldModel Field = GameInstance.GetMap("Farm").Fields[x, y];
+                    if (Field.Category == 2 && Field.Type > 0 && ProductModel.GetProduct(Field).StateName != "Zgniłe") // state fields
                     {
-                        FieldModel Field = GameInstance.GetMap("Farm").Fields[x, y];
-
                         // +5 synthetic fertilize + water
                         // +4 synthetic fertilize
                         // +3 natural fertilize + water
@@ -59,17 +58,23 @@ namespace FarmConsole.Body.Services
                         // +0 no water
 
                         int RottenState = ProductModel.GetProduct(Field.FieldName, _StateName: "Zgniłe").State;
-                        Increase = Field.Duration / 50;
+                        Increase = Field.Duration / 10;
                         Field.Duration += Increase > 0 ? Increase : 1;
-                        Field.Duration -= Increase * 50;
+                        Field.Duration -= Increase * 10;
 
-                        while (Field.Duration >= GrowCycle[Field.Type, Field.State]) Field.Duration -= GrowCycle[Field.Type, Field.State++];
-
-                        ChanceOfGrowing = Increase % 2 == 1 ? 100 : 80;
-                        if (rnd.Next() % 100 > ChanceOfGrowing) Field.State = RottenState;
-                        Field.Color = ProductModel.GetProduct(Field).Color;
+                        if (rnd.Next() % 100 >= (Increase % 2 == 1 ? 100 : 60) && Field.State + 1 != RottenState)
+                        {
+                            Field.State = RottenState;
+                            Field.ReloadView(false);
+                        }
+                        else
+                        {
+                            while (Field.Duration >= GrowCycle[Field.Type, Field.State])
+                                Field.Duration -= GrowCycle[Field.Type, Field.State++];
+                            Field.ReloadView();
+                        }
                     }
+                }
         }
-
     }
 }

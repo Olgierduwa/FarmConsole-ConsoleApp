@@ -7,25 +7,28 @@ using System.Text;
 
 namespace FarmConsole.Body.Controlers
 {
-    public class MainController
+    class MainController
     {
         protected static GameInstanceModel GameInstance;
+        protected static ActionModel Action;
+
+        public static DateTime Previously = DateTime.Now;
+        public static double FrameTime = 400;
+
+        public static string OpenScreen = "Menu";
+        public static string LastScreen = "Menu";
+        public static string EscapeScreen = "Menu";
 
         public static string POPUPTEXT = "";
         public static int POPUPSTAGE = -1;
         public static int POPUPID = 0;
-        public static DateTime Now = DateTime.Now;
-        public static string openScreen = "Menu";
-        public static string lastScreen = "Menu";
-        public static string escapeScreen = "Menu";
-
         public static void PopUp(int id, string text)
         {
             string popupText = text;
-            if (id > 0) popupText = XF.GetString((400 + id).ToString());
+            if (id > 0) popupText = StringService.Get((400 + id).ToString());
             if (POPUPSTAGE >= 0)
             {
-                AnimationController.Effect(GV: ComponentEngine.TextBoxView(popupText), S: POPUPSTAGE);
+                AnimationController.Effect(GV: /*ComponentEngine.TextBoxView(popupText)*/ null, S: POPUPSTAGE);
                 POPUPSTAGE = AnimationController.PopUp();
             }
             if (POPUPSTAGE < 0) POPUPID = 0;
@@ -34,6 +37,7 @@ namespace FarmConsole.Body.Controlers
         static MainController()
         {
             GameInstance = new GameInstanceModel();
+            Action = new ActionModel();
         }
     }
 }

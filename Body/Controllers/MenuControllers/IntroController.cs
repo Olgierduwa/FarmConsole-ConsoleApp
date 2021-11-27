@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FarmConsole.Body.Controlers
 {
-    public class IntroController : MainController
+    class IntroController : MainController
     {
         public static void Open()
         {

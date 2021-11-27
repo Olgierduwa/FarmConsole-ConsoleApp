@@ -8,28 +8,28 @@ using FarmConsole.Body.Views.MenuViews;
 
 namespace FarmConsole.Body.Controlers
 {
-    public class GameLoadController : MainController
+    class GameLoadController : MainController
     {
         public static void Open()
         {
             GameInstanceModel[] saves = XF.GetGameInstances();
             int selected = 1, selCount = saves.Length + 1, selStart = 1;
-            GameLoadView.Show(saves); GameLoadView.UpdateSelect(selected, selected, selCount);
-            while (openScreen == "Load")
+            GameLoadView.Display(saves); GameLoadView.UpdateMenuSelect(selected, selected, selCount);
+            while (OpenScreen == "Load")
             {
                 if (Console.KeyAvailable)
                 {
                     switch (Console.ReadKey(true).Key)
                     {
-                        case ConsoleKey.W: if (selected > selStart) { S.Play("K1"); selected--; GameLoadView.UpdateSelect(selected, selected + 1, selCount); } break;
-                        case ConsoleKey.S: if (selected < selCount) { S.Play("K1"); selected++; GameLoadView.UpdateSelect(selected, selected - 1, selCount); } break;
+                        case ConsoleKey.W: if (selected > selStart) { S.Play("K1"); selected--; GameLoadView.UpdateMenuSelect(selected, selected + 1, selCount); } break;
+                        case ConsoleKey.S: if (selected < selCount) { S.Play("K1"); selected++; GameLoadView.UpdateMenuSelect(selected, selected - 1, selCount); } break;
                         case ConsoleKey.Escape:
-                        case ConsoleKey.Q: S.Play("K3"); openScreen = "Menu"; break;
+                        case ConsoleKey.Q: S.Play("K3"); OpenScreen = "Menu"; break;
                         case ConsoleKey.E: S.Play("K2");
                             switch (selected)
                             {
-                                case 1: openScreen = "NewGame"; break;
-                                default: GameInstance = new GameInstanceModel(); GameInstance.Load(selected - 1); openScreen = "Farm"; break;
+                                case 1: OpenScreen = "NewGame"; break;
+                                default: GameInstance = new GameInstanceModel(); GameInstance.Load(selected - 1); OpenScreen = "Farm"; break;
                             }
                             break;
                         case ConsoleKey.D:
@@ -39,21 +39,21 @@ namespace FarmConsole.Body.Controlers
                                 saves = XF.GetGameInstances();
                                 selected = 1;
                                 selCount = saves.Length + 1;
-                                GameLoadView.ClearList();
-                                GameLoadView.Show(saves);
-                                GameLoadView.UpdateSelect(1, 1, selCount);
+                                GameLoadView.Clean();
+                                GameLoadView.Display(saves);
+                                GameLoadView.UpdateMenuSelect(1, 1, selCount);
                             }
                             break;
                     }
                     GameLoadView.SetPreview(saves, selected);
                 }
-                else if ((DateTime.Now - Now).TotalMilliseconds >= 50)
+                else if ((DateTime.Now - Previously).TotalMilliseconds >= FrameTime)
                 {
                     PopUp(POPUPID, POPUPTEXT);
-                    Now = DateTime.Now;
+                    Previously = DateTime.Now;
                 }
             }
-            GameLoadView.ClearList();
+            GameLoadView.Clean();
         }
     }
 }

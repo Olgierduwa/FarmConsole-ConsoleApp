@@ -6,7 +6,7 @@ using System.Text;
 
 namespace FarmConsole.Body.Views.LocationViews
 {
-    class HouseView : MapView
+    class HouseView : MapManager
     {
     }
 }

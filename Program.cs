@@ -1,7 +1,10 @@
 ﻿using FarmConsole.Body.Controlers;
 using FarmConsole.Body.Services;
 using FarmConsole.Body.Views.LocationViews;
+using FarmConsole.Body.Views.MenuViews;
 using System;
+using System.IO;
+using System.Text;
 using System.Xml.Schema;
 
 namespace FarmConsole
@@ -10,11 +13,14 @@ namespace FarmConsole
     {
         static void Main()
         {
+            StringService.SetStrings("pl");
             WindowService.PresetWindow();
-            MapView.GlobalMapInit();
-            while (MainController.openScreen != "Close")
+            MapManager.GlobalMapInit();
+            ConvertService.SetSymbols();
+            MenuManager.Captions();
+            while (MainController.OpenScreen != "Close")
             {
-                switch (MainController.openScreen)
+                switch (MainController.OpenScreen)
                 {
                     case "Menu": MenuController.Open(); break;
                     case "Load": GameLoadController.Open(); break;

@@ -1,0 +1,520 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="401" xml:space="preserve">
+    <value>Wybieranie elementu Menu: W/S Zatwierdzenie lub wycofanie: E/Q Wybór wartości suwaka: A/D</value>
+    <comment>main popup</comment>
+  </data>
+  <data name="already fertilized" xml:space="preserve">
+    <value>To pole zostało już nawiezione!</value>
+    <comment>action result</comment>
+  </data>
+  <data name="already watered" xml:space="preserve">
+    <value>To pole jest już podlane!</value>
+    <comment>action result</comment>
+  </data>
+  <data name="cant do anything" xml:space="preserve">
+    <value>Nic z tym nie zrobisz</value>
+    <comment>navigation label</comment>
+  </data>
+  <data name="cant fertilizating" xml:space="preserve">
+    <value>Nie możesz użyć nawozu na polu innym niż pole z rosnącymi roślinami!</value>
+    <comment>action result</comment>
+  </data>
+  <data name="choose" xml:space="preserve">
+    <value>WYBIERZ</value>
+    <comment>navigation</comment>
+  </data>
+  <data name="destroy" xml:space="preserve">
+    <value>Zniszcz</value>
+    <comment>action name</comment>
+  </data>
+  <data name="do" xml:space="preserve">
+    <value>WYKONAJ</value>
+    <comment>navigation</comment>
+  </data>
+  <data name="done" xml:space="preserve">
+    <value>Zrobione</value>
+    <comment>action result</comment>
+  </data>
+  <data name="escape" xml:space="preserve">
+    <value>WYJDŹ</value>
+    <comment>navigation</comment>
+  </data>
+  <data name="fertilizers" xml:space="preserve">
+    <value>Nawozy</value>
+    <comment>navigation label</comment>
+  </data>
+  <data name="finish filtering" xml:space="preserve">
+    <value>ZAKOŃCZ FILTR</value>
+    <comment>navigation</comment>
+  </data>
+  <data name="foot" xml:space="preserve">
+    <value>* FC copyright 2021 *</value>
+    <comment>main</comment>
+  </data>
+  <data name="go back" xml:space="preserve">
+    <value>WRÓĆ</value>
+    <comment>navigation</comment>
+  </data>
+  <data name="inventory" xml:space="preserve">
+    <value>Ekwipunek</value>
+    <comment>navigation label</comment>
+  </data>
+  <data name="multi collect" xml:space="preserve">
+    <value>Nie posiadasz odpowiedniej maszyny, aby zebrać tyle plonów jednocześnie!</value>
+    <comment>action result</comment>
+  </data>
+  <data name="multi fertilize" xml:space="preserve">
+    <value>Nie posiadasz odpowiedniej maszyny, aby użyźnić tyle pól jednocześnie!</value>
+    <comment>action result</comment>
+  </data>
+  <data name="multi make fertilizer" xml:space="preserve">
+    <value>Nie posiadasz odpowiedniej maszyny, aby zrobić nawóz z tylu pól jednocześnie!</value>
+    <comment>action result</comment>
+  </data>
+  <data name="multi mow grass" xml:space="preserve">
+    <value>Nie posiadasz odpowiedniej maszyny, aby skosić tyle traw jednocześnie!</value>
+    <comment>action result</comment>
+  </data>
+  <data name="multi plow" xml:space="preserve">
+    <value>Nie posiadasz odpowiedniej maszyny, aby zaorać tyle pól jednocześnie!</value>
+    <comment>action result</comment>
+  </data>
+  <data name="multi sow" xml:space="preserve">
+    <value>Nie posiadasz odpowiedniej maszyny, aby posiać tyle pól jednocześnie!</value>
+    <comment>action result</comment>
+  </data>
+  <data name="multi water it" xml:space="preserve">
+    <value>Nie posiadasz odpowiedniej maszyny, aby podlać tyle pól jednocześnie!</value>
+    <comment>action result</comment>
+  </data>
+  <data name="no money" xml:space="preserve">
+    <value>Nie posiadasz wystarczającej ilości pieniędzy!</value>
+    <comment>action result</comment>
+  </data>
+  <data name="no plowed field" xml:space="preserve">
+    <value>Nie możesz posiać nic na polu innym niż zaorane!</value>
+    <comment>action result</comment>
+  </data>
+  <data name="nothing here" xml:space="preserve">
+    <value>Nic tu nie ma</value>
+    <comment>navigation label</comment>
+  </data>
+  <data name="objects" xml:space="preserve">
+    <value>Obiekty</value>
+    <comment>navigation label</comment>
+  </data>
+  <data name="overwriting" xml:space="preserve">
+    <value>Nie możesz buildić nic więcej w tym samym miejscu!</value>
+    <comment>action result</comment>
+  </data>
+  <data name="build" xml:space="preserve">
+    <value>Postaw</value>
+    <comment>action name</comment>
+  </data>
+  <data name="search" xml:space="preserve">
+    <value>Szukaj...</value>
+    <comment>navigation</comment>
+  </data>
+  <data name="seeds" xml:space="preserve">
+    <value>Nasiona</value>
+    <comment>navigation label</comment>
+  </data>
+  <data name="fertilize" xml:space="preserve">
+    <value>Nawieź</value>
+    <comment>action name</comment>
+  </data>
+  <data name="sow" xml:space="preserve">
+    <value>Posiej</value>
+    <comment>action name</comment>
+  </data>
+  <data name="drink" xml:space="preserve">
+    <value>Wypij</value>
+    <comment>action name</comment>
+  </data>
+  <data name="buy" xml:space="preserve">
+    <value>Kup</value>
+    <comment>action name</comment>
+  </data>
+  <data name="sell" xml:space="preserve">
+    <value>Sprzedaj</value>
+    <comment>action name</comment>
+  </data>
+  <data name="move" xml:space="preserve">
+    <value>Przenieś</value>
+    <comment>action name</comment>
+  </data>
+  <data name="title" xml:space="preserve">
+    <value>Farm Console</value>
+    <comment>main</comment>
+  </data>
+  <data name="unknown action" xml:space="preserve">
+    <value>Nieznana akcja</value>
+    <comment>action result</comment>
+  </data>
+  <data name="warning" xml:space="preserve">
+    <value>OSTRZEZENIE!</value>
+    <comment>navigation label</comment>
+  </data>
+  <data name="come in" xml:space="preserve">
+    <value>Wejdź</value>
+    <comment>action name</comment>
+  </data>
+  <data name="dig path" xml:space="preserve">
+    <value>Wykop ścieżkę</value>
+    <comment>action name</comment>
+  </data>
+  <data name="hide" xml:space="preserve">
+    <value>Schowaj</value>
+    <comment>action name</comment>
+  </data>
+  <data name="rotate" xml:space="preserve">
+    <value>Obróć</value>
+    <comment>action name</comment>
+  </data>
+  <data name="sleep" xml:space="preserve">
+    <value>Śpij</value>
+    <comment>action name</comment>
+  </data>
+  <data name="check" xml:space="preserve">
+    <value>Sprawdź</value>
+    <comment>action name</comment>
+  </data>
+  <data name="collect" xml:space="preserve">
+    <value>Zbierz</value>
+    <comment>action name</comment>
+  </data>
+  <data name="come out" xml:space="preserve">
+    <value>Wyjdź</value>
+    <comment>action name</comment>
+  </data>
+  <data name="control label" xml:space="preserve">
+    <value>Sterowanie</value>
+    <comment>menu label</comment>
+  </data>
+  <data name="effects volume" xml:space="preserve">
+    <value>Głośność Efektów</value>
+    <comment>menu option name</comment>
+  </data>
+  <data name="empty save button" xml:space="preserve">
+    <value>P U S T Y   Z A P I S</value>
+    <comment>menu button</comment>
+  </data>
+  <data name="from the author label" xml:space="preserve">
+    <value>Od Autora</value>
+    <comment>menu label</comment>
+  </data>
+  <data name="hello player" xml:space="preserve">
+    <value>Witaj w grze</value>
+    <comment>game label</comment>
+  </data>
+  <data name="help button" xml:space="preserve">
+    <value>Poznaj Zasady Gry</value>
+    <comment>menu button</comment>
+  </data>
+  <data name="help label" xml:space="preserve">
+    <value>Nie wiesz o co chodzi?</value>
+    <comment>menu label</comment>
+  </data>
+  <data name="lastplay label" xml:space="preserve">
+    <value>Ostatni Zapis</value>
+    <comment>menu label</comment>
+  </data>
+  <data name="load game button" xml:space="preserve">
+    <value>Kontynuuj Rozrywke</value>
+    <comment>menu button</comment>
+  </data>
+  <data name="lvl label" xml:space="preserve">
+    <value>Osiągniety Poziom</value>
+    <comment>menu label</comment>
+  </data>
+  <data name="make fertilizer" xml:space="preserve">
+    <value>Zrób nawóz</value>
+    <comment>action name</comment>
+  </data>
+  <data name="menu text 1" xml:space="preserve">
+    <value>Swietny Tytul!!</value>
+    <comment>menu text</comment>
+  </data>
+  <data name="menu text 2" xml:space="preserve">
+    <value>Oto najlpesza gra konsolowa, o jakiej slyszal swiat!</value>
+    <comment>menu text</comment>
+  </data>
+  <data name="mow" xml:space="preserve">
+    <value>Skoś</value>
+    <comment>action name</comment>
+  </data>
+  <data name="music volume" xml:space="preserve">
+    <value>Głośność Muzyki</value>
+    <comment>menu option name</comment>
+  </data>
+  <data name="new save button" xml:space="preserve">
+    <value>Utwórz Nowy Zapis</value>
+    <comment>menu button</comment>
+  </data>
+  <data name="nickname label" xml:space="preserve">
+    <value>Nazwa Gracza</value>
+    <comment>menu label</comment>
+  </data>
+  <data name="no" xml:space="preserve">
+    <value>NIE</value>
+    <comment>navigation</comment>
+  </data>
+  <data name="options button" xml:space="preserve">
+    <value>Ustaw Wlasne Opcje</value>
+    <comment>menu button</comment>
+  </data>
+  <data name="option label" xml:space="preserve">
+    <value>Ustaw Spersonalizowane Opcje</value>
+    <comment>menu label</comment>
+  </data>
+  <data name="override save button" xml:space="preserve">
+    <value>Nadpisz Gre</value>
+    <comment>menu button</comment>
+  </data>
+  <data name="plow" xml:space="preserve">
+    <value>Zaoraj</value>
+    <comment>action name</comment>
+  </data>
+  <data name="reject button" xml:space="preserve">
+    <value>Odrzuć</value>
+    <comment>menu button</comment>
+  </data>
+  <data name="restore default button" xml:space="preserve">
+    <value>Przywróć Domyślne Ustawienia</value>
+    <comment>menu button</comment>
+  </data>
+  <data name="save button" xml:space="preserve">
+    <value>Zapisz</value>
+    <comment>menu button</comment>
+  </data>
+  <data name="save game label" xml:space="preserve">
+    <value>Zapisz Giereczke</value>
+    <comment>menu label</comment>
+  </data>
+  <data name="screen height" xml:space="preserve">
+    <value>Wysokość Ekranu</value>
+    <comment>menu option name</comment>
+  </data>
+  <data name="screen width" xml:space="preserve">
+    <value>Szerokość Ekranu</value>
+    <comment>menu option name</comment>
+  </data>
+  <data name="start game button" xml:space="preserve">
+    <value>Zacznij Rozgrywke</value>
+    <comment>menu button</comment>
+  </data>
+  <data name="use" xml:space="preserve">
+    <value>Użyj</value>
+    <comment>action name</comment>
+  </data>
+  <data name="wallet label" xml:space="preserve">
+    <value>Posiadany Majątek</value>
+    <comment>menu label</comment>
+  </data>
+  <data name="wash" xml:space="preserve">
+    <value>Umyj</value>
+    <comment>action name</comment>
+  </data>
+  <data name="water it" xml:space="preserve">
+    <value>Podlej</value>
+    <comment>action name</comment>
+  </data>
+  <data name="yes" xml:space="preserve">
+    <value>TAK</value>
+    <comment>navigation</comment>
+  </data>
+  <data name="back to menu button" xml:space="preserve">
+    <value>Wróć do Menu</value>
+    <comment>menu button</comment>
+  </data>
+  <data name="continue button" xml:space="preserve">
+    <value>Kontynuuj</value>
+    <comment>menu button</comment>
+  </data>
+  <data name="delete save button" xml:space="preserve">
+    <value>Usuń Zapis</value>
+    <comment>menu button</comment>
+  </data>
+  <data name="load game label" xml:space="preserve">
+    <value>Wczytaj Swój Ulubiony Zapis</value>
+    <comment>menu label</comment>
+  </data>
+  <data name="new game button" xml:space="preserve">
+    <value>Rozpocznij Nową Grę</value>
+    <comment>menu button</comment>
+  </data>
+  <data name="save game button" xml:space="preserve">
+    <value>Zapisz Gre</value>
+    <comment>menu button</comment>
+  </data>
+  <data name="gender label" xml:space="preserve">
+    <value>Preferowana Płeć</value>
+    <comment>menu label</comment>
+  </data>
+  <data name="level of difficulty label" xml:space="preserve">
+    <value>Poziom Trudności</value>
+    <comment>menu label</comment>
+  </data>
+  <data name="new game label" xml:space="preserve">
+    <value>Rozpocznij Nowa Giereczke</value>
+    <comment>menu label</comment>
+  </data>
+  <data name="avatar label" xml:space="preserve">
+    <value>Wygląd Postaci</value>
+    <comment>menu label</comment>
+  </data>
+  <data name="easy button" xml:space="preserve">
+    <value>Łatwy</value>
+    <comment>menu button</comment>
+  </data>
+  <data name="hard button" xml:space="preserve">
+    <value>Trudny</value>
+    <comment>menu button</comment>
+  </data>
+  <data name="man button" xml:space="preserve">
+    <value>Mężczyzna</value>
+    <comment>menu button</comment>
+  </data>
+  <data name="random button" xml:space="preserve">
+    <value>Losowy</value>
+    <comment>menu button</comment>
+  </data>
+  <data name="self button" xml:space="preserve">
+    <value>Własny</value>
+    <comment>menu button</comment>
+  </data>
+  <data name="woman button" xml:space="preserve">
+    <value>Kobieta</value>
+    <comment>menu button</comment>
+  </data>
+  <data name="multi build" xml:space="preserve">
+    <value>Nie posiadasz odpowiednich maszyn, aby budować tyle obiektów jednocześnie!</value>
+    <comment>action result</comment>
+  </data>
+  <data name="multi destroy" xml:space="preserve">
+    <value>Nie posiadasz odpowiedniej maszyny, aby wyburzyć tyle obiektów jednocześnie!</value>
+    <comment>action result</comment>
+  </data>
+  <data name="multi dig path" xml:space="preserve">
+    <value>Nie posiadasz odpowiedniej maszyny, aby wykopać ściężkę na tylu polach jednocześnie!</value>
+    <comment>action result</comment>
+  </data>
+</root>

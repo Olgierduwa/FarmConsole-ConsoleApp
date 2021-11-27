@@ -7,7 +7,7 @@ namespace FarmConsole.Body.Resources.Sounds
     public static class S
     {
         private static readonly string location = "../../../Body/Resources/Sounds/";
-        private static WaveOutEvent waveSound = new WaveOutEvent();
+        private static readonly WaveOutEvent waveSound = new WaveOutEvent();
         private static WaveOutEvent waveMusic = new WaveOutEvent();
         private static float volumeSound;
         private static float volumeMusic;

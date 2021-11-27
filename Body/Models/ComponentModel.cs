@@ -1,36 +1,52 @@
-﻿using System;
+﻿using FarmConsole.Body.Services;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 
 namespace FarmConsole.Body.Models
 {
     public class CM
     {
-        private const ConsoleColor static_base_color = ConsoleColor.DarkGray;
-        private const ConsoleColor static_content_color = ConsoleColor.White;
+        private static readonly Color static_base_color = ColorService.GetColorByName("GrayD");
+        private static readonly Color static_content_color = ColorService.GetColorByName("White");
 
         public int ID_group { get; }
         public int ID_object { get; }
-        public int PosX { get; }
-        public int PosY { get; }
-        public int Width { get; }
-        public int Height { get; set; }
+        public string Name { get; set; }
+        public bool? Show { get; set; }
         public string[] View { get; set; }
         public int Prop { get; set; }
-        public string Name { get; set; } // jedynie do testów
-        public bool? Show { get; set; }
-        public ConsoleColor Base_color { get; set; }
-        public ConsoleColor Content_color { get; set; }
+        public Point Pos { get; set; }
+        public Size Size { get; set; }
+        public Color Base_color { get; set; }
+        public Color Content_color { get; set; }
 
-        public CM(int id_group, int id_object, int posX, int posY, int width, int height, string[] view, string name, int prop = 0, bool? show = true,
-                         ConsoleColor color1 = static_base_color, ConsoleColor color2 = static_content_color)
+        public CM Copy()
         {
+            CM cm = (CM)this.MemberwiseClone();
+            cm.Size = new Size(this.Size.Width, this.Size.Height);
+            cm.Pos = new Point(this.Pos.X, this.Pos.Y);
+            cm.Base_color = Color.FromArgb(Base_color.ToArgb());
+            cm.Content_color = Color.FromArgb(Content_color.ToArgb());
+            return cm;
+        }
+
+        public override string ToString()
+        {
+            return "".PadLeft(ID_group,' ') + Name + "   " + Pos.X + "X," + Pos.Y + "Y, " + Size.Width + "W, " + Size.Height + "H";
+        }
+
+        public CM(int id_group, int id_object, Point pos, Size size, string[] view, string name, int prop = 0, bool? show = true,
+                         Color color1 = new Color(), Color color2 = new Color())
+        {
+            color1 = color1 == new Color() ? static_base_color : color1;
+            color2 = color2 == new Color() ? static_content_color : color2;
+
             this.ID_group = id_group;
             this.ID_object = id_object;
-            this.PosX = posX;
-            this.PosY = posY;
-            this.Width = width;
-            this.Height = height;
+            this.Pos = pos;
+            this.Size = size;
             this.View = view;
             this.Prop = prop;
             this.Name = name;

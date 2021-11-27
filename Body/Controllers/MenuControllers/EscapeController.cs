@@ -5,47 +5,49 @@ using System.Collections.Generic;
 using System.Text;
 using FarmConsole.Body.Views.MenuViews;
 using FarmConsole.Body.Services;
+using FarmConsole.Body.Engines;
 
 namespace FarmConsole.Body.Controlers
 {
-    public class EscapeController : MainController
+    class EscapeController : MainController
     {
         public static void Open()
         {
-            lastScreen = "Escape";
+            LastScreen = "Escape";
             int selected = 1, selCount = 5, selStart = 1;
 
-            EscapeView.Show();
-            EscapeView.UpdateSelect(selected, selected, selCount);
-            while (openScreen == "Escape")
+            EscapeView.Display();
+            EscapeView.UpdateMenuSelect(selected, selected, selCount);
+            while (OpenScreen == "Escape")
             {
                 if (Console.KeyAvailable)
                 {
                     switch (Console.ReadKey(true).Key)
                     {
-                        case ConsoleKey.W: if (selected > selStart) { S.Play("K1"); selected--; EscapeView.UpdateSelect(selected, selected + 1, selCount); } break;
-                        case ConsoleKey.S: if (selected < selCount) { S.Play("K1"); selected++; EscapeView.UpdateSelect(selected, selected - 1, selCount); } break;
-                        case ConsoleKey.Escape: S.Play("K3"); openScreen = escapeScreen; EscapeView.ClearList(); break;
-                        case ConsoleKey.Q: S.Play("K3"); openScreen = escapeScreen; break;
+                        case ConsoleKey.W: if (selected > selStart) { S.Play("K1"); selected--; EscapeView.UpdateMenuSelect(selected, selected + 1, selCount); } break;
+                        case ConsoleKey.S: if (selected < selCount) { S.Play("K1"); selected++; EscapeView.UpdateMenuSelect(selected, selected - 1, selCount); } break;
+                        case ConsoleKey.Escape: S.Play("K3"); OpenScreen = EscapeScreen; EscapeView.Clean(); break;
+                        case ConsoleKey.Q: S.Play("K3"); OpenScreen = EscapeScreen; break;
                         case ConsoleKey.E:
                             switch (selected)
                             {
-                                case 1: S.Play("K3"); openScreen = escapeScreen; break;
-                                case 2: S.Play("K2"); openScreen = "Save"; break;
-                                case 3: if (EscapeView.Warning() == true) { openScreen = lastScreen = "Menu"; GameInstance = null; } break;
-                                case 4: S.Play("K2"); openScreen = "Options"; break;
-                                case 5: S.Play("K2"); openScreen = "Help"; break;
+                                case 1: S.Play("K3"); OpenScreen = EscapeScreen; break;
+                                case 2: S.Play("K2"); OpenScreen = "Save"; break;
+                                case 3: if (EscapeView.Warning() == true) { OpenScreen = LastScreen = "Menu";
+                                        MapEngine.Map = null; GameInstance = null; GameView.Clean(true, true); } break;
+                                case 4: S.Play("K2"); OpenScreen = "Options"; break;
+                                case 5: S.Play("K2"); OpenScreen = "Help"; break;
                             }
                             break;
                     }
                 }
-                else if ((DateTime.Now - Now).TotalMilliseconds >= 50)
+                else if ((DateTime.Now - Previously).TotalMilliseconds >= FrameTime)
                 {
                     PopUp(POPUPID, POPUPTEXT);
-                    Now = DateTime.Now;
+                    Previously = DateTime.Now;
                 }
             }
-            EscapeView.ClearList();
+            EscapeView.Clean();
         }
     }
 }

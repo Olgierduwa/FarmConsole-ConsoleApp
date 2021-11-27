@@ -1,67 +1,53 @@
 ﻿using FarmConsole.Body.Engines;
+using FarmConsole.Body.Models;
 using FarmConsole.Body.Resources.Sounds;
 using FarmConsole.Body.Services;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 
 namespace FarmConsole.Body.Views.MenuViews
 {
-    public class EscapeView : ComponentEngine
+    class EscapeView : MenuManager
     {
-        public static void Show()
+        public static void Display()
         {
-            H1(title);
-            Endl(Console.WindowHeight / 5);
+            Endl(Console.WindowHeight / 3);
 
             GroupStart(0);
             GroupStart(3);
             Endl(1);
-            TextBox("Kontynuuj");
-            TextBox("Zapisz Gre");
-            TextBox("Wróc do Menu");
-            TextBox("Ustawienia");
-            TextBox("Samouczek");
+            TextBox(StringService.Get("continue button"));
+            TextBox(StringService.Get("save game button"));
+            TextBox(StringService.Get("back to menu button"));
+            TextBox(StringService.Get("options button"));
+            TextBox(StringService.Get("help button"));
 
             GroupStart(Console.WindowWidth / 2, Console.WindowWidth);
             Endl(4);
-            TextBox(exitQuestion, 33, false, ConsoleColor.Red);
+            TextBox(exitQuestion, 33, false, ColorService.GetColorByName("Red"));
+
             GroupStart(Console.WindowWidth / 2 - 9, Console.WindowWidth);
             Endl(10);
-            TextBox("Q / NIE", 15, false, ConsoleColor.Red, margin: 0);
+            TextBox(StringService.Get("no", " Q"), 15, false, ColorService.GetColorByName("Red"), margin: 0);
             GroupEnd();
+
             GroupStart(Console.WindowWidth / 2 + 9, Console.WindowWidth);
             Endl(10);
-            TextBox("E / TAK", 15, false, ConsoleColor.Red, margin: 0);
+            TextBox(StringService.Get("yes", " E"), 15, false, ColorService.GetColorByName("Red"), margin: 0);
             GroupEnd();
 
             GroupEnd();
             GroupEnd();
             GroupEnd();
 
-            Foot(foot);
             PrintList();
             //vt1.showComponentList();
-        }
-        public static bool? Warning()
-        {
-            S.Play("K2");
-            int focus = 3;
-            Focus(focus);
-            bool? choice = null;
-            while (choice == null)
-            {
-                switch (Console.ReadKey(true).Key)
-                {
-                    case ConsoleKey.Q: S.Play("K3"); choice = false; break;
-                    case ConsoleKey.E: S.Play("K2"); choice = true; break;
-                }
-            }
-            Showability(focus, 0, false);
-            Showability(focus + 1, 0, false);
-            Showability(focus + 2, 0, false);
-            PrintList();
-            return choice;
+
+            ComponentsDisplayed = new List<CM>();
+            ComponentsDisplayed.Add(GetComponentByName("GS", 2));
+            FocusGroupID = 3;
         }
     }
 }

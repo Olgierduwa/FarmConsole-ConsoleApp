@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<rules>
+	<rule difficulty="11100" name="multi build"/>
+	<rule difficulty="11000" name="multi collect"/>
+	<rule difficulty="11110" name="multi destroy"/>
+	<rule difficulty="11100" name="multi dig path"/>
+	<rule difficulty="11000" name="multi fertilize"/>
+	<rule difficulty="11100" name="multi make fertilizer"/>
+	<rule difficulty="11110" name="multi mow grass"/>
+	<rule difficulty="11100" name="multi plow"/>
+	<rule difficulty="11100" name="multi sow"/>
+	<rule difficulty="11000" name="multi water it"/>
+	<rule difficulty="11100" name="multi "/>
+</rules>

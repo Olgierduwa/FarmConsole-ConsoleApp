@@ -8,38 +8,52 @@ using FarmConsole.Body.Services;
 
 namespace FarmConsole.Body.Controlers
 {
-    public class GameNewController : MainController
+    class GameNewController : MainController
     {
         public static void Open()
         {
-            int selected = 1, selCount = 2, selStart = 1;
-            GameNewView.Show(); GameNewView.UpdateSelect(selected, selected, selCount);
-            while (openScreen == "NewGame")
+            int selected = 1, selCount = 4, selStart = 1, MaxSliderValue = 4;
+            GameNewView.Display(); GameNewView.UpdateMenuSelect(selected, selected, selCount);
+            while (OpenScreen == "NewGame")
             {
                 if (Console.KeyAvailable)
                 {
                     switch (Console.ReadKey(true).Key)
                     {
-                        case ConsoleKey.W: if (selected > selStart) { S.Play("K1"); selected--; GameNewView.UpdateSelect(selected, selected + 1, selCount); } break;
-                        case ConsoleKey.S: if (selected < selCount) { S.Play("K1"); selected++; GameNewView.UpdateSelect(selected, selected - 1, selCount); } break;
+                        case ConsoleKey.W: if (selected > selStart) { S.Play("K1"); selected--; GameNewView.UpdateMenuSelect(selected, selected + 1, selCount); } break;
+                        case ConsoleKey.S: if (selected < selCount) { S.Play("K1"); selected++; GameNewView.UpdateMenuSelect(selected, selected - 1, selCount); } break;
                         case ConsoleKey.Escape:
-                        case ConsoleKey.Q: S.Play("K3"); openScreen = "Menu"; break;
+                        case ConsoleKey.Q: S.Play("K3"); OpenScreen = "Menu"; break;
                         case ConsoleKey.E:
-                            switch (selected)
                             {
-                                case 1: S.Play("K2"); openScreen = "Farm"; GameInstance = new GameInstanceModel("Asia"); break;
-                                case 2: S.Play("K2"); openScreen = "Farm"; GameInstance = new GameInstanceModel("Olgierd"); break;
+                                S.Play("K2");
+                                int Difficulty = GameNewView.GetSliderValue(2);
+                                int Gender = GameNewView.GetSliderValue(3);
+                                GameInstance = new GameInstanceModel("Olgierd", Difficulty, Gender);
+                                OpenScreen = "Farm";
                             }
+                            break;
+
+                        case ConsoleKey.A:
+                            if (selected == selCount) ; // generowanie losowego awatara
+                            else if (selected > 1 && GameNewView.GetSliderValue(selected) > 0)
+                            { GameNewView.UpdateMenuSlider(selected, MaxSliderValue, -1); S.Play("K3"); }
+                            break;
+
+                        case ConsoleKey.D:
+                            if (selected == selCount) ; // generowanie wlasnego awatera
+                            else if (selected > 1 && GameNewView.GetSliderValue(selected) < MaxSliderValue)
+                            { GameNewView.UpdateMenuSlider(selected, MaxSliderValue, 1); S.Play("K2"); }
                             break;
                     }
                 }
-                else if ((DateTime.Now - Now).TotalMilliseconds >= 50)
+                else if ((DateTime.Now - Previously).TotalMilliseconds >= FrameTime)
                 {
                     PopUp(POPUPID, POPUPTEXT);
-                    Now = DateTime.Now;
+                    Previously = DateTime.Now;
                 }
             }
-            GameNewView.ClearList();
+            GameNewView.Clean();
         }
     }
 }

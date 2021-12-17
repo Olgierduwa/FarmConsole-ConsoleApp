@@ -11,6 +11,7 @@ namespace FarmConsole.Body.Models
         public string Result { get; set; }
         public bool IsInProcess { get; set; }
         public ProductModel SelectedProduct { get; set; }
-        public void SetPropertyProduct() => SelectedProduct = ProductModel.GetProduct(SelectedProduct.Property);
+        public void SetPropertyProduct() => SelectedProduct = ObjectModel.GetObject(SelectedProduct.Property).ToProduct();
+        public void SetProductByName(string Name) => SelectedProduct = ObjectModel.GetObject(Name).ToProduct();
     }
 }

@@ -21,7 +21,7 @@ namespace FarmConsole.Body.Engines
         protected static readonly string exitQuestion3 = XF.GetText(103);
 
         private static List<CM> CLIST = new List<CM>();
-        private static readonly Color static_base_color = ColorService.GetColorByName("GrayD");
+        private static readonly Color static_base_color = ColorService.GetColorByName("gray3");
         private static readonly Color static_content_color = ColorService.GetColorByName("White");
 
         protected static List<CM> ComponentList { get => CLIST; set => CLIST = value; }
@@ -62,42 +62,7 @@ namespace FarmConsole.Body.Engines
                     }
             //ShowComponentList();
         }
-        protected static void UpdateItemList(List<ProductModel> component_list, int id_group = 5)
-        {
-            int t = 0, idStartFrom = 4, count = CLIST.Count;
-            while (CLIST[idStartFrom].ID_group != id_group) idStartFrom++;
-            CM name = CLIST[idStartFrom + 1]; name.Base_color = ColorService.GetColorByName("GrayD");
-            name.View = new string[] { "".PadRight(name.View[0].Length, '─') }; name.Size = new Size(name.Size.Width, 1);
-            foreach (CM c in CLIST) if (c.ID_group == id_group && c.ID_object >= 0) switch (c.Show)
-                    {
-                        case true: Clear(c, t * c.Size.Height); break;
-                        case false: t++; break;
-                        case null: t = 0; break;
-                    }
-            for (int i = idStartFrom + 1; i < count; i++) CLIST.RemoveAt(idStartFrom + 1);
-            GraphicBox(new string[] { "Ekwipunek", "" }, color: ColorService.GetColorByName("Gray"));
-            Print(name);
-            Print(CLIST[++idStartFrom]);
-
-            if (component_list.Count == 0)
-            {
-                idStartFrom += 2;
-                Endl(1);
-                GraphicBox(new string[] { "NIC TU NIE MA" });
-                Print(CLIST[idStartFrom]);
-            }
-            for (int i = 0; i < component_list.Count; i++)
-                if (i < (Console.WindowHeight - 13) / 3)
-                {
-                    idStartFrom++;
-                    TextBox(component_list[i].Amount + "x " + component_list[i].ProductName, Console.WindowWidth / 5 - 1, margin: 0);
-                    Print(CLIST[idStartFrom]);
-                }
-                else TextBox(component_list[i].ProductName, Console.WindowWidth / 5 - 1, false, margin: 0);
-            GroupEnd();
-            GroupEnd();
-        }
-        protected static void UpdateBox(int id_group, int id_object, string text)
+        protected static void UpdateTextBox(int id_group, int id_object, string text)
         {
             int id = 0;
             for (int i = 0; i < CLIST.Count; i++)
@@ -150,19 +115,29 @@ namespace FarmConsole.Body.Engines
                     return CLIST[i].Prop;
             return 0;
         }
-        protected static void UpdateGraphic(int id_group, int id_object, string[] content = null, Color color = new Color())
+        protected static void SetFocus(int id_group)
         {
-            int id = 0;
-            for (int i = 0; i < CLIST.Count; i++) if (CLIST[i].ID_group == id_group && CLIST[i].ID_object == id_object) { id = i; break; }
-            if (content != null)
+            int t = 0;
+            foreach (CM c in CLIST)
             {
-                if (CLIST[id].Size.Height != content.Length) Clear(CLIST[id]);
-                CLIST[id].View = content;
-                CLIST[id].Size = new Size(CLIST[id].Size.Width, content.Length);
+                if ((c.ID_group >= id_group) && c.ID_object >= 0)
+                {
+                    c.Show = true;
+                    Print(c);
+                }
+                else switch (c.Show)
+                    {
+                        case true: Print(c, t * c.Size.Height, false); break;
+                        case false: t++; break;
+                        case null: t = 0; break;
+                    }
             }
-            CLIST[id].Content_color = color;
-            CLIST[id].Base_color = color;
-            Print(CLIST[id]);
+        }
+        protected static void SetShowability(int id_group, int id_object, bool show)
+        {
+            foreach (CM c in CLIST)
+                if ((c.ID_group == id_group && id_object == 0 && c.ID_object > 0) || (c.ID_group == id_group && c.ID_object == id_object))
+                    if (show == true) { c.Show = true; Print(c); } else { c.Show = false; Clear(c); }
         }
         protected static void ClearList(bool cleaning = true)
         {
@@ -218,30 +193,6 @@ namespace FarmConsole.Body.Engines
                     Console.Write(c.View[i][1..^1].Pastel(content_color));
                 }
             Console.SetCursorPosition(0, 0);
-        }
-        protected static void Focus(int id_group)
-        {
-            int t = 0;
-            foreach (CM c in CLIST)
-            {
-                if ((c.ID_group >= id_group) && c.ID_object >= 0)
-                {
-                    c.Show = true;
-                    Print(c);
-                }
-                else switch (c.Show)
-                    {
-                        case true: Print(c, t * c.Size.Height, false); break;
-                        case false: t++; break;
-                        case null: t = 0; break;
-                    }
-            }
-        }
-        protected static void Showability(int id_group, int id_object, bool show)
-        {
-            foreach (CM c in CLIST)
-                if ((c.ID_group == id_group && id_object == 0 && c.ID_object > 0) || (c.ID_group == id_group && c.ID_object == id_object))
-                    if (show == true) { c.Show = true; Print(c); } else { c.Show = false; Clear(c); }
         }
         private static void AddComponent(string name, string[] view, bool show = true, int prop = 0, Color background = new Color(), Color foreground = new Color(), bool cut = false)
         {
@@ -315,6 +266,9 @@ namespace FarmConsole.Body.Engines
             CLIST.Add(new CM(id_group, id_object, Pos, Size, componentView, name, prop, show, background, foreground));
             //PrintList();
         }
+        #endregion
+
+        #region ComponentsViews
         protected static void GroupStart(int selColumn, int column = 5)
         {
             Point Pos = new Point
@@ -332,7 +286,7 @@ namespace FarmConsole.Body.Engines
             for (int i = CLIST.Count - 1; i > 0; i--)
                 if (CLIST[i].ID_object == -1)
                 {
-                    if (selColumn > 0 && counter > 0) Pos.Y = CLIST[i].Pos.Y ;
+                    if (selColumn > 0 && counter > 0) Pos.Y = CLIST[i].Pos.Y;
                     id_group = CLIST[i].ID_group + 1; break;
                 }
 
@@ -378,9 +332,6 @@ namespace FarmConsole.Body.Engines
 
             CLIST.Add(new CM(id_group, -2, Pos, new Size(Console.WindowWidth / column, 0), new string[] { "" }, "GE", 0, null));
         }
-        #endregion
-
-        #region ComponentsViews
         protected static void H1(string text)
         {
             AddComponent("H1", new string[]
@@ -413,10 +364,6 @@ namespace FarmConsole.Body.Engines
             string[] view = new string[x];
             for (int i = 0; i < x; i++) view[i] = "";
             AddComponent("EN", view);
-        }
-        protected static void GraphicBox(string[] content, bool show = true, Color color = new Color())
-        {
-            AddComponent("GB", content, show, 0, color, color, true);
         }
         protected static void TextBox(string text, int width = 40, bool show = true, Color background = new Color(), Color foreground = new Color(), int margin = 3)
         {
@@ -451,6 +398,26 @@ namespace FarmConsole.Body.Engines
             string[] view3 = new string[] { ComponentViewService.Bot(width) };
             AddComponent("TBL", view1.Concat(view2.Concat(view3).ToArray()).ToArray(), show, 0, color1, color2);
         }
+        protected static string[] TextBoxView(string text, int width = 40, int margin = 3)
+        {
+            string line = "";
+            List<string> content = new List<string>();
+            foreach (string word in text.Split(' '))
+            {
+                if (line.Length + word.Length <= width - (margin * 2 + 2)) line += string.IsNullOrEmpty(line) ? word : " " + word;
+                else if (word != "")
+                {
+                    content.Add(("").PadRight((width - line.Length) / 2 - 1, ' ') + line + ("").PadRight(width - line.Length - (width - line.Length) / 2 - 1, ' '));
+                    line = " " + word;
+                }
+            }
+            content.Add(("").PadRight((width - 2 - line.Length) / 2, ' ') + line + ("").PadRight(width - 2 - line.Length - (width - 2 - line.Length) / 2, ' '));
+            return content.ToArray();
+        }
+        protected static void GraphicBox(string[] content, bool show = true, Color color = new Color())
+        {
+            AddComponent("GB", content, show, 0, color, color, true);
+        }
         protected static void Slider(int count, int value, int width = 36, bool show = true)
         {
             int left = width * value / count, right = width - left;
@@ -475,22 +442,6 @@ namespace FarmConsole.Body.Engines
             string[] view3 = new string[] { ComponentViewService.Bot(Console.WindowWidth / 5 + 1, false, true) };
             string[] view = view1.Concat(view2.Concat(view3).ToArray()).ToArray();
             AddComponent("LB", view, show);
-        }
-        protected static string[] TextBoxView(string text, int width = 40, int margin = 3)
-        {
-            string line = "";
-            List<string> content = new List<string>();
-            foreach (string word in text.Split(' '))
-            {
-                if (line.Length + word.Length <= width - (margin * 2 + 2)) line += string.IsNullOrEmpty(line) ? word : " " + word;
-                else if (word != "")
-                {
-                    content.Add(("").PadRight((width - line.Length) / 2 - 1, ' ') + line + ("").PadRight(width - line.Length - (width - line.Length) / 2 - 1, ' '));
-                    line = " " + word;
-                }
-            }
-            content.Add(("").PadRight((width - 2 - line.Length) / 2, ' ') + line + ("").PadRight(width - 2 - line.Length - (width - 2 - line.Length) / 2, ' '));
-            return content.ToArray();
         }
         #endregion
 

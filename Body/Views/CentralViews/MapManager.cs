@@ -14,124 +14,149 @@ namespace FarmConsole.Body.Views.LocationViews
         public static void GlobalMapInit()
         {
             ColorService.SetColorPalette();
-            ProductModel.SetProducts();
+            //ProductModel.SetProducts();
             GameService.SetGrowCycle();
-            SetMapBorders();
+            SetMapScreenBorders();
         }
         
         public static void InitMap(MapModel Map)
         {
-            SetMapBorders();
+            SetMapScreenBorders();
             MapEngine.Map = Map;
             InitVisualMap();
-            InitMapExtremePoints();
         }
         
         public static void ShowMap(bool Smoothly = true)
         {
             MapModel map = Map;
-            int procent = 80;
+            int procent = 60;
             if (Smoothly)
             {
                 for (int i = 0; i < 3; i++)
                 {
-                    DarkerMap(procent);
+                    DarkerVisualMap(procent);
                     ShowVisualMap();
-                    procent -= 40;
+                    procent -= 30;
                     Map = map;
                 }
             }
             else
             {
-                DarkerMap(procent);
+                DarkerVisualMap(procent);
                 ShowVisualMap();
             }
         }
         
-        public static void HideMap()
+        public static void HideMap(bool CompletelyHide = true)
         {
             MapModel map = Map;
             for (int i = 0; i < 2; i++)
             {
-                DarkerMap(55);
+                DarkerVisualMap(40);
                 ShowVisualMap();
             }
-            //Map = map;
+            if (CompletelyHide)
+            {
+                ClearMapSreen();
+                Map = map;
+            }
         }
 
 
         public static string Build(ProductModel BuildProduct)
         {
-            if (ProductModel.GetProduct(GetField()).Category == 3) return StringService.Get("overwriting");
-            SetField(GetPos(), new FieldModel(BuildProduct));
-            ShowPhisicalField(GetPos());
-            ClearSelected(1);
+            if (GetField().Category == 3) return StringService.Get("overwriting");
+            SetField(GetPos(), BuildProduct.ToField());
+            ShowField(GetPos());
+            ClearSelectedFields(1);
             return StringService.Get("done");
         }
         
-        public static string Destroy(int CountToRemove = 0)
+        public static void Destroy()
         {
-            if (CountToRemove == 0) CountToRemove = GetSelectedFieldCount();
-            do
-            {
-                CountToRemove--;
-                Point PhisicalPos = GetPos();
-                ClearSelected(1);
-                SetField(PhisicalPos, null, "Base");
-                ShowPhisicalField(PhisicalPos);
-            }
-            while (CountToRemove > 0 && GetSelectedFieldCount() > 0);
-            return StringService.Get("done");
+            SetField(GetPos(), null, "Base");
+            ShowField(GetPos());
+            ClearSelectedFields(1);
         }
         
         public static void Dragg()
         {
-            if(GetField("Stand").Category == 3) ClearSelected(); 
+            if(GetField("Stand").Category == 3) ClearSelectedFields(); 
             SetField(GetPos(), null, "Dragged");
-            Destroy(1);
-            ClearSelected();
-            ShowPhisicalField(GetPos());
+            Destroy();
+            ClearSelectedFields();
+            ShowField(GetPos());
         }
         
         public static void Drop(bool ConfirmDrop = true)
         {
             if(GetField("Dragged") != null)
             {
-                if (ConfirmDrop) SetField(GetPos(), GetField("Dragged"));
+                if (ConfirmDrop)
+                {
+                    SetField(GetPos(), GetField("Dragged"));
+                    SetField(new Point(), null, "Dragged");
+                }
                 else
                 {
-                    Point PhisicalPos = GetPos(Dragged: true);
-                    SetField(PhisicalPos, GetField("Dragged"));
-                    ShowPhisicalField(PhisicalPos);
+                    Point DraggedPosition = GetPos(Dragged: true);
+                    SetField(DraggedPosition, GetField("Dragged"));
+                    SetField(new Point(), null, "Dragged");
+                    ShowField(DraggedPosition);
                 }
-                SetField(new Point(), null, "Dragged");
-                ShowPhisicalField(GetPos());
+                ShowField(GetPos());
             }
         }
         
-        public static void Rotate()
+        public static string Rotate()
         {
             FieldModel Field = GetField();
-            Field.State++;
-            if (ProductModel.GetProduct(Field).ProductName != "error")
+            if (Field.StateName[0] == '-' && Field.StateName.Length == 6) // check if locked objects
             {
-                Field.ReloadView();
-                SetField(GetPos(), Field);
+                if (Field.StateName[5] == '1') return StringService.Get("cant edit locked");
+                else Field.State++;
             }
+            var NewField = Field.ToField();
+            NewField.State++;
+            NewField.SetID();
+            NewField = NewField.ToField();
+
+            if (NewField.ObjectName != "error" && NewField.StateName != "+") SetField(GetPos(), NewField);
             else
             {
                 Field.State = 0;
-                Field.ReloadView();
+                Field.SetID();
+                Field = Field.ToField();
                 SetField(GetPos(), Field);
             }
-            ShowPhisicalField(GetPos());
+            ClearSelectedFields(1);
+            ShowField(GetPos());
+            return StringService.Get("done");
         }
         
-        public static void MakePath()
+        public static void DigPath()
         {
-            SetField(GetPos(), new FieldModel(ProductModel.GetProduct("Ścieżka")));
-            ShowPhisicalField(GetPos());
-            ClearSelected(1);
+            SetField(GetPos(), ObjectModel.GetObject("Ścieżka").ToField());
+            ShowField(GetPos());
+            ClearSelectedFields(1);
+        }
+
+        public static void Lock()
+        {
+            FieldModel Field = GetField();
+            Field.State++;
+            Field = Field.ToField();
+            ClearSelectedFields(1);
+            ShowField(GetPos());
+        }
+
+        public static void Unlock()
+        {
+            FieldModel Field = GetField();
+            Field.State--;
+            Field = Field.ToField();
+            ClearSelectedFields(1);
+            ShowField(GetPos());
         }
     }
 }

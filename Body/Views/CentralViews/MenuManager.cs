@@ -18,6 +18,7 @@ namespace FarmConsole.Body.Views.MenuViews
                 foreach (var CD in ComponentsDisplayed)
                     MapEngine.ShowMapFragment(CD.Pos, CD.Size);
                 ClearList(false);
+                ComponentsDisplayed.Clear();
             }
             else ClearList();
 
@@ -30,7 +31,7 @@ namespace FarmConsole.Body.Views.MenuViews
         public static bool? Warning()
         {
             S.Play("K2");
-            Focus(FocusGroupID);
+            SetFocus(FocusGroupID);
             bool? choice = null;
             while (choice == null)
             {
@@ -41,9 +42,9 @@ namespace FarmConsole.Body.Views.MenuViews
                     case ConsoleKey.E: S.Play("K2"); choice = true; break;
                 }
             }
-            Showability(FocusGroupID, 0, false);
-            Showability(FocusGroupID + 1, 0, false);
-            Showability(FocusGroupID + 2, 0, false);
+            SetShowability(FocusGroupID, 0, false);
+            SetShowability(FocusGroupID + 1, 0, false);
+            SetShowability(FocusGroupID + 2, 0, false);
             PrintList();
             return choice;
         }

@@ -143,7 +143,7 @@
   </data>
   <data name="destroy" xml:space="preserve">
     <value>Zniszcz</value>
-    <comment>action name</comment>
+    <comment>action name multi skill</comment>
   </data>
   <data name="do" xml:space="preserve">
     <value>WYKONAJ</value>
@@ -179,31 +179,31 @@
   </data>
   <data name="multi collect" xml:space="preserve">
     <value>Nie posiadasz odpowiedniej maszyny, aby zebrać tyle plonów jednocześnie!</value>
-    <comment>action result</comment>
+    <comment>action result no machine</comment>
   </data>
   <data name="multi fertilize" xml:space="preserve">
     <value>Nie posiadasz odpowiedniej maszyny, aby użyźnić tyle pól jednocześnie!</value>
-    <comment>action result</comment>
+    <comment>action result no machine</comment>
   </data>
   <data name="multi make fertilizer" xml:space="preserve">
     <value>Nie posiadasz odpowiedniej maszyny, aby zrobić nawóz z tylu pól jednocześnie!</value>
-    <comment>action result</comment>
+    <comment>action result no machine</comment>
   </data>
   <data name="multi mow grass" xml:space="preserve">
     <value>Nie posiadasz odpowiedniej maszyny, aby skosić tyle traw jednocześnie!</value>
-    <comment>action result</comment>
+    <comment>action result no machine</comment>
   </data>
   <data name="multi plow" xml:space="preserve">
     <value>Nie posiadasz odpowiedniej maszyny, aby zaorać tyle pól jednocześnie!</value>
-    <comment>action result</comment>
+    <comment>action result no machine</comment>
   </data>
   <data name="multi sow" xml:space="preserve">
     <value>Nie posiadasz odpowiedniej maszyny, aby posiać tyle pól jednocześnie!</value>
-    <comment>action result</comment>
+    <comment>action result no machine</comment>
   </data>
   <data name="multi water it" xml:space="preserve">
     <value>Nie posiadasz odpowiedniej maszyny, aby podlać tyle pól jednocześnie!</value>
-    <comment>action result</comment>
+    <comment>action result no machine</comment>
   </data>
   <data name="no money" xml:space="preserve">
     <value>Nie posiadasz wystarczającej ilości pieniędzy!</value>
@@ -227,7 +227,7 @@
   </data>
   <data name="build" xml:space="preserve">
     <value>Postaw</value>
-    <comment>action name</comment>
+    <comment>action name multi skill</comment>
   </data>
   <data name="search" xml:space="preserve">
     <value>Szukaj...</value>
@@ -239,11 +239,11 @@
   </data>
   <data name="fertilize" xml:space="preserve">
     <value>Nawieź</value>
-    <comment>action name</comment>
+    <comment>action name multi</comment>
   </data>
   <data name="sow" xml:space="preserve">
     <value>Posiej</value>
-    <comment>action name</comment>
+    <comment>action name multi</comment>
   </data>
   <data name="drink" xml:space="preserve">
     <value>Wypij</value>
@@ -279,15 +279,15 @@
   </data>
   <data name="dig path" xml:space="preserve">
     <value>Wykop ścieżkę</value>
-    <comment>action name</comment>
+    <comment>action name multi skill</comment>
   </data>
   <data name="hide" xml:space="preserve">
     <value>Schowaj</value>
-    <comment>action name</comment>
+    <comment>action name multi skill</comment>
   </data>
   <data name="rotate" xml:space="preserve">
     <value>Obróć</value>
-    <comment>action name</comment>
+    <comment>action name multi skill</comment>
   </data>
   <data name="sleep" xml:space="preserve">
     <value>Śpij</value>
@@ -299,7 +299,7 @@
   </data>
   <data name="collect" xml:space="preserve">
     <value>Zbierz</value>
-    <comment>action name</comment>
+    <comment>action name multi</comment>
   </data>
   <data name="come out" xml:space="preserve">
     <value>Wyjdź</value>
@@ -347,7 +347,7 @@
   </data>
   <data name="make fertilizer" xml:space="preserve">
     <value>Zrób nawóz</value>
-    <comment>action name</comment>
+    <comment>action name multi</comment>
   </data>
   <data name="menu text 1" xml:space="preserve">
     <value>Swietny Tytul!!</value>
@@ -357,9 +357,9 @@
     <value>Oto najlpesza gra konsolowa, o jakiej slyszal swiat!</value>
     <comment>menu text</comment>
   </data>
-  <data name="mow" xml:space="preserve">
+  <data name="mow grass" xml:space="preserve">
     <value>Skoś</value>
-    <comment>action name</comment>
+    <comment>action name multi</comment>
   </data>
   <data name="music volume" xml:space="preserve">
     <value>Głośność Muzyki</value>
@@ -391,7 +391,7 @@
   </data>
   <data name="plow" xml:space="preserve">
     <value>Zaoraj</value>
-    <comment>action name</comment>
+    <comment>action name multi</comment>
   </data>
   <data name="reject button" xml:space="preserve">
     <value>Odrzuć</value>
@@ -431,11 +431,11 @@
   </data>
   <data name="wash" xml:space="preserve">
     <value>Umyj</value>
-    <comment>action name</comment>
+    <comment>action name multi skill</comment>
   </data>
   <data name="water it" xml:space="preserve">
     <value>Podlej</value>
-    <comment>action name</comment>
+    <comment>action name multi</comment>
   </data>
   <data name="yes" xml:space="preserve">
     <value>TAK</value>
@@ -506,15 +506,47 @@
     <comment>menu button</comment>
   </data>
   <data name="multi build" xml:space="preserve">
-    <value>Nie posiadasz odpowiednich maszyn, aby budować tyle obiektów jednocześnie!</value>
-    <comment>action result</comment>
+    <value>Nie masz odpowiednio wysokiego poziomu, aby stawiać tyle obiektów jednocześnie!</value>
+    <comment>action result low lvl</comment>
   </data>
   <data name="multi destroy" xml:space="preserve">
-    <value>Nie posiadasz odpowiedniej maszyny, aby wyburzyć tyle obiektów jednocześnie!</value>
-    <comment>action result</comment>
+    <value>Nie masz odpowiednio wysokiego poziomu, aby niszczyć tyle obiektów jednocześnie!</value>
+    <comment>action result low lvl</comment>
   </data>
   <data name="multi dig path" xml:space="preserve">
-    <value>Nie posiadasz odpowiedniej maszyny, aby wykopać ściężkę na tylu polach jednocześnie!</value>
+    <value>Nie masz odpowiednio wysokiego poziomu, aby wykopać tyle ścieżek jednocześnie!</value>
+    <comment>action result low lvl</comment>
+  </data>
+  <data name="lvl" xml:space="preserve">
+    <value>Poziom</value>
+    <comment>main</comment>
+  </data>
+  <data name="multi hide" xml:space="preserve">
+    <value>Nie masz odpowiednio wysokiego poziomu, aby schować tyle obiektów jednocześnie!</value>
+    <comment>action result low lvl</comment>
+  </data>
+  <data name="multi rotate" xml:space="preserve">
+    <value>Nie masz odpowiednio wysokiego poziomu, aby obracać tyle obiektów jednocześnie!</value>
+    <comment>action result low lvl</comment>
+  </data>
+  <data name="no energy" xml:space="preserve">
+    <value>Nie posiadasz wystarczającej ilości energii!</value>
     <comment>action result</comment>
+  </data>
+  <data name="required" xml:space="preserve">
+    <value>Wymagany</value>
+    <comment>main</comment>
+  </data>
+  <data name="cant edit locked" xml:space="preserve">
+    <value>Nie możesz edytować zamkniętych na klucz obiektów!</value>
+    <comment>action result</comment>
+  </data>
+  <data name="lock" xml:space="preserve">
+    <value>Zamknij kluczem</value>
+    <comment>action name</comment>
+  </data>
+  <data name="unlock" xml:space="preserve">
+    <value>Otwórz kluczem</value>
+    <comment>action name</comment>
   </data>
 </root>

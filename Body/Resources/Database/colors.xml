@@ -2,44 +2,39 @@
 <colors>
 	
 	<color id="0" name="error" value="255 0 255"/>
-	<color id="1" name="selected" value="255 255 0"/>
-	<color id="2" name="white" value="255 255 255"/>
-	<color id="3" name="black" value="0 0 0"/>
+	<color id="1" name="white" value="255 255 255"/>
+	<color id="2" name="gray1" value="200 200 200"/>
+	<color id="3" name="gray2" value="160 160 160"/>
+	<color id="4" name="gray3" value="120 120 120"/>
+	<color id="5" name="gray4" value="80 80 80"/>
+	<color id="6" name="gray5" value="40 40 40"/>
+	<color id="7" name="black" value="0 0 0"/>
 
-	<color id="4" name="greenL" value="50 120 0"/>
-	<color id="5" name="green" value="30 80 0"/>
-	<color id="6" name="greenD" value="0 50 0"/>
+	<color id="8" name="greenD" value="0 100 50"/>
+	<color id="9" name="green"  value="40 100 10"/>
+	<color id="10" name="greenL" value="80 150 20"/>
+	<color id="11" name="limeD"  value="120 200 30"/>
+	<color id="12" name="lime"   value="160 225 50"/>
+	<color id="13" name="limeL"  value="200 255 80"/>
+	<color id="14" name="yellowL" value="255 255 80"/>
+	<color id="15" name="yellow"  value="255 255 40"/>
 	
-	<color id="7" name="limeL" value="200 255 50"/>
-	<color id="8" name="lime" value="120 225 55"/>
-	<color id="9" name="limeD" value="50 190 17"/>
+	<color id="16" name="yellowD" value="220 170 0"/>
+	<color id="17" name="orangeL" value="255 150 0"/>
+	<color id="18" name="orange"  value="255 110 0"/>
+	<color id="19" name="orangeD" value="230 70 0"/>
+	<color id="20" name="redL" value="255 40 20"/>
+	<color id="21" name="red" value="225 20 10"/>
+	<color id="22" name="redD" value="128 10 0"/>
+	<color id="23" name="brownD" value="60 30 20"/>
 	
-	<color id="10" name="yellowL" value="255 255 90"/>
-	<color id="11" name="yellow" value="255 255 0"/>
-	<color id="12" name="yellowD" value="220 170 0"/>
+	<color id="24" name="brown" value="120 70 30"/>
+	<color id="25" name="brownL" value="160 110 60"/>
+	<color id="26" name="cyanL" value="120 225 255"/>
+	<color id="27" name="cyan" value="30 180 255"/>
+	<color id="28" name="cyanD" value="15 120 255"/>
+	<color id="29" name="blueL" value="10 60 215"/>
+	<color id="30" name="blue" value="10 30 150"/>
+	<color id="31" name="blueD" value="0 10 80"/>
 
-	<color id="13" name="orangeL" value="255 150 0"/>
-	<color id="14" name="orange" value="255 110 0"/>
-	<color id="15" name="orangeD" value="230 70 0"/>
-
-	<color id="16" name="redL" value="255 40 20"/>
-	<color id="17" name="red" value="225 20 10"/>
-	<color id="18" name="redD" value="128 10 0"/>
-	
-	<color id="19" name="blueL" value="10 60 215"/>
-	<color id="20" name="blue" value="10 30 150"/>
-	<color id="21" name="blueD" value="0 10 80"/>
-	
-	<color id="22" name="cyanL" value="60 220 255"/>
-	<color id="23" name="cyan" value="30 180 255"/>
-	<color id="24" name="cyanD" value="15 120 255"/>
-
-	<color id="25" name="grayL" value="220 220 220"/>
-	<color id="26" name="gray" value="180 180 180"/>
-	<color id="27" name="grayD" value="100 100 100"/>
-	
-	<color id="28" name="brownL" value="160 120 50"/>
-	<color id="29" name="brown" value="120 70 30"/>
-	<color id="30" name="brownD" value="60 30 20"/>
-	
 </colors>

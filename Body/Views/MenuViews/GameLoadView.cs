@@ -70,20 +70,20 @@ namespace FarmConsole.Body.Views.MenuViews
             if (selected > 1)
             {
                 var save = saves[selected - 2];
-                UpdateBox(3, 1, ". . ." + " ---------------------------------- " +
+                UpdateTextBox(3, 1, ". . ." + " ---------------------------------- " +
                 StringService.Get("nickname label") + " - " + save.UserName.ToString() + " ---------------------------------- " +
                 StringService.Get("lvl label") + " - " + save.LVL.ToString() + " ---------------------------------- " +
                 StringService.Get("wallet label") + " - " + save.Wallet.ToString() + " ---------------------------------- " +
                 StringService.Get("lastplay label") + " - " + save.Lastplay.ToString() + " ---------------------------------- . . .");
-                Showability(4, 1, true);
-                Showability(5, 1, true);
+                SetShowability(4, 1, true);
+                SetShowability(5, 1, true);
             }
             else
             {
-                UpdateBox(3, 1, StringService.Get("new game button", " E"));
-                Showability(3, 3, false);
-                Showability(4, 1, false);
-                Showability(5, 1, false);
+                UpdateTextBox(3, 1, StringService.Get("new game button", " E"));
+                SetShowability(3, 3, false);
+                SetShowability(4, 1, false);
+                SetShowability(5, 1, false);
             }
         }
     }

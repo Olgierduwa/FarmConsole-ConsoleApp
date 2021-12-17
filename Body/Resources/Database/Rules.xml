@@ -1,14 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <rules>
-	<rule difficulty="11100" name="multi build"/>
-	<rule difficulty="11000" name="multi collect"/>
-	<rule difficulty="11110" name="multi destroy"/>
-	<rule difficulty="11100" name="multi dig path"/>
-	<rule difficulty="11000" name="multi fertilize"/>
-	<rule difficulty="11100" name="multi make fertilizer"/>
-	<rule difficulty="11110" name="multi mow grass"/>
-	<rule difficulty="11100" name="multi plow"/>
-	<rule difficulty="11100" name="multi sow"/>
-	<rule difficulty="11000" name="multi water it"/>
-	<rule difficulty="11100" name="multi "/>
+	<rule lvl="10" type="skill" name="multi build"/>
+	<rule lvl="8"  type="skill" name="multi destroy"/>
+	<rule lvl="5"  type="skill" name="multi dig path"/>
+	<rule lvl="10" type="skill" name="multi hide"/>
+	<rule lvl="8"  type="skill" name="multi rotate"/>
+	<rule lvl="20" type="skill" name="multi wash"/>
+	
+	<rule lvl="16" type="tobuy" name="multi collect"/>
+	<rule lvl="18" type="tobuy" name="multi fertilize"/>
+	<rule lvl="20" type="tobuy" name="multi make fertilizer"/>
+	<rule lvl="6"  type="tobuy" name="multi mow grass"/>
+	<rule lvl="10" type="tobuy" name="multi plow"/>
+	<rule lvl="12" type="tobuy" name="multi sow"/>
+	<rule lvl="14" type="tobuy" name="multi water it"/>
 </rules>

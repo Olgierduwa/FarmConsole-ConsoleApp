@@ -18,7 +18,7 @@ namespace FarmConsole.Body.Models
         public string Lastplay { get; set; }
         public decimal Wallet { get; set; }
         public DateTime GameDate { get; set; }
-        public Dictionary<string, bool> Rules { get; set; }
+        public List<RuleModel> Rules { get; set; }
 
         private List<MapModel> Maps;
         public MapModel GetMap(string Location)
@@ -74,13 +74,14 @@ namespace FarmConsole.Body.Models
         public GameInstanceModel(string name, int difficulty, int gender)
         {
             ID = 0;
-            LVL = 0;
+            LVL = 100;
             UserName = name;
             Difficulty = difficulty;
             Gender = gender;
             Wallet = 420 * (5 - difficulty);
             GameDate = new DateTime(2020, 10, 10);
-            Rules = XF.GetRules(Difficulty);
+            Rules = XF.GetRules();
+            foreach (var Rule in Rules) Rule.Update(LVL);
 
             Maps = new List<MapModel>();
 
@@ -88,7 +89,7 @@ namespace FarmConsole.Body.Models
             BuildFarmMap();
             BuildHouseMap();
 
-            Maps.Add(new MapModel("Shop", "Drewniana Podłoga", new Point(2, 8), 10));
+            Maps.Add(new MapModel("Shop", "Kafelkowa Podłoga", new Point(2, 8), 10));
             Maps.Add(new MapModel("Street", "Trawa", new Point(10, 10), 20));
         }
 
@@ -98,21 +99,21 @@ namespace FarmConsole.Body.Models
             MapModel FarmMap = new MapModel("Farm", "Trawa", new Point(-2, -2), Size);
 
             // płot
-            for (int x = 2; x < Size; x++) FarmMap.Fields[x, 1] = new FieldModel(ProductModel.GetProduct("Płot", 1));
-            for (int y = 2; y < Size; y++) FarmMap.Fields[1, y] = new FieldModel(ProductModel.GetProduct("Płot", 0));
-            for (int x = 2; x < Size; x++) FarmMap.Fields[x, Size] = new FieldModel(ProductModel.GetProduct("Płot", 1));
-            for (int y = 2; y < Size; y++) FarmMap.Fields[Size, y] = new FieldModel(ProductModel.GetProduct("Płot", 0));
-            FarmMap.Fields[1, 1] = new FieldModel(ProductModel.GetProduct("Płot", 5));
-            FarmMap.Fields[Size, 1] = new FieldModel(ProductModel.GetProduct("Płot", 4));
-            FarmMap.Fields[1, Size] = new FieldModel(ProductModel.GetProduct("Płot", 2));
-            FarmMap.Fields[Size, Size] = new FieldModel(ProductModel.GetProduct("Płot", 3));
+            for (int x = 2; x < Size; x++) FarmMap.SetField(x, 1, ObjectModel.GetObject("Płot", 1).ToField());
+            for (int y = 2; y < Size; y++) FarmMap.SetField(1, y, ObjectModel.GetObject("Płot", 0).ToField());
+            for (int x = 2; x < Size; x++) FarmMap.SetField(x, Size, ObjectModel.GetObject("Płot", 1).ToField());
+            for (int y = 2; y < Size; y++) FarmMap.SetField(Size, y, ObjectModel.GetObject("Płot", 0).ToField());
+            FarmMap.SetField(1, 1, ObjectModel.GetObject("Płot", 5).ToField());
+            FarmMap.SetField(Size, 1, ObjectModel.GetObject("Płot", 4).ToField());
+            FarmMap.SetField(1, Size, ObjectModel.GetObject("Płot", 2).ToField());
+            FarmMap.SetField(Size, Size, ObjectModel.GetObject("Płot", 3).ToField());
 
             // obiekty
-            FarmMap.Fields[1, 2] = new FieldModel(ProductModel.GetProduct("Dom"));
-            FarmMap.Fields[3, 1] = new FieldModel(ProductModel.GetProduct("Silos"));
-            FarmMap.Fields[4, 1] = new FieldModel(ProductModel.GetProduct("Silos"));
-            FarmMap.Fields[1, 4] = new FieldModel(ProductModel.GetProduct("Wieża Ciśnień"));
-            FarmMap.Fields[Size, Size - 2] = new FieldModel(ProductModel.GetProduct("Brama"));
+            FarmMap.SetField(1, 2, ObjectModel.GetObject("Dom").ToField());
+            FarmMap.SetField(3, 1, ObjectModel.GetObject("Silos").ToField());
+            FarmMap.SetField(4, 1, ObjectModel.GetObject("Silos").ToField());
+            FarmMap.SetField(1, 4, ObjectModel.GetObject("Wieża Ciśnień").ToField());
+            FarmMap.SetField(Size, Size - 2, ObjectModel.GetObject("Brama").ToField());
 
             Maps.Add(FarmMap);
         }
@@ -122,23 +123,23 @@ namespace FarmConsole.Body.Models
             MapModel HouseMap = new MapModel("House", "Drewniana Podłoga", new Point(-2, -1), Size);
 
             // ściany zewnętrzne
-            for (int x = 2; x < Size; x++) HouseMap.Fields[x, 1] = new FieldModel(ProductModel.GetProduct("Ściana", 0));
-            for (int y = 2; y < Size; y++) HouseMap.Fields[1, y] = new FieldModel(ProductModel.GetProduct("Ściana", 1));
-            for (int x = 2; x < Size; x++) HouseMap.Fields[x, Size] = new FieldModel(ProductModel.GetProduct("Ściana", 2));
-            for (int y = 2; y < Size; y++) HouseMap.Fields[Size, y] = new FieldModel(ProductModel.GetProduct("Ściana", 3));
-            HouseMap.Fields[Size, 1] = new FieldModel(ProductModel.GetProduct("Ściana", 4));
-            HouseMap.Fields[1, 1] = new FieldModel(ProductModel.GetProduct("Ściana", 5));
-            HouseMap.Fields[1, Size] = new FieldModel(ProductModel.GetProduct("Ściana", 6));
-            HouseMap.Fields[Size, Size] = new FieldModel(ProductModel.GetProduct("Ściana", 7));
+            for (int x = 2; x < Size; x++) HouseMap.SetField(x, 1, ObjectModel.GetObject("Ściana", 0).ToField());
+            for (int y = 2; y < Size; y++) HouseMap.SetField(1, y, ObjectModel.GetObject("Ściana", 1).ToField());
+            for (int x = 2; x < Size; x++) HouseMap.SetField(x, Size, ObjectModel.GetObject("Ściana", 2).ToField());
+            for (int y = 2; y < Size; y++) HouseMap.SetField(Size, y, ObjectModel.GetObject("Ściana", 3).ToField());
+            HouseMap.SetField(Size, 1, ObjectModel.GetObject("Ściana", 4).ToField());
+            HouseMap.SetField(1, 1, ObjectModel.GetObject("Ściana", 5).ToField());
+            HouseMap.SetField(1, Size, ObjectModel.GetObject("Ściana", 6).ToField());
+            HouseMap.SetField(Size, Size, ObjectModel.GetObject("Ściana", 7).ToField());
 
             // drzwi wejściowe, okna i meble
-            HouseMap.Fields[4, 6] = new FieldModel(ProductModel.GetProduct("Drzwi wejściowe", 2));
-            HouseMap.Fields[3, 1] = new FieldModel(ProductModel.GetProduct("Okno", 0));
-            HouseMap.Fields[1, 3] = new FieldModel(ProductModel.GetProduct("Okno", 1));
-            HouseMap.Fields[3, 6] = new FieldModel(ProductModel.GetProduct("Okno", 2));
-            HouseMap.Fields[6, 3] = new FieldModel(ProductModel.GetProduct("Okno", 3));
-            HouseMap.Fields[6, 4] = new FieldModel(ProductModel.GetProduct("Okno", 3));
-            HouseMap.Fields[4, 4] = new FieldModel(ProductModel.GetProduct("Łóżko"));
+            HouseMap.SetField(4, 6, ObjectModel.GetObject("Drzwi wejściowe", 2).ToField());
+            HouseMap.SetField(3, 1, ObjectModel.GetObject("Okno", 0).ToField());
+            HouseMap.SetField(1, 3, ObjectModel.GetObject("Okno", 1).ToField());
+            HouseMap.SetField(3, 6, ObjectModel.GetObject("Okno", 2).ToField());
+            HouseMap.SetField(6, 3, ObjectModel.GetObject("Okno", 3).ToField());
+            HouseMap.SetField(6, 4, ObjectModel.GetObject("Okno", 3).ToField());
+            HouseMap.SetField(4, 4, ObjectModel.GetObject("Łóżko").ToField());
 
             Maps.Add(HouseMap);
         } 
@@ -146,27 +147,41 @@ namespace FarmConsole.Body.Models
         {
             Inventory = new List<ProductModel>
             {
-                ProductModel.GetProduct("Portfel"),
+                ObjectModel.GetObject("Portfel").ToProduct(),
 
-                ProductModel.GetProduct("Droga Asfaltowa"),
-                ProductModel.GetProduct("Płot"),
-                ProductModel.GetProduct("Auto"),
-                ProductModel.GetProduct("Brama"),
+                ObjectModel.GetObject("Lada").ToProduct(),
+                ObjectModel.GetObject("Lodówka").ToProduct(),
+                ObjectModel.GetObject("Zamrażarka").ToProduct(),
+                ObjectModel.GetObject("Duży Regał").ToProduct(),
+                ObjectModel.GetObject("Mały Regał").ToProduct(),
+                ObjectModel.GetObject("Stragan").ToProduct(),
+                ObjectModel.GetObject("Drzwi").ToProduct(),
+                ObjectModel.GetObject("Drzwi wejściowe").ToProduct(),
+                ObjectModel.GetObject("Ściana").ToProduct(),
+                ObjectModel.GetObject("Okno").ToProduct(),
 
-                ProductModel.GetProduct("Farma"),
-                ProductModel.GetProduct("Dom"),
-                ProductModel.GetProduct("Sklep Spożywczy"),
-                ProductModel.GetProduct("Silos"),
-                ProductModel.GetProduct("Wieża Ciśnień"),
+                ObjectModel.GetObject("Świerk").ToProduct(),
+                ObjectModel.GetObject("Droga Asfaltowa").ToProduct(),
+                ObjectModel.GetObject("Płot").ToProduct(),
+                ObjectModel.GetObject("Auto").ToProduct(),
+                ObjectModel.GetObject("Brama").ToProduct(),
 
-                ProductModel.GetProduct("Nasiona Pszenicy"),
-                ProductModel.GetProduct("Nasiona Marchwi"),
-                ProductModel.GetProduct("Naturalny Nawóz"),
-                ProductModel.GetProduct("Syntetyczny Nawóz"),
+                ObjectModel.GetObject("Farma").ToProduct(),
+                ObjectModel.GetObject("Dom").ToProduct(),
+                ObjectModel.GetObject("Sklep Spożywczy").ToProduct(),
+                ObjectModel.GetObject("Silos").ToProduct(),
+                ObjectModel.GetObject("Wieża Ciśnień").ToProduct(),
 
-                ProductModel.GetProduct("Drzwi wejściowe"),
-                ProductModel.GetProduct("Ściana"),
-                ProductModel.GetProduct("Okno")
+                ObjectModel.GetObject("Nasiona Pszenicy").ToProduct(),
+                ObjectModel.GetObject("Nasiona Pietruszki").ToProduct(),
+                ObjectModel.GetObject("Nasiona Ziemniaka").ToProduct(),
+                ObjectModel.GetObject("Nasiona Marchwi").ToProduct(),
+                ObjectModel.GetObject("Nasiona Rzodkiewki").ToProduct(),
+                ObjectModel.GetObject("Nasiona Buraka").ToProduct(),
+
+                ObjectModel.GetObject("Naturalny Nawóz").ToProduct(),
+                ObjectModel.GetObject("Syntetyczny Nawóz").ToProduct()
+
             };
 
             for (int i = 1; i < Inventory.Count; i++) Inventory[i].Amount = 40;
@@ -177,17 +192,17 @@ namespace FarmConsole.Body.Models
             DateTime now = DateTime.Now;
             Lastplay = now.ToString();
 
-            string inventoryString = "";
-            for (int i = 0; i < Inventory.Count; i++)
-                inventoryString += Inventory[i].ToString();
-
             string[] mapString = new string[Maps.Count];
             for (int i = 0; i < Maps.Count; i ++)
                 mapString[i] = Maps[i].ToString();
 
+            string inventoryString = "";
+            foreach (var product in Inventory)
+                inventoryString += product.ToString();
+
             string rulesString = "";
             foreach(var rule in Rules)
-                rulesString += Convert.ToInt32(rule.Value); 
+                rulesString += Convert.ToInt32(rule.IsAllowed); 
 
             string[] list = new string[]
             {
@@ -226,14 +241,15 @@ namespace FarmConsole.Body.Models
 
             string inventoryString = save["inventory"].InnerText;
             for (int index = 0; index < inventoryString.Length; index += 3)
-                Inventory.Add(new ProductModel(inventoryString.Substring(index, 3)));
+                Inventory.Add(new ProductModel(inventoryString.Substring(index, 3)).ToProduct());
 
             string rulesString = save["rules"].InnerText;
-            var SampleRules = XF.GetRules(0);
-            Rules = new Dictionary<string, bool>();
-            int indexx = 0;
-            foreach (var samplerule in SampleRules)
-                Rules.Add(samplerule.Key, Convert.ToBoolean(Convert.ToInt32(rulesString[indexx++]) - 48));
+            Rules = XF.GetRules();
+            foreach (var Rule in Rules) if (rulesString.Length > 0)
+            {
+                Rule.IsAllowed = Convert.ToBoolean(rulesString[0] - 48);
+                rulesString = rulesString.Remove(0, 1);
+            }
 
             ReloadMaps();
         }

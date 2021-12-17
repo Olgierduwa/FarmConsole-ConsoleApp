@@ -33,7 +33,7 @@ namespace FarmConsole.Body.Services
             {
                 // MapView Activities
                 case "destroy": AddAmount(-1); break;
-                case "build": s = MapManager.Build(Action.SelectedProduct); if (s == DONE) AddAmount(-1); return s;
+                case "build": s = MapManager.Build(Action.SelectedProduct); /*if (s == DONE) AddAmount(-1);*/ return s;
 
                 // FarmView Activities
                 case "sow": s = FarmView.Sow(Action.SelectedProduct); if (s == DONE) AddAmount(-1); return s;
@@ -56,48 +56,46 @@ namespace FarmConsole.Body.Services
         private static string DoOnMap()
         {
             string s;
-            Action.SelectedProduct = new ProductModel(MapManager.GetField());
+            Action.SelectedProduct = MapManager.GetField().ToProduct();
             switch (Action.Name)
             {
                 // MapView Activities
-                case "destroy": return MapManager.Destroy();
+                case "destroy": MapManager.Destroy(); break;
                 case "move": MapManager.Dragg(); break;
-                case "hide": s = MapManager.Destroy(1); AddAmount(1); return s;
-                case "rotate": MapManager.Rotate(); break;
-                case "dig path": MapManager.MakePath(); break;
+                case "hide": MapManager.Destroy(); AddAmount(1); break;
+                case "rotate": return MapManager.Rotate();
+                case "dig path": MapManager.DigPath(); break;
                 case "sleep": GameService.Sleep(); break;
-                case "come in": switch (Action.SelectedProduct.ProductName)
+                case "come in": switch (Action.SelectedProduct.ObjectName)
                     {
                         case "Dom": OpenScreen = "House"; break;
                         case "Farma": OpenScreen = "Farm"; break;
                         case "Sklep Spożywczy": OpenScreen = "Shop"; break;
                         case "Drzwi wejściowe": OpenScreen = LastScreen; break;
-                    }
-                    break;
+                    } break;
                 case "come out": switch (EscapeScreen)
                     {
                         case "House": OpenScreen = "Farm"; break;
                         case "Shop": OpenScreen = "Street"; break;
                         case "Farm": OpenScreen = "Street"; break;
-                    }
-                    break;
-                case "check": switch (Action.SelectedProduct.ProductName)
+                    } break;
+                case "check": switch (Action.SelectedProduct.ObjectName)
                     {
                         case "Portfel": OpenScreen = "Portfel"; break;
                         case "Telefon": OpenScreen = "Telefon"; break;
-                    }
-                    break;
+                    } break;
 
                 // FarmView Activities
+                case "mow grass": FarmView.MowGrass(); break;
                 case "plow": return FarmView.Plow(); 
                 case "water it": return FarmView.WaterIt();
-                case "mow grass": return FarmView.MowGrass();
                 case "collect": s = FarmView.Collect(); Action.SetPropertyProduct(); if(s == DONE) AddAmount(1); return s;
-                case "make fertilizer": s = FarmView.MakeFertilize();
-                    Action.SelectedProduct = ProductModel.GetProduct("Naturalny Nawóz"); if(s == DONE) AddAmount(1); return s;
+                case "make fertilizer": FarmView.MakeFertilize(); Action.SetProductByName("Naturalny Nawóz"); AddAmount(1); break;
 
                 // HouseView Activities
                 case "wash": break;
+                case "lock": MapManager.Lock(); break;
+                case "unlock": MapManager.Unlock(); break;
 
                 // Unknown Activities
                 default: return StringService.Get("unknown action");
@@ -109,12 +107,14 @@ namespace FarmConsole.Body.Services
         {
             if (MapEngine.GetSelectedFieldCount() > 1)
             {
-                if (GameInstance.Rules["multi " + Action.Name]) Action.IsInProcess = true;
-                else return StringService.Get("multi " + Action.Name);
+                var Rule = RuleModel.Find(GameInstance.Rules, "multi " + Action.Name);
+                if (Rule == null) return MakeAction();
+                if (Rule.IsAllowed) Action.IsInProcess = true;
+                else return StringService.Get(Rule.Name) + " (" + StringService.Get("lvl") + ":" + Rule.RequiredLevel + ")";
             }
-            return DoAction();
+            return MakeAction();
         }
-        public static string DoAction()
+        public static string MakeAction()
         {
             string result = "unknown action type";
             switch (Action.Type)

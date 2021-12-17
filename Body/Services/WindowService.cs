@@ -1,6 +1,8 @@
 ﻿using System.Runtime.InteropServices;
 using System;
 using FarmConsole.Body.Resources.Sounds;
+using System.Drawing;
+using Pastel;
 
 namespace FarmConsole.Body.Services
 {
@@ -53,6 +55,12 @@ namespace FarmConsole.Body.Services
             Console.SetWindowSize(windowWidth, windowHeight);
             Console.SetBufferSize(windowWidth, windowHeight);
             Console.SetWindowSize(windowWidth, windowHeight);
+        }
+
+        public static void Write(int X, int Y, string Text, Color color)
+        {
+            Console.SetCursorPosition(X, Y);
+            Console.Write(Text.Pastel(color));
         }
     }
 }

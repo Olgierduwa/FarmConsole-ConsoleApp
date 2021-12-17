@@ -21,7 +21,7 @@ namespace FarmConsole.Body.Controlers
                 {
                     switch (Console.ReadKey(true).Key)
                     {
-                        case ConsoleKey.R: POPUPID = 1; POPUPSTAGE = 0; break;
+                        //case ConsoleKey.R: POPUPID = 1; POPUPSTAGE = 0; break;
                         case ConsoleKey.T: OpenScreen = "Intro"; break;
                         case ConsoleKey.W: if (selected > selStart) { S.Play("K1"); selected--; MenuView.UpdateMenuSelect(selected, selected + 1, selCount); } break;
                         case ConsoleKey.S: if (selected < selCount) { S.Play("K1"); selected++; MenuView.UpdateMenuSelect(selected, selected - 1, selCount); } break;

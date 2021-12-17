@@ -8,7 +8,7 @@ namespace FarmConsole.Body.Models
 {
     public class CM
     {
-        private static readonly Color static_base_color = ColorService.GetColorByName("GrayD");
+        private static readonly Color static_base_color = ColorService.GetColorByName("gray3");
         private static readonly Color static_content_color = ColorService.GetColorByName("White");
 
         public int ID_group { get; }

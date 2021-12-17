@@ -9,10 +9,10 @@ namespace FarmConsole.Body.Services
     {
         // private static int MaxCategory = 5;
         private static readonly int MaxScale = 3;
-        private static readonly int MaxState = 12;
-        private static readonly int MaxProductType = 340;
-        private static readonly int MaxFieldType = 100;
-        private static readonly int MaxAmmount = 100000;
+        private static readonly int MaxFieldState = 12;
+        private static readonly int MaxProductState = 3;
+        private static readonly int MaxType = 170;
+        private static readonly int MaxAmount = 100000;
         private static readonly int MaxDuration = 100;
         private static int SymbolsLength;
 
@@ -34,22 +34,31 @@ namespace FarmConsole.Body.Services
             return Index;
         }
 
-        public static string ConvertProductToString(int category, int scale, int producttype, int ammount)
+        public static string ConvertProductToString(int category, int scale, int state, int type, int amount)
         {
-            int Rest, Value = ((category * MaxScale + scale) * MaxProductType + producttype) * MaxAmmount + ammount;
-            string Result = "";
-            while (Value > 0)
-            {
-                Rest = Value % SymbolsLength;
-                Result = Result.Insert(0, Symbols[Rest].ToString());
-                Value /= SymbolsLength;
-            }
+            int Value = category - 2;
+            Value = Value * MaxScale + scale;
+            Value = Value * MaxProductState + state;
+            Value = Value * MaxType + type;
+            Value = Value * MaxAmount + amount;
+
+            string Result;
+            Result = Symbols[(Value / SymbolsLength / SymbolsLength) % SymbolsLength].ToString();
+            Result += Symbols[(Value / SymbolsLength) % SymbolsLength].ToString();
+            Result += Symbols[Value % SymbolsLength].ToString();
             return Result;
         }
-        public static string ConvertFieldToString(int category, int state, int fieldtype, int duration)
+        public static string ConvertFieldToString(int category, int state, int type, int duration)
         {
-            int Value = ((category * MaxState + state) * MaxFieldType + fieldtype) * MaxDuration + duration;
-            return Symbols[(Value / SymbolsLength) % SymbolsLength].ToString() + Symbols[Value % SymbolsLength].ToString();
+            int Value = category - 1;
+            Value = Value * MaxFieldState + state;
+            Value = Value * MaxType + type;
+            Value = Value * MaxDuration + duration;
+
+            string Result;
+            Result = Symbols[(Value / SymbolsLength) % SymbolsLength].ToString();
+            Result += Symbols[Value % SymbolsLength].ToString();
+            return Result;
         }
 
         public static int[] ConvertStringToProduct(string ProductString)
@@ -63,10 +72,11 @@ namespace FarmConsole.Body.Services
             }
             return new int[]
             {
-                (Value / MaxAmmount / MaxProductType / MaxScale),
-                (Value / MaxAmmount / MaxProductType ) % MaxScale,
-                (Value / MaxAmmount) % MaxProductType,
-                Value % MaxAmmount
+                (Value / MaxAmount / MaxType / MaxProductState / MaxScale ) + 2,
+                (Value / MaxAmount / MaxType / MaxProductState ) % MaxScale,
+                (Value / MaxAmount / MaxType ) % MaxProductState,
+                (Value / MaxAmount) % MaxType,
+                Value % MaxAmount
             };
         }
         public static int[] ConvertStringToField(string FieldString)
@@ -80,21 +90,13 @@ namespace FarmConsole.Body.Services
             }
             return new int[4]
             {
-                (Value / MaxDuration / MaxFieldType / MaxState),
-                (Value / MaxDuration / MaxFieldType ) % MaxState,
-                (Value / MaxDuration) % MaxFieldType,
+                (Value / MaxDuration / MaxType / MaxFieldState) + 1,
+                (Value / MaxDuration / MaxType ) % MaxFieldState,
+                (Value / MaxDuration) % MaxType,
                 Value % MaxDuration
             };
         }
 
-        public static bool DirectionalAccess(Point point)
-        {
-            switch(point.X)
-            {
-                case 1:return true;
-            }
-            return true;
-        }
 
     }
 }

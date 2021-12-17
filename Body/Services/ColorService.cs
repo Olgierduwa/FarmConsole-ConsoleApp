@@ -8,12 +8,18 @@ namespace FarmConsole.Body.Services
 {
     static class ColorService
     {
+        public static Color BackgroundColor;
+        public static Color ForegroundColor;
+
         private static List<ColorModel> Colors;
         public static void SetColorPalette()
         {
             Colors = new List<ColorModel>();
             foreach (string ColorString in XF.GetColors())
                 Colors.Add(new ColorModel(ColorString));
+
+            BackgroundColor = GetColorByName("black");
+            ForegroundColor = GetColorByName("white");
         }
         public static Color GetColorByName(string colorName)
         {
@@ -59,6 +65,14 @@ namespace FarmConsole.Body.Services
             int R = color.R - color.R * procent / 100;
             int G = color.G - color.G * procent / 100;
             int B = color.B + (255 - color.B) * procent / 100;
+            color = Color.FromArgb(R, G, B);
+            return color;
+        }
+        public static Color Yellower(Color color, int procent = 70)
+        {
+            int R = color.R + (255 - color.R) * procent / 100;
+            int G = color.G + (255 - color.G) * procent / 100;
+            int B = color.B - color.B * procent / 100;
             color = Color.FromArgb(R, G, B);
             return color;
         }

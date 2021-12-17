@@ -38,6 +38,11 @@ namespace FarmConsole.Body.Controlers
                         case ConsoleKey.A: MapEngine.MoveStandPosition(new Point(0, -1), ShiftPressed); break;
                         case ConsoleKey.D: MapEngine.MoveStandPosition(new Point(0, 1), ShiftPressed); break;
 
+                        case ConsoleKey.D1: MapEngine.FPM = 1; break;
+                        case ConsoleKey.D2: MapEngine.FPM = 2; break;
+                        case ConsoleKey.D3: MapEngine.FPM = 3; break;
+                        case ConsoleKey.D4: MapEngine.FPM = 6; break;
+
                         case ConsoleKey.UpArrow: MapEngine.MoveMapPosition(new Point(-1, -1)); break;
                         case ConsoleKey.DownArrow: MapEngine.MoveMapPosition(new Point(1, 1)); break;
                         case ConsoleKey.LeftArrow: MapEngine.MoveMapPosition(new Point(1, -1)); break;
@@ -52,13 +57,14 @@ namespace FarmConsole.Body.Controlers
                 {
                     PopUp(POPUPID, POPUPTEXT);
 
-                    if(Action.IsInProcess) SideMenuService.DoAction();
+                    if(Action.IsInProcess) SideMenuService.MakeAction();
                     Previously = DateTime.Now;
                 }
             }
             GameInstance.SetMap(Location, MapEngine.Map);
-            MapManager.HideMap();
-            GameView.Clean();
+            if(OpenScreen == "Escape") MapManager.HideMap(false);
+            else MapManager.HideMap();
+            MenuManager.Clean();
         }
     }
 }

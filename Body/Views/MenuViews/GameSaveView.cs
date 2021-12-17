@@ -72,19 +72,19 @@ namespace FarmConsole.Body.Views.MenuViews
             if (selected > 1)
             {
                 var save = saves[selected - 2];
-                UpdateBox(3, 1, ". . ." + " ---------------------------------- " +
+                UpdateTextBox(3, 1, ". . ." + " ---------------------------------- " +
                 StringService.Get("nickname label") + " - " + save.UserName.ToString() + " ---------------------------------- " +
                 StringService.Get("lvl label") + " - " + save.LVL.ToString() + " ---------------------------------- " +
                 StringService.Get("wallet label") + " - " + save.Wallet.ToString() + " ---------------------------------- " +
                 StringService.Get("lastplay label") + " - " + save.Lastplay.ToString() + " ---------------------------------- . . .");
-                Showability(3, 0, true);
+                SetShowability(3, 0, true);
             }
             else
             {
-                Showability(3, 3, false);
-                UpdateBox(3, 1, StringService.Get("new save button", " E"));
+                SetShowability(3, 3, false);
+                UpdateTextBox(3, 1, StringService.Get("new save button", " E"));
                 MapEngine.ShowMapFragment(ComponentsDisplayed[1].Pos, ComponentsDisplayed[1].Size);
-                UpdateBox(3, 1, StringService.Get("new save button", " E"));
+                UpdateTextBox(3, 1, StringService.Get("new save button", " E"));
             }
         }
     }

@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -25,34 +26,19 @@ namespace FarmConsole.Body.Services
 
         private static readonly string saves_path = locsaves + "Saves.xml";
 
-        public static Dictionary<string, bool> GetRules(int Difficulty)
-        {
-            XmlDocument doc = new XmlDocument();
-            doc.Load(rules_path);
-            XmlNodeList NodeRules = doc.SelectNodes("/rules/rule");
-            Dictionary<string, bool> Rules = new Dictionary<string, bool>();
-            foreach (XmlNode NodeRule in NodeRules)
-            {
-                int value = NodeRule.Attributes["difficulty"].Value[Difficulty] - 48;
-                Rules.Add(NodeRule.Attributes["name"].Value, Convert.ToBoolean(value));
-            }
-            return Rules;
-        }
-        public static List<ProductModel> GetProducts()
+        public static List<ObjectModel> GetObjects()
         {
             XmlDocument doc = new XmlDocument();
             List<string> Attributes;
             doc.Load(objects_path);
-            List<ProductModel> Products = new List<ProductModel>();
+            List<ObjectModel> Objects = new List<ObjectModel>();
             XmlNodeList Categories = doc.SelectNodes("/ObjectsCollection/category");
             for (int Category = 0; Category < Categories.Count; Category++)
             {
                 XmlNodeList Scales = Categories[Category].ChildNodes;
                 XmlNode CurrentCategory = Categories[Category];
-
                 Attributes = new List<string>();
                 foreach (XmlAttribute Attribute in CurrentCategory.Attributes) Attributes.Add(Attribute.Name);
-
                 string[] MainMenuAct = Attributes.Contains("menuAct") ? CurrentCategory.Attributes["menuAct"].Value.Split(',') : null;
                 string[] MainMapAct = Attributes.Contains("mapAct") ? CurrentCategory.Attributes["mapAct"].Value.Split(',') : null;
                 for (int Scale = 0; Scale < Scales.Count; Scale++)
@@ -61,52 +47,95 @@ namespace FarmConsole.Body.Services
                     for (int Type = 0; Type < Fields.Count; Type++)
                     {
                         XmlNode Field = Fields[Type];
-
                         Attributes = new List<string>();
                         foreach (XmlAttribute Attribute in Field.Attributes) Attributes.Add(Attribute.Name);
-
-                        string[] States = Attributes.Contains("state") ? Field.Attributes["state"].Value.Split('/') : new string[] { "" };
+                        string[] States = Attributes.Contains("state") ? Field.Attributes["state"].Value.Split('/') : new string[] { "*" };
                         string[] Colors = Attributes.Contains("colors") ? Field.Attributes["colors"].Value.Split('/') : new string[] { "0" };
                         string[] MenuActs = Attributes.Contains("menuAct") ? Field.Attributes["menuAct"].Value.Split('/') : null;
                         string[] MapActs = Attributes.Contains("mapAct") ? Field.Attributes["mapAct"].Value.Split('/') : null;
-                        string[] View = Field.InnerText.Replace("\r", "").Replace("\n", "").Replace("\t", "").Split('@');
-                        string Price = Attributes.Contains("price") ? Field.Attributes["price"].Value : "0";
+                        string[] StateViewLines = Field.InnerText.Replace("\r", "").Replace("\n", "").Replace("\t", "").Split('@');
                         string Property = Attributes.Contains("property") && Field.Attributes["property"].Value != "" ? Field.Attributes["property"].Value : "0003";
-                        bool Fill = !Attributes.Contains("cut");
+                        string Price = Attributes.Contains("price") ? Field.Attributes["price"].Value : "0";
+                        bool Cutted = Attributes.Contains("cut") ? true : false;
+                        int ViewHeight = (StateViewLines.Length - 1) / States.Length;
+                        int ViewWidth = StateViewLines[0].Length;
+                        List<int>[] StateLayers = new List<int>[States.Length];
+                        List<PixelModel[,]> StateViews = new List<PixelModel[,]>();
+                        foreach (var s in States) if (s != "+") StateViews.Add(new PixelModel[ViewWidth, ViewHeight]);
+                        for (int i = 0; i < States.Length; i++) StateLayers[i] = new List<int>();
 
-                        for (int State = 0; State < States.Length; State++)
-                        {
-                            ProductModel Product = new ProductModel()
+                        // filling state view layers
+                        if (Attributes.Contains("layers"))
+                            if (Field.Attributes["layers"].Value != "")
                             {
+                                string[] LayersForStates = Field.Attributes["layers"].Value.Split('/');
+                                for (int Layer = 0; Layer < LayersForStates.Length; Layer++)
+                                    foreach (var DirectState in LayersForStates[Layer].Split(','))
+                                        StateLayers[Convert.ToInt32(DirectState)].Add(Layer);
+                            }
+
+                        // filling state views
+                        for (int LineIndex = StateViewLines.Length - 2; LineIndex >= 0; LineIndex--)
+                        {
+                            int CurrentState = LineIndex % States.Length;
+                            int CurrentHeight = LineIndex / States.Length;
+                            Color Color = CurrentState < Colors.Length ?
+                                IsNumber(Colors[CurrentState]) ? ColorService.GetColorByName(Colors[CurrentState]) :
+                                ColorService.GetColorByID(Convert.ToInt16(Colors[CurrentState])) :
+                                IsNumber(Colors[0]) ? ColorService.GetColorByName(Colors[0]) :
+                                ColorService.GetColorByID(Convert.ToInt16(Colors[0]));
+                            if (StateLayers[CurrentState].Count == 0) StateLayers[CurrentState].Add(CurrentState);
+
+                            foreach (int DirectState in StateLayers[CurrentState])
+                                for (int CurrentSymbol = 0; CurrentSymbol < ViewWidth; CurrentSymbol++)
+                                    if (StateViewLines[LineIndex][CurrentSymbol] != '´')
+                                        StateViews[DirectState][CurrentSymbol, CurrentHeight] = new PixelModel()
+                                        { Content = StateViewLines[LineIndex][CurrentSymbol].ToString(), Color = Color };
+                        }
+
+                        // filling states
+                        for (int State = 0; State < StateViews.Count; State++)
+                        {
+                            ObjectModel Object = new ObjectModel()
+                            {
+                                ID = Objects.Count(),
                                 Category = Category,
                                 Scale = Scale,
                                 Type = Type,
                                 State = State,
                                 StateName = States[State],
-                                ProductName = Field.Attributes["name"].Value,
-                                Price = Convert.ToDecimal(Price),
-                                Property = Property,
-                                Fill = Fill,
+                                ObjectName = Field.Attributes["name"].Value,
                                 MenuActions = MenuActs == null ? new string[] { } : MenuActs[State < MenuActs.Length ? State : 0].Split(','),
                                 MapActions = MapActs == null ? new string[] { } : MapActs[State < MapActs.Length ? State : 0].Split(','),
-                                Color = State < Colors.Length ?
-                                    IsNumber(Colors[State]) ? ColorService.GetColorByName(Colors[State]) : ColorService.GetColorByID(Convert.ToInt16(Colors[State])) :
-                                    IsNumber(Colors[0]) ? ColorService.GetColorByName(Colors[0]) : ColorService.GetColorByID(Convert.ToInt16(Colors[0]))
+                                Price = Convert.ToDecimal(Price),
+                                Property = Property,
+                                Cutted = Cutted,
+                                View = new ViewModel(StateViews[State], ViewWidth, ViewHeight)
                             };
-
-                            Product.MenuActions = MainMenuAct == null ? Product.MenuActions : Product.MenuActions.Concat(MainMenuAct).ToArray();
-                            Product.MapActions = MainMapAct == null ? Product.MapActions : Product.MapActions.Concat(MainMapAct).ToArray();
-                            Product.View = new string[(View.Length - 1) / States.Length];
-
-                            int Line = State, Index = 0;
-                            while (Line < View.Length - 1) { Product.View[Index++] = View[Line]; Line += States.Length; }
-
-                            Products.Add(Product);
+                            Object.MenuActions = MainMenuAct == null ? Object.MenuActions : Object.MenuActions.Concat(MainMenuAct).ToArray();
+                            Object.MapActions = MainMapAct == null ? Object.MapActions : Object.MapActions.Concat(MainMapAct).ToArray();
+                            Objects.Add(Object);
                         }
                     }
                 }
             }
-            return Products;
+            return Objects;
+        }
+        public static List<RuleModel> GetRules()
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(rules_path);
+            XmlNodeList NodeRules = doc.SelectNodes("/rules/rule");
+            List<RuleModel> Rules = new List<RuleModel>();
+            foreach (XmlNode NodeRule in NodeRules)
+            {
+                Rules.Add(new RuleModel {
+                    Name = NodeRule.Attributes["name"].Value,
+                    CaptureType = NodeRule.Attributes["type"].Value,
+                    RequiredLevel = Convert.ToInt32(NodeRule.Attributes["lvl"].Value),
+                    IsAllowed = true });
+            }
+            return Rules;
         }
         public static string GetText(int id)
         {

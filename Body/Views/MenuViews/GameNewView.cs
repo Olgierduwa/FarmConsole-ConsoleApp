@@ -33,14 +33,14 @@ namespace FarmConsole.Body.Views.MenuViews
 
             GroupStart(Console.WindowWidth * 15 / 22 - 18, Console.WindowWidth);
             Endl(Height + 3);
-            TextBox(StringService.Get("woman button"), 13, foreground: ColorService.GetColorByName("gray"), margin: 0);
-            TextBox(StringService.Get("easy button"), 13, foreground: ColorService.GetColorByName("gray"), margin: 0);
+            TextBox(StringService.Get("woman button"), 13, foreground: ColorService.GetColorByName("gray3"), margin: 0);
+            TextBox(StringService.Get("easy button"), 13, foreground: ColorService.GetColorByName("gray3"), margin: 0);
             GroupEnd();
 
             GroupStart(Console.WindowWidth * 15 / 22 + 19, Console.WindowWidth);
             Endl(Height + 3);
-            TextBox(StringService.Get("man button"), 13, foreground: ColorService.GetColorByName("gray"), margin:0);
-            TextBox(StringService.Get("hard button"), 13, foreground: ColorService.GetColorByName("gray"), margin:0);
+            TextBox(StringService.Get("man button"), 13, foreground: ColorService.GetColorByName("gray3"), margin:0);
+            TextBox(StringService.Get("hard button"), 13, foreground: ColorService.GetColorByName("gray3"), margin:0);
             GroupEnd();
 
             GroupStart(Console.WindowWidth * 15 / 22 - 13, Console.WindowWidth);

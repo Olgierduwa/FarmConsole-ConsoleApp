@@ -13,4 +13,8 @@
     <PackageReference Include="Pastel" Version="2.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Body\Resources\Saves\000\" />
+  </ItemGroup>
+
 </Project>

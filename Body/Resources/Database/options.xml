@@ -1,11 +1,11 @@
 <OptionsCollection>
   <option id="0" Name="screen width">
     <default>220</default>
-    <current>240</current>
+    <current>120</current>
   </option>
   <option id="1" Name="screen height">
     <default>40</default>
-    <current>65</current>
+    <current>35</current>
   </option>
   <option id="2" Name="effects volume">
     <default>3</default>

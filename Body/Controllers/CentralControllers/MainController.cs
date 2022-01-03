@@ -13,7 +13,10 @@ namespace FarmConsole.Body.Controlers
         protected static ActionModel Action;
 
         public static DateTime Previously = DateTime.Now;
-        public static double FrameTime = 400;
+        public static double FrameTime = 10;
+        public static bool PlayerMovementAxis; 
+        public static bool MapMovementAxis; 
+        public static bool FieldNameVisibility; 
 
         public static string OpenScreen = "Menu";
         public static string LastScreen = "Menu";
@@ -22,6 +25,7 @@ namespace FarmConsole.Body.Controlers
         public static string POPUPTEXT = "";
         public static int POPUPSTAGE = -1;
         public static int POPUPID = 0;
+
         public static void PopUp(int id, string text)
         {
             string popupText = text;

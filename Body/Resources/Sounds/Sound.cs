@@ -1,4 +1,5 @@
-﻿using FarmConsole.Body.Services;
+﻿using FarmConsole.Body.Models;
+using FarmConsole.Body.Services;
 using NAudio.Wave;
 using System;
 
@@ -36,7 +37,17 @@ namespace FarmConsole.Body.Resources.Sounds
             }
             waveMusic.Play();
         }
-        public static void SetSoundVolume(int vol = -1) { if (vol < 0) vol = SettingsService.GetOptionById(2); waveSound.Volume = volumeSound = Convert.ToSingle(vol) / 6.0f; }
-        public static void SetMusicVolume(int vol = -1) { if (vol < 0) vol = SettingsService.GetOptionById(3); waveMusic.Volume = volumeMusic = Convert.ToSingle(vol) / 6.0f; }
+        public static void SetSoundVolume(int vol = -1)
+        {
+            SettingModel Setting = SettingsService.GetSetting("set effects volume");
+            if (vol < 0) vol = Setting.GetRealValue;
+            waveSound.Volume = volumeSound = Convert.ToSingle(vol) / Setting.GetMaxSliderValue;
+        }
+        public static void SetMusicVolume(int vol = -1)
+        {
+            SettingModel Setting = SettingsService.GetSetting("set music volume");
+            if (vol < 0) vol = Setting.GetRealValue;
+            waveMusic.Volume = volumeMusic = Convert.ToSingle(vol) / Setting.GetMaxSliderValue;
+        }
     }
 }

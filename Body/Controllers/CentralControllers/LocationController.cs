@@ -12,14 +12,52 @@ namespace FarmConsole.Body.Controlers
 {
     class LocationController : MainController
     {
+        private static bool ShiftPressed;
+
+        private static void MoveStandPosition(string Direction)
+        {
+            if(!PlayerMovementAxis) switch (Direction)
+            {
+                case "UP": MapEngine.MoveStandPosition(new Point(0, -1), ShiftPressed); break;
+                case "DOWN": MapEngine.MoveStandPosition(new Point(0, 1), ShiftPressed); break;
+                case "LEFT": MapEngine.MoveStandPosition(new Point(1, 0), ShiftPressed); break;
+                case "RIGHT": MapEngine.MoveStandPosition(new Point(-1, 0), ShiftPressed); break;
+            }
+            else switch (Direction)
+            {
+                case "UP": MapEngine.MoveStandPosition(new Point(-1, 0), ShiftPressed); break;
+                case "DOWN": MapEngine.MoveStandPosition(new Point(1, 0), ShiftPressed); break;
+                case "LEFT": MapEngine.MoveStandPosition(new Point(0, -1), ShiftPressed); break;
+                case "RIGHT": MapEngine.MoveStandPosition(new Point(0, 1), ShiftPressed); break;
+            }
+            if (FieldNameVisibility) GameView.DisplayFieldName();
+        }
+        private static void MoveMapPosition(string Direction)
+        {
+            if (MapMovementAxis) switch (Direction)
+                {
+                    case "UP": MapEngine.MoveMapPosition(new Point(-1, -1)); break;
+                    case "DOWN": MapEngine.MoveMapPosition(new Point(1, 1)); break;
+                    case "LEFT": MapEngine.MoveMapPosition(new Point(1, -1)); break;
+                    case "RIGHT": MapEngine.MoveMapPosition(new Point(-1, 1)); break;
+                }
+            else switch (Direction)
+                {
+                    case "UP": MapEngine.MoveMapPosition(new Point(1, 1)); break;
+                    case "DOWN": MapEngine.MoveMapPosition(new Point(-1, -1)); break;
+                    case "LEFT": MapEngine.MoveMapPosition(new Point(-1, 1)); break;
+                    case "RIGHT": MapEngine.MoveMapPosition(new Point(1, -1)); break;
+                }
+        }
+
         public static void Open(string Location)
         {
-            bool ShiftPressed;
             GameView.Display(GameInstance.UserName);
-            MapManager.InitMap(GameInstance.GetMap(Location));
+            MapModel map = GameInstance.GetMap(Location);
+            SideMenuController.Init(map.Scale);
+            MapManager.InitMap(map);
             MapManager.ShowMap();
-            SideMenuController.Init(GameInstance.GetMap(Location).Scale);
-            EscapeScreen = Location;
+            if (FieldNameVisibility) GameView.DisplayFieldName();
             while (OpenScreen == Location)
             {
                 if (Console.KeyAvailable)
@@ -32,39 +70,49 @@ namespace FarmConsole.Body.Controlers
                         case ConsoleKey.Escape: MapManager.Drop(false); OpenScreen = "Escape"; S.Play("K2"); break;
                         case ConsoleKey.Q: SideMenuController.Open(cki.Key); break;
                         case ConsoleKey.E: SideMenuController.Open(cki.Key); break;
+                        case ConsoleKey.Tab: SideMenuController.Open(cki.Key); break;
 
-                        case ConsoleKey.W: MapEngine.MoveStandPosition(new Point(-1, 0), ShiftPressed); break;
-                        case ConsoleKey.S: MapEngine.MoveStandPosition(new Point(1, 0), ShiftPressed); break;
-                        case ConsoleKey.A: MapEngine.MoveStandPosition(new Point(0, -1), ShiftPressed); break;
-                        case ConsoleKey.D: MapEngine.MoveStandPosition(new Point(0, 1), ShiftPressed); break;
+                        case ConsoleKey.W: MoveStandPosition("UP"); break;
+                        case ConsoleKey.S: MoveStandPosition("DOWN"); break;
+                        case ConsoleKey.A: MoveStandPosition("LEFT"); break;
+                        case ConsoleKey.D: MoveStandPosition("RIGHT"); break;
+
+                        case ConsoleKey.UpArrow: MoveMapPosition("UP"); break;
+                        case ConsoleKey.DownArrow: MoveMapPosition("DOWN"); break;
+                        case ConsoleKey.LeftArrow: MoveMapPosition("LEFT"); break;
+                        case ConsoleKey.RightArrow: MoveMapPosition("RIGHT"); break;
 
                         case ConsoleKey.D1: MapEngine.FPM = 1; break;
                         case ConsoleKey.D2: MapEngine.FPM = 2; break;
                         case ConsoleKey.D3: MapEngine.FPM = 3; break;
                         case ConsoleKey.D4: MapEngine.FPM = 6; break;
 
-                        case ConsoleKey.UpArrow: MapEngine.MoveMapPosition(new Point(-1, -1)); break;
-                        case ConsoleKey.DownArrow: MapEngine.MoveMapPosition(new Point(1, 1)); break;
-                        case ConsoleKey.LeftArrow: MapEngine.MoveMapPosition(new Point(1, -1)); break;
-                        case ConsoleKey.RightArrow: MapEngine.MoveMapPosition(new Point(-1, 1)); break;
-
-                        case ConsoleKey.R: MapManager.GlobalMapInit(); MapEngine.ReloadMap(); break;
+                        case ConsoleKey.R: GameInstance.SetMapSupply(Location); GameInstance.SetMap(Location, MapEngine.Map); 
+                                           MapManager.GlobalMapInit(); MapEngine.ReloadMapView(); break;
                         case ConsoleKey.F: GameInstance.SetMap(Location, MapEngine.Map); GameService.GrowingUp();
                                            MapManager.InitMap(GameInstance.GetMap(Location)); MapManager.ShowMap(); break;
                     }
+
+                    if (FieldNameVisibility) GameView.DisplayFieldName();
                 }
                 else if ((DateTime.Now - Previously).TotalMilliseconds >= FrameTime)
                 {
                     PopUp(POPUPID, POPUPTEXT);
 
-                    if(Action.IsInProcess) SideMenuService.MakeAction();
+                    if (Action.IsInProcess)
+                    {
+                        SideMenuService.MakeAction();
+                        if (FieldNameVisibility) GameView.DisplayFieldName();
+                    }
                     Previously = DateTime.Now;
                 }
             }
+            EscapeScreen = Location;
+            MapEngine.Map.LastVisitDate = GameInstance.GameDate;
             GameInstance.SetMap(Location, MapEngine.Map);
-            if(OpenScreen == "Escape") MapManager.HideMap(false);
+            MenuManager.Clean(WithCleaning: false);
+            if(OpenScreen == "Escape" || OpenScreen == "Container" || OpenScreen == "CashRegister") MapManager.HideMap(false);
             else MapManager.HideMap();
-            MenuManager.Clean();
         }
     }
 }

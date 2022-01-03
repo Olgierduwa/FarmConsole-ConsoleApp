@@ -47,23 +47,10 @@ namespace FarmConsole.Body.Views.MenuViews
             TextBox(StringService.Get("continue button", " E"), 19, false, margin: 0);
             GroupEnd();
 
-            GroupStart(Console.WindowWidth / 2, Console.WindowWidth);
-            Endl(detailsHeight + 1);
-            TextBox(deleteQuestion, 33, false, ColorService.GetColorByName("Red"));
-            GroupEnd();
-            GroupStart(Console.WindowWidth / 2 - 9, Console.WindowWidth);
-            Endl(detailsHeight + 9);
-            TextBox(StringService.Get("no", " Q"), 15, false, ColorService.GetColorByName("Red"), margin: 0);
-            GroupEnd();
-            GroupStart(Console.WindowWidth / 2 + 9, Console.WindowWidth);
-            Endl(detailsHeight + 9);
-            TextBox(StringService.Get("yes", " E"), 15, false, ColorService.GetColorByName("Red"), margin: 0);
-            GroupEnd();
-
             GroupEnd();
             PrintList();
             //vt1.showComponentList();
-            FocusGroupID = 6;
+            DangerMessage = deleteQuestion;
         }
         public static void SetPreview(GameInstanceModel[] saves, int selected)
         {
@@ -73,7 +60,7 @@ namespace FarmConsole.Body.Views.MenuViews
                 UpdateTextBox(3, 1, ". . ." + " ---------------------------------- " +
                 StringService.Get("nickname label") + " - " + save.UserName.ToString() + " ---------------------------------- " +
                 StringService.Get("lvl label") + " - " + save.LVL.ToString() + " ---------------------------------- " +
-                StringService.Get("wallet label") + " - " + save.Wallet.ToString() + " ---------------------------------- " +
+                StringService.Get("wallet label") + " - " + save.WalletFunds.ToString() + " ---------------------------------- " +
                 StringService.Get("lastplay label") + " - " + save.Lastplay.ToString() + " ---------------------------------- . . .");
                 SetShowability(4, 1, true);
                 SetShowability(5, 1, true);

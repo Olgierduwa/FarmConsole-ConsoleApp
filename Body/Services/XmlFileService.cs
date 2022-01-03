@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.Permissions;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -18,7 +19,8 @@ namespace FarmConsole.Body.Services
         private static readonly string locsaves = "../../../Body/Resources/Saves/";
 
         private static readonly string long_path = loc + "LongTexts.xml";
-        private static readonly string options_path = loc + "Options.xml";
+        private static readonly string languages_path = loc + "Languages.xml";
+        private static readonly string setting_path = loc + "Settings.xml";
         private static readonly string objects_path = loc + "Objects.xml";
         private static readonly string graphics_path = loc + "Graphics.xml";
         private static readonly string colors_path = loc + "Colors.xml";
@@ -26,6 +28,15 @@ namespace FarmConsole.Body.Services
 
         private static readonly string saves_path = locsaves + "Saves.xml";
 
+        public static Dictionary<string, string> GetLanguages()
+        {
+            Dictionary<string, string> Languages = new Dictionary<string, string>();
+            XmlDocument doc = new XmlDocument();
+            doc.Load(languages_path);
+            XmlNodeList LanguagesList = doc.SelectNodes("/Languages/language");
+            foreach (XmlNode node in LanguagesList) Languages.Add(node.Attributes["key"].Value, node.InnerText);
+            return Languages;
+        }
         public static List<ObjectModel> GetObjects()
         {
             XmlDocument doc = new XmlDocument();
@@ -39,8 +50,8 @@ namespace FarmConsole.Body.Services
                 XmlNode CurrentCategory = Categories[Category];
                 Attributes = new List<string>();
                 foreach (XmlAttribute Attribute in CurrentCategory.Attributes) Attributes.Add(Attribute.Name);
-                string[] MainMenuAct = Attributes.Contains("menuAct") ? CurrentCategory.Attributes["menuAct"].Value.Split(',') : null;
-                string[] MainMapAct = Attributes.Contains("mapAct") ? CurrentCategory.Attributes["mapAct"].Value.Split(',') : null;
+                string[] MainMenuActs = Attributes.Contains("menuAct") ? CurrentCategory.Attributes["menuAct"].Value.Split(',') : new string[] { };
+                string[] MainMapAct = Attributes.Contains("mapAct") ? CurrentCategory.Attributes["mapAct"].Value.Split(',') : new string[] { };
                 for (int Scale = 0; Scale < Scales.Count; Scale++)
                 {
                     XmlNodeList Fields = Scales[Scale].ChildNodes;
@@ -56,7 +67,8 @@ namespace FarmConsole.Body.Services
                         string[] StateViewLines = Field.InnerText.Replace("\r", "").Replace("\n", "").Replace("\t", "").Split('@');
                         string Property = Attributes.Contains("property") && Field.Attributes["property"].Value != "" ? Field.Attributes["property"].Value : "0003";
                         string Price = Attributes.Contains("price") ? Field.Attributes["price"].Value : "0";
-                        bool Cutted = Attributes.Contains("cut") ? true : false;
+                        bool Cutted = Attributes.Contains("cut");
+                        short Slots = Attributes.Contains("slots") ? Convert.ToInt16(Field.Attributes["slots"].Value) : (short)0;
                         int ViewHeight = (StateViewLines.Length - 1) / States.Length;
                         int ViewWidth = StateViewLines[0].Length;
                         List<int>[] StateLayers = new List<int>[States.Length];
@@ -96,24 +108,26 @@ namespace FarmConsole.Body.Services
                         // filling states
                         for (int State = 0; State < StateViews.Count; State++)
                         {
+                            string[] StateMenuActs = MenuActs == null ? new string[] { } : MenuActs[State < MenuActs.Length ? State : 0].Split(',');
+                            string[] StateMapActions = MapActs == null ? new string[] { } : MapActs[State < MapActs.Length ? State : 0].Split(',');
+                            
                             ObjectModel Object = new ObjectModel()
                             {
-                                ID = Objects.Count(),
+                                ID = (short)Objects.Count(),
                                 Category = Category,
                                 Scale = Scale,
                                 Type = Type,
                                 State = State,
                                 StateName = States[State],
                                 ObjectName = Field.Attributes["name"].Value,
-                                MenuActions = MenuActs == null ? new string[] { } : MenuActs[State < MenuActs.Length ? State : 0].Split(','),
-                                MapActions = MapActs == null ? new string[] { } : MapActs[State < MapActs.Length ? State : 0].Split(','),
+                                MenuActions = ConvertService.ConcatActionTables(StateMenuActs, MainMenuActs),
+                                MapActions = ConvertService.ConcatActionTables(StateMapActions, MainMapAct),
                                 Price = Convert.ToDecimal(Price),
                                 Property = Property,
                                 Cutted = Cutted,
+                                Slots = Slots,
                                 View = new ViewModel(StateViews[State], ViewWidth, ViewHeight)
                             };
-                            Object.MenuActions = MainMenuAct == null ? Object.MenuActions : Object.MenuActions.Concat(MainMenuAct).ToArray();
-                            Object.MapActions = MainMapAct == null ? Object.MapActions : Object.MapActions.Concat(MainMapAct).ToArray();
                             Objects.Add(Object);
                         }
                     }
@@ -137,6 +151,51 @@ namespace FarmConsole.Body.Services
             }
             return Rules;
         }
+        public static List<SettingModel> GetSettings()
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(setting_path);
+            XmlNodeList SettingsList = doc.SelectNodes("/SettingsCollection/setting");
+            List<SettingModel> Settings = new List<SettingModel>();
+            for (int i = 0; i < SettingsList.Count; i++)
+            {
+                var S = SettingsList[i];
+                string Key = S.Attributes["key"].Value;
+                int Default = int.Parse(S.Attributes["default"].Value);
+                int Value = int.Parse(S.Attributes["value"].Value);
+                int Max = int.Parse(S.Attributes["max"].Value);
+                int Multi = int.Parse(S.Attributes["multiplier"].Value);
+                int Offset = int.Parse(S.Attributes["offset"].Value);
+                Settings.Add(new SettingModel(Key, Default, Value, Max, Multi, Offset));
+            }
+            return Settings;
+        }
+        public static void UpdateSettings(List<SettingModel> Settings)
+        {
+            File.SetAttributes(setting_path, FileAttributes.Normal);
+            using (FileStream fs = new FileStream(setting_path, FileMode.Create))
+            {
+                using (XmlWriter w = XmlWriter.Create(fs))
+                {
+                    string content = "\n<SettingsCollection>\n";
+                    for (int index = 0; index < Settings.Count; index++)
+                        content += "\t" + Settings[index].ToString() + "\n";
+                    content += "</SettingsCollection>";
+                    w.WriteStartDocument();
+                    w.WriteRaw(content);
+                    w.Flush();
+                }
+            }
+        }
+        public static void UpdateLanguage(string Language)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(languages_path);
+            XmlNode node = doc.SelectSingleNode("/Languages/language[@key='current']");
+            node.InnerText = Language;
+            doc.Save(languages_path);
+        }
+        
         public static string GetText(int id)
         {
             XmlDocument doc = new XmlDocument();
@@ -178,46 +237,22 @@ namespace FarmConsole.Body.Services
                     color.Attributes["value"].Value;
             return ColorsString;
         }
+        public static XmlNode GetSupply(string name)
+        {
+            try
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.Load(locsaves + "000/" + name + ".xml");
+                return doc.SelectSingleNode("/Supply");
+            }
+            catch { return null; }
+        }
         private static bool IsNumber(string Text)
         {
             Regex reg = new Regex("[^0-9]");
             return reg.IsMatch(Text);
         }
 
-        #region OPTIONS
-        public static int GetOptionsCount()
-        {
-            return XElement.Load(options_path).Descendants("option").Select(x => int.Parse(x.Attribute("id").Value)).Last() + 1;
-        }
-        public static int[] GetOptions()
-        {
-            XmlDocument doc = new XmlDocument();
-            doc.Load(options_path);
-            XmlNodeList list = doc.SelectNodes("/OptionsCollection/option");
-            int[] opt = new int[list.Count];
-            for (int i = 0; i < list.Count; i++)
-                opt[i] = int.Parse(list[i]["current"].InnerText);
-            return opt;
-        }
-        public static string[] GetOptionsNames()
-        {
-            XmlDocument doc = new XmlDocument();
-            doc.Load(options_path);
-            XmlNodeList list = doc.SelectNodes("/OptionsCollection/option");
-            string[] names = new string[list.Count];
-            for (int i = 0; i < list.Count; i++) names[i] = list[i].Attributes["Name"].Value;
-            return names;
-        }
-        public static void UpdateOptions(int[] opt)
-        {
-            XmlDocument doc = new XmlDocument();
-            doc.Load(options_path);
-            XmlNodeList list = doc.SelectNodes("/OptionsCollection/option");
-            if (opt.Length > 0) for (int i = 0; i < list.Count; i++) list[i]["current"].InnerText = opt[i].ToString();
-            else for (int i = 0; i < list.Count; i++) list[i]["current"].InnerText = list[i]["default"].InnerText;
-            doc.Save(options_path);
-        }
-        #endregion
 
         #region GAME INSTANCE
         public static GameInstanceModel[] GetGameInstances()
@@ -229,7 +264,7 @@ namespace FarmConsole.Body.Services
             for (int i = 0; i < list.Count; i++)
                 saves[i] = new GameInstanceModel(
                     list[i].Attributes["id"].Value, list[i]["lvl"].InnerText, list[i]["username"].InnerText,
-                    list[i]["lastplay"].InnerText, list[i]["wallet"].InnerText);
+                    list[i]["lastplay"].InnerText, list[i]["wallet"].InnerText, list[i]["card"].InnerText);
             return saves;
         }
         public static XmlNode GetGameInstance(int id)
@@ -305,13 +340,11 @@ namespace FarmConsole.Body.Services
             for (int i = 0; i < MapList.Length; i++)
             {
                 string[] mapString = MapList[i].Split(';');
-                path = directory + "/" + mapString[0] + ".txt";
-                using (FileStream fs = File.Create(path))
-                {
-                    byte[] info = new UTF8Encoding(true).GetBytes(mapString[1]);
-                    fs.Write(info, 0, info.Length);
-                    fs.Close();
-                }
+                path = directory + "/" + mapString[0].Split(':')[0] + ".txt";
+                using FileStream fs = File.Create(path);
+                byte[] info = new UTF8Encoding(true).GetBytes(mapString[1]);
+                fs.Write(info, 0, info.Length);
+                fs.Close();
             }
         }
         public static string[] LoadMaps(int id)
@@ -326,7 +359,7 @@ namespace FarmConsole.Body.Services
                 foreach (string path in files)
                     using (var file = File.OpenText(path))
                     {
-                        Maps[index++] = path.Split('\\')[^1].Split('.')[0] + " " + file.ReadToEnd();
+                        Maps[index++] = path.Split('\\')[^1].Split('.')[0] + ":" + file.ReadToEnd();
                         file.Close();
                     }
             }

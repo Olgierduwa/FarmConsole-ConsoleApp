@@ -29,11 +29,11 @@ namespace FarmConsole.Body.Controlers
                             switch (selected)
                             {
                                 case 1: OpenScreen = "NewGame"; break;
-                                default: GameInstance = new GameInstanceModel(); GameInstance.Load(selected - 1); OpenScreen = "Farm"; break;
+                                default: GameInstance = new GameInstanceModel(); GameInstance.Load(selected - 1); OpenScreen = GameInstance.Lastmap; break;
                             }
                             break;
                         case ConsoleKey.D:
-                            if (selected > 1 && GameLoadView.Warning() == true)
+                            if (selected > 1 && GameLoadView.Danger() == true)
                             {
                                 saves[selected - 2].Delete();
                                 saves = XF.GetGameInstances();

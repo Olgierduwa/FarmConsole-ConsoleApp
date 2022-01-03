@@ -14,7 +14,7 @@ namespace FarmConsole.Body.Views.LocationViews
         public static void GlobalMapInit()
         {
             ColorService.SetColorPalette();
-            //ProductModel.SetProducts();
+            ObjectModel.SetObjects();
             GameService.SetGrowCycle();
             SetMapScreenBorders();
         }
@@ -24,42 +24,38 @@ namespace FarmConsole.Body.Views.LocationViews
             SetMapScreenBorders();
             MapEngine.Map = Map;
             InitVisualMap();
+            InitMapView();
         }
         
         public static void ShowMap(bool Smoothly = true)
         {
-            MapModel map = Map;
             int procent = 60;
             if (Smoothly)
             {
                 for (int i = 0; i < 3; i++)
                 {
-                    DarkerVisualMap(procent);
-                    ShowVisualMap();
+                    DarkerMapView(procent);
+                    ShowMapView();
                     procent -= 30;
-                    Map = map;
+                    Map.View.SetWords();
                 }
             }
             else
             {
-                DarkerVisualMap(procent);
-                ShowVisualMap();
+                DarkerMapView(procent);
+                ShowMapView();
             }
         }
         
         public static void HideMap(bool CompletelyHide = true)
         {
-            MapModel map = Map;
-            for (int i = 0; i < 2; i++)
+            Map.View.SetWords();
+            for (int i = 0; i < 3; i++)
             {
-                DarkerVisualMap(40);
-                ShowVisualMap();
+                DarkerMapView(30);
+                ShowMapView();
             }
-            if (CompletelyHide)
-            {
-                ClearMapSreen();
-                Map = map;
-            }
+            if (CompletelyHide) ClearMapSreen(); 
         }
 
 
@@ -67,23 +63,25 @@ namespace FarmConsole.Body.Views.LocationViews
         {
             if (GetField().Category == 3) return StringService.Get("overwriting");
             SetField(GetPos(), BuildProduct.ToField());
-            ShowField(GetPos());
             ClearSelectedFields(1);
             return StringService.Get("done");
         }
         
-        public static void Destroy()
+        public static string Destroy()
         {
+            var DeletingField = GetField().ToField();
+            if (DeletingField.Pocket != null && !DeletingField.Pocket.IsEmpty) return StringService.Get("is no empty");
             SetField(GetPos(), null, "Base");
-            ShowField(GetPos());
             ClearSelectedFields(1);
+            return StringService.Get("done");
         }
         
         public static void Dragg()
         {
             if(GetField("Stand").Category == 3) ClearSelectedFields(); 
             SetField(GetPos(), null, "Dragged");
-            Destroy();
+            SetField(GetPos(), null, "Base");
+            //Destroy();
             ClearSelectedFields();
             ShowField(GetPos());
         }
@@ -94,6 +92,7 @@ namespace FarmConsole.Body.Views.LocationViews
             {
                 if (ConfirmDrop)
                 {
+                    if (GetField().Category == 1 && GetField().State > 0) Destroy();
                     SetField(GetPos(), GetField("Dragged"));
                     SetField(new Point(), null, "Dragged");
                 }
@@ -118,26 +117,22 @@ namespace FarmConsole.Body.Views.LocationViews
             }
             var NewField = Field.ToField();
             NewField.State++;
-            NewField.SetID();
             NewField = NewField.ToField();
 
             if (NewField.ObjectName != "error" && NewField.StateName != "+") SetField(GetPos(), NewField);
             else
             {
                 Field.State = 0;
-                Field.SetID();
                 Field = Field.ToField();
                 SetField(GetPos(), Field);
             }
             ClearSelectedFields(1);
-            ShowField(GetPos());
             return StringService.Get("done");
         }
         
         public static void DigPath()
         {
             SetField(GetPos(), ObjectModel.GetObject("Ścieżka").ToField());
-            ShowField(GetPos());
             ClearSelectedFields(1);
         }
 
@@ -146,8 +141,8 @@ namespace FarmConsole.Body.Views.LocationViews
             FieldModel Field = GetField();
             Field.State++;
             Field = Field.ToField();
+            SetField(GetPos(), Field);
             ClearSelectedFields(1);
-            ShowField(GetPos());
         }
 
         public static void Unlock()
@@ -155,8 +150,8 @@ namespace FarmConsole.Body.Views.LocationViews
             FieldModel Field = GetField();
             Field.State--;
             Field = Field.ToField();
+            SetField(GetPos(), Field);
             ClearSelectedFields(1);
-            ShowField(GetPos());
         }
     }
 }

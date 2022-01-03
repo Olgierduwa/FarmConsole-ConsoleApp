@@ -11,7 +11,7 @@ namespace FarmConsole.Body.Views.MenuViews
 {
     class GameSaveView : MenuManager
     {
-        public static void Display(GameInstanceModel[] saves)
+        public static void DisplayList(GameInstanceModel[] saves)
         {
             int savesCount = saves.Length;
             int freeSpace = Console.WindowHeight - 15;
@@ -19,6 +19,8 @@ namespace FarmConsole.Body.Views.MenuViews
             int endlCount = 3;
             int detailsHeight = (Console.WindowHeight - 24) / 2;
             if (showCount >= savesCount + 1) endlCount += (showCount - savesCount + 1) * 3 / 2;
+
+            ClearList(false);
 
             Endl(3);
             H2(StringService.Get("save game label"));
@@ -42,19 +44,6 @@ namespace FarmConsole.Body.Views.MenuViews
             TextBox(StringService.Get("override save button", " E"), show: false);
             GroupEnd();
 
-            GroupStart(Console.WindowWidth / 2, Console.WindowWidth);
-            Endl(detailsHeight + 1);
-            TextBox(updateQuestion, 33, false, ColorService.GetColorByName("Red"));
-            GroupEnd();
-            GroupStart(Console.WindowWidth / 2 - 9, Console.WindowWidth);
-            Endl(detailsHeight + 9);
-            TextBox(StringService.Get("no", " Q"), 15, false, ColorService.GetColorByName("Red"), margin: 0);
-            GroupEnd();
-            GroupStart(Console.WindowWidth / 2 + 9, Console.WindowWidth);
-            Endl(detailsHeight + 9);
-            TextBox(StringService.Get("yes", " E"), 15, false, ColorService.GetColorByName("Red"), margin: 0);
-            GroupEnd();
-
             GroupEnd();
             PrintList();
             //showComponentList();
@@ -62,12 +51,9 @@ namespace FarmConsole.Body.Views.MenuViews
             ComponentsDisplayed = new List<CM>();
             ComponentsDisplayed.Add(GetComponentByName("GS", 2));
             ComponentsDisplayed.Add(GetComponentByName("GS", 3));
-            ComponentsDisplayed.Add(GetComponentByName("GS", 4));
-            ComponentsDisplayed.Add(GetComponentByName("GS", 5));
-            ComponentsDisplayed.Add(GetComponentByName("GS", 6));
-            FocusGroupID = 4;
+            DangerMessage = updateQuestion;
         }
-        public static void SetPreview(GameInstanceModel[] saves, int selected)
+        public static void DisplayReview(GameInstanceModel[] saves, int selected, int selCount)
         {
             if (selected > 1)
             {
@@ -75,16 +61,16 @@ namespace FarmConsole.Body.Views.MenuViews
                 UpdateTextBox(3, 1, ". . ." + " ---------------------------------- " +
                 StringService.Get("nickname label") + " - " + save.UserName.ToString() + " ---------------------------------- " +
                 StringService.Get("lvl label") + " - " + save.LVL.ToString() + " ---------------------------------- " +
-                StringService.Get("wallet label") + " - " + save.Wallet.ToString() + " ---------------------------------- " +
+                StringService.Get("wallet label") + " - " + save.WalletFunds.ToString() + " ---------------------------------- " +
                 StringService.Get("lastplay label") + " - " + save.Lastplay.ToString() + " ---------------------------------- . . .");
                 SetShowability(3, 0, true);
             }
             else
             {
                 SetShowability(3, 3, false);
-                UpdateTextBox(3, 1, StringService.Get("new save button", " E"));
-                MapEngine.ShowMapFragment(ComponentsDisplayed[1].Pos, ComponentsDisplayed[1].Size);
-                UpdateTextBox(3, 1, StringService.Get("new save button", " E"));
+                GameSaveView.View.DisplayPixels(ComponentsDisplayed[1].Pos, ComponentsDisplayed[1].Size);
+                GameSaveView.DisplayList(saves);
+                GameSaveView.UpdateMenuSelect(selected, selected, selCount);
             }
         }
     }

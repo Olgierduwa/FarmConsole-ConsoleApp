@@ -10,6 +10,7 @@ namespace FarmConsole.Body.Services
     {
         public static Color BackgroundColor;
         public static Color ForegroundColor;
+        public static Color SelectionColor;
 
         private static List<ColorModel> Colors;
         public static void SetColorPalette()
@@ -20,6 +21,7 @@ namespace FarmConsole.Body.Services
 
             BackgroundColor = GetColorByName("black");
             ForegroundColor = GetColorByName("white");
+            SelectionColor = GetColorByName("yellow");
         }
         public static Color GetColorByName(string colorName)
         {

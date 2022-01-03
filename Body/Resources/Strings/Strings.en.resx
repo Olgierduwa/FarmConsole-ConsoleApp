@@ -205,6 +205,10 @@
     <value>Nie posiadasz odpowiedniej maszyny, aby podlać tyle pól jednocześnie!</value>
     <comment>action result no machine</comment>
   </data>
+  <data name="no money" xml:space="preserve">
+    <value>Nie posiadasz wystarczającej ilości pieniędzy!</value>
+    <comment>action result</comment>
+  </data>
   <data name="no plowed field" xml:space="preserve">
     <value>Nie możesz posiać nic na polu innym niż zaorane!</value>
     <comment>action result</comment>
@@ -370,7 +374,7 @@
     <comment>menu button</comment>
   </data>
   <data name="setting label" xml:space="preserve">
-    <value>Ustaw Spersonalizowane Opcje</value>
+    <value>Set Personalized Settings</value>
     <comment>menu label</comment>
   </data>
   <data name="override save button" xml:space="preserve">
@@ -382,15 +386,15 @@
     <comment>action name multi</comment>
   </data>
   <data name="reject button" xml:space="preserve">
-    <value>Odrzuć</value>
+    <value>Reject</value>
     <comment>menu button</comment>
   </data>
   <data name="restore default button" xml:space="preserve">
-    <value>Przywróć Domyślne Ustawienia</value>
+    <value>Restore Default Settings</value>
     <comment>menu setting button</comment>
   </data>
   <data name="save button" xml:space="preserve">
-    <value>Zapisz</value>
+    <value>Save</value>
     <comment>menu button</comment>
   </data>
   <data name="save game label" xml:space="preserve">
@@ -539,19 +543,19 @@
   </data>
   <data name="put item back" xml:space="preserve">
     <value>ODŁÓŻ</value>
-    <comment>navigation container</comment>
+    <comment>navigation</comment>
   </data>
   <data name="put items back" xml:space="preserve">
-    <value>ODKŁADAJ PRODUKTY</value>
-    <comment>navigation container</comment>
+    <value>ODKŁADAJ PRZEDMIOTY</value>
+    <comment>navigation</comment>
   </data>
   <data name="take item" xml:space="preserve">
     <value>WEŹ</value>
-    <comment>navigation container</comment>
+    <comment>navigation</comment>
   </data>
   <data name="take items" xml:space="preserve">
-    <value>WYBIERAJ PRODUKTY</value>
-    <comment>navigation container</comment>
+    <value>BIERZ PRZEDMIOTY</value>
+    <comment>navigation</comment>
   </data>
   <data name="take a look" xml:space="preserve">
     <value>Zajrzyj</value>
@@ -562,95 +566,23 @@
     <comment>action result</comment>
   </data>
   <data name="set effects volume" xml:space="preserve">
-    <value>Głośność Efektów</value>
+    <value>Effects Volume</value>
     <comment>menu setting name</comment>
   </data>
   <data name="set music volume" xml:space="preserve">
-    <value>Głośność Muzyki</value>
+    <value>Music Volume</value>
     <comment>menu setting name</comment>
   </data>
   <data name="set screen height" xml:space="preserve">
-    <value>Wysokość Ekranu</value>
+    <value>Screen Height</value>
     <comment>menu setting name</comment>
   </data>
   <data name="set screen width" xml:space="preserve">
-    <value>Szerokość Ekranu</value>
+    <value>Screen Width</value>
     <comment>menu setting name</comment>
   </data>
   <data name="language button" xml:space="preserve">
-    <value>Język</value>
+    <value>Language</value>
     <comment>menu setting button</comment>
-  </data>
-  <data name="set player move axis" xml:space="preserve">
-    <value>Kierunek Ruchu Gracza</value>
-    <comment>menu setting name</comment>
-  </data>
-  <data name="set field name" xml:space="preserve">
-    <value>Widoczność Nazwy Pola</value>
-    <comment>menu setting name</comment>
-  </data>
-  <data name="set map move axis" xml:space="preserve">
-    <value>Kierunek Ruchu Mapy</value>
-    <comment>menu setting name</comment>
-  </data>
-  <data name="default nickname" xml:space="preserve">
-    <value>Gracz</value>
-    <comment>main</comment>
-  </data>
-  <data name="amount to pay" xml:space="preserve">
-    <value>Kwota do zapłaty</value>
-    <comment>navigation cashregister</comment>
-  </data>
-  <data name="change payment method" xml:space="preserve">
-    <value>ZMIEŃ METODĘ PŁATNOŚCI</value>
-    <comment>navigation cashregister</comment>
-  </data>
-  <data name="currency" xml:space="preserve">
-    <value>$</value>
-    <comment>main</comment>
-  </data>
-  <data name="give up shopping" xml:space="preserve">
-    <value>ZREZYGNUJ Z ZAKUPÓW</value>
-    <comment>navigation cashregister</comment>
-  </data>
-  <data name="pay by card" xml:space="preserve">
-    <value>ZAPŁAĆ KARTĄ</value>
-    <comment>navigation cashregister</comment>
-  </data>
-  <data name="pay with cash" xml:space="preserve">
-    <value>ZAPŁAĆ GOTÓWKĄ</value>
-    <comment>navigation cashregister</comment>
-  </data>
-  <data name="reject product" xml:space="preserve">
-    <value>ZREZYGNUJ Z PRODUKTU</value>
-    <comment>navigation cashregister</comment>
-  </data>
-  <data name="cashregister label" xml:space="preserve">
-    <value>Sfinalizuj tranzakcję lub zrezygnuj z zakupów</value>
-    <comment>menu label</comment>
-  </data>
-  <data name="no money in wallet" xml:space="preserve">
-    <value>Nie posiadasz przy sobie wystarczającej ilości pieniędzy!</value>
-    <comment>action result</comment>
-  </data>
-  <data name="no money on card" xml:space="preserve">
-    <value>Nie wystarczająca ilość środków na karcie!</value>
-    <comment>action result</comment>
-  </data>
-  <data name="price" xml:space="preserve">
-    <value>Cena</value>
-    <comment>main</comment>
-  </data>
-  <data name="cart" xml:space="preserve">
-    <value>Koszyk</value>
-    <comment>navigation cashregister</comment>
-  </data>
-  <data name="cashregister" xml:space="preserve">
-    <value>Kasa</value>
-    <comment>navigation cashregister</comment>
-  </data>
-  <data name="no items in cart" xml:space="preserve">
-    <value>Halo! Przecież koszyk jest pusty</value>
-    <comment>action result</comment>
   </data>
 </root>

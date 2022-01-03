@@ -48,10 +48,10 @@ namespace FarmConsole.Body.Services
         public static void SetWindow()
         {
             Console.CursorVisible = false;
-            windowWidth = SettingsService.GetOptionById(0);
-            windowHeight = SettingsService.GetOptionById(1);
-            S.SetSoundVolume(SettingsService.GetOptionById(2));
-            S.SetMusicVolume(SettingsService.GetOptionById(3));
+            windowWidth = SettingsService.GetSetting("set screen width").GetRealValue;
+            windowHeight = SettingsService.GetSetting("set screen height").GetRealValue;
+            S.SetSoundVolume();
+            S.SetMusicVolume();
             Console.SetWindowSize(windowWidth, windowHeight);
             Console.SetBufferSize(windowWidth, windowHeight);
             Console.SetWindowSize(windowWidth, windowHeight);
@@ -59,8 +59,11 @@ namespace FarmConsole.Body.Services
 
         public static void Write(int X, int Y, string Text, Color color)
         {
-            Console.SetCursorPosition(X, Y);
-            Console.Write(Text.Pastel(color));
+            if(X >= 0 && X < Console.WindowWidth && Y >= 0 && Y < Console.WindowHeight)
+            {
+                Console.SetCursorPosition(X, Y);
+                Console.Write(Text.Pastel(color));
+            }
         }
     }
 }

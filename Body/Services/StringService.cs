@@ -16,8 +16,9 @@ namespace FarmConsole.Body.Services
 			string Value = Strings.ContainsKey(Key) ? Strings[Key] : "UNKNOWN STRING";
 			return Before + Value + After;
 		}
-		public static void SetStrings(string language)
+		public static void SetStrings()
 		{
+			string language = SettingsService.LanguageKey;
 			Strings = new Dictionary<string, string>();
 			ResourceManager resmanager = new ResourceManager("FarmConsole.Body.Resources.Strings.Strings", typeof(StringService).Assembly);
 			ResourceSet resourceSet = resmanager.GetResourceSet(new CultureInfo(language), true, true);

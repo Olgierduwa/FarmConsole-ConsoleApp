@@ -79,7 +79,7 @@ namespace FarmConsole.Body.Services
                 Value % MaxAmount
             };
         }
-        public static int[] ConvertStringToField(string FieldString)
+        public static short[] ConvertStringToField(string FieldString)
         {
             int Power = 1;
             int Value = 0;
@@ -88,15 +88,36 @@ namespace FarmConsole.Body.Services
                 Value += GetIndexOfSymbol(FieldString[i]) * Power;
                 Power *= SymbolsLength;
             }
-            return new int[4]
+            return new short[4]
             {
-                (Value / MaxDuration / MaxType / MaxFieldState) + 1,
-                (Value / MaxDuration / MaxType ) % MaxFieldState,
-                (Value / MaxDuration) % MaxType,
-                Value % MaxDuration
+                (short)((Value / MaxDuration / MaxType / MaxFieldState) + 1),
+                (short)(Value / MaxDuration / MaxType % MaxFieldState),
+                (short)(Value / MaxDuration % MaxType),
+                (short)(Value % MaxDuration)
             };
         }
 
+        public static string[] ConcatActionTables(string[] stateActs, string[] mainActs)
+        {
+            if (stateActs.Length == 0) return mainActs;
+            
+            List<string> ForbiddenActs = new List<string>();
+            int ActsCount = stateActs.Length + mainActs.Length;
+            foreach(string act in stateActs)
+                if(act[0] == '-')
+                {
+                    ActsCount -= 2;
+                    ForbiddenActs.Add(act[1..]);
+                }
+            string[] ActionsTable = new string[ActsCount];
+            int index = 0;
+            for (int i = 0; i < stateActs.Length; i++)
+                if (stateActs[i][0] != '-') ActionsTable[index++] = stateActs[i];
 
+            for (int i = 0; i < mainActs.Length; i++)
+                if (!ForbiddenActs.Contains(mainActs[i])) ActionsTable[index++] = mainActs[i];
+
+            return ActionsTable;
+        }
     }
 }

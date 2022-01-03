@@ -14,7 +14,8 @@ namespace FarmConsole.Body.Models
         public int ID_group { get; }
         public int ID_object { get; }
         public string Name { get; set; }
-        public bool? Show { get; set; }
+        public bool? IsVisible { get; set; }
+        public bool? IsEnable { get; set; }
         public string[] View { get; set; }
         public int Prop { get; set; }
         public Point Pos { get; set; }
@@ -37,8 +38,8 @@ namespace FarmConsole.Body.Models
             return "".PadLeft(ID_group,' ') + Name + "   " + Pos.X + "X," + Pos.Y + "Y, " + Size.Width + "W, " + Size.Height + "H";
         }
 
-        public CM(int id_group, int id_object, Point pos, Size size, string[] view, string name, int prop = 0, bool? show = true,
-                         Color color1 = new Color(), Color color2 = new Color())
+        public CM(int id_group, int id_object, Point pos, Size size, string[] view, string name, int prop = 0,
+                  bool? visable = true, bool? enable = true, Color color1 = new Color(), Color color2 = new Color())
         {
             color1 = color1 == new Color() ? static_base_color : color1;
             color2 = color2 == new Color() ? static_content_color : color2;
@@ -50,7 +51,8 @@ namespace FarmConsole.Body.Models
             this.View = view;
             this.Prop = prop;
             this.Name = name;
-            this.Show = show;
+            this.IsVisible = visable;
+            this.IsEnable = enable;
             this.Base_color = color1;
             this.Content_color = color2;
         }

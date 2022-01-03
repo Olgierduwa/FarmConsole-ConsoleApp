@@ -13,8 +13,9 @@ namespace FarmConsole.Body.Controlers
         public static void Open()
         {
             GameInstanceModel[] saves = XF.GetGameInstances();
-            int selected = 1, selCount = saves.Length + 1, selStart = 1;
-            GameSaveView.Display(saves); GameSaveView.UpdateMenuSelect(selected, selected, selCount);
+            int selected = 1, prevselected = 1, selCount = saves.Length + 1, selStart = 1;
+            GameSaveView.DisplayList(saves); GameSaveView.UpdateMenuSelect(selected, selected, selCount);
+            //GameSaveView.DisplayReview(saves, selected);
             while (OpenScreen == "Save")
             {
                 if (Console.KeyAvailable)
@@ -26,19 +27,24 @@ namespace FarmConsole.Body.Controlers
                         case ConsoleKey.Escape:
                         case ConsoleKey.Q: S.Play("K3"); OpenScreen = "Escape"; break;
                         case ConsoleKey.E:
-                            if (selected == 1 || GameSaveView.Warning() == true)
+                            if (selected == 1 || GameSaveView.Danger() == true)
                             {
+                                GameInstance.Lastmap = EscapeScreen;
                                 GameInstance.Update(selected - 1);
                                 saves = XF.GetGameInstances();
                                 selected = 1;
                                 selCount = saves.Length + 1;
                                 GameSaveView.Clean();
-                                GameSaveView.Display(saves);
+                                GameSaveView.DisplayList(saves);
                                 GameSaveView.UpdateMenuSelect(1, 1, selCount);
                             }
                             break;
                     }
-                    GameSaveView.SetPreview(saves, selected);
+                    if (selected != prevselected)
+                    {
+                        GameSaveView.DisplayReview(saves, selected,selCount);
+                        prevselected = selected;
+                    }
                 }
                 else if ((DateTime.Now - Previously).TotalMilliseconds >= FrameTime)
                 {

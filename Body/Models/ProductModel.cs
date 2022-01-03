@@ -22,7 +22,6 @@ namespace FarmConsole.Body.Models
             State = Values[2];
             Type = Values[3];
             Amount = Values[4];
-            SetID();
         }
         public static List<ProductModel> SelectProductsByAction(List<ProductModel> _Products, string _Action)
         {

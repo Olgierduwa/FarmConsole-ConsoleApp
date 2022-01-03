@@ -1,14 +1,16 @@
 ﻿using FarmConsole.Body.Engines;
+using FarmConsole.Body.Models;
 using FarmConsole.Body.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace FarmConsole.Body.Views.MenuViews
 {
     class GameNewView : MenuManager
     {
-        public static void Display()
+        public static void Display(string NickName)
         {
             Endl(3);
             H2(StringService.Get("new game label"));
@@ -26,7 +28,7 @@ namespace FarmConsole.Body.Views.MenuViews
 
             GroupStart(Console.WindowWidth * 15 / 22, Console.WindowWidth);
             Endl(Height);
-            TextBox("Olgierduwa", 50);
+            TextBox(NickName, 50);
             Slider(4, 2, 18);
             Slider(4, 2, 18);
             GroupEnd();
@@ -67,5 +69,18 @@ namespace FarmConsole.Body.Views.MenuViews
             PrintList();
             //showComponentList();
         }
+        public static void DisplayNickNameEditor(string defaultString)
+        {
+            ClearList(false);
+            Endl(Console.WindowHeight / 2 - 8);
+            GroupStart(Console.WindowWidth * 15 / 22, Console.WindowWidth);
+            TextBox(defaultString, 50, background: ColorService.SelectionColor);
+            GroupEnd();
+            PrintList();
+        }
+
+        private static List<CM> NewGameView;
+        public static void GetNewGameView() => NewGameView = ComponentList.ToList(); 
+        public static void SetNewGameView() => ComponentList = NewGameView.ToList(); 
     }
 }

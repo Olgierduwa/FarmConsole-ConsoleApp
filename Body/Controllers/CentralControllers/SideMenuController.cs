@@ -3,6 +3,7 @@ using FarmConsole.Body.Models;
 using FarmConsole.Body.Services;
 using FarmConsole.Body.Views;
 using FarmConsole.Body.Views.LocationViews;
+using FarmConsole.Body.Views.MenuViews;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -17,6 +18,7 @@ namespace FarmConsole.Body.Controlers
         private static List<ProductModel> Inventory;
         private static List<ProductModel> SelectedProducts;
         private static IDictionary<string, CM> MenuSize;
+        private static ViewModel View;
 
         private static int Scale, MenuCount, CS, PS, QS, ES;     // CurrentSelect / PreviousSelect / Q-Select / E-Select //
         private static bool Q, C, E, COM, DRAGGED;              // CurrentOpenMenu / true - Q / false - E //
@@ -26,6 +28,10 @@ namespace FarmConsole.Body.Controlers
             Inventory = GameInstance.GetProductsByScale(Scale);
             switch (menu)
             {
+                case "QFT":
+                    FieldActions = MapManager.GetField().ToProduct().MapActions; MenuCount = FieldActions.Length;
+                    COM = Q = true; CS = PS = 1; SelectFieldAction(); break;
+
                 case "QF":
                     ProductModel Field = MapManager.GetField().ToProduct(); CS = PS = 1;
                     FieldActions = Field.MapActions; MenuCount = FieldActions.Length; COM = Q = true;
@@ -60,6 +66,7 @@ namespace FarmConsole.Body.Controlers
                 case "2": FillMenuBg("LR"); QS = ES = 1; Q = E = false; break;
                 case "ALL": FillMenuBg("LRC"); QS = ES = 1; Q = E = C = false; break;
             }
+            MenuManager.Clean(WithCleaning: false);
         }
         private static void FillMenuBg(string type)
         {
@@ -69,8 +76,8 @@ namespace FarmConsole.Body.Controlers
                 cm = MenuSize[type[i].ToString()];
                 if (cm != null)
                 {
-                    if (type[i] == 'S') MapEngine.ShowMapFragment(new Point(cm.Pos.X, 4), new Size(cm.Size.Width, Console.WindowHeight - cm.Size.Height - 9));
-                    else MapEngine.ShowMapFragment(cm.Pos, cm.Size);
+                    if (type[i] == 'S') View.DisplayPixels(new Point(cm.Pos.X, 4), new Size(cm.Size.Width, Console.WindowHeight - cm.Size.Height - 8));
+                    else View.DisplayPixels(cm.Pos, new Size(cm.Size.Width, cm.Size.Height + 1));
                 }
             }
         }
@@ -187,8 +194,10 @@ namespace FarmConsole.Body.Controlers
         }
         public static void Open(ConsoleKey cki)
         {
+            View = MapEngine.Map.View;
             switch (cki)
             {
+                case ConsoleKey.Tab: if (DRAGGED) { MapManager.Drop(false); DRAGGED = false; } else Display("QFT"); break;
                 case ConsoleKey.Q: if (DRAGGED) { MapManager.Drop(false); DRAGGED = false; } else Display("QF"); break;
                 case ConsoleKey.E: if (DRAGGED) { MapManager.Drop(true); DRAGGED = false; } else Display("EP"); break;
             }
@@ -222,6 +231,7 @@ namespace FarmConsole.Body.Controlers
                                 { CS++; SideMenuView.UpdateMenuSelect(CS, PS, MenuCount); PS = CS; }
                                 break;
 
+                            case ConsoleKey.Tab:
                             case ConsoleKey.Escape: Hide("ALL"); break;
                         }
                 }

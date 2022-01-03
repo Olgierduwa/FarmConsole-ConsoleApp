@@ -9,12 +9,13 @@ namespace FarmConsole.Body.Models
     public class ObjectModel
     {
         #region DEFINITIONS
-
-        public int ID { get; set; }
         public int Category { get; set; }
         public int Scale { get; set; }
         public int Type { get; set; }
-        public int State { get; set; }
+        private int _State { get; set; }
+        public int State { get => _State; set { _State = value; Edited = true; } }
+        public short ID { get; set; }
+        private bool Edited { get; set; }
         public string StateName { get; set; }
         public string ObjectName { get; set; }
         public string Property { get; set; }
@@ -22,13 +23,13 @@ namespace FarmConsole.Body.Models
         public string[] MenuActions { get; set; }
         public string[] MapActions { get; set; }
         public bool Cutted { get; set; }
+        public short Slots { get; set; }
         public ViewModel View { get; set; }
         #endregion
 
-
-        public void SetID()
+        private void SetID()
         {
-            int Index = 0;
+            short Index = 0;
             while (Index < Objects.Count)
             {
                 if (Objects[Index].Category == Category &&
@@ -39,12 +40,13 @@ namespace FarmConsole.Body.Models
             }
             if (Index == Objects.Count) ID = 3; // error
             else ID = Index;
+            Edited = false;
         }
-        private ObjectModel Clone(object type)
+        private ObjectModel Clone(object ExpectedModel)
         {
             ObjectModel O = new ObjectModel();
-            if(type is ProductModel) O = new ProductModel();
-            if(type is FieldModel) O = new FieldModel();
+            if(ExpectedModel is ProductModel) O = new ProductModel();
+            if(ExpectedModel is FieldModel) O = new FieldModel();
             O.Category = Category;
             O.Scale = Scale;
             O.Type = Type;
@@ -56,41 +58,53 @@ namespace FarmConsole.Body.Models
             O.MenuActions = (string[])MenuActions.Clone();
             O.MapActions = (string[])MapActions.Clone();
             O.Cutted = Cutted;
+            O.Slots = Slots;
             O.View = View.ViewClone();
             return O;
         }
-        public ProductModel ToProduct()
+        public ProductModel ToProduct(int amount = -1)
         {
+            if (Edited) SetID();
             ProductModel NewProduct = (ProductModel)Objects[ID].Clone(new ProductModel());
             NewProduct.ID = ID;
             NewProduct.Amount = 1;
-            if (this is ProductModel)
+            if (amount < 0)
             {
-                NewProduct.Amount = ((ProductModel)this).Amount; 
+                ObjectModel ThisObject = this;
+                if (ThisObject is ProductModel) NewProduct.Amount = ((ProductModel)ThisObject).Amount;
             }
+            else NewProduct.Amount = amount;
             return NewProduct;
         }
         public FieldModel ToField()
         {
+            if (Edited) SetID();
             FieldModel NewField = (FieldModel)Objects[ID].Clone(new FieldModel());
             NewField.ID = ID;
-            if (this is FieldModel)
+            if (NewField.Slots > 0) NewField.Pocket = new ContainerModel(new ProductModel[0], NewField.Slots);
+            ObjectModel ThisObject = this;
+            if (ThisObject is FieldModel)
             {
-                if(((FieldModel)this).BaseView != null)
-                    NewField.BaseView = ((FieldModel)this).BaseView.ViewClone();
-                NewField.Duration = ((FieldModel)this).Duration;
-                NewField.BaseID = ((FieldModel)this).BaseID;
-                NewField.ArrivalDirection = ((FieldModel)this).ArrivalDirection;
+                if (((FieldModel)ThisObject).New == false)
+                {
+                    if (((FieldModel)ThisObject).BaseView != null) NewField.BaseView = ((FieldModel)ThisObject).BaseView.ViewClone();
+                    //if (((FieldModel)this).View != null) NewField.View = ((FieldModel)this).View.ViewClone();
+                    NewField.Duration = ((FieldModel)ThisObject).Duration;
+                    NewField.BaseID = ((FieldModel)ThisObject).BaseID;
+                    NewField.Pocket = ((FieldModel)ThisObject).Pocket;
+                    NewField.ArrivalDirection = ((FieldModel)ThisObject).ArrivalDirection;
+                }
+                else ((FieldModel)ThisObject).New = false;
             }
             return NewField;
         }
         public override string ToString()
         {
-            return ObjectName;
+            return StateName + " " + ObjectName;
         }
 
-
         private static List<ObjectModel> Objects = XF.GetObjects();
+        public static void SetObjects() => Objects = XF.GetObjects();
         public static ObjectModel GetObject(int _ID) => Objects[_ID];
         public static ObjectModel GetObject(string _Name, int _State = 0, string _StateName = "")
         {

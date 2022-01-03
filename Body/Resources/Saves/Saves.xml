@@ -2,24 +2,17 @@
 <Saves>
   <save id="1">
     <lvl>100</lvl>
-    <username>Olgierd</username>
+    <username>Gracz</username>
     <difficulty>2</difficulty>
     <gender>2</gender>
     <gamedate>10.10.2020</gamedate>
-    <lastplay>17.12.2021 11:16:16</lastplay>
-    <wallet>1260</wallet>
-    <inventory>˞Ǳ1ơÞdƠ̄dơ0dƠȊdƠƍdƠʇdơśdƟ̶dƟʹdƠndŐʇd0śdŐndŐȊdŐĐdŐƍdŐ̄dőśdő0dőÞdȿÅdȿłdȿƿdȿȼdȿʹdȿ̶dɁśdɁǘd</inventory>
-    <rules>1111111111111</rules>
-  </save>
-  <save id="2">
-    <lvl>100</lvl>
-    <username>Olgierd</username>
-    <difficulty>2</difficulty>
-    <gender>2</gender>
-    <gamedate>10.10.2020</gamedate>
-    <lastplay>17.12.2021 11:44:55</lastplay>
-    <wallet>1260</wallet>
-    <inventory>˞Ǳ1ơÞdƠ̄dơ0dƠȊdƠƍdƠʇdơśdƟ̶dƟʹdƠndŐʇd0śdŐndŐȊdŐĐdŐƍdŐ̄dőśdő0dőÞdȿÅdȿłdȿƿdȿȼdȿʹdȿ̶dɁśdɁǘd</inventory>
+    <lastplay>03.01.2022 09:32:34</lastplay>
+    <lastmap>Shop</lastmap>
+    <wallet>315</wallet>
+    <card>1260</card>
+    <inventory>˞Ǳ1±0dơǘdơśdơ0dơÞdƠʇdƠȊdƠ̄dƠndƟ̶dƟʹdƠĐdŐʇd0śd0ǘdŐndŐȊdŐĐdŐƍdŐ̄dőśdő0dőÞdȿÅdȿłdȿƿdȿȼdȿʹdȿ̶dɁśdɁǘd</inventory>
+    <cart>
+    </cart>
     <rules>1111111111111</rules>
   </save>
 </Saves>

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FarmConsole.Body.Controlers;
+using FarmConsole.Body.Models;
+using System;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -7,60 +9,58 @@ namespace FarmConsole.Body.Services
 {
     public static class SettingsService
     {
-        private static readonly int optionsCount = XF.GetOptionsCount();
-        private static int[] currentOptions = LoadOptions();
-        private static int[] optionsView = LoadOptionView();
-        private static int[] LoadOptions()
-        {
-            return XF.GetOptions();
-        }
-        private static int[] LoadOptionView()
-        {
-            int[] opt = new int[optionsCount];
+        public static bool GODMOD = true;
 
-            opt[0] = (currentOptions[0] - 120) / 20;
-            opt[1] = (currentOptions[1] - 35) / 5;
-            opt[2] = currentOptions[2];
-            opt[3] = currentOptions[3];
-            //opt[4] = currentOptions[4];
-
-            return opt;
+        public static string LanguageKey { get; set; }
+        public static Dictionary<string, string> Languages { get; set; }
+        public static string GetLanguage()
+        {
+            return Languages[LanguageKey];
+        }
+        public static void SetLanguage(int value)
+        {
+            List<string> Keys = new List<string>();
+            foreach (var lan in Languages) Keys.Add(lan.Key);
+            int index = 1;
+            while (index < Keys.Count && Keys[index] != LanguageKey) index++;
+            index += value;
+            if (index == Keys.Count) index = 1;
+            if (index == 0) index = Keys.Count - 1;
+            LanguageKey = Keys[index];
+        }
+        public static void LoadLanguages()
+        {
+            Languages = XF.GetLanguages();
+            LanguageKey = Languages["current"];
+            StringService.SetStrings();
+            foreach (var s in Settings) s.Name = StringService.Get(s.Key);
         }
 
-        public static void SaveOptions(int[] opt)
+        private static List<SettingModel> Settings { get; set; }
+        public static List<SettingModel> GetSettings => Settings;
+        public static SettingModel GetSetting(string key)
         {
-            currentOptions[0] = opt[0] * 20 + 120;
-            currentOptions[1] = opt[1] * 5 + 35;
-            currentOptions[2] = opt[2];
-            currentOptions[3] = opt[3];
-            //currentOptions[4] = opt[4];
-
-            XF.UpdateOptions(currentOptions);
-            WindowService.SetWindow();
+            foreach (var s in Settings) if (s.Key == key) return s;
+            return null;
         }
-        public static void ResetOptions()
+        public static void LoadSettings()
         {
-            XF.UpdateOptions(new int[] { });
-            currentOptions = LoadOptions();
-            optionsView = LoadOptionView();
-            WindowService.SetWindow();
+            Settings = XF.GetSettings();
+            ConvertService.SetSymbols();
+            MainController.FieldNameVisibility = Convert.ToBoolean(GetSetting("set field name").GetRealValue);
+            MainController.PlayerMovementAxis = Convert.ToBoolean(GetSetting("set player move axis").GetRealValue);
+            MainController.MapMovementAxis = Convert.ToBoolean(GetSetting("set map move axis").GetRealValue);
+            LoadLanguages();
         }
-        public static int GetOptionsCount()
+        public static void SaveSettings()
         {
-            return optionsCount;
+            XF.UpdateLanguage(LanguageKey);
+            XF.UpdateSettings(Settings);
         }
-        public static int GetOptionById(int id)
+        public static void RestoreDefaultSettings()
         {
-            return currentOptions[id];
-        }
-        public static int GetOptionViewById(int id)
-        {
-            return optionsView[id];
-        }
-        public static int[] GetOptionsView()
-        {
-            optionsView = LoadOptionView();
-            return optionsView;
+            foreach(var setting in Settings) setting.SetDefaultValue();
+            SaveSettings();
         }
     }
 }

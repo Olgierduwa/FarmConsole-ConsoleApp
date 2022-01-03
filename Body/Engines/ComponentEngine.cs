@@ -11,8 +11,6 @@ namespace FarmConsole.Body.Engines
 {
     class ComponentEngine
     {
-        protected static readonly string title = StringService.Get("title");
-        protected static readonly string foot = StringService.Get("foot");
         protected static readonly string controlsText = XF.GetText(1);
         protected static readonly string fromAuthorText = XF.GetText(2);
         protected static readonly string exitQuestion = XF.GetText(100);
@@ -25,16 +23,20 @@ namespace FarmConsole.Body.Engines
         private static readonly Color static_content_color = ColorService.GetColorByName("White");
 
         protected static List<CM> ComponentList { get => CLIST; set => CLIST = value; }
-        protected static CM GetComponentByName(string name, int id_group = -1)
+        protected static CM GetComponentByName(string name, int id_group = -1, int id_object = -1)
         {
             int index = 0;
-            while (index < CLIST.Count) if (CLIST[index].Name == name && (id_group < 0 || id_group == CLIST[index].ID_group)) break; else index++;
+            while (index < CLIST.Count)
+                if (CLIST[index].Name == name &&
+                    (id_group < 0 || id_group == CLIST[index].ID_group) &&
+                    (id_object < 0 || id_object == CLIST[index].ID_object)) break;
+                else index++;
             if (index < CLIST.Count) return CLIST[index];
             else return CLIST[0];
         }
 
         #region ComponentsControl
-        protected static void UpdateSelect(int c1, int c0, int count, int id_group = 2, int rangeProp = 13)
+        protected static void UpdateSelect(int c1, int c0, int count, int id_group = 2, int rangeProp = 13, bool Colorize = true)
         {
             if (count == 0) return;
             int idStartFrom = 3, t = 0;
@@ -42,19 +44,22 @@ namespace FarmConsole.Body.Engines
             int range = (Console.WindowHeight - rangeProp) / CLIST[idStartFrom + 1].Size.Height;
             if (c0 < c1 && c0 < count + 1 - range)
             {
-                CLIST[idStartFrom + c0].Show = false;
-                CLIST[idStartFrom + c0 + range].Show = true;
+                CLIST[idStartFrom + c0].IsVisible = false;
+                CLIST[idStartFrom + c0 + range].IsVisible = true;
             }
             else if (c0 >= c1 && c1 < count + 1 - range)
             {
-                CLIST[idStartFrom + c1].Show = true;
-                CLIST[idStartFrom + c1 + range].Show = false;
+                CLIST[idStartFrom + c1].IsVisible = true;
+                CLIST[idStartFrom + c1 + range].IsVisible = false;
             }
-            CLIST[idStartFrom + c0].Prop = 0;
-            CLIST[idStartFrom + c0].Base_color = static_base_color;
-            CLIST[idStartFrom + c1].Prop = 1;
-            CLIST[idStartFrom + c1].Base_color = ColorService.GetColorByName("Yellow");
-            foreach (CM c in CLIST) if (c.ID_group == id_group && c.ID_object > 0) switch (c.Show)
+            if (Colorize)
+            {
+                CLIST[idStartFrom + c0].Prop = 0;
+                CLIST[idStartFrom + c1].Prop = 1;
+                CLIST[idStartFrom + c0].Base_color = static_base_color;
+                CLIST[idStartFrom + c1].Base_color = ColorService.GetColorByName("Yellow");
+            }
+            foreach (CM c in CLIST) if (c.ID_group == id_group && c.ID_object > 0) switch (c.IsVisible)
                     {
                         case true: Print(c, t * c.Size.Height); break;
                         case false: t++; break;
@@ -87,26 +92,42 @@ namespace FarmConsole.Body.Engines
             if (CLIST[id].Size.Height != view.Length) Clear(CLIST[id]);
             CLIST[id].View = view;
             CLIST[id].Size = new Size(CLIST[id].Size.Width, view.Length);
-            Print(CLIST[id]);
+
+            int y = id_object - 1;
+            int p = 1;
+            while (p < id && y > 0 && CLIST[id - p].IsVisible == true) { p++; y--; }
+            y *= CLIST[id].Size.Height;
+
+            if (CLIST[id].IsVisible == true)
+                if (CLIST[id].IsEnable == true)
+                     Print(CLIST[id], y, enable: true);
+                else Print(CLIST[id], y, enable: false);
         }
         protected static void UpdateSlider(int id_group, int id_object, int count, int movement)
         {
+            int id = 0;
             for (int i = 0; i < CLIST.Count; i++)
-                if (CLIST[i].ID_group == id_group && CLIST[i].ID_object == id_object)
+                if (CLIST[i].ID_group == id_group && CLIST[i].ID_object == id_object) { id = i; break; }
+
+            int y = id_object - 1;
+            int p = 1;
+            while (p < id && y > 0 && CLIST[id - p].IsVisible == true) { p++; y--; }
+            y *= CLIST[id].Size.Height;
+
+            if (CLIST[id].IsVisible == true)
+            {
+                var c = CLIST[id];
+                c.Prop += movement;
+                int left = (c.Size.Width - 4) * c.Prop / count, right = (c.Size.Width - 4) - left;
+                c.View = new string[]
                 {
-                    CLIST[i].Prop += movement;
-                    int tick = (CLIST[i].Size.Width - 4) * CLIST[i].Prop / count + 1;
-                    Console.SetCursorPosition(CLIST[i].Pos.X, CLIST[i].Pos.Y);
-                    Console.Write(" " + ComponentViewService.Fragment(CLIST[i].Size.Width - 2, '_'));
-                    Console.SetCursorPosition(CLIST[i].Pos.X + tick, CLIST[i].Pos.Y);
-                    Console.Write("||");
-                    Console.SetCursorPosition(CLIST[i].Pos.X, CLIST[i].Pos.Y + 1);
-                    Console.Write("|" + ComponentViewService.Fragment(CLIST[i].Size.Width - 2, '_') + "|");
-                    Console.SetCursorPosition(CLIST[i].Pos.X + tick, CLIST[i].Pos.Y + 1);
-                    Console.Write("||");
-                    break;
-                }
-            Console.SetCursorPosition(0, 0);
+                    " " + ComponentViewService.Fragment(left, '_') + "||" + ComponentViewService.Fragment(right, '_') + " ",
+                    "|" + ComponentViewService.Fragment(left, '.') + "||" + ComponentViewService.Fragment(right, '.') + "|",
+                    ComponentViewService.Bot(c.Size.Width)
+                };
+
+                Print(CLIST[id], y);
+            }
         }
         protected static int GetSliderValue(int id_object, int id_group = 3)
         {
@@ -115,36 +136,37 @@ namespace FarmConsole.Body.Engines
                     return CLIST[i].Prop;
             return 0;
         }
-        protected static void SetFocus(int id_group)
+        protected static void DisableView()
         {
             int t = 0;
             foreach (CM c in CLIST)
             {
-                if ((c.ID_group >= id_group) && c.ID_object >= 0)
+                c.IsEnable = false;
+                switch (c.IsVisible)
                 {
-                    c.Show = true;
-                    Print(c);
+                    case true: Print(c, t * c.Size.Height, false); break;
+                    case false: t++; break;
+                    case null: t = 0; break;
                 }
-                else switch (c.Show)
-                    {
-                        case true: Print(c, t * c.Size.Height, false); break;
-                        case false: t++; break;
-                        case null: t = 0; break;
-                    }
             }
         }
         protected static void SetShowability(int id_group, int id_object, bool show)
         {
             foreach (CM c in CLIST)
                 if ((c.ID_group == id_group && id_object == 0 && c.ID_object > 0) || (c.ID_group == id_group && c.ID_object == id_object))
-                    if (show == true) { c.Show = true; Print(c); } else { c.Show = false; Clear(c); }
+                    if (show == true) { c.IsVisible = true; Print(c); } else { c.IsVisible = false; Clear(c); }
+        }
+        protected static void SetEnable(int id_group, int id_object, bool enable)
+        {
+            foreach (CM c in CLIST)
+                if ((c.ID_group == id_group && id_object == 0 && c.ID_object > 0) || (c.ID_group == id_group && c.ID_object == id_object)) Print(c, enable: enable);
         }
         protected static void ClearList(bool cleaning = true)
         {
             if (cleaning)
             {
                 int t = 0;
-                foreach (CM c in CLIST) switch (c.Show)
+                foreach (CM c in CLIST) switch (c.IsVisible)
                     {
                         case true: Clear(c, t * c.Size.Height); break;
                         case false: t++; break;
@@ -156,7 +178,7 @@ namespace FarmConsole.Body.Engines
         protected static void PrintList()
         {
             int t = 0;
-            foreach (CM c in CLIST) switch (c.Show)
+            foreach (CM c in CLIST) switch (c.IsVisible)
                 {
                     case true: Print(c, t * c.Size.Height); break;
                     case false: t++; break;
@@ -180,18 +202,12 @@ namespace FarmConsole.Body.Engines
             if (enable == false) base_color = content_color = static_base_color;
 
             for (int i = 0; i < c.Size.Height; i++)
-                if (c.Pos.Y + i - y < Console.WindowHeight)
-                {
-                    Console.SetCursorPosition(c.Pos.X, c.Pos.Y + i - y);
-                    Console.Write(c.View[i].Pastel(base_color));
-                }
+                WindowService.Write(c.Pos.X, c.Pos.Y + i - y, c.View[i], base_color);
 
             if (c.View[0].Length > 1)
                 for (int i = 1; i < c.Size.Height - 1; i++)
-                {
-                    Console.SetCursorPosition(c.Pos.X + 1, c.Pos.Y + i - y);
-                    Console.Write(c.View[i][1..^1].Pastel(content_color));
-                }
+                    WindowService.Write(c.Pos.X + 1, c.Pos.Y + i - y, c.View[i][1..^1], content_color);
+
             Console.SetCursorPosition(0, 0);
         }
         private static void AddComponent(string name, string[] view, bool show = true, int prop = 0, Color background = new Color(), Color foreground = new Color(), bool cut = false)
@@ -263,7 +279,7 @@ namespace FarmConsole.Body.Engines
                         }
             }
             if (name == "EN") Pos.X = 0;
-            CLIST.Add(new CM(id_group, id_object, Pos, Size, componentView, name, prop, show, background, foreground));
+            CLIST.Add(new CM(id_group, id_object, Pos, Size, componentView, name, prop, show, true, background, foreground));
             //PrintList();
         }
         #endregion
@@ -290,7 +306,7 @@ namespace FarmConsole.Body.Engines
                     id_group = CLIST[i].ID_group + 1; break;
                 }
 
-            CLIST.Add(new CM(id_group, -1, Pos, new Size(Console.WindowWidth / column, 0), new string[] { "" }, "GS", 0, null));
+            CLIST.Add(new CM(id_group, -1, Pos, new Size(Console.WindowWidth / column, 0), new string[] { "" }, "GS", 0, null, null));
         }
         protected static void GroupEnd(int column = 5)
         {
@@ -330,7 +346,7 @@ namespace FarmConsole.Body.Engines
             CLIST[index].Pos = PosS;
             CLIST[index].Size = size;
 
-            CLIST.Add(new CM(id_group, -2, Pos, new Size(Console.WindowWidth / column, 0), new string[] { "" }, "GE", 0, null));
+            CLIST.Add(new CM(id_group, -2, Pos, new Size(Console.WindowWidth / column, 0), new string[] { "" }, "GE", 0, null, null));
         }
         protected static void H1(string text)
         {
@@ -386,6 +402,7 @@ namespace FarmConsole.Body.Engines
             string[] view1 = new string[] { ComponentViewService.Top(width) };
             string[] view2 = ComponentViewService.Sides(content);
             string[] view3 = new string[] { ComponentViewService.Bot(width) };
+            if (text == "") background = foreground = ColorService.BackgroundColor;
             AddComponent("TB", view1.Concat(view2.Concat(view3).ToArray()).ToArray(), show, 0, background, foreground);
         }
         protected static void TextBoxLines(string[] lines, int width = 40, bool show = true, Color color1 = new Color(), Color color2 = new Color())
@@ -424,22 +441,40 @@ namespace FarmConsole.Body.Engines
             AddComponent("SL", new string[]
             {
                 " " + ComponentViewService.Fragment(left, '_') + "||" + ComponentViewService.Fragment(right, '_') + " ",
-                "|" + ComponentViewService.Fragment(left, '.') + "||" + ComponentViewService.Fragment(right, '.') + "|", ""
+                "|" + ComponentViewService.Fragment(left, '.') + "||" + ComponentViewService.Fragment(right, '.') + "|",
+                ComponentViewService.Bot(width + 4)
             }, show, value, ColorService.GetColorByName("White"));
         }
-        protected static void RightBar(int height, bool show = true)
+        protected static void BotBar(string text, int width = 40, int height = -1, bool show = true, Color background = new Color(), Color foreground = new Color(), int margin = 3)
         {
-            string[] view1 = new string[] { ComponentViewService.Top(Console.WindowWidth / 5 + 2, true, false) };
-            string[] view2 = ComponentViewService.SideRight(Console.WindowWidth / 5 + 1, height - 2);
-            string[] view3 = new string[] { ComponentViewService.Bot(Console.WindowWidth / 5 + 2, true, false) };
+            string[] view1 = new string[] { ComponentViewService.Top(width) };
+            string[] view2 = TextBoxView(text, width, margin);
+            for (int i = 0; i < view2.Length; i++)
+            {
+                view2[i] = view2[i].Insert(0, "|");
+                view2[i] = view2[i].Insert(view2[i].Length, "|");
+            }
+            string[] view3 = new string[] { ComponentViewService.Bot(width) };
+            string[] view4 = view1.Concat(view2.Concat(view3).ToArray()).ToArray();
+            string[] view;
+            height = height < 0 ? view4.Length : height > view4.Length ? view4.Length : height;
+            view = new string[height];
+            for (int i = 0; i < height; i++) view[i] = view4[i];
+            AddComponent("BB", view, show);
+        }
+        protected static void RightBar(int height, int width, bool show = true)
+        {
+            string[] view1 = new string[] { ComponentViewService.Top(width + 2, true, false) };
+            string[] view2 = ComponentViewService.SideRight(width + 1, height - 2);
+            string[] view3 = new string[] { ComponentViewService.Bot(width + 2, true, false) };
             string[] view = view1.Concat(view2.Concat(view3).ToArray()).ToArray();
             AddComponent("RB", view, show);
         }
-        protected static void LeftBar(int height, bool show = true)
+        protected static void LeftBar(int height, int width, bool show = true)
         {
-            string[] view1 = new string[] { ComponentViewService.Top(Console.WindowWidth / 5 + 1, false, true) };
-            string[] view2 = ComponentViewService.SideLeft(Console.WindowWidth / 5 + 0, height - 2);
-            string[] view3 = new string[] { ComponentViewService.Bot(Console.WindowWidth / 5 + 1, false, true) };
+            string[] view1 = new string[] { ComponentViewService.Top(width + 2, false, true) };
+            string[] view2 = ComponentViewService.SideLeft(width + 1, height - 2);
+            string[] view3 = new string[] { ComponentViewService.Bot(width + 2, false, true) };
             string[] view = view1.Concat(view2.Concat(view3).ToArray()).ToArray();
             AddComponent("LB", view, show);
         }
@@ -455,7 +490,7 @@ namespace FarmConsole.Body.Engines
                 i++;
                 if (i + 2 > Console.WindowHeight) { Console.SetCursorPosition(od, i); Console.Write("> > > WIECEJ SIE NIE ZMIESCI < < <"); return; }
                 Console.SetCursorPosition(od, i);
-                Console.Write(c.ID_group + " | " + c.ID_object + " | " + c.Name + " | " + c.Pos.X + " | " + c.Pos.Y + " | " + c.Size.Width + " | " + c.Size.Height + " | " + c.Prop + " | " + c.Show + "             ");
+                Console.Write(c.ID_group + " | " + c.ID_object + " | " + c.Name + " | " + c.Pos.X + " | " + c.Pos.Y + " | " + c.Size.Width + " | " + c.Size.Height + " | " + c.Prop + " | " + c.IsVisible + "             ");
             }
         }
     }

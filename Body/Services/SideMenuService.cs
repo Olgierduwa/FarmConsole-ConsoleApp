@@ -2,16 +2,17 @@
 using FarmConsole.Body.Engines;
 using FarmConsole.Body.Models;
 using FarmConsole.Body.Views.LocationViews;
+using System.Collections.Generic;
 
 namespace FarmConsole.Body.Services
 {
     class SideMenuService : MainController
     {
-        public static int TradedQuantity { get; set; }
         public static string DONE = StringService.Get("done");
 
         private static void AddAmount(int Value)
         {
+            if (Value < 0 && SettingsService.GODMOD) return;
             int Index = GameInstance.Inventory.FindIndex(x => x.Category == Action.SelectedProduct.Category
             && x.Type == Action.SelectedProduct.Type && x.Scale == Action.SelectedProduct.Scale);
             if (Index < 0) GameInstance.Inventory.Add(Action.SelectedProduct); 
@@ -21,34 +22,16 @@ namespace FarmConsole.Body.Services
                 if (GameInstance.Inventory[Index].Amount == 0) GameInstance.Inventory.RemoveAt(Index);
             }
         }
-        private static decimal GetPrice()
-        {
-            return GameInstance.Inventory[GameInstance.Inventory.IndexOf(Action.SelectedProduct)].Price;
-        }
-
         private static string DoInInventory()
         {
             string s;
             switch(Action.Name)
             {
-                // MapView Activities
                 case "destroy": AddAmount(-1); break;
-                case "build": s = MapManager.Build(Action.SelectedProduct); /*if (s == DONE) AddAmount(-1);*/ return s;
-
-                // FarmView Activities
+                case "build": s = MapManager.Build(Action.SelectedProduct); if (s == DONE) AddAmount(-1); return s;
                 case "sow": s = FarmView.Sow(Action.SelectedProduct); if (s == DONE) AddAmount(-1); return s;
                 case "fertilize": s = FarmView.Fertilize(Action.SelectedProduct); if (s == DONE) AddAmount(-1); return s;
-
-                // HouseView Activities
                 case "drink": break;
-
-                // ShopView Activities
-                case "buy": if (GetPrice() * TradedQuantity > GameInstance.Wallet) return StringService.Get("no money");
-                            GameInstance.Wallet -= TradedQuantity * GetPrice(); AddAmount(TradedQuantity); break;
-
-                case "sell": GameInstance.Wallet += TradedQuantity * GetPrice(); AddAmount(-1 * TradedQuantity); break;
-
-                // Unknown Activities
                 default: return StringService.Get("unknown action");
             }
             return DONE;
@@ -60,30 +43,52 @@ namespace FarmConsole.Body.Services
             switch (Action.Name)
             {
                 // MapView Activities
-                case "destroy": MapManager.Destroy(); break;
+                case "destroy": return MapManager.Destroy();
                 case "move": MapManager.Dragg(); break;
-                case "hide": MapManager.Destroy(); AddAmount(1); break;
+                case "hide": s = MapManager.Destroy(); if(s == DONE) AddAmount(1); return s;
                 case "rotate": return MapManager.Rotate();
                 case "dig path": MapManager.DigPath(); break;
                 case "sleep": GameService.Sleep(); break;
-                case "come in": switch (Action.SelectedProduct.ObjectName)
+                case "take a look": OpenScreen = "Container"; break;
+                case "come in":
                     {
-                        case "Dom": OpenScreen = "House"; break;
-                        case "Farma": OpenScreen = "Farm"; break;
-                        case "Sklep Spożywczy": OpenScreen = "Shop"; break;
-                        case "Drzwi wejściowe": OpenScreen = LastScreen; break;
+                        string CurrentScreen = OpenScreen;
+                        switch (Action.SelectedProduct.ObjectName)
+                        {
+                            case "Dom": OpenScreen = "House"; break;
+                            case "Farma": OpenScreen = "Farm"; break;
+                            case "Sklep Spożywczy": OpenScreen = "Shop"; break;
+                            case "Drzwi wejściowe": OpenScreen = LastScreen; break;
+                        }
+                        GameInstance.GetMap(OpenScreen).EscapeScreen = CurrentScreen;
+                        GameInstance.GetMap(OpenScreen).Delivery(GameInstance.GameDate);
+                        GameInstance.Cart = OpenScreen switch
+                        {
+                            "House" => GameInstance.Inventory,
+                            "Farm" => GameInstance.Inventory,
+                            _ => new List<ProductModel>(),
+                        };
                     } break;
-                case "come out": switch (EscapeScreen)
+                case "come out":
                     {
-                        case "House": OpenScreen = "Farm"; break;
-                        case "Shop": OpenScreen = "Street"; break;
-                        case "Farm": OpenScreen = "Street"; break;
+                        OpenScreen = MapEngine.Map.EscapeScreen;
+                        MapEngine.Map.SortContainers(GameInstance.Cart);
+                        GameInstance.Cart = OpenScreen switch
+                        {
+                            "House" => GameInstance.Inventory,
+                            "Farm" => GameInstance.Inventory,
+                            _ => new List<ProductModel>(),
+                        };
                     } break;
                 case "check": switch (Action.SelectedProduct.ObjectName)
                     {
                         case "Portfel": OpenScreen = "Portfel"; break;
                         case "Telefon": OpenScreen = "Telefon"; break;
                     } break;
+
+                // ShopView Activities
+                case "buy": OpenScreen = "CashRegister"; break;
+                case "sell": OpenScreen = "CashRegister"; break;
 
                 // FarmView Activities
                 case "mow grass": FarmView.MowGrass(); break;
@@ -109,7 +114,7 @@ namespace FarmConsole.Body.Services
             {
                 var Rule = RuleModel.Find(GameInstance.Rules, "multi " + Action.Name);
                 if (Rule == null) return MakeAction();
-                if (Rule.IsAllowed) Action.IsInProcess = true;
+                if (Rule.IsAllowed || SettingsService.GODMOD) Action.IsInProcess = true;
                 else return StringService.Get(Rule.Name) + " (" + StringService.Get("lvl") + ":" + Rule.RequiredLevel + ")";
             }
             return MakeAction();

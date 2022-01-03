@@ -12,17 +12,16 @@ namespace FarmConsole.Body.Views.LocationViews
     {
         public static void MowGrass()
         {
-            //FieldModel Field = GetField();
-            GetField().State = 0;
-            //SetField(GetPos(), Field);
-            ShowField(GetPos());
+            FieldModel Field = GetField();
+            Field.State = 0;
+            Field = Field.ToField();
+            SetField(GetPos(), Field);
             ClearSelectedFields(1);
         }
 
         public static string Plow()
         {
             SetField(GetPos(), ObjectModel.GetObject("Pole").ToField());
-            ShowField(GetPos());
             ClearSelectedFields(1);
             return StringService.Get("done");
         }
@@ -31,7 +30,6 @@ namespace FarmConsole.Body.Views.LocationViews
         {
             if (GetField().ObjectName != "Pole") { ClearSelectedFields(); return StringService.Get("no plowed field"); }
             SetField(GetPos(), ObjectModel.GetObject(Product.Property).ToField());
-            ShowField(GetPos());
             ClearSelectedFields(1);
             return StringService.Get("done");
         }
@@ -42,10 +40,8 @@ namespace FarmConsole.Body.Views.LocationViews
             if (Field.Category != 1 || Field.Type < 1) return StringService.Get("cant fertilizating");
             if (Field.Duration / 10 > 1) return StringService.Get("already fertilized");
 
-            Field.Duration += Convert.ToInt32(Product.Property);
-            Field.ColorizeView("Bluer");
-            SetField(GetPos(), Field);
-            ShowField(GetPos());
+            Field.Duration += (short)Convert.ToInt32(Product.Property);
+            Field.View.ColorizePixels("Bluer");
             ClearSelectedFields(1);
             return StringService.Get("done");
         }
@@ -56,9 +52,7 @@ namespace FarmConsole.Body.Views.LocationViews
             if ((Field.Duration / 10) % 2 == 1) return StringService.Get("already watered");
 
             Field.Duration += 10;
-            Field.ColorizeView("Darker");
-            SetField(GetPos(), Field);
-            ShowField(GetPos());
+            Field.View.ColorizePixels("Darker");
             ClearSelectedFields(1);
             return StringService.Get("done");
         }
@@ -66,7 +60,6 @@ namespace FarmConsole.Body.Views.LocationViews
         public static string Collect()
         {
             SetField(GetPos(), ObjectModel.GetObject("Pole").ToField());
-            ShowField(GetPos());
             ClearSelectedFields(1);
             return StringService.Get("done");
         }
@@ -74,7 +67,6 @@ namespace FarmConsole.Body.Views.LocationViews
         public static void MakeFertilize()
         {
             SetField(GetPos(), ObjectModel.GetObject("Pole").ToField());
-            ShowField(GetPos());
             ClearSelectedFields(1);
         }
     }

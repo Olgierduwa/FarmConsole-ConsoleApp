@@ -3,49 +3,60 @@ using FarmConsole.Body.Models;
 using FarmConsole.Body.Services;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 
 namespace FarmConsole.Body.Views.MenuViews
 {
-    class OptionsView : MenuManager
+    class SettingsView : MenuManager
     {
         public static void Display()
         {
             ClearList(false);
-            string[] names = XF.GetOptionsNames();
-            int optionsCount = SettingsService.GetOptionsCount();
-            int freeSpace = (Console.WindowHeight - 18);
-            int showCount = freeSpace / 3;
+
+            List<SettingModel> Settings = SettingsService.GetSettings;
+
+            int showCount = (Console.WindowHeight - 15) / 3;
             int endlCount = 3;
-            if (showCount > optionsCount) endlCount += (showCount - optionsCount) * 3 / 2;
+            if (showCount > Settings.Count + 2) endlCount += (showCount - Settings.Count - 2) * 3 / 2;
 
             Endl(3);
-            H2(StringService.Get("option label"));
+            H2(StringService.Get("setting label"));
             GroupStart(0);
 
             GroupStart(2);
             Endl(endlCount);
-            for (int i = 0; i < optionsCount; i++)
-                if (i <= showCount) TextBox(StringService.Get(names[i]));
-                else TextBox(StringService.Get(names[i]), show: false);
+            for (int i = 0; i < Settings.Count; i++)
+                if (i < showCount) TextBox(Settings[i].Name);
+                else TextBox(Settings[i].Name, show: false);
 
-            if (optionsCount < showCount) TextBox(StringService.Get("restore default button"));
+            if (Settings.Count < showCount) TextBox(StringService.Get("language button"));
+            else TextBox(StringService.Get("language button"), show: false);
+
+            if (Settings.Count + 1 < showCount) TextBox(StringService.Get("restore default button"));
             else TextBox(StringService.Get("restore default button"), show: false);
+
             GroupEnd();
 
             GroupStart(4);
             Endl(endlCount);
-            Slider(6, SettingsService.GetOptionViewById(0));
-            Slider(6, SettingsService.GetOptionViewById(1));
-            Slider(6, SettingsService.GetOptionViewById(2));
-            Slider(6, SettingsService.GetOptionViewById(3));
-            //slider(6, OPTIONS.getOptionViewById(4));
+            for (int i = 0; i < Settings.Count; i++)
+                if (i < showCount) Slider(Settings[i].GetMaxSliderValue, Settings[i].GetSliderValue);
+                else Slider(Settings[i].GetMaxSliderValue, Settings[i].GetSliderValue, show: false);
+
+            if (Settings.Count < showCount) TextBox(SettingsService.GetLanguage());
+            else TextBox(SettingsService.GetLanguage(), show: false);
+
+            if (Settings.Count + 1 < showCount) TextBox("");
+            else TextBox("", show: false);
+
             GroupEnd();
 
             GroupStart(Console.WindowWidth / 2 - 10, Console.WindowWidth);
             Endl(Console.WindowHeight - 12);
             TextBox(StringService.Get("reject button", " Q"), 19, margin: 0);
             GroupEnd();
+
             GroupStart(Console.WindowWidth / 2 + 11, Console.WindowWidth);
             Endl(Console.WindowHeight - 12);
             TextBox(StringService.Get("save button", " E"), 19, margin: 0);

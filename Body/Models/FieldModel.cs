@@ -7,10 +7,12 @@ namespace FarmConsole.Body.Models
 {
     public class FieldModel : ObjectModel
     {
-        public int Duration { get; set; }
-        public int ArrivalDirection { get; set; }
-        public int BaseID { get; set; }
+        public short Duration { get; set; }
+        public short ArrivalDirection { get; set; }
+        public short BaseID { get; set; }
         public ViewModel BaseView { get; set; }
+        public ContainerModel Pocket { get; set; }
+        public bool New { get; set; }
 
         public override string ToString()
         {
@@ -19,42 +21,13 @@ namespace FarmConsole.Body.Models
         public FieldModel() { }
         public FieldModel(string _ModelAsString, int _Scale)
         {
-            int[] Values = ConvertService.ConvertStringToField(_ModelAsString);
+            short[] Values = ConvertService.ConvertStringToField(_ModelAsString);
             Category = Values[0];
             State = Values[1];
             Type = Values[2];
             Duration = Values[3];
             Scale = _Scale;
-            SetID();
-        }
-        public void ColorizeView(string _Type, int _Procent = 0)
-        {
-            var Views = new List<ViewModel>() { View };
-            if (BaseView != null) Views.Add(BaseView);
-            foreach (var view in Views)
-                foreach (var word in view.GetWords())
-                {
-                    Color color = word.Color;
-                    if (_Procent > 0)
-                        switch (_Type)
-                        {
-                            case "Darker": color = ColorService.Darker(color); break;
-                            case "Brighter": color = ColorService.Brighter(color); break;
-                            case "Bluer": color = ColorService.Bluer(color); break;
-                            case "Greener": color = ColorService.Greener(color); break;
-                            case "Yellower": color = ColorService.Yellower(color); break;
-                        }
-                    else
-                        switch (_Type)
-                        {
-                            case "Darker": color = ColorService.Darker(color, _Procent); break;
-                            case "Brighter": color = ColorService.Brighter(color, _Procent); break;
-                            case "Bluer": color = ColorService.Bluer(color, _Procent); break;
-                            case "Greener": color = ColorService.Greener(color, _Procent); break;
-                            case "Yellower": color = ColorService.Yellower(color, _Procent); break;
-                        }
-                    word.Color = color;
-                }
+            New = true;
         }
     }
 }

@@ -37,7 +37,19 @@ namespace FarmConsole.Body.Models
             while (index < Maps.Count) if (Maps[index].Name == Location) break; else index++;
             if (index != Maps.Count) Maps[index] = Map;
         }
-
+        public void ExpandMap(string Location, Point Vector)
+        {
+            MapModel map = GetMap(Location);
+            map.Expand(Vector);
+            SetMap(Location, map);
+        }
+        public bool IsLocation(string Screen)
+        {
+            int index = 0;
+            while (index < Maps.Count) if (Maps[index].Name == Screen) break; else index++;
+            if (index == Maps.Count) return false;
+            return true;
+        }
         public void ReloadMaps(string MapLoaded = "")
         {
             foreach (var map in Maps) map.Reload();
@@ -82,7 +94,7 @@ namespace FarmConsole.Body.Models
         public GameInstanceModel(string name, int difficulty, int gender)
         {
             ID = 0;
-            LVL = 100;
+            LVL = SettingsService.GODMOD ? 100: 1;
             UserName = name;
             Difficulty = difficulty;
             Gender = gender;
@@ -100,144 +112,152 @@ namespace FarmConsole.Body.Models
             BuildFarmMap();
             BuildHouseMap();
             BuildStreetMap();
-            BuildShopMap();
-            SetMapSupply("Shop");
+            BuildTownHall();
+            BuildShopMap("TradingHouse", new Point(3, 0), 12);
+            BuildShopMap("AgroShop", new Point(0, -3));
+            BuildShopMap("Supermarket", new Point(0, -3));
+            BuildShopMap("ConstructionShop", new Point(0, -3));
         }
 
         private void BuildFarmMap()
         {
             int Size = 6;
-            MapModel FarmMap = new MapModel("Farm", "Trawa", new Point(-2, -2), Size);
+            MapModel FarmMap = new MapModel("Farm", "grass", new Point(-2, -2), Size, _AccessLevel: 3);
             FarmMap.EscapeScreen = "Street";
 
-            // płot
-            for (int x = 2; x < Size; x++) FarmMap.SetField(x, 1, ObjectModel.GetObject("Płot", 1).ToField());
-            for (int y = 2; y < Size; y++) FarmMap.SetField(1, y, ObjectModel.GetObject("Płot", 0).ToField());
-            for (int x = 2; x < Size; x++) FarmMap.SetField(x, Size, ObjectModel.GetObject("Płot", 1).ToField());
-            for (int y = 2; y < Size; y++) FarmMap.SetField(Size, y, ObjectModel.GetObject("Płot", 0).ToField());
-            FarmMap.SetField(1, 1, ObjectModel.GetObject("Płot", 5).ToField());
-            FarmMap.SetField(Size, 1, ObjectModel.GetObject("Płot", 4).ToField());
-            FarmMap.SetField(1, Size, ObjectModel.GetObject("Płot", 2).ToField());
-            FarmMap.SetField(Size, Size, ObjectModel.GetObject("Płot", 3).ToField());
-
-
-            FarmMap.SetField(Size - 2, Size - 3, ObjectModel.GetObject("Sklep Spożywczy").ToField());
-
-            // obiekty
-            FarmMap.SetField(1, 2, ObjectModel.GetObject("Dom").ToField());
-            FarmMap.SetField(3, 1, ObjectModel.GetObject("Silos").ToField());
-            FarmMap.SetField(4, 1, ObjectModel.GetObject("Silos").ToField());
-            FarmMap.SetField(1, 4, ObjectModel.GetObject("Wieża Ciśnień").ToField());
-            FarmMap.SetField(Size, Size - 2, ObjectModel.GetObject("Brama").ToField());
+            BuildingService.BuildFence(FarmMap, new Point(1, 1), new Size(Size, Size));
+            //FarmMap.SetField(Size - 2, Size - 3, ObjectModel.GetObject("town hall").ToField());
+            FarmMap.SetField(1, 2, ObjectModel.GetObject("house").ToField());
+            FarmMap.SetField(3, 1, ObjectModel.GetObject("silo").ToField());
+            FarmMap.SetField(4, 1, ObjectModel.GetObject("silo").ToField());
+            FarmMap.SetField(1, 4, ObjectModel.GetObject("water tower").ToField());
+            FarmMap.SetField(Size, Size - 2, ObjectModel.GetObject("gate").ToField());
 
             Maps.Add(FarmMap);
         }
         private void BuildHouseMap()
         {
             int Size = 8;
-            MapModel HouseMap = new MapModel("House", "Drewniana Podłoga", new Point(-4, 0), Size);
-
-            // ściany zewnętrzne
-            for (int x = 2; x <= Size; x++) HouseMap.SetField(x, 1, ObjectModel.GetObject("Sztuczna Trawa").ToField());
-            for (int y = 2; y <= Size; y++) HouseMap.SetField(1, y, ObjectModel.GetObject("Sztuczna Trawa").ToField());
-            for (int x = 2; x <= Size; x++) HouseMap.SetField(x, Size, ObjectModel.GetObject("Sztuczna Trawa").ToField());
-            for (int y = 2; y <= Size; y++) HouseMap.SetField(Size, y, ObjectModel.GetObject("Sztuczna Trawa").ToField());
-            for (int x = 2; x < Size; x++) HouseMap.SetField(x, 1, ObjectModel.GetObject("Ściana", 2).ToField());
-            for (int y = 2; y < Size; y++) HouseMap.SetField(1, y, ObjectModel.GetObject("Ściana", 3).ToField());
-            for (int x = 2; x < Size; x++) HouseMap.SetField(x, Size, ObjectModel.GetObject("Ściana", 0).ToField());
-            for (int y = 2; y < Size; y++) HouseMap.SetField(Size, y, ObjectModel.GetObject("Ściana", 1).ToField());
-            HouseMap.SetField(1, Size, ObjectModel.GetObject("Ściana", 8).ToField());
-            HouseMap.SetField(Size, Size, ObjectModel.GetObject("Ściana", 9).ToField());
-            HouseMap.SetField(Size, 1, ObjectModel.GetObject("Ściana", 10).ToField());
-            HouseMap.SetField(1, 1, ObjectModel.GetObject("Ściana", 11).ToField());
+            MapModel HouseMap = new MapModel("House", "wooden floor", new Point(-4, Size), Size, _AccessLevel: 3);
+            BuildingService.BuildRectangle(HouseMap, new Point(1, 1), new Size(Size, Size), "synthetic grass", false);
+            BuildingService.BuildWalls(HouseMap, new Point(1, 1), new Size(Size, Size));
 
             // drzwi wejściowe, okna i meble
-            HouseMap.SetField(4, Size, ObjectModel.GetObject("Kamienna Płyta").ToField());
-            HouseMap.SetField(4, Size, ObjectModel.GetObject("Drzwi wejściowe", 0).ToField());
-            HouseMap.SetField(3, 1, ObjectModel.GetObject("Okno", 2).ToField());
-            HouseMap.SetField(1, 3, ObjectModel.GetObject("Okno", 3).ToField());
-            HouseMap.SetField(3, Size, ObjectModel.GetObject("Okno", 0).ToField());
-            HouseMap.SetField(Size, 3, ObjectModel.GetObject("Okno", 1).ToField());
-            HouseMap.SetField(Size, 4, ObjectModel.GetObject("Okno", 1).ToField());
-            HouseMap.SetField(4, 4, ObjectModel.GetObject("Łóżko").ToField());
+            HouseMap.SetField(4, Size, ObjectModel.GetObject("stone floor").ToField());
+            HouseMap.SetField(4, Size, ObjectModel.GetObject("front door", 0).ToField());
+            HouseMap.SetField(3, 1, ObjectModel.GetObject("window", 2).ToField());
+            HouseMap.SetField(1, 3, ObjectModel.GetObject("window", 3).ToField());
+            HouseMap.SetField(3, Size, ObjectModel.GetObject("window", 0).ToField());
+            HouseMap.SetField(Size, 3, ObjectModel.GetObject("window", 1).ToField());
+            HouseMap.SetField(Size, 4, ObjectModel.GetObject("window", 1).ToField());
+            HouseMap.SetField(4, 4, ObjectModel.GetObject("bed").ToField());
 
             Maps.Add(HouseMap);
         }
-        private void BuildShopMap()
-        {
-            int Size = 7;
-            MapModel ShopMap = new MapModel("Shop", "Kafelkowa Podłoga", new Point(0, -3), Size);
-
-            // ściany zewnętrzne
-            for (int x = 2; x <= Size; x++) ShopMap.SetField(x, 1, ObjectModel.GetObject("Sztuczna Trawa").ToField());
-            for (int y = 2; y <= Size; y++) ShopMap.SetField(1, y, ObjectModel.GetObject("Sztuczna Trawa").ToField());
-            for (int x = 2; x <= Size; x++) ShopMap.SetField(x, Size, ObjectModel.GetObject("Sztuczna Trawa").ToField());
-            for (int y = 2; y <= Size; y++) ShopMap.SetField(Size, y, ObjectModel.GetObject("Sztuczna Trawa").ToField());
-            for (int x = 2; x < Size; x++) ShopMap.SetField(x, 1, ObjectModel.GetObject("Ściana", 2).ToField());
-            for (int y = 2; y < Size; y++) ShopMap.SetField(1, y, ObjectModel.GetObject("Ściana", 3).ToField());
-            for (int x = 2; x < Size; x++) ShopMap.SetField(x, Size, ObjectModel.GetObject("Ściana", 0).ToField());
-            for (int y = 2; y < Size; y++) ShopMap.SetField(Size, y, ObjectModel.GetObject("Ściana", 1).ToField());
-            ShopMap.SetField(1, Size, ObjectModel.GetObject("Ściana", 8).ToField());
-            ShopMap.SetField(Size, Size, ObjectModel.GetObject("Ściana", 9).ToField());
-            ShopMap.SetField(Size, 1, ObjectModel.GetObject("Ściana", 10).ToField());
-            ShopMap.SetField(1, 1, ObjectModel.GetObject("Ściana", 11).ToField());
-
-            // drzwi wejściowe, okna i meble
-            ShopMap.SetField(Size, 4, ObjectModel.GetObject("Kamienna Płyta").ToField());
-            ShopMap.SetField(Size, 4, ObjectModel.GetObject("Drzwi wejściowe", 2).ToField());
-            ShopMap.SetField(2, Size/2+1, ObjectModel.GetObject("Kasa", 1).ToField());
-            ShopMap.SetField(3, Size, ObjectModel.GetObject("Okno", 0).ToField());
-            ShopMap.SetField(4, Size, ObjectModel.GetObject("Okno", 0).ToField());
-            ShopMap.SetField(5, Size, ObjectModel.GetObject("Okno", 0).ToField());
-            ShopMap.SetField(3, 1, ObjectModel.GetObject("Okno", 2).ToField());
-            ShopMap.SetField(4, 1, ObjectModel.GetObject("Okno", 2).ToField());
-            ShopMap.SetField(5, 1, ObjectModel.GetObject("Okno", 2).ToField());
-            ShopMap.SetField(Size, 3, ObjectModel.GetObject("Okno", 1).ToField());
-            ShopMap.SetField(Size, 5, ObjectModel.GetObject("Okno", 1).ToField());
-            ShopMap.SetField(1, 3, ObjectModel.GetObject("Okno", 3).ToField());
-            ShopMap.SetField(1, 5, ObjectModel.GetObject("Okno", 3).ToField());
-
-            Maps.Add(ShopMap);
-        }
         private void BuildStreetMap()
         {
-            int Size = 8;
-            MapModel StreetMap = new MapModel("Street", "Trawa", new Point(2, Size * 3 / 4 + 1), Size);
+            int Size = 10;
+            MapModel StreetMap = new MapModel("Street", "grass", new Point(1, Size * 3 / 4), Size);
 
             Random rnd = new Random();
             for (int x = 2; x < Size; x++)
                 for (int y = 2; y < Size; y++)
                     if (rnd.Next() % 100 < 80 && rnd.Next() % 100 > 40)
-                        StreetMap.SetField(x, y, ObjectModel.GetObject("Świerk", rnd.Next() % 4).ToField());
+                        StreetMap.SetField(x, y, ObjectModel.GetObject("spruce", rnd.Next() % 4).ToField());
 
-            for (int x = 1; x <= Size; x++) StreetMap.SetField(x, 1, ObjectModel.GetObject("Świerk", rnd.Next() % 4).ToField());
-            for (int y = 1; y <= Size; y++) StreetMap.SetField(1, y, ObjectModel.GetObject("Świerk", rnd.Next() % 4).ToField());
-            for (int x = 1; x <= Size; x++) StreetMap.SetField(x, Size, ObjectModel.GetObject("Świerk", rnd.Next() % 4).ToField());
-            for (int y = 1; y <= Size; y++) StreetMap.SetField(Size, y, ObjectModel.GetObject("Świerk", rnd.Next() % 4).ToField());
+            for (int x = 1; x <= Size; x++) StreetMap.SetField(x, 1, ObjectModel.GetObject("spruce", rnd.Next() % 4).ToField());
+            for (int y = 1; y <= Size; y++) StreetMap.SetField(1, y, ObjectModel.GetObject("spruce", rnd.Next() % 4).ToField());
+            for (int x = 1; x <= Size; x++) StreetMap.SetField(x, Size, ObjectModel.GetObject("spruce", rnd.Next() % 4).ToField());
+            for (int y = 1; y <= Size; y++) StreetMap.SetField(Size, y, ObjectModel.GetObject("spruce", rnd.Next() % 4).ToField());
 
-            for (int y = 1; y <= Size; y++) StreetMap.SetField(Size - 2, y, ObjectModel.GetObject("Droga", 0).ToField());
-            for (int y = 3; y <= Size * 2 / 3 + 1; y++) StreetMap.SetField(Size - 2, y, ObjectModel.GetObject("Droga z Chodnikiem", 0).ToField());
-            StreetMap.SetField(Size - 2, Size * 3 / 4, ObjectModel.GetObject("Droga z Chodnikiem", 7).ToField());
-            for (int x = 1; x < Size - 2; x++) StreetMap.SetField(x, Size * 3 / 4, ObjectModel.GetObject("Ścieżka", 1).ToField());
-            for (int x = 1; x <= Size; x++) StreetMap.SetField(x, 2, ObjectModel.GetObject("Tory", 1).ToField());
-            StreetMap.SetField(Size - 2, 2, ObjectModel.GetObject("Przejazd Kolejowy", 1).ToField());
-            StreetMap.SetField(1, Size * 3 / 4, ObjectModel.GetObject("Farma", 1).ToField());
-            StreetMap.SetField(Size - 3, Size * 3 / 4 - 1, ObjectModel.GetObject("Sklep Spożywczy", 0).ToField());
+            for (int y = 1; y <= Size; y++) StreetMap.SetField(Size - 3, y, ObjectModel.GetObject("road", 0).ToField());
+            for (int y = 3; y <= Size * 2 / 3 + 1; y++) StreetMap.SetField(Size - 3, y, ObjectModel.GetObject("road with sidewalk", 0).ToField());
+            for (int x = Size - 3; x <= Size; x++) StreetMap.SetField(x, Size * 3 / 4 - 1, ObjectModel.GetObject("road with sidewalk", 1).ToField());
+
+            BuildingService.BuildParking(StreetMap, new Point(Size - 2, Size * 3 / 4), new Size(3, 2), true);
+
+            StreetMap.SetField(Size - 3, Size * 3 / 4, ObjectModel.GetObject("road with sidewalk", 7).ToField());
+            StreetMap.SetField(Size - 3, Size * 3 / 4 - 1, ObjectModel.GetObject("road with sidewalk", 9).ToField());
+            for (int x = 1; x < Size - 3; x++) StreetMap.SetField(x, Size * 3 / 4, ObjectModel.GetObject("path", 1).ToField());
+            for (int x = 1; x <= Size; x++) StreetMap.SetField(x, 2, ObjectModel.GetObject("rails", 1).ToField());
+            StreetMap.SetField(Size - 3, 2, ObjectModel.GetObject("rail crossing", 1).ToField());
+            StreetMap.SetField(1, Size * 3 / 4, ObjectModel.GetObject("farm", 0).ToField());
+
+            StreetMap.SetField(Size - 4, Size * 3 / 4 - 1, ObjectModel.GetObject("agro shop", 0).ToField());
+            StreetMap.SetField(Size - 4, Size * 3 / 4 - 2, ObjectModel.GetObject("supermarket", 0).ToField());
+            StreetMap.SetField(Size - 4, Size * 3 / 4 - 3, ObjectModel.GetObject("construction shop", 0).ToField());
+            StreetMap.SetField(Size - 4, Size * 3 / 4 - 4, ObjectModel.GetObject("town hall", 0).ToField());
+
+            StreetMap.SetField(Size - 1, Size / 2 - 1, ObjectModel.GetObject("trading house", 0).ToField());
+            StreetMap.SetField(Size - 2, Size / 2 - 1, ObjectModel.GetObject("trading house", 1).ToField());
+            StreetMap.SetField(Size - 2, Size / 2, ObjectModel.GetObject("trading house", 2).ToField());
+            StreetMap.SetField(Size - 1, Size / 2, ObjectModel.GetObject("trading house", 3).ToField());
 
             Maps.Add(StreetMap);
         }
+        private void BuildTownHall()
+        {
+            int Size = 9;
+            MapModel TownHallMap = new MapModel("TownHall", "stone floor", new Point(Size, 5), Size);
+            BuildingService.BuildRectangle(TownHallMap, new Point(1, 1), new Size(Size, Size), "synthetic grass", false);
+            BuildingService.BuildWalls(TownHallMap, new Point(1, 1), new Size(Size, Size));
+            for (int y = 2; y < 4; y++) TownHallMap.SetField(6, y, ObjectModel.GetObject("wall", 3).ToField());
+            for (int y = 7; y < Size; y++) TownHallMap.SetField(4, y, ObjectModel.GetObject("wall", 1).ToField());
+            for (int x = 2; x < 7; x++) TownHallMap.SetField(x, 4, ObjectModel.GetObject("wall", 0).ToField());
+            for (int x = 5; x < Size; x++) TownHallMap.SetField(x, 6, ObjectModel.GetObject("wall", 2).ToField());
+            TownHallMap.SetField(4, 4, ObjectModel.GetObject("wall", 5).ToField());
+            TownHallMap.SetField(4, 6, ObjectModel.GetObject("wall", 6).ToField());
+
+            TownHallMap.SetField(5, 4, ObjectModel.GetObject("door", 0, sufix: "*notary office").ToField());
+            TownHallMap.SetField(4, 5, ObjectModel.GetObject("door", 2, sufix: "*no one office").ToField());
+            TownHallMap.SetField(5, 6, ObjectModel.GetObject("door", 4, sufix: "*no one office").ToField());
+            TownHallMap.SetField(Size, 5, ObjectModel.GetObject("stone floor", 0).ToField());
+            TownHallMap.SetField(Size, 5, ObjectModel.GetObject("front door", 2).ToField());
+
+            Maps.Add(TownHallMap);
+            SetMapSupply("TownHall");
+        }
+
+
+        private void BuildShopMap(string ShopName, Point Position, int Size = 7)
+        {
+            MapModel ShopMap = new MapModel(ShopName, "tiled floor", Position, Size);
+            BuildingService.BuildRectangle(ShopMap, new Point(1, 1), new Size(Size, Size), "synthetic grass", false);
+            BuildingService.BuildWalls(ShopMap, new Point(1, 1), new Size(Size, Size));
+
+            ShopMap.SetField(3, Size, ObjectModel.GetObject("window", 0).ToField());
+            ShopMap.SetField(4, Size, ObjectModel.GetObject("window", 0).ToField());
+            ShopMap.SetField(5, Size, ObjectModel.GetObject("window", 0).ToField());
+            ShopMap.SetField(3, 1, ObjectModel.GetObject("window", 2).ToField());
+            ShopMap.SetField(4, 1, ObjectModel.GetObject("window", 2).ToField());
+            ShopMap.SetField(5, 1, ObjectModel.GetObject("window", 2).ToField());
+            ShopMap.SetField(Size, 3, ObjectModel.GetObject("window", 1).ToField());
+            ShopMap.SetField(Size, 5, ObjectModel.GetObject("window", 1).ToField());
+            ShopMap.SetField(1, 3, ObjectModel.GetObject("window", 3).ToField());
+            ShopMap.SetField(1, 5, ObjectModel.GetObject("window", 3).ToField());
+
+            // drzwi wejściowe, okna i meble
+            int doorstate = Position.X == 1 ? 6 : Position.Y == 1 ? 4 : Position.X == 0 ? 2 : 0;
+            if (Position.X < 1) Position.X = Size + Position.X;
+            if (Position.Y < 1) Position.Y = Size + Position.Y;
+            ShopMap.SetField(Position.X, Position.Y, ObjectModel.GetObject("stone floor").ToField());
+            ShopMap.SetField(Position.X, Position.Y, ObjectModel.GetObject("front door", doorstate).ToField());
+
+            Maps.Add(ShopMap);
+            SetMapSupply(ShopName);
+        }
         public void SetMapSupply(string MapName)
         {
-            var ShopMap = GetMap(MapName);
             var Supply = XF.GetSupply(MapName);
-            var ContainerList = Supply.ChildNodes;
-            if (ContainerList != null)
+            if (Supply != null && Supply.ChildNodes != null)
             {
+                var ContainerList = Supply.ChildNodes;
+                var ShopMap = GetMap(MapName);
                 var Containers = new ContainerModel[ContainerList.Count];
                 var ContainersPos = new Point[ContainerList.Count];
                 var DeliveryDays = new List<int>();
                 var DeliveryDaysString = Supply.Attributes["deliverydays"].Value.Split(',');
-                foreach (var day in DeliveryDaysString) DeliveryDays.Add(int.Parse(day));
+                foreach (var day in DeliveryDaysString) if (day.Length > 0) DeliveryDays.Add(int.Parse(day));
                 for (int c = 0; c < ContainerList.Count; c++)
                 {
                     var Coords = ContainerList[c].Attributes["pos"].Value.Split(',');
@@ -251,13 +271,18 @@ namespace FarmConsole.Body.Models
                     for (int s = 0; s < ContainerList[c].ChildNodes.Count; s++)
                         Slots[s] = ContainerList[c].ChildNodes[s].InnerText;
 
+                    foreach (XmlAttribute Attribute in ContainerList[c].Attributes)
+                        if (Attribute.Name == "mapAct")
+                            Field.MapActions = ConvertService.ConcatActionTables(Attribute.Value.Split(','), Field.MapActions);
+
                     var Container = new ContainerModel(Slots, Field.Slots, ContainerSufix);
                     ContainersPos[c] = ContainerPos;
                     Containers[c] = Container;
                     Field.Pocket = Container;
                     ShopMap.SetField(ContainerPos.X, ContainerPos.Y, Field);
-                }
-                ShopMap.SetSupply(new SupplyModel(Containers, ContainersPos, DeliveryDays, ShopMap.MapSize));
+                } 
+                if (DeliveryDaysString[0].Length > 0)
+                    ShopMap.SetSupply(new SupplyModel(Containers, ContainersPos, DeliveryDays, ShopMap.MapSize));
                 SetMap(MapName, ShopMap);
             }
         }
@@ -267,11 +292,11 @@ namespace FarmConsole.Body.Models
             {
                 Inventory = new List<ProductModel>();
                 var objects = ObjectModel.GetObjects(_State: 0);
-                foreach (var o in objects) if (o.Category > 1) Inventory.Add(o.ToProduct(99999));
+                foreach (var o in objects) if (o.Category > 1) Inventory.Add(o.ToProduct(100));
             }
             else Inventory = new List<ProductModel>
             {
-                ObjectModel.GetObject("Portfel").ToProduct(1)
+                ObjectModel.GetObject("wallet").ToProduct(1)
             };
         }
         

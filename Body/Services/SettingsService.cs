@@ -10,6 +10,8 @@ namespace FarmConsole.Body.Services
     public static class SettingsService
     {
         public static bool GODMOD = true;
+        public static string[] BLOCKEDACTIONS_LVL2 = new string[] { "hide", "destroy", "build", "dig path", "plow" };
+        public static string[] BLOCKEDACTIONS_LVL1 = new string[] { "rotate", "move", "lock", "unlock" };
 
         public static string LanguageKey { get; set; }
         public static Dictionary<string, string> Languages { get; set; }
@@ -32,8 +34,8 @@ namespace FarmConsole.Body.Services
         {
             Languages = XF.GetLanguages();
             LanguageKey = Languages["current"];
-            StringService.SetStrings();
-            foreach (var s in Settings) s.Name = StringService.Get(s.Key);
+            LS.SetStrings();
+            foreach (var s in Settings) s.Name = LS.Navigation(s.Key);
         }
 
         private static List<SettingModel> Settings { get; set; }

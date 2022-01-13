@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Text;
 
 namespace FarmConsole.Body.Services
@@ -99,12 +100,12 @@ namespace FarmConsole.Body.Services
 
         public static string[] ConcatActionTables(string[] stateActs, string[] mainActs)
         {
-            if (stateActs.Length == 0) return mainActs;
+            if (stateActs.Length == 0 || (stateActs.Length == 1 && stateActs[0] == "")) return mainActs;
             
             List<string> ForbiddenActs = new List<string>();
             int ActsCount = stateActs.Length + mainActs.Length;
             foreach(string act in stateActs)
-                if(act[0] == '-')
+                if(act.Length > 0 && act[0] == '-')
                 {
                     ActsCount -= 2;
                     ForbiddenActs.Add(act[1..]);
@@ -118,6 +119,32 @@ namespace FarmConsole.Body.Services
                 if (!ForbiddenActs.Contains(mainActs[i])) ActionsTable[index++] = mainActs[i];
 
             return ActionsTable;
+        }
+        public static string[] SelectAllowedActions(string[] mapActions, byte accesslevel)
+        {
+            if (SettingsService.GODMOD) return mapActions;
+            if (accesslevel == 0) return new string[] { };
+            List<string> AllowedActions = new List<string>();
+            for (int i = 0; i < mapActions.Length; i++)
+            {
+                bool Permission = true;
+                if (accesslevel < 3 && SettingsService.BLOCKEDACTIONS_LVL2.Contains(mapActions[i])) Permission = false;
+                if (accesslevel < 2 && SettingsService.BLOCKEDACTIONS_LVL1.Contains(mapActions[i])) Permission = false;
+                if (Permission) AllowedActions.Add(mapActions[i]);
+            }
+            return AllowedActions.ToArray();
+        }
+        public static string Cammel(string text)
+        {
+            return string.Join("", text.Split().Select(i => char.ToUpper(i[0]) + i.Substring(1)));
+        }
+        public static string RemoveSpacesAfterEndline(string text)
+        {
+            for (int i = 0; i < text.Length;)
+                if(text[i++] == '\n')
+                    while(i < text.Length && text[i] == ' ')
+                        text = text.Remove(i, 1);
+            return text;
         }
     }
 }

@@ -29,7 +29,7 @@ namespace FarmConsole.Body.Controlers
         public static void PopUp(int id, string text)
         {
             string popupText = text;
-            if (id > 0) popupText = StringService.Get((400 + id).ToString());
+            if (id > 0) popupText = LS.Navigation((400 + id).ToString());
             if (POPUPSTAGE >= 0)
             {
                 AnimationController.Effect(GV: /*ComponentEngine.TextBoxView(popupText)*/ null, S: POPUPSTAGE);

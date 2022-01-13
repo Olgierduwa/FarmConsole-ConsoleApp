@@ -16,22 +16,22 @@ namespace FarmConsole.Body.Views.MenuViews
 
                 GroupStart(2);
                 Endl(1);
-                TextBox(StringService.Get("start game button"));
-                TextBox(StringService.Get("load game button"));
-                TextBox(StringService.Get("settings button"));
-                TextBox(StringService.Get("help button"));
+                TextBox(LS.Navigation("start game button"));
+                TextBox(LS.Navigation("load game button"));
+                TextBox(LS.Navigation("settings button"));
+                TextBox(LS.Navigation("help button"));
                 GroupEnd();
 
                 GroupStart(4);
                 Endl(1);
-                TextBox("\"" + StringService.Get("menu text 1") + "\"");
-                TextBox("\"" + StringService.Get("menu text 2") + "\"");
+                TextBox("\"" + LS.Navigation("menu text 1") + "\"");
+                TextBox("\"" + LS.Navigation("menu text 2") + "\"");
                 GroupEnd();
 
             GroupEnd();
             PrintList();
             //vt1.ShowComponentList();
-            DangerMessage = exitQuestion;
+            DangerMessage = LS.Text("exit question");
         }
     }
 }

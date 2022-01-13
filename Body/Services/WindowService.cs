@@ -3,6 +3,8 @@ using System;
 using FarmConsole.Body.Resources.Sounds;
 using System.Drawing;
 using Pastel;
+using System.Collections.Generic;
+using FarmConsole.Body.Models;
 
 namespace FarmConsole.Body.Services
 {
@@ -38,7 +40,7 @@ namespace FarmConsole.Body.Services
                 DeleteMenu(sysMenu, SC_MAXIMIZE, MF_BYCOMMAND);
                 DeleteMenu(sysMenu, SC_SIZE, MF_BYCOMMAND);
             }
-            Console.Title = StringService.Get("title");
+            Console.Title = LS.Navigation("title");
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.White;
 
@@ -57,12 +59,33 @@ namespace FarmConsole.Body.Services
             Console.SetWindowSize(windowWidth, windowHeight);
         }
 
-        public static void Write(int X, int Y, string Text, Color color)
+        public static void Write(int X, int Y, string Text, Color Color)
         {
             if(X >= 0 && X < Console.WindowWidth && Y >= 0 && Y < Console.WindowHeight)
             {
                 Console.SetCursorPosition(X, Y);
-                Console.Write(Text.Pastel(color));
+                Console.Write(Text.Pastel(Color));
+            }
+        }
+        public static void Write(int X, int Y, List<PixelModel> Words)
+        {
+            if (X >= 0 && X < Console.WindowWidth && Y >= 0 && Y < Console.WindowHeight)
+            {
+                int Lenght = 0;
+                string Text = "";
+                for (int i = 0; i < Words.Count; i++)
+                {
+                    if (Lenght % Console.WindowWidth == 0 && i != 0)
+                    {
+                        Text += "\n";
+                        Lenght = 0;
+                    }
+                    Text += Words[i].Content.Pastel(Words[i].Color);
+                    Lenght += Words[i].Content.Length;
+                }
+
+                Console.SetCursorPosition(X, Y);
+                Console.Write(Text);
             }
         }
     }

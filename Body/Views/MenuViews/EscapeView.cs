@@ -14,24 +14,24 @@ namespace FarmConsole.Body.Views.MenuViews
         public static void Display()
         {
             Endl(3);
-            H2(StringService.Get("game pause label"));
+            H2(LS.Navigation("game pause label"));
 
-            Endl(Console.WindowHeight / 3 - 6);
+            Endl((Console.WindowHeight - 15) / 2 - 5);
 
             GroupStart(0);
                 GroupStart(3);
                 Endl(1);
-                TextBox(StringService.Get("continue button"));
-                TextBox(StringService.Get("save game button"));
-                TextBox(StringService.Get("back to menu button"));
-                TextBox(StringService.Get("settings button"));
-                TextBox(StringService.Get("help button"));
+                TextBox(LS.Navigation("continue button"));
+                TextBox(LS.Navigation("save game button"));
+                TextBox(LS.Navigation("back to menu button"));
+                TextBox(LS.Navigation("settings button"));
+                TextBox(LS.Navigation("help button"));
                 GroupEnd();
             GroupEnd();
 
             PrintList();
 
-            DangerMessage = exitQuestion;
+            DangerMessage = LS.Text("exit question");
             ComponentsDisplayed = new List<CM>();
             ComponentsDisplayed.Add(GetComponentByName("GS", 2));
         }

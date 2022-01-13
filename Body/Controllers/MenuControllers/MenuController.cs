@@ -27,7 +27,7 @@ namespace FarmConsole.Body.Controlers
                         case ConsoleKey.S: if (selected < selCount) { S.Play("K1"); selected++; MenuView.UpdateMenuSelect(selected, selected - 1, selCount); } break;
                         case ConsoleKey.Escape:
                         case ConsoleKey.Q: if (MenuView.Danger() == true) OpenScreen = "Close"; break;
-                        case ConsoleKey.G: SettingsService.GODMOD = !SettingsService.GODMOD; break;
+                        case ConsoleKey.G: SettingsService.GODMOD = !SettingsService.GODMOD; S.Play("K3"); break;
                         case ConsoleKey.E:
                             S.Play("K2"); switch (selected)
                             {

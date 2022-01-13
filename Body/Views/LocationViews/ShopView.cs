@@ -8,9 +8,5 @@ namespace FarmConsole.Body.Views.LocationViews
 {
     class ShopView : MapEngine
     {
-        public static void Show()
-        {
-
-        }
     }
 }

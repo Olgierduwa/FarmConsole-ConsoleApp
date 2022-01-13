@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Supply deliverydays="1,8,15,29">
+	<Container name="cash register" sufix="" pos="2,4" state="1"/>
+	<Container name="big bookcase" sufix="with structures" pos="3,2" state="0">
+		<Slot>wall:100</Slot>
+		<Slot>door:100</Slot>
+	</Container>
+	<Container name="big bookcase" sufix="with floors" pos="5,2" state="0">
+		<Slot>wooden floor:100</Slot>
+		<Slot>tiled floor:100</Slot>
+		<Slot>synthetic grass:100</Slot>
+		<Slot>stone floor:100</Slot>
+	</Container>
+	<Container name="big bookcase" sufix="with fences" pos="4,4" state="1">
+		<Slot>fence:100</Slot>
+		<Slot>gate:100</Slot>
+	</Container>
+	<Container name="big bookcase" sufix="with buildings" pos="3,6" state="2">
+		<Slot>silo:100</Slot>
+		<Slot>water tower:100</Slot>
+	</Container>
+	<Container name="big bookcase" sufix="with furniture" pos="5,6" state="2">
+		<Slot>bed:100</Slot>
+		<Slot>small bookcase:100</Slot>
+		<Slot>big bookcase:100</Slot>
+	</Container>
+</Supply>

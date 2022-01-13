@@ -26,7 +26,7 @@
 	<color id="20" name="redL" value="255 40 20"/>
 	<color id="21" name="red" value="225 20 10"/>
 	<color id="22" name="redD" value="128 10 0"/>
-	<color id="23" name="brownD" value="60 30 20"/>
+	<color id="23" name="brownD" value="80 45 25"/>
 	
 	<color id="24" name="brown" value="120 70 30"/>
 	<color id="25" name="brownL" value="160 110 60"/>

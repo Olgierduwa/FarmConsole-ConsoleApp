@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Supply deliverydays="1,8,15,29">
+	<Container name="cash register" sufix="" pos="2,4" state="1"/>
+	<Container name="big bookcase" sufix="with cereal seeds" pos="3,2" state="0">
+		<Slot>oat seeds:100</Slot>
+		<Slot>corn seeds:100</Slot>
+		<Slot>wheat seeds:100</Slot>
+		<Slot>rape seed:100</Slot>
+	</Container>
+	<Container name="big bookcase" sufix="with vegetable seeds" pos="5,2" state="0">
+		<Slot>potato seeds:100</Slot>
+		<Slot>beetroot seeds:100</Slot>
+		<Slot>carrot seeds:100</Slot>
+		<Slot>radish seeds:100</Slot>
+		<Slot>parsley seeds:100</Slot>
+	</Container>
+	<Container name="small bookcase" sufix="with fertilizers" pos="4,4" state="0">
+		<Slot>synthetic fertilizer:100</Slot>
+		<Slot>natural fertilizer:100</Slot>
+	</Container>
+</Supply>

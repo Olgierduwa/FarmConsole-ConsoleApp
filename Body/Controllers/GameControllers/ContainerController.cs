@@ -15,17 +15,40 @@ namespace FarmConsole.Body.Controllers.CentralControllers
 {
     class ContainerController : MainController
     {
-        private static int Select;
+        private static int Selected;
         private static int SliderValue = 2;
-        private static int Multiplier = new int[] { 1, 5, 10, 25, 50 } [SliderValue];
-        private static int Count;
+        private static int[] Values = new int[] { 1, 5, 10, 25, 50 };
+        private static int Multiplier = Values[SliderValue];
+        private static int CartCount;
         private static bool Side;
         private static bool ShiftPressed;
+        private static string LeftTitle;
+        private static string RightTitle;
         private static ProductModel SelectedProduct { get; set; }
         private static ContainerModel Pocket { get; set; }
         private static List<ProductModel> Cart { get; set; }
 
 
+        private static void UpdateSelecet(int value)
+        {
+            if (Selected + value > 0 && ((!Side && Selected + value <= Pocket.GetSlotsCount) || (Side && Selected + value <= CartCount)))
+            {
+                S.Play("K1");
+                Selected += value;
+                ContainerView.UpdateMenuSelect(Selected, Selected - value, CartCount, Prop:15);
+                GetProduct();
+            }
+        }
+        private static void UpdateSlider(int value)
+        {
+            if ((value < 0 && SliderValue > 0) || (value > 0 && SliderValue < Values.Length - 1))
+            {
+                S.Play("K1");
+                SliderValue += value;
+                Multiplier = Values[SliderValue];
+                Captains();
+            }
+        }
         private static void Transfer()
         {
             if (SelectedProduct != null && SelectedProduct.Amount >= Multiplier)
@@ -50,20 +73,20 @@ namespace FarmConsole.Body.Controllers.CentralControllers
                             NewProduct.Amount = Multiplier;
                             Pocket.SetSlot(index, NewProduct);
                         }
-                        ContainerView.DisplayLeftList(Pocket.GetSlots, Select, false);
+                        ContainerView.DisplayLeftList(Pocket.GetSlots, LeftTitle, Selected, false);
                         SelectedProduct.Amount -= Multiplier;
                         if (SelectedProduct.Amount == 0)
                         {
-                            Select = 1;
+                            Selected = 1;
                             Cart.Remove(SelectedProduct);
-                            Count = Cart.Count;
-                            if (Cart.Count > 0) SelectedProduct = Cart[Select - 1]; else SelectedProduct = null;
-                            ContainerView.DisplayRightList(Cart, Select, true, cleaning: true);
+                            CartCount = Cart.Count;
+                            if (Cart.Count > 0) SelectedProduct = Cart[Selected - 1]; else SelectedProduct = null;
+                            ContainerView.DisplayRightList(Cart, RightTitle, Selected, true, cleaning: true);
                         }
                         else
                         {
                             ContainerView.SetRightView();
-                            ContainerView.UpdateMenuTextBox(Select, SelectedProduct.Amount + "x " + SelectedProduct.ObjectName);
+                            ContainerView.UpdateMenuTextBox(Selected, SelectedProduct.Amount + "x " + LS.Object(SelectedProduct.ObjectName), margin:0);
                             ContainerView.GetRightView();
                         }
                         S.Play("K1");
@@ -73,14 +96,17 @@ namespace FarmConsole.Body.Controllers.CentralControllers
                 {
                     ProductModel NewProduct = SelectedProduct.ToProduct();
                     SelectedProduct.Amount -= Multiplier;
-                    if (SelectedProduct.Amount == 0) Pocket.SetSlot(Select - 1, null);
+                    if (SelectedProduct.Amount == 0) Pocket.SetSlot(Selected - 1, null);
                     NewProduct.Amount = Multiplier;
                     int index = 0;
                     while (index < Cart.Count) if (Cart[index].ObjectName == NewProduct.ObjectName) break; else index++;
                     if (index == Cart.Count) Cart.Add(NewProduct);
                     else Cart[index].Amount += Multiplier;
-                    ContainerView.DisplayRightList(Cart, Select, false);
-                    ContainerView.DisplayLeftList(Pocket.GetSlots, Select, true);
+                    ContainerView.GetLeftView();
+                    ContainerView.DisplayRightList(Cart, RightTitle, Selected, false);
+                    ContainerView.SetLeftView();
+                    string content = SelectedProduct.Amount == 0 ? "..." : SelectedProduct.Amount + "x " + LS.Object(SelectedProduct.ObjectName);
+                    ContainerView.UpdateMenuTextBox(Selected, content, margin: 0);
                     S.Play("K1");
                 }
             }
@@ -91,25 +117,25 @@ namespace FarmConsole.Body.Controllers.CentralControllers
             Side = !Side;
             if (Side)
             {
-                Select = 1;
-                Count = Cart.Count;
-                ContainerView.DisplayRightList(Cart, Select, true);
-                ContainerView.DisplayLeftList(Pocket.GetSlots, Select, false);
+                Selected = 1;
+                CartCount = Cart.Count;
+                ContainerView.DisplayRightList(Cart, RightTitle, Selected, true);
+                ContainerView.DisplayLeftList(Pocket.GetSlots, LeftTitle, Selected, false);
                 GetProduct();
             }
             else
             {
-                Select = 1;
-                Count = Pocket.GetSlotsCount;
-                ContainerView.DisplayLeftList(Pocket.GetSlots, Select, true);
-                ContainerView.DisplayRightList(Cart, Select, false);
+                Selected = 1;
+                CartCount = Pocket.GetSlotsCount;
+                ContainerView.DisplayLeftList(Pocket.GetSlots, LeftTitle, Selected, true);
+                ContainerView.DisplayRightList(Cart, RightTitle, Selected, false);
                 GetProduct();
             }
         }
         private static void GetProduct()
         {
-            if (Side) if (Cart.Count > 0) SelectedProduct = Cart[Select - 1]; else SelectedProduct = null;
-            else SelectedProduct = Pocket.GetSlot(Select - 1);
+            if (Side) if (Cart.Count > 0) SelectedProduct = Cart[Selected - 1]; else SelectedProduct = null;
+            else SelectedProduct = Pocket.GetSlot(Selected - 1);
             Captains();
         }
         private static void Captains()
@@ -117,22 +143,27 @@ namespace FarmConsole.Body.Controllers.CentralControllers
             string[] itemDetails = new string[] { "", "", "", "", "", "" };
             if (SelectedProduct != null)
             {
-                itemDetails[2] = SelectedProduct.ObjectName;
-                itemDetails[3] = StringService.Get("price") + ": " + SelectedProduct.Price.ToString() + StringService.Get("currency");
+                itemDetails[2] = LS.Object(SelectedProduct.ObjectName);
+                itemDetails[3] = LS.Navigation("price") + ": " + SelectedProduct.Price.ToString() + LS.Navigation("currency");
             }
             else itemDetails[itemDetails.Length / 2] = "...";
-            ContainerView.DisplayCaptains(Action.SelectedProduct.ObjectName, itemDetails, Side, SliderValue);
+            ContainerView.DisplayCaptains(itemDetails, Side, SliderValue);
             if (Side) ContainerView.SetRightView();
             else ContainerView.SetLeftView();
         }
-        public static void Open()
+
+        public static void Open(ContainerModel Container = null)
         {
-            Cart = GameInstance.Cart;
-            Select = 1;
+            Selected = 1;
             Side = true;
+            Cart = GameInstance.Cart;
             MenuManager.SetView = MapEngine.Map;
-            Pocket = MapEngine.GetField().Pocket;
-            SelectedProduct = Pocket.GetSlot(Select);
+            Pocket = Container ?? MapEngine.GetField().Pocket;
+            SelectedProduct = Pocket.GetSlot(Selected);
+
+            LeftTitle = Container == null ? Action.SelectedProduct.ObjectName : "inventory";
+            RightTitle = Container == null ? Cart == GameInstance.Inventory ? "inventory" : "cart" : "offer";
+
             Switch();
             while (OpenScreen == "Container")
             {
@@ -145,19 +176,16 @@ namespace FarmConsole.Body.Controllers.CentralControllers
                     {
                         case ConsoleKey.Tab:
                         case ConsoleKey.Escape: OpenScreen = EscapeScreen; S.Play("K2"); break;
-
-                        case ConsoleKey.E: Transfer(); break;
+                        case ConsoleKey.W: UpdateSelecet(-1); break;
+                        case ConsoleKey.S: UpdateSelecet(+1); break;
+                        case ConsoleKey.A: UpdateSlider(-1); break;
+                        case ConsoleKey.D: UpdateSlider(+1); break;
                         case ConsoleKey.Q: Switch(); break;
-
-                        case ConsoleKey.W: if (Select > 1) { S.Play("K1"); Select--; ContainerView.UpdateMenuSelect(Select, Select + 1, Count); GetProduct(); } break;
-                        case ConsoleKey.S: if (Select < Count) { S.Play("K1"); Select++; ContainerView.UpdateMenuSelect(Select, Select - 1, Count); GetProduct(); } break;
-
-                        case ConsoleKey.A: if (SliderValue > 0) { S.Play("K1"); SliderValue--; Multiplier = new int[] { 1, 5, 10, 25, 50 }[SliderValue]; Captains(); } break;
-                        case ConsoleKey.D: if (SliderValue < 4) { S.Play("K1"); SliderValue++; Multiplier = new int[] { 1, 5, 10, 25, 50 }[SliderValue]; Captains(); } break;
+                        case ConsoleKey.E: Transfer(); break;
                     }
                 }
             }
-            MenuManager.Clean();
+            MenuManager.Clean(WithCleaning: true);
         }
     }
 }

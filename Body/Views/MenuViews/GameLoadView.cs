@@ -21,14 +21,14 @@ namespace FarmConsole.Body.Views.MenuViews
             if (showCount >= savesCount + 1) endlCount += (showCount - savesCount + 1) * 3 / 2;
 
             Endl(3);
-            H2(StringService.Get("load game label"));
+            H2(LS.Navigation("load game label"));
 
             GroupStart(0);
 
             GroupStart(2);
             if ((savesCount + 1) * 3 <= 17) Endl(detailsHeight);
             else Endl(endlCount);
-            TextBox(StringService.Get("empty save button"));
+            TextBox(LS.Navigation("empty save button"));
             for (int i = 0; i < savesCount; i++)
                 if (i < showCount) TextBox(saves[i].UserName);
                 else TextBox(saves[i].UserName, 40, false);
@@ -36,21 +36,21 @@ namespace FarmConsole.Body.Views.MenuViews
 
             GroupStart(4);
             Endl(detailsHeight);
-            TextBox(StringService.Get("new game button", " E"));
+            TextBox(LS.Navigation("new game button", " E"));
             GroupEnd();
             GroupStart(Console.WindowWidth * 4 / 5 - Console.WindowWidth / 10 - 10, Console.WindowWidth);
             Endl(detailsHeight + 14);
-            TextBox(StringService.Get("delete save button", " D"), 19, false, margin: 0);
+            TextBox(LS.Navigation("delete save button", " D"), 19, false, margin: 0);
             GroupEnd();
             GroupStart(Console.WindowWidth * 4 / 5 - Console.WindowWidth / 10 + 11, Console.WindowWidth);
             Endl(detailsHeight + 14);
-            TextBox(StringService.Get("continue button", " E"), 19, false, margin: 0);
+            TextBox(LS.Navigation("continue button", " E"), 19, false, margin: 0);
             GroupEnd();
 
             GroupEnd();
             PrintList();
             //vt1.showComponentList();
-            DangerMessage = deleteQuestion;
+            DangerMessage = LS.Text("delete question");
         }
         public static void SetPreview(GameInstanceModel[] saves, int selected)
         {
@@ -58,16 +58,16 @@ namespace FarmConsole.Body.Views.MenuViews
             {
                 var save = saves[selected - 2];
                 UpdateTextBox(3, 1, ". . ." + " ---------------------------------- " +
-                StringService.Get("nickname label") + " - " + save.UserName.ToString() + " ---------------------------------- " +
-                StringService.Get("lvl label") + " - " + save.LVL.ToString() + " ---------------------------------- " +
-                StringService.Get("wallet label") + " - " + save.WalletFunds.ToString() + " ---------------------------------- " +
-                StringService.Get("lastplay label") + " - " + save.Lastplay.ToString() + " ---------------------------------- . . .");
+                LS.Navigation("nickname label") + " - " + save.UserName.ToString() + " ---------------------------------- " +
+                LS.Navigation("lvl label") + " - " + save.LVL.ToString() + " ---------------------------------- " +
+                LS.Navigation("wallet label") + " - " + save.WalletFunds.ToString() + " ---------------------------------- " +
+                LS.Navigation("lastplay label") + " - " + save.Lastplay.ToString() + " ---------------------------------- . . .");
                 SetShowability(4, 1, true);
                 SetShowability(5, 1, true);
             }
             else
             {
-                UpdateTextBox(3, 1, StringService.Get("new game button", " E"));
+                UpdateTextBox(3, 1, LS.Navigation("new game button", " E"));
                 SetShowability(3, 3, false);
                 SetShowability(4, 1, false);
                 SetShowability(5, 1, false);

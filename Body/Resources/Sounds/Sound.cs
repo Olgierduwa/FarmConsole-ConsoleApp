@@ -8,22 +8,24 @@ namespace FarmConsole.Body.Resources.Sounds
     public static class S
     {
         private static readonly string location = "../../../Body/Resources/Sounds/";
-        private static readonly WaveOutEvent waveSound = new WaveOutEvent();
+        private static WaveOutEvent waveSound = new WaveOutEvent();
         private static WaveOutEvent waveMusic = new WaveOutEvent();
         private static float volumeSound;
         private static float volumeMusic;
 
         public static void Play(string select)
         {
-            //waveSound = new WaveOutEvent();
-            //waveSound.Volume = volumeSound;
-            //switch (select)
-            //{
-            //    case "K1": waveSound.Init(new WaveFileReader(location + "klik1.wav")); break;
-            //    case "K2": waveSound.Init(new WaveFileReader(location + "klik2.wav")); break;
-            //    case "K3": waveSound.Init(new WaveFileReader(location + "klik3.wav")); break;
-            //}
-            //waveSound.Play();
+            waveSound = new WaveOutEvent
+            {
+                Volume = volumeSound
+            };
+            switch (select)
+            {
+                case "K1": waveSound.Init(new WaveFileReader(location + "klik1.wav")); break;
+                case "K2": waveSound.Init(new WaveFileReader(location + "klik2.wav")); break;
+                case "K3": waveSound.Init(new WaveFileReader(location + "klik3.wav")); break;
+            }
+            waveSound.Play();
         }
         public static void PlayMusic(string select)
         {

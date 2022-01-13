@@ -49,8 +49,7 @@ namespace FarmConsole.Body.Controlers
                     case "RIGHT": MapEngine.MoveMapPosition(new Point(1, -1)); break;
                 }
         }
-
-        public static void Open(string Location)
+        private static void EnterLocation(string Location)
         {
             GameView.Display(GameInstance.UserName);
             MapModel map = GameInstance.GetMap(Location);
@@ -58,6 +57,21 @@ namespace FarmConsole.Body.Controlers
             MapManager.InitMap(map);
             MapManager.ShowMap();
             if (FieldNameVisibility) GameView.DisplayFieldName();
+        }
+        private static void LeaveLocation(string Location)
+        {
+            EscapeScreen = Location;
+            MapEngine.Map.LastVisitDate = GameInstance.GameDate;
+            GameInstance.SetMap(Location, MapEngine.Map);
+            MenuManager.Clean(WithCleaning: false);
+            if(GameInstance.IsLocation(OpenScreen)) MapManager.HideMap();
+            else MapManager.HideMap(false);
+        }
+
+        public static void Open(string Location)
+        {
+            //HelpService.CLEAR_TIMERS();
+            EnterLocation(Location);
             while (OpenScreen == Location)
             {
                 if (Console.KeyAvailable)
@@ -107,12 +121,7 @@ namespace FarmConsole.Body.Controlers
                     Previously = DateTime.Now;
                 }
             }
-            EscapeScreen = Location;
-            MapEngine.Map.LastVisitDate = GameInstance.GameDate;
-            GameInstance.SetMap(Location, MapEngine.Map);
-            MenuManager.Clean(WithCleaning: false);
-            if(OpenScreen == "Escape" || OpenScreen == "Container" || OpenScreen == "CashRegister") MapManager.HideMap(false);
-            else MapManager.HideMap();
+            LeaveLocation(Location);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace FarmConsole.Body.Views.MenuViews
             if (showCount > Settings.Count + 2) endlCount += (showCount - Settings.Count - 2) * 3 / 2;
 
             Endl(3);
-            H2(StringService.Get("setting label"));
+            H2(LS.Navigation("setting label"));
             GroupStart(0);
 
             GroupStart(2);
@@ -30,11 +30,11 @@ namespace FarmConsole.Body.Views.MenuViews
                 if (i < showCount) TextBox(Settings[i].Name);
                 else TextBox(Settings[i].Name, show: false);
 
-            if (Settings.Count < showCount) TextBox(StringService.Get("language button"));
-            else TextBox(StringService.Get("language button"), show: false);
+            if (Settings.Count < showCount) TextBox(LS.Navigation("set language"));
+            else TextBox(LS.Navigation("set language"), show: false);
 
-            if (Settings.Count + 1 < showCount) TextBox(StringService.Get("restore default button"));
-            else TextBox(StringService.Get("restore default button"), show: false);
+            if (Settings.Count + 1 < showCount) TextBox(LS.Navigation("set restore default"));
+            else TextBox(LS.Navigation("set restore default"), show: false);
 
             GroupEnd();
 
@@ -54,12 +54,12 @@ namespace FarmConsole.Body.Views.MenuViews
 
             GroupStart(Console.WindowWidth / 2 - 10, Console.WindowWidth);
             Endl(Console.WindowHeight - 12);
-            TextBox(StringService.Get("reject button", " Q"), 19, margin: 0);
+            TextBox(LS.Navigation("reject button", " Q"), 19, margin: 0);
             GroupEnd();
 
             GroupStart(Console.WindowWidth / 2 + 11, Console.WindowWidth);
             Endl(Console.WindowHeight - 12);
-            TextBox(StringService.Get("save button", " E"), 19, margin: 0);
+            TextBox(LS.Navigation("save button", " E"), 19, margin: 0);
             GroupEnd();
 
             GroupEnd();

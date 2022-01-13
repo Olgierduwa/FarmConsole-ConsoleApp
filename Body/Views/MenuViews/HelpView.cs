@@ -13,18 +13,18 @@ namespace FarmConsole.Body.Views.MenuViews
         public static void Display()
         {
             Endl(3);
-            H2(StringService.Get("help label"));
+            H2(LS.Navigation("help label"));
             Endl(Console.WindowHeight / 8);
             GroupStart(0);
             GroupStart(2);
-            TextBox(StringService.Get("control label"), 44);
+            TextBox(LS.Navigation("control label"), 44);
             Endl(1);
-            TextBox(controlsText, 44);
+            TextBoxLines(LS.Text("controls").Split('\n'), 44);
             GroupEnd();
             GroupStart(4);
-            TextBox(StringService.Get("from the author label"), 44);
+            TextBox(LS.Navigation("about label"), 44);
             Endl(1);
-            TextBox(fromAuthorText, 44);
+            TextBoxLines(LS.Text("about").Split('\n'), 44);
             GroupEnd();
             GroupEnd();
 

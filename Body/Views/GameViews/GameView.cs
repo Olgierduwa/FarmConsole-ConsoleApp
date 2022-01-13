@@ -12,20 +12,20 @@ namespace FarmConsole.Body.Views.MenuViews
         public static void Display(string name)
         {
             Endl(3);
-            H2(StringService.Get("hello player") + ", " + name + "!");
+            H2(LS.Navigation("hello player") + ", " + name + "!");
             PrintList();
         }
 
         internal static void DisplayFieldName()
         {
             var f = MapEngine.GetField();
-            string prefix = f.StateName[0] > '@' ? f.StateName + " " : "";
-            string sufix = f.Pocket != null && f.Pocket.SufixName != null &&
-                f.Pocket.SufixName.Length > 0 ? " " + f.Pocket.SufixName : "";
+            string prefix = f.StateName[0] > '@' ? LS.Object(f.StateName) + " " : "";
+            string sufix = f.Pocket != null && f.Pocket.SufixName.Length > 0 ? " " + LS.Object(f.Pocket.SufixName) :
+                f.Property != "" && f.Property[0] == '*' ? " [" +LS.Object(f.Property[1..]) + "]" : "";
             ClearList(false);
             Endl(Console.WindowHeight - 5);
             GroupStart(3);
-            BotBar(prefix + f.ObjectName + sufix, height:2, foreground: ColorService.GetColorByName("gray3"));
+            BotBar(prefix + LS.Object(f.ObjectName) + sufix, height:2, foreground: ColorService.GetColorByName("gray3"));
             GroupEnd();
             PrintList();
         }

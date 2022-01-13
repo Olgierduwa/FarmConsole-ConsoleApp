@@ -36,25 +36,25 @@ namespace FarmConsole.Body.Views
             GraphicBox(new string[] { title.ToUpper(), "" }, color: ColorService.GetColorByName("gray3"));
             if (component_list.Count > 0)
             {
-                if(search) TextBox(StringService.Get("search"), Width, margin: 0, foreground: ColorService.GetColorByName("Yellow"));
+                if(search) TextBox(LS.Navigation("search"), Width, margin: 0, foreground: ColorService.GetColorByName("Yellow"));
                 for (int i = 0; i < component_list.Count; i++)
                     if (i + searchHeight / 3 < (Console.WindowHeight - 13) / 3)
-                        TextBox(component_list[i].Amount + "x " + component_list[i].ObjectName, Width, margin: 0);
-                    else TextBox(component_list[i].Amount + "x " + component_list[i].ObjectName, Width, false, margin: 0);
+                        TextBox(component_list[i].Amount + "x " + LS.Object(component_list[i].ObjectName), Width, margin: 0);
+                    else TextBox(component_list[i].Amount + "x " + LS.Object(component_list[i].ObjectName), Width, false, margin: 0);
             }
-            else GraphicBox(new string[] { StringService.Get("nothing here") });
+            else GraphicBox(new string[] { LS.Action("nothing here") });
             GroupEnd();
 
             GroupStart(Console.WindowWidth - Width * 3 / 4, Console.WindowWidth);
             Endl(Height - 2);
-            if (extended) TextBox(StringService.Get("go back", " Q"), Width / 2 - 2, background: ColorService.GetColorByName("gray3"), margin: 0);
-            else TextBox(StringService.Get("choose", " Q"), Width / 2 - 2, background: ColorService.GetColorByName("gray3"), margin: 0);
+            if (extended) TextBox(LS.Navigation("go back", " Q"), Width / 2 - 2, background: ColorService.GetColorByName("gray3"), margin: 0);
+            else TextBox(LS.Navigation("choose", " Q"), Width / 2 - 2, background: ColorService.GetColorByName("gray3"), margin: 0);
             GroupEnd();
 
             GroupStart(Console.WindowWidth - Width / 4 - 1, Console.WindowWidth);
             Endl(Height - 2);
-            if (extended) TextBox(StringService.Get("choose", " E"), Width / 2 - 1, background: ColorService.GetColorByName("gray3"), margin: 0);
-            else TextBox(StringService.Get("escape", " E"), Width / 2 - 1, background: ColorService.GetColorByName("gray3"), margin: 0);
+            if (extended) TextBox(LS.Navigation("choose", " E"), Width / 2 - 1, background: ColorService.GetColorByName("gray3"), margin: 0);
+            else TextBox(LS.Navigation("escape", " E"), Width / 2 - 1, background: ColorService.GetColorByName("gray3"), margin: 0);
             GroupEnd();
 
             GroupEnd();
@@ -83,22 +83,22 @@ namespace FarmConsole.Body.Views
             {
                 for (int i = 0; i < component_list.Length; i++)
                 if (i < (Console.WindowHeight - 13) / 3)
-                    TextBox(StringService.Get(component_list[i]), Width, margin: 0);
-                else TextBox(StringService.Get(component_list[i]), Width, false, margin: 0);
+                    TextBox(LS.Action(component_list[i]), Width, margin: 0);
+                else TextBox(LS.Action(component_list[i]), Width, false, margin: 0);
             }
-            else GraphicBox(new string[] { StringService.Get("cant do anything") });
+            else GraphicBox(new string[] { LS.Action("cant do anything") });
             GroupEnd();
 
             GroupStart(Width / 4 + 1, Console.WindowWidth);
             Endl(Height - 2);
-            if (extended) TextBox(StringService.Get("do", " Q"), Width / 2 - 2, background: ColorService.GetColorByName("gray3"), margin: 0);
-            else TextBox(StringService.Get("escape", " Q"), Width / 2 - 2, background: ColorService.GetColorByName("gray3"), margin: 0);
+            if (extended) TextBox(LS.Navigation("do", " Q"), Width / 2 - 2, background: ColorService.GetColorByName("gray3"), margin: 0);
+            else TextBox(LS.Navigation("escape", " Q"), Width / 2 - 2, background: ColorService.GetColorByName("gray3"), margin: 0);
             GroupEnd();
 
             GroupStart(Width * 3 / 4, Console.WindowWidth);
             Endl(Height - 2);
-            if (extended) TextBox(StringService.Get("go back", " E"), Width / 2 - 1, background: ColorService.GetColorByName("gray3"), margin: 0);
-            else TextBox(StringService.Get("do", " E"), Width / 2 - 1, background: ColorService.GetColorByName("gray3"), margin: 0);
+            if (extended) TextBox(LS.Navigation("go back", " E"), Width / 2 - 1, background: ColorService.GetColorByName("gray3"), margin: 0);
+            else TextBox(LS.Navigation("do", " E"), Width / 2 - 1, background: ColorService.GetColorByName("gray3"), margin: 0);
             GroupEnd();
 
             GroupEnd();
@@ -116,7 +116,7 @@ namespace FarmConsole.Body.Views
             string[] text, text2;
             int Width = 40;
 
-            text = new string[] { " ", StringService.Get("warning"), " " };
+            text = new string[] { " ", LS.Navigation("warning"), " " };
             text2 = TextBoxView(content, Width);
             text = text.Concat(text2.Concat(new string[] { " " }).ToArray()).ToArray();
             
@@ -151,15 +151,15 @@ namespace FarmConsole.Body.Views
             {
                 for (int i = 0; i < component_list.Count; i++)
                     if (i + 1 < (Console.WindowHeight - 13) / 3)
-                        TextBox(component_list[i].Amount + "x " + component_list[i].ObjectName, Width, margin: 0);
-                    else TextBox(component_list[i].Amount + "x " + component_list[i].ObjectName, Width, false, margin: 0);
+                        TextBox(component_list[i].Amount + "x " + LS.Object(component_list[i].ObjectName), Width, margin: 0);
+                    else TextBox(component_list[i].Amount + "x " + LS.Object(component_list[i].ObjectName), Width, false, margin: 0);
             }
-            else { Endl(1); GraphicBox(new string[] { StringService.Get("nothing here") }); }
+            else { Endl(1); GraphicBox(new string[] { LS.Action("nothing here") }); }
             GroupEnd();
 
             GroupStart(Console.WindowWidth - Width / 2, Console.WindowWidth);
             Endl(Height - 2);
-            TextBox(StringService.Get("finish filtering", " Q"), Width - 6, background: ColorService.GetColorByName("gray3"), margin: 0);
+            TextBox(LS.Navigation("finish filtering", " Q"), Width - 6, background: ColorService.GetColorByName("gray3"), margin: 0);
             GroupEnd();
 
             GroupEnd();

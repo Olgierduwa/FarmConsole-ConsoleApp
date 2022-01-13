@@ -87,6 +87,13 @@ namespace FarmConsole.Body.Models
             }
             _Edited = false;
         }
+        public void DisplayPixels()
+        {
+            foreach (var word in GetWords)
+                WindowService.Write(word.Position.X + GetPosition.X, word.Position.Y + GetPosition.Y, word.Content, word.Color);
+
+            _Edited = false;
+        }
         public void DisplayPixels(Point Position, Size Size)
         {
             int Y = Position.Y - GetPosition.Y < 0 ? 0 : Position.Y;

@@ -15,18 +15,20 @@ namespace FarmConsole.Body.Services
 {
     public static class XF
     {
-        private static readonly string loc = "../../../Body/Resources/Database/";
-        private static readonly string locsaves = "../../../Body/Resources/Saves/";
+        private static readonly string res = "../../../Body/Resources/";
 
-        private static readonly string long_path = loc + "LongTexts.xml";
-        private static readonly string languages_path = loc + "Languages.xml";
-        private static readonly string setting_path = loc + "Settings.xml";
-        private static readonly string objects_path = loc + "Objects.xml";
-        private static readonly string graphics_path = loc + "Graphics.xml";
-        private static readonly string colors_path = loc + "Colors.xml";
-        private static readonly string rules_path = loc + "Rules.xml";
+        private static readonly string db = "Database/";
+        private static readonly string saves = "Saves/";
+        private static readonly string language = "Language/";
 
-        private static readonly string saves_path = locsaves + "Saves.xml";
+        private static readonly string setting_path = res + db + "Settings.xml";
+        private static readonly string objects_path = res + db + "Objects.xml";
+        private static readonly string graphics_path = res + db + "Graphics.xml";
+        private static readonly string colors_path = res + db + "Colors.xml";
+        private static readonly string rules_path = res + db + "Rules.xml";
+
+        private static readonly string languages_path = res + language + "Languages.xml";
+        private static readonly string saves_path = res + saves + "Saves.xml";
 
         public static Dictionary<string, string> GetLanguages()
         {
@@ -65,7 +67,7 @@ namespace FarmConsole.Body.Services
                         string[] MenuActs = Attributes.Contains("menuAct") ? Field.Attributes["menuAct"].Value.Split('/') : null;
                         string[] MapActs = Attributes.Contains("mapAct") ? Field.Attributes["mapAct"].Value.Split('/') : null;
                         string[] StateViewLines = Field.InnerText.Replace("\r", "").Replace("\n", "").Replace("\t", "").Split('@');
-                        string Property = Attributes.Contains("property") && Field.Attributes["property"].Value != "" ? Field.Attributes["property"].Value : "0003";
+                        string Property = Attributes.Contains("property") && Field.Attributes["property"].Value != "" ? Field.Attributes["property"].Value : "";
                         string Price = Attributes.Contains("price") ? Field.Attributes["price"].Value : "0";
                         bool Cutted = Attributes.Contains("cut");
                         short Slots = Attributes.Contains("slots") ? Convert.ToInt16(Field.Attributes["slots"].Value) : (short)0;
@@ -108,8 +110,10 @@ namespace FarmConsole.Body.Services
                         // filling states
                         for (int State = 0; State < StateViews.Count; State++)
                         {
-                            string[] StateMenuActs = MenuActs == null ? new string[] { } : MenuActs[State < MenuActs.Length ? State : 0].Split(',');
-                            string[] StateMapActions = MapActs == null ? new string[] { } : MapActs[State < MapActs.Length ? State : 0].Split(',');
+                            string[] StateMenuActs = MenuActs == null ? new string[] { } :
+                                MenuActs[State < MenuActs.Length ? State : MenuActs.Length > 0 ? State % MenuActs.Length : 0].Split(',');
+                            string[] StateMapActions = MapActs == null ? new string[] { } :
+                                MapActs[State < MapActs.Length ? State : MapActs.Length > 0 ? State % MapActs.Length : 0].Split(',');
                             
                             ObjectModel Object = new ObjectModel()
                             {
@@ -122,7 +126,7 @@ namespace FarmConsole.Body.Services
                                 ObjectName = Field.Attributes["name"].Value,
                                 MenuActions = ConvertService.ConcatActionTables(StateMenuActs, MainMenuActs),
                                 MapActions = ConvertService.ConcatActionTables(StateMapActions, MainMapAct),
-                                Price = Convert.ToDecimal(Price),
+                                Price = int.Parse(Price),
                                 Property = Property,
                                 Cutted = Cutted,
                                 Slots = Slots,
@@ -196,17 +200,6 @@ namespace FarmConsole.Body.Services
             doc.Save(languages_path);
         }
         
-        public static string GetText(int id)
-        {
-            XmlDocument doc = new XmlDocument();
-            doc.Load(long_path);
-            XmlNodeList list = doc.SelectNodes("/texts/text[@id=" + id.ToString() + "]");
-            XmlNode node = list[0];
-            string text = "- BRAK TEKSTU -";
-            if (list.Count < 1) { return text; }
-            text = Regex.Replace(node.InnerText, @"\s+", " ", RegexOptions.Multiline);
-            return text;
-        }
         public static string[] GetGraphic(string GraphicName)
         {
             XmlDocument doc = new XmlDocument();
@@ -242,7 +235,7 @@ namespace FarmConsole.Body.Services
             try
             {
                 XmlDocument doc = new XmlDocument();
-                doc.Load(locsaves + "000/" + name + ".xml");
+                doc.Load(res + saves + "000/" + name + ".xml");
                 return doc.SelectSingleNode("/Supply");
             }
             catch { return null; }
@@ -313,8 +306,8 @@ namespace FarmConsole.Body.Services
                 doc.SelectSingleNode("/Saves/save[@id=" + i.ToString() + "]").Attributes["id"].Value = (i - 1).ToString();
             doc.Save(saves_path);
 
-            string directory = locsaves + id.ToString().PadLeft(3, '0');
-            var directores = Directory.EnumerateDirectories(locsaves);
+            string directory = res + saves + id.ToString().PadLeft(3, '0');
+            var directores = Directory.EnumerateDirectories(res + saves);
             int count = directores.Count();
             bool deleted = false;
             foreach (string path in directores)
@@ -327,14 +320,14 @@ namespace FarmConsole.Body.Services
                 }
                 else if(deleted)
                 {
-                    Directory.Move(path, locsaves + id.ToString().PadLeft(3, '0'));
+                    Directory.Move(path, res + saves + id.ToString().PadLeft(3, '0'));
                     id++;
                 }
             }
         }
         public static void UpdateMaps(string[] MapList, int id)
         {
-            string path, directory = locsaves + id.ToString().PadLeft(3, '0');
+            string path, directory = res + saves + id.ToString().PadLeft(3, '0');
             if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
 
             for (int i = 0; i < MapList.Length; i++)
@@ -350,7 +343,7 @@ namespace FarmConsole.Body.Services
         public static string[] LoadMaps(int id)
         {
             string[] Maps = null;
-            string directory = locsaves + id.ToString().PadLeft(3, '0');
+            string directory = res + saves + id.ToString().PadLeft(3, '0');
             if (Directory.Exists(directory))
             {
                 var files = Directory.EnumerateFiles(directory, "*.txt");

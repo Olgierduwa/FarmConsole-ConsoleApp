@@ -23,14 +23,14 @@ namespace FarmConsole.Body.Views.MenuViews
             ClearList(false);
 
             Endl(3);
-            H2(StringService.Get("save game label"));
+            H2(LS.Navigation("save game label"));
 
             GroupStart(0);
 
             GroupStart(2);
             if ((savesCount + 1) * 3 <= 17) Endl(detailsHeight);
             else Endl(endlCount);
-            TextBox(StringService.Get("empty save button"));
+            TextBox(LS.Navigation("empty save button"));
             for (int i = 0; i < savesCount; i++)
                 if (i < showCount)
                     TextBox(saves[i].UserName);
@@ -39,9 +39,9 @@ namespace FarmConsole.Body.Views.MenuViews
 
             GroupStart(4);
             Endl(detailsHeight);
-            TextBox(StringService.Get("new save button", " E"));
+            TextBox(LS.Navigation("new save button", " E"));
             Endl(11);
-            TextBox(StringService.Get("override save button", " E"), show: false);
+            TextBox(LS.Navigation("override save button", " E"), show: false);
             GroupEnd();
 
             GroupEnd();
@@ -51,7 +51,7 @@ namespace FarmConsole.Body.Views.MenuViews
             ComponentsDisplayed = new List<CM>();
             ComponentsDisplayed.Add(GetComponentByName("GS", 2));
             ComponentsDisplayed.Add(GetComponentByName("GS", 3));
-            DangerMessage = updateQuestion;
+            DangerMessage = LS.Text("update question");
         }
         public static void DisplayReview(GameInstanceModel[] saves, int selected, int selCount)
         {
@@ -59,10 +59,10 @@ namespace FarmConsole.Body.Views.MenuViews
             {
                 var save = saves[selected - 2];
                 UpdateTextBox(3, 1, ". . ." + " ---------------------------------- " +
-                StringService.Get("nickname label") + " - " + save.UserName.ToString() + " ---------------------------------- " +
-                StringService.Get("lvl label") + " - " + save.LVL.ToString() + " ---------------------------------- " +
-                StringService.Get("wallet label") + " - " + save.WalletFunds.ToString() + " ---------------------------------- " +
-                StringService.Get("lastplay label") + " - " + save.Lastplay.ToString() + " ---------------------------------- . . .");
+                LS.Navigation("nickname label") + " - " + save.UserName.ToString() + " ---------------------------------- " +
+                LS.Navigation("lvl label") + " - " + save.LVL.ToString() + " ---------------------------------- " +
+                LS.Navigation("wallet label") + " - " + save.WalletFunds.ToString() + " ---------------------------------- " +
+                LS.Navigation("lastplay label") + " - " + save.Lastplay.ToString() + " ---------------------------------- . . .");
                 SetShowability(3, 0, true);
             }
             else

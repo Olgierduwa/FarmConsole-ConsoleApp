@@ -40,6 +40,7 @@ namespace FarmConsole.Body.Services
         }
         public static Color Brighter(Color color, int procent = 50)
         {
+            if (color.R == color.G && color.G == color.B) procent = 100;
             int R = color.R + (255 - color.R) * procent / 100;
             int G = color.G + (255 - color.G) * procent / 100;
             int B = color.B + (255 - color.B) * procent / 100;
@@ -84,7 +85,7 @@ namespace FarmConsole.Body.Services
         public static int[] YellowEffect { get { return new int[] { 0, 6, 14, 6, 0, 0 }; } }
         public static int[] GreenEffect { get { return new int[] { 0, 2, 10, 2, 0, 0 }; } }
         public static int[] BlueEffect { get { return new int[] { 1, 3, 11, 3, 1, 0 }; } }
-        public static int[] WhiteEffect { get { return new int[] { 8, 7, 15, 7, 8, 0 }; } }
+        public static int[] WhiteEffect { get { return new int[] { 5, 3, 1, 3, 5, 7 }; } }
 
 
     }

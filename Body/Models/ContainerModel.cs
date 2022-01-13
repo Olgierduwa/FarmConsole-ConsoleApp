@@ -26,6 +26,7 @@ namespace FarmConsole.Body.Models
             SufixName = _SufixName;
             MaxSlotsCount = _MaxSlots;
             Slots = new ProductModel[MaxSlotsCount];
+            IsEmpty = true;
             int index = 0;
             while (index < GetSlotsCount && index < _ProductAmount.Length)
             {
@@ -35,30 +36,49 @@ namespace FarmConsole.Body.Models
                 SetSlot(index, product);
                 index++;
             }
+            foreach (var p in Slots) if (p != null) { IsEmpty = false; break; }
         }
         public ContainerModel(ProductModel[] _Products, short _MaxSlots)
         {
             SufixName = "";
             MaxSlotsCount = _MaxSlots;
             Slots = new ProductModel[MaxSlotsCount];
+            IsEmpty = true;
             int index = 0;
             while (index < GetSlotsCount && index < _Products.Length)
             {
                 SetSlot(index, _Products[index].ToProduct());
                 index++;
             }
+            foreach (var p in Slots) if (p != null) { IsEmpty = false; break; }
+        }
+        public ContainerModel(List<ProductModel> _Products, short _MaxSlots)
+        {
+            SufixName = "";
+            MaxSlotsCount = _MaxSlots;
+            Slots = new ProductModel[MaxSlotsCount];
+            IsEmpty = true;
+            int index = 0;
+            while (index < GetSlotsCount && index < _Products.Count)
+            {
+                SetSlot(index, _Products[index].ToProduct());
+                index++;
+            }
+            foreach (var p in Slots) if (p != null) { IsEmpty = false; break; }
         }
         public ContainerModel(string _PocketString, short _MaxSlots, string _SufixName)
         {
             SufixName = _SufixName;
             MaxSlotsCount = _MaxSlots;
             Slots = new ProductModel[MaxSlotsCount];
+            IsEmpty = true;
             int index = 0;
             while (index < GetSlotsCount && index * 3 < _PocketString.Length)
             {
                 SetSlot(index, new ProductModel(_PocketString.Substring(index * 3, 3)).ToProduct());
                 index++;
             }
+            foreach (var p in Slots) if (p != null) { IsEmpty = false; break; }
         }
         public override string ToString()
         {

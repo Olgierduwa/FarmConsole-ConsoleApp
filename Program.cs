@@ -1,5 +1,6 @@
 ﻿using FarmConsole.Body.Controlers;
 using FarmConsole.Body.Controllers.CentralControllers;
+using FarmConsole.Body.Controllers.GameControllers;
 using FarmConsole.Body.Services;
 using FarmConsole.Body.Views.LocationViews;
 using FarmConsole.Body.Views.MenuViews;
@@ -22,6 +23,7 @@ namespace FarmConsole
             {
                 switch (MainController.OpenScreen)
                 {
+                    // menu controllers
                     case "Menu": MenuController.Open(); break;
                     case "Load": GameLoadController.Open(); break;
                     case "Save": GameSaveController.Open(); break;
@@ -31,13 +33,16 @@ namespace FarmConsole
                     case "Help": HelpController.Open(); break;
                     case "Intro": IntroController.Open(); break;
 
-                    case "Farm": LocationController.Open("Farm"); break;
-                    case "House": LocationController.Open("House"); break;
-                    case "Street": LocationController.Open("Street"); break;
-                    case "Shop": LocationController.Open("Shop"); break;
-
+                    // operation interfaces
                     case "Container": ContainerController.Open(); break;
-                    case "CashRegister": CashRegisterController.Open(); break;
+                    case "ProductOffer": ProductOfferController.Open(); break;
+                    case "ProductBuying": ProductBuyingController.Open(); break;
+                    case "PlotExtending": PlotExtendingController.Open(); break;
+                    case "PlotSelling": PlotSellingController.Open(); break;
+                    case "PlotBuying": PlotBuyingController.Open(); break;
+
+                    // location controllers
+                    default: LocationController.Open(MainController.OpenScreen); break;
                 }
             }
         }

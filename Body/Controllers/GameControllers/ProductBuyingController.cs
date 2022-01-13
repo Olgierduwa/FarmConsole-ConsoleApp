@@ -11,7 +11,7 @@ using System.Text;
 
 namespace FarmConsole.Body.Controllers.CentralControllers
 {
-    class CashRegisterController : MainController
+    class ProductBuyingController : MainController
     {
         private static int selected;
         private static decimal amount;
@@ -44,14 +44,16 @@ namespace FarmConsole.Body.Controllers.CentralControllers
                     Cart.Clear();
                     OpenScreen = EscapeScreen;
                     S.Play("K3");
+                    string message = LS.Navigation("purchases finalized");
+                    MenuManager.GoodNews(message);
                 }
                 else
                 {
-                    if (paybycard) MenuManager.Warning(StringService.Get("no money on card"));
-                    else MenuManager.Warning(StringService.Get("no money in wallet"));
+                    if (paybycard) MenuManager.Warning(LS.Action("no money on card"));
+                    else MenuManager.Warning(LS.Action("no money in wallet"));
                 }
             }
-            else MenuManager.Warning(StringService.Get("no items in cart"));
+            else MenuManager.Warning(LS.Action("no items in cart"));
         }
         private static void ChangePaymentMethod()
         {
@@ -77,7 +79,7 @@ namespace FarmConsole.Body.Controllers.CentralControllers
         }
         private static void DisplayView()
         {
-            CashRegisterView.Display(Cart, selected, amount, paybycard);
+            ProductBuyingView.Display(Cart, selected, amount, paybycard);
         }
         private static void SetAmount()
         {
@@ -94,7 +96,7 @@ namespace FarmConsole.Body.Controllers.CentralControllers
             SetAmount();
             DisplayView();
 
-            while (OpenScreen == "CashRegister")
+            while (OpenScreen == "ProductBuying")
             {
                 if (Console.KeyAvailable)
                 {

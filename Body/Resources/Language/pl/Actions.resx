@@ -117,10 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="401" xml:space="preserve">
-    <value>Wybieranie elementu Menu: W/S Zatwierdzenie lub wycofanie: E/Q Wybór wartości suwaka: A/D</value>
-    <comment>main popup</comment>
-  </data>
   <data name="already fertilized" xml:space="preserve">
     <value>To pole zostało już nawiezione!</value>
     <comment>action result</comment>
@@ -129,53 +125,17 @@
     <value>To pole jest już podlane!</value>
     <comment>action result</comment>
   </data>
-  <data name="cant do anything" xml:space="preserve">
-    <value>Nic z tym nie zrobisz</value>
-    <comment>navigation label</comment>
-  </data>
   <data name="cant fertilizating" xml:space="preserve">
     <value>Nie możesz użyć nawozu na polu innym niż pole z rosnącymi roślinami!</value>
     <comment>action result</comment>
-  </data>
-  <data name="choose" xml:space="preserve">
-    <value>WYBIERZ</value>
-    <comment>navigation</comment>
   </data>
   <data name="destroy" xml:space="preserve">
     <value>Zniszcz</value>
     <comment>action name multi skill</comment>
   </data>
-  <data name="do" xml:space="preserve">
-    <value>WYKONAJ</value>
-    <comment>navigation</comment>
-  </data>
   <data name="done" xml:space="preserve">
     <value>Zrobione</value>
     <comment>action result</comment>
-  </data>
-  <data name="escape" xml:space="preserve">
-    <value>WYJDŹ</value>
-    <comment>navigation</comment>
-  </data>
-  <data name="fertilizers" xml:space="preserve">
-    <value>Nawozy</value>
-    <comment>navigation label</comment>
-  </data>
-  <data name="finish filtering" xml:space="preserve">
-    <value>ZAKOŃCZ FILTR</value>
-    <comment>navigation</comment>
-  </data>
-  <data name="foot" xml:space="preserve">
-    <value>* FC copyright 2021 *</value>
-    <comment>main</comment>
-  </data>
-  <data name="go back" xml:space="preserve">
-    <value>WRÓĆ</value>
-    <comment>navigation</comment>
-  </data>
-  <data name="inventory" xml:space="preserve">
-    <value>Ekwipunek</value>
-    <comment>navigation label</comment>
   </data>
   <data name="multi collect" xml:space="preserve">
     <value>Nie posiadasz odpowiedniej maszyny, aby zebrać tyle plonów jednocześnie!</value>
@@ -209,14 +169,6 @@
     <value>Nie możesz posiać nic na polu innym niż zaorane!</value>
     <comment>action result</comment>
   </data>
-  <data name="nothing here" xml:space="preserve">
-    <value>Nic tu nie ma</value>
-    <comment>navigation label</comment>
-  </data>
-  <data name="objects" xml:space="preserve">
-    <value>Obiekty</value>
-    <comment>navigation label</comment>
-  </data>
   <data name="overwriting" xml:space="preserve">
     <value>Nie możesz buildić nic więcej w tym samym miejscu!</value>
     <comment>action result</comment>
@@ -224,14 +176,6 @@
   <data name="build" xml:space="preserve">
     <value>Postaw</value>
     <comment>action name multi skill</comment>
-  </data>
-  <data name="search" xml:space="preserve">
-    <value>Szukaj...</value>
-    <comment>navigation</comment>
-  </data>
-  <data name="seeds" xml:space="preserve">
-    <value>Nasiona</value>
-    <comment>navigation label</comment>
   </data>
   <data name="fertilize" xml:space="preserve">
     <value>Nawieź</value>
@@ -245,11 +189,11 @@
     <value>Wypij</value>
     <comment>action name</comment>
   </data>
-  <data name="buy" xml:space="preserve">
+  <data name="product buying" xml:space="preserve">
     <value>Kup</value>
     <comment>action name</comment>
   </data>
-  <data name="sell" xml:space="preserve">
+  <data name="product offer" xml:space="preserve">
     <value>Sprzedaj</value>
     <comment>action name</comment>
   </data>
@@ -257,17 +201,9 @@
     <value>Przenieś</value>
     <comment>action name</comment>
   </data>
-  <data name="title" xml:space="preserve">
-    <value>Farm Console</value>
-    <comment>main</comment>
-  </data>
   <data name="unknown action" xml:space="preserve">
     <value>Nieznana akcja</value>
     <comment>action result</comment>
-  </data>
-  <data name="warning" xml:space="preserve">
-    <value>OSTRZEZENIE!</value>
-    <comment>navigation label</comment>
   </data>
   <data name="come in" xml:space="preserve">
     <value>Wejdź</value>
@@ -301,113 +237,21 @@
     <value>Wyjdź</value>
     <comment>action name</comment>
   </data>
-  <data name="control label" xml:space="preserve">
-    <value>Sterowanie</value>
-    <comment>menu label</comment>
-  </data>
-  <data name="empty save button" xml:space="preserve">
-    <value>P U S T Y   Z A P I S</value>
-    <comment>menu button</comment>
-  </data>
-  <data name="from the author label" xml:space="preserve">
-    <value>Od Autora</value>
-    <comment>menu label</comment>
-  </data>
-  <data name="hello player" xml:space="preserve">
-    <value>Witaj w grze</value>
-    <comment>game label</comment>
-  </data>
-  <data name="help button" xml:space="preserve">
-    <value>Poznaj Zasady Gry</value>
-    <comment>menu button</comment>
-  </data>
-  <data name="help label" xml:space="preserve">
-    <value>Nie wiesz o co chodzi?</value>
-    <comment>menu label</comment>
-  </data>
-  <data name="lastplay label" xml:space="preserve">
-    <value>Ostatni Zapis</value>
-    <comment>menu label</comment>
-  </data>
-  <data name="load game button" xml:space="preserve">
-    <value>Kontynuuj Rozrywke</value>
-    <comment>menu button</comment>
-  </data>
-  <data name="lvl label" xml:space="preserve">
-    <value>Osiągniety Poziom</value>
-    <comment>menu label</comment>
-  </data>
   <data name="make fertilizer" xml:space="preserve">
     <value>Zrób nawóz</value>
     <comment>action name multi</comment>
-  </data>
-  <data name="menu text 1" xml:space="preserve">
-    <value>Swietny Tytul!!</value>
-    <comment>menu text</comment>
-  </data>
-  <data name="menu text 2" xml:space="preserve">
-    <value>Oto najlpesza gra konsolowa, o jakiej slyszal swiat!</value>
-    <comment>menu text</comment>
   </data>
   <data name="mow grass" xml:space="preserve">
     <value>Skoś</value>
     <comment>action name multi</comment>
   </data>
-  <data name="new save button" xml:space="preserve">
-    <value>Utwórz Nowy Zapis</value>
-    <comment>menu button</comment>
-  </data>
-  <data name="nickname label" xml:space="preserve">
-    <value>Nazwa Gracza</value>
-    <comment>menu label</comment>
-  </data>
-  <data name="no" xml:space="preserve">
-    <value>NIE</value>
-    <comment>navigation</comment>
-  </data>
-  <data name="settings button" xml:space="preserve">
-    <value>Ustaw Wlasne Opcje</value>
-    <comment>menu button</comment>
-  </data>
-  <data name="setting label" xml:space="preserve">
-    <value>Ustaw Spersonalizowane Opcje</value>
-    <comment>menu label</comment>
-  </data>
-  <data name="override save button" xml:space="preserve">
-    <value>Nadpisz Gre</value>
-    <comment>menu button</comment>
-  </data>
   <data name="plow" xml:space="preserve">
     <value>Zaoraj</value>
     <comment>action name multi</comment>
   </data>
-  <data name="reject button" xml:space="preserve">
-    <value>Odrzuć</value>
-    <comment>menu button</comment>
-  </data>
-  <data name="restore default button" xml:space="preserve">
-    <value>Przywróć Domyślne Ustawienia</value>
-    <comment>menu setting button</comment>
-  </data>
-  <data name="save button" xml:space="preserve">
-    <value>Zapisz</value>
-    <comment>menu button</comment>
-  </data>
-  <data name="save game label" xml:space="preserve">
-    <value>Zapisz Giereczke</value>
-    <comment>menu label</comment>
-  </data>
-  <data name="start game button" xml:space="preserve">
-    <value>Zacznij Rozgrywke</value>
-    <comment>menu button</comment>
-  </data>
   <data name="use" xml:space="preserve">
     <value>Użyj</value>
     <comment>action name</comment>
-  </data>
-  <data name="wallet label" xml:space="preserve">
-    <value>Posiadany Majątek</value>
-    <comment>menu label</comment>
   </data>
   <data name="wash" xml:space="preserve">
     <value>Umyj</value>
@@ -416,74 +260,6 @@
   <data name="water it" xml:space="preserve">
     <value>Podlej</value>
     <comment>action name multi</comment>
-  </data>
-  <data name="yes" xml:space="preserve">
-    <value>TAK</value>
-    <comment>navigation</comment>
-  </data>
-  <data name="back to menu button" xml:space="preserve">
-    <value>Wróć do Menu</value>
-    <comment>menu button</comment>
-  </data>
-  <data name="continue button" xml:space="preserve">
-    <value>Kontynuuj</value>
-    <comment>menu button</comment>
-  </data>
-  <data name="delete save button" xml:space="preserve">
-    <value>Usuń Zapis</value>
-    <comment>menu button</comment>
-  </data>
-  <data name="load game label" xml:space="preserve">
-    <value>Wczytaj Swój Ulubiony Zapis</value>
-    <comment>menu label</comment>
-  </data>
-  <data name="new game button" xml:space="preserve">
-    <value>Rozpocznij Nową Grę</value>
-    <comment>menu button</comment>
-  </data>
-  <data name="save game button" xml:space="preserve">
-    <value>Zapisz Gre</value>
-    <comment>menu button</comment>
-  </data>
-  <data name="gender label" xml:space="preserve">
-    <value>Preferowana Płeć</value>
-    <comment>menu label</comment>
-  </data>
-  <data name="level of difficulty label" xml:space="preserve">
-    <value>Poziom Trudności</value>
-    <comment>menu label</comment>
-  </data>
-  <data name="new game label" xml:space="preserve">
-    <value>Rozpocznij Nowa Giereczke</value>
-    <comment>menu label</comment>
-  </data>
-  <data name="avatar label" xml:space="preserve">
-    <value>Wygląd Postaci</value>
-    <comment>menu label</comment>
-  </data>
-  <data name="easy button" xml:space="preserve">
-    <value>Łatwy</value>
-    <comment>menu button</comment>
-  </data>
-  <data name="hard button" xml:space="preserve">
-    <value>Trudny</value>
-    <comment>menu button</comment>
-  </data>
-  <data name="man button" xml:space="preserve">
-    <value>Mężczyzna</value>
-    <comment>menu button</comment>
-  </data>
-  <data name="random button" xml:space="preserve">
-    <value>Losowy</value>
-    <comment>menu button</comment>
-  </data>
-  <data name="self button" xml:space="preserve">
-    <value>Własny</value>
-    <comment>menu button</comment>
-  </data>
-  <data name="woman button" xml:space="preserve">
-    <value>Kobieta</value>
-    <comment>menu button</comment>
   </data>
   <data name="multi build" xml:space="preserve">
     <value>Nie masz odpowiednio wysokiego poziomu, aby stawiać tyle obiektów jednocześnie!</value>
@@ -497,10 +273,6 @@
     <value>Nie masz odpowiednio wysokiego poziomu, aby wykopać tyle ścieżek jednocześnie!</value>
     <comment>action result low lvl</comment>
   </data>
-  <data name="lvl" xml:space="preserve">
-    <value>Poziom</value>
-    <comment>main</comment>
-  </data>
   <data name="multi hide" xml:space="preserve">
     <value>Nie masz odpowiednio wysokiego poziomu, aby schować tyle obiektów jednocześnie!</value>
     <comment>action result low lvl</comment>
@@ -513,10 +285,6 @@
     <value>Nie posiadasz wystarczającej ilości energii!</value>
     <comment>action result</comment>
   </data>
-  <data name="required" xml:space="preserve">
-    <value>Wymagany</value>
-    <comment>main</comment>
-  </data>
   <data name="cant edit locked" xml:space="preserve">
     <value>Nie możesz edytować zamkniętych na klucz obiektów!</value>
     <comment>action result</comment>
@@ -526,32 +294,8 @@
     <comment>action name</comment>
   </data>
   <data name="unlock" xml:space="preserve">
-    <value>Otwórz kluczem</value>
+    <value>Otwórz</value>
     <comment>action name</comment>
-  </data>
-  <data name="game pause label" xml:space="preserve">
-    <value>Chwila przerwy? Nie ma sprawy!</value>
-    <comment>menu label</comment>
-  </data>
-  <data name="container label" xml:space="preserve">
-    <value>Bierz i odkładaj wedle uznania!</value>
-    <comment>menu label</comment>
-  </data>
-  <data name="put item back" xml:space="preserve">
-    <value>ODŁÓŻ</value>
-    <comment>navigation container</comment>
-  </data>
-  <data name="put items back" xml:space="preserve">
-    <value>ODKŁADAJ PRODUKTY</value>
-    <comment>navigation container</comment>
-  </data>
-  <data name="take item" xml:space="preserve">
-    <value>WEŹ</value>
-    <comment>navigation container</comment>
-  </data>
-  <data name="take items" xml:space="preserve">
-    <value>WYBIERAJ PRODUKTY</value>
-    <comment>navigation container</comment>
   </data>
   <data name="take a look" xml:space="preserve">
     <value>Zajrzyj</value>
@@ -561,74 +305,6 @@
     <value>Nic nie zrobisz z tym obiektem, dopóki nie jest pusty!</value>
     <comment>action result</comment>
   </data>
-  <data name="set effects volume" xml:space="preserve">
-    <value>Głośność Efektów</value>
-    <comment>menu setting name</comment>
-  </data>
-  <data name="set music volume" xml:space="preserve">
-    <value>Głośność Muzyki</value>
-    <comment>menu setting name</comment>
-  </data>
-  <data name="set screen height" xml:space="preserve">
-    <value>Wysokość Ekranu</value>
-    <comment>menu setting name</comment>
-  </data>
-  <data name="set screen width" xml:space="preserve">
-    <value>Szerokość Ekranu</value>
-    <comment>menu setting name</comment>
-  </data>
-  <data name="language button" xml:space="preserve">
-    <value>Język</value>
-    <comment>menu setting button</comment>
-  </data>
-  <data name="set player move axis" xml:space="preserve">
-    <value>Kierunek Ruchu Gracza</value>
-    <comment>menu setting name</comment>
-  </data>
-  <data name="set field name" xml:space="preserve">
-    <value>Widoczność Nazwy Pola</value>
-    <comment>menu setting name</comment>
-  </data>
-  <data name="set map move axis" xml:space="preserve">
-    <value>Kierunek Ruchu Mapy</value>
-    <comment>menu setting name</comment>
-  </data>
-  <data name="default nickname" xml:space="preserve">
-    <value>Gracz</value>
-    <comment>main</comment>
-  </data>
-  <data name="amount to pay" xml:space="preserve">
-    <value>Kwota do zapłaty</value>
-    <comment>navigation cashregister</comment>
-  </data>
-  <data name="change payment method" xml:space="preserve">
-    <value>ZMIEŃ METODĘ PŁATNOŚCI</value>
-    <comment>navigation cashregister</comment>
-  </data>
-  <data name="currency" xml:space="preserve">
-    <value>$</value>
-    <comment>main</comment>
-  </data>
-  <data name="give up shopping" xml:space="preserve">
-    <value>ZREZYGNUJ Z ZAKUPÓW</value>
-    <comment>navigation cashregister</comment>
-  </data>
-  <data name="pay by card" xml:space="preserve">
-    <value>ZAPŁAĆ KARTĄ</value>
-    <comment>navigation cashregister</comment>
-  </data>
-  <data name="pay with cash" xml:space="preserve">
-    <value>ZAPŁAĆ GOTÓWKĄ</value>
-    <comment>navigation cashregister</comment>
-  </data>
-  <data name="reject product" xml:space="preserve">
-    <value>ZREZYGNUJ Z PRODUKTU</value>
-    <comment>navigation cashregister</comment>
-  </data>
-  <data name="cashregister label" xml:space="preserve">
-    <value>Sfinalizuj tranzakcję lub zrezygnuj z zakupów</value>
-    <comment>menu label</comment>
-  </data>
   <data name="no money in wallet" xml:space="preserve">
     <value>Nie posiadasz przy sobie wystarczającej ilości pieniędzy!</value>
     <comment>action result</comment>
@@ -637,20 +313,28 @@
     <value>Nie wystarczająca ilość środków na karcie!</value>
     <comment>action result</comment>
   </data>
-  <data name="price" xml:space="preserve">
-    <value>Cena</value>
-    <comment>main</comment>
-  </data>
-  <data name="cart" xml:space="preserve">
-    <value>Koszyk</value>
-    <comment>navigation cashregister</comment>
-  </data>
-  <data name="cashregister" xml:space="preserve">
-    <value>Kasa</value>
-    <comment>navigation cashregister</comment>
-  </data>
   <data name="no items in cart" xml:space="preserve">
     <value>Halo! Przecież koszyk jest pusty</value>
     <comment>action result</comment>
+  </data>
+  <data name="cant do anything" xml:space="preserve">
+    <value>Nic z tym nie zrobisz</value>
+    <comment>action result</comment>
+  </data>
+  <data name="nothing here" xml:space="preserve">
+    <value>Nic tu nie ma</value>
+    <comment>action result</comment>
+  </data>
+  <data name="plot buying" xml:space="preserve">
+    <value>Kup działkę</value>
+    <comment>action name</comment>
+  </data>
+  <data name="plot extending" xml:space="preserve">
+    <value>Rozszerz działkę</value>
+    <comment>action name</comment>
+  </data>
+  <data name="plot selling" xml:space="preserve">
+    <value>Sprzedaj działkę</value>
+    <comment>action name</comment>
   </data>
 </root>

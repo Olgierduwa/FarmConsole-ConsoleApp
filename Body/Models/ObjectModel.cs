@@ -19,7 +19,7 @@ namespace FarmConsole.Body.Models
         public string StateName { get; set; }
         public string ObjectName { get; set; }
         public string Property { get; set; }
-        public decimal Price { get; set; }
+        public int Price { get; set; }
         public string[] MenuActions { get; set; }
         public string[] MapActions { get; set; }
         public bool Cutted { get; set; }
@@ -64,10 +64,13 @@ namespace FarmConsole.Body.Models
         }
         public ProductModel ToProduct(int amount = -1)
         {
+            string BaseAction = Objects[ID].MapActions.Length > 0 ? Objects[ID].MapActions[0] : null;
             if (Edited) SetID();
             ProductModel NewProduct = (ProductModel)Objects[ID].Clone(new ProductModel());
+            string CurrentAcction = MapActions != null ? MapActions.Length > 0 ? MapActions[0] : null : null;
             NewProduct.ID = ID;
             NewProduct.Amount = 1;
+            NewProduct.MapActions = BaseAction != CurrentAcction ? MapActions : NewProduct.MapActions;
             if (amount < 0)
             {
                 ObjectModel ThisObject = this;
@@ -78,11 +81,14 @@ namespace FarmConsole.Body.Models
         }
         public FieldModel ToField()
         {
+            string BaseAction = Objects[ID].MapActions.Length > 0 ? Objects[ID].MapActions[0] : null;
             if (Edited) SetID();
             FieldModel NewField = (FieldModel)Objects[ID].Clone(new FieldModel());
+            string CurrentAction = MapActions != null ? MapActions.Length > 0 ? MapActions[0] : null : null;
             NewField.ID = ID;
             if (NewField.Slots > 0) NewField.Pocket = new ContainerModel(new ProductModel[0], NewField.Slots);
             ObjectModel ThisObject = this;
+            NewField.MapActions = BaseAction != CurrentAction ? MapActions : NewField.MapActions;
             if (ThisObject is FieldModel)
             {
                 if (((FieldModel)ThisObject).New == false)
@@ -106,7 +112,7 @@ namespace FarmConsole.Body.Models
         private static List<ObjectModel> Objects = XF.GetObjects();
         public static void SetObjects() => Objects = XF.GetObjects();
         public static ObjectModel GetObject(int _ID) => Objects[_ID];
-        public static ObjectModel GetObject(string _Name, int _State = 0, string _StateName = "")
+        public static ObjectModel GetObject(string _Name, int _State = 0, string _StateName = "", string sufix = "")
         {
             int Index = 0;
             while (Index < Objects.Count)
@@ -117,6 +123,7 @@ namespace FarmConsole.Body.Models
                 Index++;
             }
             if (Index == Objects.Count) return Objects[3]; // error
+            if (Objects[Index].Property == "") Objects[Index].Property = sufix;
             return Objects[Index];
         }
         public static List<ObjectModel> GetObjects(int? _Category = null, int? _Scale = null, int? _Type = null, int? _State = null)

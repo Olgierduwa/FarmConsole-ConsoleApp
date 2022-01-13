@@ -14,6 +14,7 @@ namespace FarmConsole.Body.Controlers
     {
         private static string InventoryLabel;
         private static string[] FieldActions;
+        private static string[] BlockedActions;
         private static string[] ProductActions;
         private static List<ProductModel> Inventory;
         private static List<ProductModel> SelectedProducts;
@@ -29,18 +30,19 @@ namespace FarmConsole.Body.Controlers
             switch (menu)
             {
                 case "QFT":
-                    FieldActions = MapManager.GetField().ToProduct().MapActions; MenuCount = FieldActions.Length;
-                    COM = Q = true; CS = PS = 1; SelectFieldAction(); break;
+                    FieldActions = ConvertService.SelectAllowedActions(MapManager.GetField().ToProduct().MapActions, MapEngine.Map.AccessLevel);
+                    MenuCount = FieldActions.Length; CS = PS = 1; SelectFieldAction(); break;
 
                 case "QF":
-                    ProductModel Field = MapManager.GetField().ToProduct(); CS = PS = 1;
-                    FieldActions = Field.MapActions; MenuCount = FieldActions.Length; COM = Q = true;
-                    string Title = Field.StateName.Length > 0 && Field.StateName[0] >= 'A' ? Field.StateName + " " + Field.ObjectName : Field.ObjectName;
+                    ProductModel Field = MapManager.GetField().ToProduct(); CS = PS = 1; COM = Q = true;
+                    FieldActions = ConvertService.SelectAllowedActions(Field.MapActions, MapEngine.Map.AccessLevel);
+                    MenuCount = FieldActions.Length; string Title = Field.StateName.Length > 0 && Field.StateName[0] >= 'A' ?
+                        LS.Object(Field.StateName) + " " + LS.Object(Field.ObjectName) : LS.Object(Field.ObjectName);
                     MenuSize["L"] = SideMenuView.DisplayLeftMenu(FieldActions, Title, CS); break;
 
                 case "QP":
                     ES = CS; ProductActions = SelectedProducts[ES - 2].MenuActions; MenuCount = ProductActions.Length; CS = PS = 1;
-                    MenuSize["L"] = SideMenuView.DisplayLeftMenu(ProductActions, SelectedProducts[ES - 2].ObjectName, CS, true); COM = Q = true; break;
+                    MenuSize["L"] = SideMenuView.DisplayLeftMenu(ProductActions, LS.Object(SelectedProducts[ES - 2].ObjectName), CS, true); COM = Q = true; break;
 
                 case "EF":
                     QS = CS; SelectedProducts = ProductModel.SelectProductsByAction(Inventory, Action.Name); CS = PS = 1; COM = false; E = true;
@@ -48,11 +50,11 @@ namespace FarmConsole.Body.Controlers
 
                 case "EP":
                     COM = false; E = true; CS = PS = 1; SelectedProducts = Inventory; MenuCount = Inventory.Count + 1;
-                    MenuSize["R"] = SideMenuView.DisplayRightMenu(SelectedProducts, StringService.Get("inventory"), CS, search: true); break;
+                    MenuSize["R"] = SideMenuView.DisplayRightMenu(SelectedProducts, LS.Object("inventory"), CS, search: true); break;
 
                 case "SE":
                     MenuCount = SelectedProducts.Count + 1; CS = PS = 1;
-                    MenuSize["R"] = SideMenuView.DisplayRightMenu(SelectedProducts, StringService.Get("inventory"), CS, search: true); break;
+                    MenuSize["R"] = SideMenuView.DisplayRightMenu(SelectedProducts, LS.Object("inventory"), CS, search: true); break;
             }
         }
         private static void Hide(string menu)
@@ -76,7 +78,7 @@ namespace FarmConsole.Body.Controlers
                 cm = MenuSize[type[i].ToString()];
                 if (cm != null)
                 {
-                    if (type[i] == 'S') View.DisplayPixels(new Point(cm.Pos.X, 4), new Size(cm.Size.Width, Console.WindowHeight - cm.Size.Height - 8));
+                    if (type[i] == 'S') View.DisplayPixels(new Point(cm.Pos.X, 4), new Size(cm.Size.Width, Console.WindowHeight - cm.Size.Height - 9));
                     else View.DisplayPixels(cm.Pos, new Size(cm.Size.Width, cm.Size.Height + 1));
                 }
             }
@@ -98,7 +100,7 @@ namespace FarmConsole.Body.Controlers
         {
             if(Q) Hide("Q");
             if(E) Hide("E");
-            if (content != StringService.Get("done"))
+            if (content != LS.Action("done"))
             {
                 C = true;
                 MenuSize["C"] = SideMenuView.DisplayCenterMenu(content);
@@ -113,9 +115,9 @@ namespace FarmConsole.Body.Controlers
                 Action.Name = FieldActions[CS - 1];
                 switch (Action.Name)
                 {
-                    case "build": InventoryLabel = StringService.Get("objects"); Display("EF"); break;
-                    case "sow": InventoryLabel = StringService.Get("seeds"); Display("EF"); break;
-                    case "fertilize": InventoryLabel = StringService.Get("fertilizers"); Display("EF"); break;
+                    case "build": InventoryLabel = LS.Object("objects"); Display("EF"); break;
+                    case "sow": InventoryLabel = LS.Object("seeds"); Display("EF"); break;
+                    case "fertilize": InventoryLabel = LS.Object("fertilizers"); Display("EF"); break;
                     case "move": DRAGGED = true; Info(SideMenuService.TakeAction()); break;
                     default: Info(SideMenuService.TakeAction()); break;
                 }
@@ -150,7 +152,7 @@ namespace FarmConsole.Body.Controlers
         }
         private static void FilterProducts()
         {
-            string Title = StringService.Get("inventory");
+            string Title = LS.Object("inventory");
             ConsoleKey cki;
             string SearchedPhrase = "", DefaultString = ":";
             SelectedProducts = new List<ProductModel>();
@@ -163,7 +165,7 @@ namespace FarmConsole.Body.Controlers
                 {
                     SearchedPhrase = SearchedPhrase[0..^1];
                     SelectedProducts = new List<ProductModel>();
-                    foreach (var P in Inventory) if (P.ObjectName.ToLower().Contains(SearchedPhrase.ToLower())) SelectedProducts.Add(P);
+                    foreach (var P in Inventory) if (LS.Object(P.ObjectName).ToLower().Contains(SearchedPhrase.ToLower())) SelectedProducts.Add(P);
                     if (SearchedPhrase.Length > 0) MenuSize["S"] = SideMenuView.DisplaySearchRightMenu(SelectedProducts, Title, SearchedPhrase);
                     else MenuSize["S"] = SideMenuView.DisplaySearchRightMenu(SelectedProducts, Title, DefaultString);
                     Hide("S");
@@ -172,7 +174,7 @@ namespace FarmConsole.Body.Controlers
                 {
                     SearchedPhrase += ((char)Convert.ToInt16(cki)).ToString();
                     SelectedProducts = new List<ProductModel>();
-                    foreach(var P in Inventory) if (P.ObjectName.ToLower().Contains(SearchedPhrase.ToLower())) SelectedProducts.Add(P);
+                    foreach(var P in Inventory) if (LS.Object(P.ObjectName).ToLower().Contains(SearchedPhrase.ToLower())) SelectedProducts.Add(P);
                     MenuSize["S"] = SideMenuView.DisplaySearchRightMenu(SelectedProducts, Title, SearchedPhrase);
                     Hide("S");
                 }
@@ -194,6 +196,7 @@ namespace FarmConsole.Body.Controlers
         }
         public static void Open(ConsoleKey cki)
         {
+            BlockedActions = new string[] { };
             View = MapEngine.Map.View;
             switch (cki)
             {

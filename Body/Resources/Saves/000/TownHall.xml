@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Supply deliverydays="">
+	<Container name="big bookcase" sufix="(empty)" pos="5,2" state="0"/>
+	<Container name="big bookcase" sufix="(empty)" pos="2,5" state="1"/>
+	<Container name="big bookcase" sufix="(empty)" pos="5,8" state="2"/>
+	<Container name="office desk" sufix="" pos="3,2" state="1" mapAct="plot extending,plot buying,plot selling"/>
+	<Container name="office desk" sufix="" pos="3,7" state="2" mapAct=""/>
+	<Container name="office desk" sufix="" pos="7,7" state="3" mapAct=""/>
+</Supply>

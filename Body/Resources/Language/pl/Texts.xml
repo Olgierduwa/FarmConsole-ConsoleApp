@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<texts>
+  <text key="controls">
+    ' ' '
+    ------------------------------------
+    --- [Q] --- Kwestionariusz ---------
+    --- [E] --- Ekwipunek --------------
+    --- [W] --- Ruch Góra --------------
+    --- [S] --- Ruch Dół ---------------
+    --- [A] --- Ruch Lewo --------------
+    --- [D] --- Ruch Prawo -------------
+    --- [TAB] - Szybki Wybór -----------
+    --- [ESC] - Pauza / Powrót ---------
+    ------------------------------------
+    . . .
+  </text>
+  <text key="about">
+    ' ' '
+    ------------------------------------
+    O Autorze tego projektu można
+    powiedziec tyle, że jest zapaleńcem
+    zwykłych jasnych znaków graficznych
+    na tylko i wylacznie czarnym tle.
+    ------------------------------------
+    Taka koncepcja Gry o sianiu nasion,
+    zbierainu plonów i ich ewentualnej
+    sprzedaży to wszystko czego trzeba,
+    by się nieco rozerwać, posiadając
+    jakąkolwiek wyobraźnię i wolny czas.
+    ------------------------------------
+    . . .
+  </text>
+  <text key="exit question">
+    !!! Ś W I A D O M I E !!!
+    !!! O P U S Z C Z A M !!!
+    !!! R O Z G R Y W K Ę !!!
+  </text>
+  <text key="delete question">
+    B E Z S P R Z E C Z N I E
+    P R A G N Ę _ U S U N Ą Ć
+    T E N _ Z A P I S _ G R Y
+    T R W A L E _ T R A C Ą C
+    O D T W A R Z A L N O Ś Ć
+  </text>
+  <text key="update question">
+    E K W I W A L E N T N I E
+    N A D P I S U J Ę _ T E N
+    W Y B R A N Y _ Z A P I S
+    T Y M Ż E _ Z A P I S E M
+    A B Y _ U Z U P E Ł N I Ć
+    K R Z T A Ł T O W A N I E
+  </text>
+  <text key="extend up">
+
+              ▄
+          ▄ ▀ . ▀ ▄
+      ▄ ▀ . ' . ' . ▀ ▄
+    ▀ . ' . ' . ' . ' . ▀
+        ' . ' . ' . '
+            ' . '
+        
+  </text>
+  <text key="extend down">
+
+              .
+          . ' . ' .
+      . ' . ' . ' . ' .
+    ▀ ▄ ' . ' . ' . ' ▄ ▀
+        ▀ ▄ ' . ' ▄ ▀
+            ▀ ▄ ▀
+
+  </text>
+  <text key="extend left">
+
+              ▄
+          ▄ ▀ . ' .
+      ▄ ▀ . ' . ' . ' .
+    ▀ ▄ ' . ' . ' . ' . '
+        ▀ ▄ ' . ' . '
+            ▀ ▄ '
+
+  </text>
+  <text key="extend right">
+
+              ▄
+          . ' . ▀ ▄
+      . ' . ' . ' . ▀ ▄
+    ' . ' . ' . ' . ' ▄ ▀
+        ' . ' . ' ▄ ▀
+            ' ▄ ▀
+
+  </text>
+</texts>

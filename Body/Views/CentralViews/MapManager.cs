@@ -61,19 +61,19 @@ namespace FarmConsole.Body.Views.LocationViews
 
         public static string Build(ProductModel BuildProduct)
         {
-            if (GetField().Category == 3) return StringService.Get("overwriting");
+            if (GetField().Category == 3) return LS.Action("overwriting");
             SetField(GetPos(), BuildProduct.ToField());
             ClearSelectedFields(1);
-            return StringService.Get("done");
+            return LS.Action("done");
         }
         
         public static string Destroy()
         {
             var DeletingField = GetField().ToField();
-            if (DeletingField.Pocket != null && !DeletingField.Pocket.IsEmpty) return StringService.Get("is no empty");
+            if (DeletingField.Pocket != null && !DeletingField.Pocket.IsEmpty) return LS.Action("is no empty");
             SetField(GetPos(), null, "Base");
             ClearSelectedFields(1);
-            return StringService.Get("done");
+            return LS.Action("done");
         }
         
         public static void Dragg()
@@ -112,7 +112,7 @@ namespace FarmConsole.Body.Views.LocationViews
             FieldModel Field = GetField();
             if (Field.StateName[0] == '-' && Field.StateName.Length == 6) // check if locked objects
             {
-                if (Field.StateName[5] == '1') return StringService.Get("cant edit locked");
+                if (Field.StateName[5] == '1') return LS.Action("cant edit locked");
                 else Field.State++;
             }
             var NewField = Field.ToField();
@@ -127,12 +127,12 @@ namespace FarmConsole.Body.Views.LocationViews
                 SetField(GetPos(), Field);
             }
             ClearSelectedFields(1);
-            return StringService.Get("done");
+            return LS.Action("done");
         }
         
         public static void DigPath()
         {
-            SetField(GetPos(), ObjectModel.GetObject("Ścieżka").ToField());
+            SetField(GetPos(), ObjectModel.GetObject("path").ToField());
             ClearSelectedFields(1);
         }
 
@@ -140,8 +140,7 @@ namespace FarmConsole.Body.Views.LocationViews
         {
             FieldModel Field = GetField();
             Field.State++;
-            Field = Field.ToField();
-            SetField(GetPos(), Field);
+            SetField(GetPos(), Field.ToField());
             ClearSelectedFields(1);
         }
 
@@ -149,8 +148,7 @@ namespace FarmConsole.Body.Views.LocationViews
         {
             FieldModel Field = GetField();
             Field.State--;
-            Field = Field.ToField();
-            SetField(GetPos(), Field);
+            SetField(GetPos(), Field.ToField());
             ClearSelectedFields(1);
         }
     }

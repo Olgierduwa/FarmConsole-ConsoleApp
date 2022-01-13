@@ -11,13 +11,6 @@ namespace FarmConsole.Body.Engines
 {
     class ComponentEngine
     {
-        protected static readonly string controlsText = XF.GetText(1);
-        protected static readonly string fromAuthorText = XF.GetText(2);
-        protected static readonly string exitQuestion = XF.GetText(100);
-        protected static readonly string deleteQuestion = XF.GetText(101);
-        protected static readonly string updateQuestion = XF.GetText(102);
-        protected static readonly string exitQuestion3 = XF.GetText(103);
-
         private static List<CM> CLIST = new List<CM>();
         private static readonly Color static_base_color = ColorService.GetColorByName("gray3");
         private static readonly Color static_content_color = ColorService.GetColorByName("White");
@@ -67,7 +60,7 @@ namespace FarmConsole.Body.Engines
                     }
             //ShowComponentList();
         }
-        protected static void UpdateTextBox(int id_group, int id_object, string text)
+        protected static void UpdateTextBox(int id_group, int id_object, string text, int margin = 3)
         {
             int id = 0;
             for (int i = 0; i < CLIST.Count; i++)
@@ -77,7 +70,7 @@ namespace FarmConsole.Body.Engines
             List<string> content = new List<string>();
             foreach (string word in text.Split(' '))
             {
-                if (line.Length + word.Length <= width - 8) line += string.IsNullOrEmpty(line) ? word : " " + word;
+                if (line.Length + word.Length <= width - (margin * 2 + 2)) line += string.IsNullOrEmpty(line) ? word : " " + word;
                 else if (word != "")
                 {
                     content.Add(("").PadRight((width - line.Length) / 2 - 1, ' ') + line + ("").PadRight(width - line.Length - (width - line.Length) / 2 - 1, ' '));

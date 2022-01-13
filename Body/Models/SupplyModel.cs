@@ -25,7 +25,7 @@ namespace FarmConsole.Body.Models
             if (ContainerIndex < 0) return null;
             return Containers[ContainerIndex].GetSlot(SlotIndex);
         }
-        
+
         public SupplyModel(ContainerModel[] _containers, Point[] _containerspos, List<int> _deliverydays, int _mapsize)
         {
             MapSize = _mapsize;
@@ -128,6 +128,14 @@ namespace FarmConsole.Body.Models
                         pocket.SetSlot(j, SupplyContainer.GetSlot(j)?.ToProduct());
                 }
             }
+        }
+        public List<ProductModel> GetSupplyProducts()
+        {
+            List<ProductModel> Products = new List<ProductModel>();
+            foreach (var c in Containers)
+                foreach (var s in c.GetSlots)
+                    if (s != null) Products.Add(s);
+            return Products;
         }
     }
 }

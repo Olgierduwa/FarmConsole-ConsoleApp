@@ -85,7 +85,7 @@ namespace FarmConsole.Body.Controlers
             selected = 1;
             selCount = 4;
             selStart = 1;
-            DefaultNickName = StringService.Get("default nickname");
+            DefaultNickName = LS.Navigation("default nickname");
             NickName = DefaultNickName;
             GameNewView.Display(NickName); GameNewView.UpdateMenuSelect(selected, selected, selCount);
             while (OpenScreen == "NewGame")

@@ -1,14 +1,13 @@
 ﻿using FarmConsole.Body.Engines;
-using FarmConsole.Body.Services;
-using FarmConsole.Body.Views.MenuViews;
+using FarmConsole.Body.Services.MainServices;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 
-namespace FarmConsole.Body.Views
+namespace FarmConsole.Body.Views.MenuViews
 {
-    class AnimationView : MenuManager
+    class AnimationView : ComponentService
     {
         public static void DisplayGraphic(string[] GraphicView, int column, int columns, int row = 5, Color color = new Color(), bool cleaning = false)
         {

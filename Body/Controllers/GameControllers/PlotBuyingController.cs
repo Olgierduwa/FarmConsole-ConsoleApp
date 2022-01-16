@@ -1,28 +1,33 @@
-﻿using FarmConsole.Body.Controlers;
+﻿using FarmConsole.Body.Controllers.CentralControllers;
 using FarmConsole.Body.Engines;
-using FarmConsole.Body.Resources.Sounds;
+using FarmConsole.Body.Services.GameServices;
+using FarmConsole.Body.Services.MainServices;
 using FarmConsole.Body.Views.GameViews;
-using FarmConsole.Body.Views.MenuViews;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace FarmConsole.Body.Controllers.GameControllers
 {
-    class PlotBuyingController : MainController
+    class PlotBuyingController : HeadController
     {
         private static int amount;
-        private static int selected;
+        private static int Selected;
 
         private static void UpdateSelected(int value)
         {
-            selected += value;
+            Selected += value;
+        }
+        private static void TryToBuy()
+        {
+            int mapsize = 10;
+            GameService.IncreaseInExperience(mapsize * mapsize);
         }
 
         public static void Open()
         {
-            selected = 1;
-            MenuManager.SetView = MapEngine.Map;
+            Selected = 1;
+            ComponentService.SetView = MapEngine.Map;
             PlotBuyingView.Display();
 
             while (OpenScreen == "PlotBuying")
@@ -33,7 +38,7 @@ namespace FarmConsole.Body.Controllers.GameControllers
                     switch (cki.Key)
                     {
                         case ConsoleKey.Tab:
-                        case ConsoleKey.Escape: OpenScreen = EscapeScreen; S.Play("K2"); break;
+                        case ConsoleKey.Escape: OpenScreen = EscapeScreen; SoundService.Play("K2"); break;
                         case ConsoleKey.W: UpdateSelected(+1); break;
                         case ConsoleKey.S: UpdateSelected(-1); break;
                         case ConsoleKey.D: break;
@@ -43,7 +48,7 @@ namespace FarmConsole.Body.Controllers.GameControllers
                     }
                 }
             }
-            MenuManager.Clean();
+            ComponentService.Clean();
         }
     }
 }

@@ -1,11 +1,10 @@
 ﻿using FarmConsole.Body.Models;
-using FarmConsole.Body.Services;
 using NAudio.Wave;
 using System;
 
-namespace FarmConsole.Body.Resources.Sounds
+namespace FarmConsole.Body.Services.MainServices
 {
-    public static class S
+    public static class SoundService
     {
         private static readonly string location = "../../../Body/Resources/Sounds/";
         private static WaveOutEvent waveSound = new WaveOutEvent();

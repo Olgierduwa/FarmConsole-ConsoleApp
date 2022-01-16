@@ -1,6 +1,6 @@
 ﻿using FarmConsole.Body.Engines;
-using FarmConsole.Body.Services;
-using FarmConsole.Body.Views.LocationViews;
+using FarmConsole.Body.Services.GameServices;
+using FarmConsole.Body.Services.MainServices;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -15,11 +15,16 @@ namespace FarmConsole.Body.Models
         public int LVL { get; set; }
         public int Gender { get; set; }
         public int Difficulty { get; set; }
+        public int Experience { get; set; }
+        public int Energy { get; set; }
+        public int Hunger { get; set; }
+        public int Immunity { get; set; }
+        public int Health { get; set; }
         public string UserName { get; set; }
         public string Lastplay { get; set; }
         public string Lastmap { get; set; }
-        public decimal WalletFunds { get; set; }
-        public decimal CardFunds { get; set; }
+        public int WalletFunds { get; set; }
+        public int CardFunds { get; set; }
         public DateTime GameDate { get; set; }
         public List<RuleModel> Rules { get; set; }
 
@@ -36,6 +41,12 @@ namespace FarmConsole.Body.Models
             int index = 0;
             while (index < Maps.Count) if (Maps[index].Name == Location) break; else index++;
             if (index != Maps.Count) Maps[index] = Map;
+        }
+        public void SetMapPermissions(string Location, byte AccessLevel)
+        {
+            for (int i = 0; i < Maps.Count; i++)
+                if (Location == "All" || Maps[i].Name == Location)
+                    Maps[i].AccessLevel = AccessLevel;
         }
         public void ExpandMap(string Location, Point Vector)
         {
@@ -55,8 +66,8 @@ namespace FarmConsole.Body.Models
             foreach (var map in Maps) map.Reload();
             if(MapLoaded != "")
             {
-                MapManager.InitMap(GetMap(MapLoaded));
-                MapManager.ShowMap(false);
+                MapService.InitMap(GetMap(MapLoaded));
+                MapService.ShowMap(false);
             }
         }
 
@@ -68,55 +79,6 @@ namespace FarmConsole.Body.Models
             foreach (var P in Inventory)
                 if (P.Scale == scale || P.Scale == 2) Products.Add(P);
             return Products;
-        }
-
-        public GameInstanceModel()
-        {
-            Gender = 2;
-            Difficulty = 2;
-            ID = 0;
-            LVL = 0;
-            UserName = "- NOBODY -";
-            Lastplay = "- NEVER -";
-            Lastmap = "- NOWHERE -";
-            WalletFunds = 0;
-            CardFunds = 0;
-        }
-        public GameInstanceModel(string id, string lvl, string name, string lastplay, string wallet, string card)
-        {
-            ID = Convert.ToInt32(id);
-            LVL = Convert.ToInt32(lvl);
-            UserName = name;
-            Lastplay = lastplay;
-            WalletFunds = Convert.ToDecimal(wallet);
-            CardFunds = Convert.ToDecimal(card);
-        }
-        public GameInstanceModel(string name, int difficulty, int gender)
-        {
-            ID = 0;
-            LVL = SettingsService.GODMOD ? 100: 1;
-            UserName = name;
-            Difficulty = difficulty;
-            Gender = gender;
-            WalletFunds = 105 * (5 - difficulty);
-            CardFunds = 420 * (5 - difficulty);
-            GameDate = new DateTime(2020, 10, 10);
-            Rules = XF.GetRules();
-            Lastmap = "Farm";
-            foreach (var Rule in Rules) Rule.Update(LVL);
-
-            SetKitStart();
-            Cart = Inventory;
-
-            Maps = new List<MapModel>();
-            BuildFarmMap();
-            BuildHouseMap();
-            BuildStreetMap();
-            BuildTownHall();
-            BuildShopMap("TradingHouse", new Point(3, 0), 12);
-            BuildShopMap("AgroShop", new Point(0, -3));
-            BuildShopMap("Supermarket", new Point(0, -3));
-            BuildShopMap("ConstructionShop", new Point(0, -3));
         }
 
         private void BuildFarmMap()
@@ -217,8 +179,6 @@ namespace FarmConsole.Body.Models
             Maps.Add(TownHallMap);
             SetMapSupply("TownHall");
         }
-
-
         private void BuildShopMap(string ShopName, Point Position, int Size = 7)
         {
             MapModel ShopMap = new MapModel(ShopName, "tiled floor", Position, Size);
@@ -292,7 +252,7 @@ namespace FarmConsole.Body.Models
             {
                 Inventory = new List<ProductModel>();
                 var objects = ObjectModel.GetObjects(_State: 0);
-                foreach (var o in objects) if (o.Category > 1) Inventory.Add(o.ToProduct(100));
+                foreach (var o in objects) if (o.Category > 2) Inventory.Add(o.ToProduct(100));
             }
             else Inventory = new List<ProductModel>
             {
@@ -300,6 +260,93 @@ namespace FarmConsole.Body.Models
             };
         }
         
+        public GameInstanceModel(string id, string lvl, string name, string lastplay, string wallet, string card)
+        {
+            ID = Convert.ToInt32(id);
+            LVL = Convert.ToInt32(lvl);
+            UserName = name;
+            Lastplay = lastplay;
+            WalletFunds = int.Parse(wallet) + int.Parse(card);
+        }
+        public GameInstanceModel(string name, int difficulty, int gender)
+        {
+            ID = 0;
+            LVL = SettingsService.GODMOD ? 1 : 1;
+            Experience = 0;
+            Energy = 10000;
+            Hunger = 0;
+            Immunity = 650;
+            Health = 1000;
+
+            UserName = name;
+            Difficulty = difficulty;
+            Gender = gender;
+            WalletFunds = 105 * (5 - difficulty);
+            CardFunds = 420 * (5 - difficulty);
+            GameDate = new DateTime(2020, 10, 10);
+            Rules = XF.GetRules();
+            Lastmap = "Farm";
+            foreach (var Rule in Rules) Rule.Update(LVL);
+
+            SetKitStart();
+            Cart = Inventory;
+
+            Maps = new List<MapModel>();
+            BuildFarmMap();
+            BuildHouseMap();
+            BuildStreetMap();
+            BuildTownHall();
+            BuildShopMap("TradingHouse", new Point(3, 0), 12);
+            BuildShopMap("AgroShop", new Point(0, -3));
+            BuildShopMap("Supermarket", new Point(0, -3));
+            BuildShopMap("ConstructionShop", new Point(0, -3));
+        }
+        public GameInstanceModel(int id)
+        {
+            XmlNode save = XF.GetGameInstance(id);
+            Inventory = new List<ProductModel>();
+            Cart = new List<ProductModel>();
+            ID = int.Parse(save.Attributes["id"].Value);
+            LVL = int.Parse(save["lvl"].InnerText);
+            Experience = int.Parse(save["experience"].InnerText);
+            Energy = int.Parse(save["energy"].InnerText);
+            Hunger = int.Parse(save["hunger"].InnerText);
+            Immunity = int.Parse(save["immunity"].InnerText);
+            Health = int.Parse(save["health"].InnerText);
+            UserName = save["username"].InnerText;
+            GameDate = DateTime.Parse(save["gamedate"].InnerText);
+            Lastplay = save["lastplay"].InnerText;
+            Lastmap = save["lastmap"].InnerText;
+            WalletFunds = int.Parse(save["wallet"].InnerText);
+            CardFunds = int.Parse(save["card"].InnerText);
+            Difficulty = int.Parse(save["difficulty"].InnerText);
+            Gender = int.Parse(save["gender"].InnerText);
+
+            Maps = new List<MapModel>();
+            string[] mapsString = XF.LoadMaps(id);
+            foreach (string map in mapsString)
+                Maps.Add(new MapModel(map));
+
+            string inventoryString = save["inventory"].InnerText;
+            for (int index = 0; index < inventoryString.Length; index += 3)
+                Inventory.Add(new ProductModel(inventoryString.Substring(index, 3)).ToProduct());
+
+            string cartString = save["cart"].InnerText;
+            if (cartString == "inventory") Cart = Inventory;
+            else for (int index = 0; index < cartString.Length; index += 3)
+                    Cart.Add(new ProductModel(cartString.Substring(index, 3)).ToProduct());
+
+            string rulesString = save["rules"].InnerText;
+            Rules = XF.GetRules();
+            foreach (var Rule in Rules) if (rulesString.Length > 0)
+            {
+                Rule.IsAllowed = Convert.ToBoolean(rulesString[0] - 48);
+                rulesString = rulesString.Remove(0, 1);
+            }
+
+            ReloadMaps();
+        }
+
         public void Update(int _id)
         {
             DateTime now = DateTime.Now;
@@ -326,6 +373,11 @@ namespace FarmConsole.Body.Models
             string[] list = new string[]
             {
                 "lvl", LVL.ToString(),
+                "experience", Experience.ToString(),
+                "energy", Energy.ToString(),
+                "hunger", Hunger.ToString(),
+                "immunity", Immunity.ToString(),
+                "health", Health.ToString(),
                 "username", UserName,
                 "difficulty", Difficulty.ToString(),
                 "gender", Gender.ToString(),
@@ -342,46 +394,6 @@ namespace FarmConsole.Body.Models
             if (_id == 0) _id = XF.AddGameInstance(list);
             else XF.UpdateGameInstance(list, _id);
             XF.UpdateMaps(mapString, _id);
-        }
-        public void Load(int _id)
-        {
-            XmlNode save = XF.GetGameInstance(_id);
-            Inventory = new List<ProductModel>();
-            Cart = new List<ProductModel>();
-            ID = int.Parse(save.Attributes["id"].Value);
-            LVL = int.Parse(save["lvl"].InnerText);
-            UserName = save["username"].InnerText;
-            GameDate = DateTime.Parse(save["gamedate"].InnerText);
-            Lastplay = save["lastplay"].InnerText;
-            Lastmap = save["lastmap"].InnerText;
-            WalletFunds = decimal.Parse(save["wallet"].InnerText);
-            CardFunds = decimal.Parse(save["card"].InnerText);
-            Difficulty = int.Parse(save["difficulty"].InnerText);
-            Gender = int.Parse(save["gender"].InnerText);
-
-            Maps = new List<MapModel>();
-            string[] mapsString = XF.LoadMaps(_id);
-            foreach (string map in mapsString)
-                Maps.Add(new MapModel(map));
-
-            string inventoryString = save["inventory"].InnerText;
-            for (int index = 0; index < inventoryString.Length; index += 3)
-                Inventory.Add(new ProductModel(inventoryString.Substring(index, 3)).ToProduct());
-
-            string cartString = save["cart"].InnerText;
-            if (cartString == "inventory") Cart = Inventory;
-            else for (int index = 0; index < cartString.Length; index += 3)
-                    Cart.Add(new ProductModel(cartString.Substring(index, 3)).ToProduct());
-
-            string rulesString = save["rules"].InnerText;
-            Rules = XF.GetRules();
-            foreach (var Rule in Rules) if (rulesString.Length > 0)
-            {
-                Rule.IsAllowed = Convert.ToBoolean(rulesString[0] - 48);
-                rulesString = rulesString.Remove(0, 1);
-            }
-
-            ReloadMaps();
         }
         public void Delete() { XF.DeleteGameInstance(ID); }
     }

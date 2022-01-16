@@ -1,13 +1,12 @@
 ﻿using FarmConsole.Body.Engines;
-using FarmConsole.Body.Resources.Sounds;
-using FarmConsole.Body.Services;
+using FarmConsole.Body.Services.MainServices;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace FarmConsole.Body.Views.MenuViews
 {
-    class MenuView : MenuManager
+    class MenuView : ComponentService
     {
         public static void Display()
         {

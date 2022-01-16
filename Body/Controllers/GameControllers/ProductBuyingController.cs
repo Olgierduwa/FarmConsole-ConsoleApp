@@ -1,30 +1,29 @@
-﻿using FarmConsole.Body.Controlers;
+﻿using FarmConsole.Body.Controllers.CentralControllers;
 using FarmConsole.Body.Engines;
 using FarmConsole.Body.Models;
-using FarmConsole.Body.Resources.Sounds;
-using FarmConsole.Body.Services;
-using FarmConsole.Body.Views.CentralViews;
-using FarmConsole.Body.Views.MenuViews;
+using FarmConsole.Body.Services.GameServices;
+using FarmConsole.Body.Services.MainServices;
+using FarmConsole.Body.Views.GameViews;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace FarmConsole.Body.Controllers.CentralControllers
+namespace FarmConsole.Body.Controllers.GameControllers
 {
-    class ProductBuyingController : MainController
+    class ProductBuyingController : HeadController
     {
-        private static int selected;
-        private static decimal amount;
+        private static int Selected;
+        private static int amount;
         private static bool paybycard;
         private static List<ProductModel> Cart { get; set; }
 
 
         private static void UpdateSelecet(int value)
         {
-            if ( selected + value > 0 && selected + value <= Cart.Count)
+            if (Selected + value > 0 && Selected + value <= Cart.Count)
             {
-                MenuManager.UpdateMenuSelect(selected + value, selected, Cart.Count, 3, 19);
-                selected += value;
+                ComponentService.UpdateMenuSelect(Selected + value, Selected, Cart.Count, 3, 19);
+                Selected += value;
             }
         }
         private static void TryToPay()
@@ -35,25 +34,26 @@ namespace FarmConsole.Body.Controllers.CentralControllers
                 {
                     GameInstance.CardFunds -= paybycard ? amount : 0;
                     GameInstance.WalletFunds -= paybycard ? 0 : amount;
-                    foreach (var product in Cart)
+                    foreach (var cartProduct in Cart)
                     {
-                        var foundProduct = GameInstance.Inventory.Find(p => p.ObjectName == product.ObjectName);
-                        if (foundProduct != null) foundProduct.Amount += product.Amount;
-                        else GameInstance.Inventory.Add(product.ToProduct());
+                        var foundProduct = GameInstance.Inventory.Find(p => p.ObjectName == cartProduct.ObjectName);
+                        if (foundProduct != null) foundProduct.Amount += cartProduct.Amount;
+                        else GameInstance.Inventory.Add(cartProduct.ToProduct());
+                        GameService.IncreaseInExperience(cartProduct.Amount);
                     }
                     Cart.Clear();
                     OpenScreen = EscapeScreen;
-                    S.Play("K3");
+                    SoundService.Play("K3");
                     string message = LS.Navigation("purchases finalized");
-                    MenuManager.GoodNews(message);
+                    ComponentService.GoodNews(message);
                 }
                 else
                 {
-                    if (paybycard) MenuManager.Warning(LS.Action("no money on card"));
-                    else MenuManager.Warning(LS.Action("no money in wallet"));
+                    if (paybycard) ComponentService.Warning(LS.Action("no money on card"));
+                    else ComponentService.Warning(LS.Action("no money in wallet"));
                 }
             }
-            else MenuManager.Warning(LS.Action("no items in cart"));
+            else ComponentService.Warning(LS.Action("no items in cart"));
         }
         private static void ChangePaymentMethod()
         {
@@ -64,9 +64,9 @@ namespace FarmConsole.Body.Controllers.CentralControllers
         {
             if (Cart.Count > 0)
             {
-                MapEngine.Map.SortContainers(new List<ProductModel>() { Cart[selected - 1] });
-                Cart.RemoveAt(selected - 1);
-                selected = 1;
+                MapEngine.Map.SortContainers(new List<ProductModel>() { Cart[Selected - 1] });
+                Cart.RemoveAt(Selected - 1);
+                Selected = 1;
                 SetAmount();
                 DisplayView();
             }
@@ -75,11 +75,11 @@ namespace FarmConsole.Body.Controllers.CentralControllers
         {
             MapEngine.Map.SortContainers(Cart);
             OpenScreen = EscapeScreen;
-            S.Play("K2");
+            SoundService.Play("K2");
         }
         private static void DisplayView()
         {
-            ProductBuyingView.Display(Cart, selected, amount, paybycard);
+            ProductBuyingView.Display(Cart, Selected, amount, paybycard);
         }
         private static void SetAmount()
         {
@@ -90,9 +90,9 @@ namespace FarmConsole.Body.Controllers.CentralControllers
         public static void Open()
         {
             paybycard = false;
-            selected = 1;
+            Selected = 1;
             Cart = GameInstance.Cart;
-            MenuManager.SetView = MapEngine.Map;
+            ComponentService.SetView = MapEngine.Map;
             SetAmount();
             DisplayView();
 
@@ -104,7 +104,7 @@ namespace FarmConsole.Body.Controllers.CentralControllers
                     switch (cki.Key)
                     {
                         case ConsoleKey.Tab:
-                        case ConsoleKey.Escape: OpenScreen = EscapeScreen; S.Play("K2"); break;
+                        case ConsoleKey.Escape: OpenScreen = EscapeScreen; SoundService.Play("K2"); break;
                         case ConsoleKey.W: UpdateSelecet(-1); break;
                         case ConsoleKey.S: UpdateSelecet(+1); break;
                         case ConsoleKey.E: TryToPay(); break;
@@ -114,7 +114,7 @@ namespace FarmConsole.Body.Controllers.CentralControllers
                     }
                 }
             }
-            MenuManager.Clean();
+            ComponentService.Clean();
         }
 
     }

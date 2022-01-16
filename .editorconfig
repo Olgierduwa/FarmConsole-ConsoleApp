@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# CS0169: Pole „PlotSellingController.amount” nie jest nigdy używane
+dotnet_diagnostic.CS0169.severity = warning

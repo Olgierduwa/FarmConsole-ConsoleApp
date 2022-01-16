@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FarmConsole.Body.Resources.Music
+namespace FarmConsole.Body.Services.MainServices
 {
-    public static class M
+    public static class MusicService
     {
 
     }

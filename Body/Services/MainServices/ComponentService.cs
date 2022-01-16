@@ -1,16 +1,14 @@
 ﻿using FarmConsole.Body.Engines;
 using FarmConsole.Body.Models;
-using FarmConsole.Body.Resources.Sounds;
-using FarmConsole.Body.Services;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 
-namespace FarmConsole.Body.Views.MenuViews
+namespace FarmConsole.Body.Services.MainServices
 {
-    class MenuManager : ComponentEngine
+    class ComponentService : ComponentEngine
     {
         protected static string DangerMessage;
         protected static List<CM> ComponentsDisplayed = new List<CM>();
@@ -21,8 +19,8 @@ namespace FarmConsole.Body.Views.MenuViews
             if (View != null)
             {
                 if (WithCleaning && ComponentsDisplayed.Count == 0) View.DisplayPixels();
-                else foreach (var CD in  ComponentsDisplayed)
-                    View.DisplayPixels(CD.Pos, CD.Size);
+                else foreach (var CD in ComponentsDisplayed)
+                        View.DisplayPixels(CD.Pos, CD.Size);
 
                 ClearList(false);
                 ComponentsDisplayed.Clear();
@@ -30,7 +28,7 @@ namespace FarmConsole.Body.Views.MenuViews
             else ClearList(WithCleaning);
 
             if (ConsoleClear) Console.Clear();
-            if (RestoreCaptions) Captions(); 
+            if (RestoreCaptions) Captions();
         }
         public static void UpdateMenuSelect(int CS, int PS, int MenuCount, int IDG = 2, int Prop = 13) => UpdateSelect(CS, PS, MenuCount, IDG, Prop);
         public static void UpdateMenuSelectOnly(int CS, int PS, int MenuCount, int IDG = 2, int Prop = 13) => UpdateSelect(CS, PS, MenuCount, IDG, Prop, false);
@@ -50,7 +48,7 @@ namespace FarmConsole.Body.Views.MenuViews
         }
         public static bool? Danger(bool ClearBefore = true)
         {
-            S.Play("K2");
+            SoundService.Play("K2");
             List<CM> TemporaryList = ComponentList.ToList();
             DisableView();
             ClearList(false);
@@ -87,8 +85,8 @@ namespace FarmConsole.Body.Views.MenuViews
                 switch (Console.ReadKey(true).Key)
                 {
                     case ConsoleKey.Escape:
-                    case ConsoleKey.Q: S.Play("K3"); choice = false; break;
-                    case ConsoleKey.E: S.Play("K2"); choice = true; break;
+                    case ConsoleKey.Q: SoundService.Play("K3"); choice = false; break;
+                    case ConsoleKey.E: SoundService.Play("K2"); choice = true; break;
                 }
             }
 
@@ -106,7 +104,7 @@ namespace FarmConsole.Body.Views.MenuViews
         {
             label = label != "" ? label : LS.Navigation("excellent");
             label = label.ToUpper() + ":";
-            List <CM> TemporaryList = ComponentList.ToList();
+            List<CM> TemporaryList = ComponentList.ToList();
             DisableView();
             ClearList(false);
 
@@ -140,7 +138,7 @@ namespace FarmConsole.Body.Views.MenuViews
         {
             label = label != "" ? label : LS.Navigation("warning");
             label = label.ToUpper() + ":";
-            List <CM> TemporaryList = ComponentList.ToList();
+            List<CM> TemporaryList = ComponentList.ToList();
             DisableView();
             ClearList(false);
 

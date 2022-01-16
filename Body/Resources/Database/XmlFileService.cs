@@ -11,7 +11,7 @@ using System.Threading;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace FarmConsole.Body.Services
+namespace FarmConsole.Body.Services.MainServices
 {
     public static class XF
     {
@@ -114,7 +114,7 @@ namespace FarmConsole.Body.Services
                                 MenuActs[State < MenuActs.Length ? State : MenuActs.Length > 0 ? State % MenuActs.Length : 0].Split(',');
                             string[] StateMapActions = MapActs == null ? new string[] { } :
                                 MapActs[State < MapActs.Length ? State : MapActs.Length > 0 ? State % MapActs.Length : 0].Split(',');
-                            
+
                             ObjectModel Object = new ObjectModel()
                             {
                                 ID = (short)Objects.Count(),
@@ -147,11 +147,13 @@ namespace FarmConsole.Body.Services
             List<RuleModel> Rules = new List<RuleModel>();
             foreach (XmlNode NodeRule in NodeRules)
             {
-                Rules.Add(new RuleModel {
+                Rules.Add(new RuleModel
+                {
                     Name = NodeRule.Attributes["name"].Value,
                     CaptureType = NodeRule.Attributes["type"].Value,
                     RequiredLevel = Convert.ToInt32(NodeRule.Attributes["lvl"].Value),
-                    IsAllowed = true });
+                    IsAllowed = true
+                });
             }
             return Rules;
         }
@@ -199,7 +201,7 @@ namespace FarmConsole.Body.Services
             node.InnerText = Language;
             doc.Save(languages_path);
         }
-        
+
         public static string[] GetGraphic(string GraphicName)
         {
             XmlDocument doc = new XmlDocument();
@@ -223,7 +225,7 @@ namespace FarmConsole.Body.Services
             XmlNodeList colors = doc.SelectNodes("/colors/color");
             int index = 0;
             string[] ColorsString = new string[colors.Count];
-            foreach(XmlNode color in colors)
+            foreach (XmlNode color in colors)
                 ColorsString[index++] =
                     color.Attributes["id"].Value + " " +
                     color.Attributes["name"].Value + " " +
@@ -313,12 +315,12 @@ namespace FarmConsole.Body.Services
             foreach (string path in directores)
             {
                 int currentID = int.Parse(path.Split('/')[^1]);
-                if(currentID == id)
+                if (currentID == id)
                 {
                     Directory.Delete(path, true);
                     deleted = true;
                 }
-                else if(deleted)
+                else if (deleted)
                 {
                     Directory.Move(path, res + saves + id.ToString().PadLeft(3, '0'));
                     id++;

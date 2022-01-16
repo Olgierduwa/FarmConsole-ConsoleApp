@@ -1,12 +1,11 @@
 ﻿using System.Runtime.InteropServices;
 using System;
-using FarmConsole.Body.Resources.Sounds;
 using System.Drawing;
 using Pastel;
 using System.Collections.Generic;
 using FarmConsole.Body.Models;
 
-namespace FarmConsole.Body.Services
+namespace FarmConsole.Body.Services.MainServices
 {
     public static class WindowService
     {
@@ -25,7 +24,7 @@ namespace FarmConsole.Body.Services
         [DllImport("user32.dll")]
         private static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
 
-        [DllImport("kernel32.dll", ExactSpelling = true)]   
+        [DllImport("kernel32.dll", ExactSpelling = true)]
         private static extern IntPtr GetConsoleWindow();
 
         public static void PresetWindow()
@@ -52,8 +51,8 @@ namespace FarmConsole.Body.Services
             Console.CursorVisible = false;
             windowWidth = SettingsService.GetSetting("set screen width").GetRealValue;
             windowHeight = SettingsService.GetSetting("set screen height").GetRealValue;
-            S.SetSoundVolume();
-            S.SetMusicVolume();
+            SoundService.SetSoundVolume();
+            SoundService.SetMusicVolume();
             Console.SetWindowSize(windowWidth, windowHeight);
             Console.SetBufferSize(windowWidth, windowHeight);
             Console.SetWindowSize(windowWidth, windowHeight);
@@ -61,7 +60,7 @@ namespace FarmConsole.Body.Services
 
         public static void Write(int X, int Y, string Text, Color Color)
         {
-            if(X >= 0 && X < Console.WindowWidth && Y >= 0 && Y < Console.WindowHeight)
+            if (X >= 0 && X < Console.WindowWidth && Y >= 0 && Y < Console.WindowHeight)
             {
                 Console.SetCursorPosition(X, Y);
                 Console.Write(Text.Pastel(Color));

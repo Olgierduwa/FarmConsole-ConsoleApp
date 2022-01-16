@@ -1,7 +1,6 @@
 ﻿using FarmConsole.Body.Engines;
 using FarmConsole.Body.Models;
-using FarmConsole.Body.Resources.Sounds;
-using FarmConsole.Body.Services;
+using FarmConsole.Body.Services.MainServices;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -9,7 +8,7 @@ using System.Text;
 
 namespace FarmConsole.Body.Views.MenuViews
 {
-    class GameSaveView : MenuManager
+    class GameSaveView : ComponentService
     {
         public static void DisplayList(GameInstanceModel[] saves)
         {
@@ -48,16 +47,16 @@ namespace FarmConsole.Body.Views.MenuViews
             PrintList();
             //showComponentList();
 
-            ComponentsDisplayed = new List<CM>();
+            ComponentsDisplayed.Clear();
             ComponentsDisplayed.Add(GetComponentByName("GS", 2));
             ComponentsDisplayed.Add(GetComponentByName("GS", 3));
             DangerMessage = LS.Text("update question");
         }
-        public static void DisplayReview(GameInstanceModel[] saves, int selected, int selCount)
+        public static void DisplayReview(GameInstanceModel[] saves, int Selected, int selCount)
         {
-            if (selected > 1)
+            if (Selected > 1)
             {
-                var save = saves[selected - 2];
+                var save = saves[Selected - 2];
                 UpdateTextBox(3, 1, ". . ." + " ---------------------------------- " +
                 LS.Navigation("nickname label") + " - " + save.UserName.ToString() + " ---------------------------------- " +
                 LS.Navigation("lvl label") + " - " + save.LVL.ToString() + " ---------------------------------- " +
@@ -70,7 +69,7 @@ namespace FarmConsole.Body.Views.MenuViews
                 SetShowability(3, 3, false);
                 GameSaveView.View.DisplayPixels(ComponentsDisplayed[1].Pos, ComponentsDisplayed[1].Size);
                 GameSaveView.DisplayList(saves);
-                GameSaveView.UpdateMenuSelect(selected, selected, selCount);
+                GameSaveView.UpdateMenuSelect(Selected, Selected, selCount);
             }
         }
     }

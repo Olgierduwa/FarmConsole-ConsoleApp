@@ -1,5 +1,5 @@
 ﻿using FarmConsole.Body.Models;
-using FarmConsole.Body.Services;
+using FarmConsole.Body.Services.MainServices;
 using Pastel;
 using System;
 using System.Collections.Generic;
@@ -31,7 +31,7 @@ namespace FarmConsole.Body.Engines
         #region ComponentsControl
         protected static void UpdateSelect(int c1, int c0, int count, int id_group = 2, int rangeProp = 13, bool Colorize = true)
         {
-            if (count == 0) return;
+            if (count == 0 || CLIST.Count == 0) return;
             int idStartFrom = 3, t = 0;
             while (CLIST[idStartFrom - 1].ID_group != id_group) idStartFrom++;
             int range = (Console.WindowHeight - rangeProp) / CLIST[idStartFrom + 1].Size.Height;
@@ -78,9 +78,9 @@ namespace FarmConsole.Body.Engines
                 }
             }
             content.Add(("").PadRight((width - line.Length) / 2 - 1, ' ') + line + ("").PadRight(width - line.Length - (width - line.Length) / 2 - 1, ' '));
-            string[] view1 = new string[] { ComponentViewService.Top(width) };
-            string[] view2 = ComponentViewService.Sides(content);
-            string[] view3 = new string[] { ComponentViewService.Bot(width) };
+            string[] view1 = new string[] { PatternService.Top(width) };
+            string[] view2 = PatternService.Sides(content);
+            string[] view3 = new string[] { PatternService.Bot(width) };
             string[] view = view1.Concat(view2.Concat(view3).ToArray()).ToArray();
             if (CLIST[id].Size.Height != view.Length) Clear(CLIST[id]);
             CLIST[id].View = view;
@@ -114,9 +114,9 @@ namespace FarmConsole.Body.Engines
                 int left = (c.Size.Width - 4) * c.Prop / count, right = (c.Size.Width - 4) - left;
                 c.View = new string[]
                 {
-                    " " + ComponentViewService.Fragment(left, '_') + "||" + ComponentViewService.Fragment(right, '_') + " ",
-                    "|" + ComponentViewService.Fragment(left, '.') + "||" + ComponentViewService.Fragment(right, '.') + "|",
-                    ComponentViewService.Bot(c.Size.Width)
+                    " " + PatternService.Fragment(left, '_') + "||" + PatternService.Fragment(right, '_') + " ",
+                    "|" + PatternService.Fragment(left, '.') + "||" + PatternService.Fragment(right, '.') + "|",
+                    PatternService.Bot(c.Size.Width)
                 };
 
                 Print(CLIST[id], y);
@@ -199,7 +199,7 @@ namespace FarmConsole.Body.Engines
 
             if (c.View[0].Length > 1)
                 for (int i = 1; i < c.Size.Height - 1; i++)
-                    WindowService.Write(c.Pos.X + 1, c.Pos.Y + i - y, c.View[i][1..^1], content_color);
+                    WindowService.Write(c.Pos.X + 1, c.Pos.Y + i - y, c.View[i][c.View[i].Length > 1 ? 1..^1 : 1..], content_color);
 
             Console.SetCursorPosition(0, 0);
         }
@@ -345,26 +345,26 @@ namespace FarmConsole.Body.Engines
         {
             AddComponent("H1", new string[]
             {
-                ComponentViewService.DoubleLine(),
-                ComponentViewService.CenteredText(Console.WindowWidth, text),
-                ComponentViewService.DoubleLine()
+                PatternService.DoubleLine(),
+                PatternService.CenteredText(Console.WindowWidth, text),
+                PatternService.DoubleLine()
             });
         }
         protected static void H2(string text)
         {
             AddComponent("H2", new string[]
             {
-                ComponentViewService.CenteredText(Console.WindowWidth, text),
-                ComponentViewService.SingleLine(),
+                PatternService.CenteredText(Console.WindowWidth, text),
+                PatternService.SingleLine(),
             });
         }
         protected static void Foot(string text)
         {
             string[] view = new string[]
             {
-                ComponentViewService.SingleLine(),
-                ComponentViewService.CenteredText(Console.WindowWidth, text),
-                ComponentViewService.SingleLine(1)
+                PatternService.SingleLine(),
+                PatternService.CenteredText(Console.WindowWidth, text),
+                PatternService.SingleLine(1)
             };
             CLIST.Add(new CM(0, 0, new Point(0, Console.WindowHeight - 3), new Size(Console.WindowWidth, 3), view, "FT"));
         }
@@ -392,9 +392,9 @@ namespace FarmConsole.Body.Engines
             RightLenght = RightLenght < 0 ? 0 : RightLenght;
             LeftLenght = LeftLenght < 0 ? 0 : LeftLenght;
             content.Add(("").PadRight(LeftLenght, ' ') + line + ("").PadRight(RightLenght, ' '));
-            string[] view1 = new string[] { ComponentViewService.Top(width) };
-            string[] view2 = ComponentViewService.Sides(content);
-            string[] view3 = new string[] { ComponentViewService.Bot(width) };
+            string[] view1 = new string[] { PatternService.Top(width) };
+            string[] view2 = PatternService.Sides(content);
+            string[] view3 = new string[] { PatternService.Bot(width) };
             if (text == "") background = foreground = ColorService.BackgroundColor;
             AddComponent("TB", view1.Concat(view2.Concat(view3).ToArray()).ToArray(), show, 0, background, foreground);
         }
@@ -403,9 +403,9 @@ namespace FarmConsole.Body.Engines
             List<string> content = new List<string>();
             foreach (string line in lines)
                 content.Add(("").PadRight((width - line.Length) / 2 - 1, ' ') + line + ("").PadRight(width - line.Length - (width - line.Length) / 2 - 1, ' '));
-            string[] view1 = new string[] { ComponentViewService.Top(width) };
-            string[] view2 = ComponentViewService.Sides(content);
-            string[] view3 = new string[] { ComponentViewService.Bot(width) };
+            string[] view1 = new string[] { PatternService.Top(width) };
+            string[] view2 = PatternService.Sides(content);
+            string[] view3 = new string[] { PatternService.Bot(width) };
             AddComponent("TBL", view1.Concat(view2.Concat(view3).ToArray()).ToArray(), show, 0, color1, color2);
         }
         protected static string[] TextBoxView(string text, int width = 40, int margin = 3)
@@ -433,21 +433,21 @@ namespace FarmConsole.Body.Engines
             int left = width * value / count, right = width - left;
             AddComponent("SL", new string[]
             {
-                " " + ComponentViewService.Fragment(left, '_') + "||" + ComponentViewService.Fragment(right, '_') + " ",
-                "|" + ComponentViewService.Fragment(left, '.') + "||" + ComponentViewService.Fragment(right, '.') + "|",
-                ComponentViewService.Bot(width + 4)
+                " " + PatternService.Fragment(left, '_') + "||" + PatternService.Fragment(right, '_') + " ",
+                "|" + PatternService.Fragment(left, '.') + "||" + PatternService.Fragment(right, '.') + "|",
+                PatternService.Bot(width + 4)
             }, show, value, ColorService.GetColorByName("White"));
         }
         protected static void BotBar(string text, int width = 40, int height = -1, bool show = true, Color background = new Color(), Color foreground = new Color(), int margin = 3)
         {
-            string[] view1 = new string[] { ComponentViewService.Top(width) };
+            string[] view1 = new string[] { PatternService.Top(width) };
             string[] view2 = TextBoxView(text, width, margin);
             for (int i = 0; i < view2.Length; i++)
             {
                 view2[i] = view2[i].Insert(0, "|");
                 view2[i] = view2[i].Insert(view2[i].Length, "|");
             }
-            string[] view3 = new string[] { ComponentViewService.Bot(width) };
+            string[] view3 = new string[] { PatternService.Bot(width) };
             string[] view4 = view1.Concat(view2.Concat(view3).ToArray()).ToArray();
             string[] view;
             height = height < 0 ? view4.Length : height > view4.Length ? view4.Length : height;
@@ -457,17 +457,18 @@ namespace FarmConsole.Body.Engines
         }
         protected static void RightBar(int height, int width, bool show = true)
         {
-            string[] view1 = new string[] { ComponentViewService.Top(width + 2, true, false) };
-            string[] view2 = ComponentViewService.SideRight(width + 1, height - 2);
-            string[] view3 = new string[] { ComponentViewService.Bot(width + 2, true, false) };
-            string[] view = view1.Concat(view2.Concat(view3).ToArray()).ToArray();
+            string[] view = new string[] { PatternService.Top(width + 2, true, false) };
+            view = view.Concat(PatternService.SideRight(width + 1, 2)).ToArray();
+            view = view.Concat(PatternService.SideRight(1, height - 6)).ToArray();
+            view = view.Concat(PatternService.SideRight(width + 1, 2)).ToArray();
+            view = view.Concat(new string[] { PatternService.Bot(width + 2, true, false) }).ToArray();
             AddComponent("RB", view, show);
         }
         protected static void LeftBar(int height, int width, bool show = true)
         {
-            string[] view1 = new string[] { ComponentViewService.Top(width + 2, false, true) };
-            string[] view2 = ComponentViewService.SideLeft(width + 1, height - 2);
-            string[] view3 = new string[] { ComponentViewService.Bot(width + 2, false, true) };
+            string[] view1 = new string[] { PatternService.Top(width + 2, false, true) };
+            string[] view2 = PatternService.SideLeft(width + 1, height - 2);
+            string[] view3 = new string[] { PatternService.Bot(width + 2, false, true) };
             string[] view = view1.Concat(view2.Concat(view3).ToArray()).ToArray();
             AddComponent("LB", view, show);
         }

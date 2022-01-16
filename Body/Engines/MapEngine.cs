@@ -1,7 +1,7 @@
-﻿using FarmConsole.Body.Controlers;
+﻿using FarmConsole.Body.Controllers.MenuControllers;
 using FarmConsole.Body.Models;
-using FarmConsole.Body.Services;
-using FarmConsole.Body.Views.MenuViews;
+using FarmConsole.Body.Services.MainServices;
+using FarmConsole.Body.Views.GameViews;
 using Pastel;
 using System;
 using System.Collections.Generic;
@@ -101,7 +101,7 @@ namespace FarmConsole.Body.Engines
                 //HelpService.START_TIMER_2();
                 ShowMapView();
 
-                if (MenuController.FieldNameVisibility) GameView.DisplayFieldName();
+                if (MainMenuController.FieldNameVisibility) GameView.DisplayFieldName();
                 //HelpService.STOP_TIMER_2();
                 //HelpService.AVG();
             }
@@ -258,6 +258,7 @@ namespace FarmConsole.Body.Engines
             WindowService.Write(ViewPos.X, ViewPos.Y, PhisicalMap.View.GetWords);
         }
         protected static void DarkerMapView(int procent) => PhisicalMap.View.ColorizeWords("Darker", procent);
+        protected static void BrighterMapView(int procent) => PhisicalMap.View.ColorizePixels("Brighter", procent);
         protected static void CenterVisualMapOnPos(Point PhisicalPos)
         {
             ClearMapSreen();
@@ -400,7 +401,12 @@ namespace FarmConsole.Body.Engines
                     {
                         Color Color = SelectedFields.Contains(P) || Field == DraggedField ?
                               Color = ColorService.Yellower(word.Color) : word.Color;
-                        Color = PhisicalMap.StandPosition == VisualPoint ? Color = ColorService.Brighter(word.Color) : Color;
+                        Color = PhisicalMap.StandPosition == VisualPoint ? Color = ColorService.Brighter(Color) : Color;
+                        if (!ColorService.ColorVisibility)
+                        {
+                            Color = ColorService.GetColorByName("white");
+                            Color = PhisicalMap.StandPosition == VisualPoint ? Color = ColorService.Darker(Color) : Color;
+                        }
                         StartIndex = X + word.Position.X < LB ? LB - X - word.Position.X : 0;
                         LeftPad = X + StartIndex + word.Position.X;
                         Lenght = word.Content.Length - StartIndex > RB - LeftPad + 1 ? RB - LeftPad + 1 : word.Content.Length - StartIndex;

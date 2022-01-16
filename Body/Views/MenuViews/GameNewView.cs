@@ -1,6 +1,6 @@
 ﻿using FarmConsole.Body.Engines;
 using FarmConsole.Body.Models;
-using FarmConsole.Body.Services;
+using FarmConsole.Body.Services.MainServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Text;
 
 namespace FarmConsole.Body.Views.MenuViews
 {
-    class GameNewView : MenuManager
+    class GameNewView : ComponentService
     {
         public static void Display(string NickName)
         {

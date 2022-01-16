@@ -1,14 +1,13 @@
 ﻿using FarmConsole.Body.Models;
-using FarmConsole.Body.Services;
-using FarmConsole.Body.Views.MenuViews;
+using FarmConsole.Body.Services.MainServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FarmConsole.Body.Views.CentralViews
+namespace FarmConsole.Body.Views.GameViews
 {
-    class ContainerView : MenuManager
+    class ContainerView : ComponentService
     {
         private static List<CM> RightList;
         private static List<CM> LeftList;
@@ -20,47 +19,47 @@ namespace FarmConsole.Body.Views.CentralViews
             ClearList(false);
 
             int Height = Console.WindowHeight - 15;
-            int Multiplier = new int[] { 1, 5, 10, 25, 50 } [sliderValue];
+            int Multiplier = new int[] { 1, 5, 10, 25, 50 }[sliderValue];
 
             Endl(3);
             H2(LS.Navigation("container label"));
 
             GroupStart(0);
 
-                GroupStart(3);
-                Endl(2);
-                TextBox(LS.Navigation("selected item"));
-                Endl(1);
-                TextBoxLines(item);
-                GroupEnd();
+            GroupStart(3);
+            Endl(2);
+            TextBox(LS.Navigation("selected item"));
+            Endl(1);
+            TextBoxLines(item);
+            GroupEnd();
 
-                GroupStart(Console.WindowWidth / 2, Console.WindowWidth);
-                Endl(Height + 8 - item.Length * 2);
-                Slider(4, sliderValue);
-                GroupEnd();
+            GroupStart(Console.WindowWidth / 2, Console.WindowWidth);
+            Endl(Height + 8 - item.Length * 2);
+            Slider(4, sliderValue);
+            GroupEnd();
 
-                GroupStart(3);
-                Endl(Height);
+            GroupStart(3);
+            Endl(Height);
 
-                if(!side)
-                {
-                    TextBox(LS.Navigation("take item", " " + Multiplier + "x [E]  >>>>", Before: ">>>>  "), foreground: ColorService.GetColorByName("limeD"), margin: 0);
-                    TextBox(LS.Navigation("put items back", " [Q]  <<<<", Before: "<<<<  "), foreground: ColorService.GetColorByName("orangeL"), margin:0);
-                }
-                else
-                {
-                    TextBox(LS.Navigation("put item back", " " + Multiplier + "x [E]  <<<<", Before: "<<<<  "), foreground: ColorService.GetColorByName("orangeL"), margin: 0);
-                    TextBox(LS.Navigation("take items", " [Q]  >>>>", Before: ">>>>  "), foreground: ColorService.GetColorByName("limeD"), margin: 0);
-                }
+            if (!side)
+            {
+                TextBox(LS.Navigation("take item", " " + Multiplier + "x [E]  >>>>", Before: ">>>>  "), foreground: ColorService.GetColorByName("limeD"), margin: 0);
+                TextBox(LS.Navigation("put items back", " [Q]  <<<<", Before: "<<<<  "), foreground: ColorService.GetColorByName("orangeL"), margin: 0);
+            }
+            else
+            {
+                TextBox(LS.Navigation("put item back", " " + Multiplier + "x [E]  <<<<", Before: "<<<<  "), foreground: ColorService.GetColorByName("orangeL"), margin: 0);
+                TextBox(LS.Navigation("take items", " [Q]  >>>>", Before: ">>>>  "), foreground: ColorService.GetColorByName("limeD"), margin: 0);
+            }
 
-                GroupEnd();
+            GroupEnd();
 
             GroupEnd();
 
             PrintList();
         }
 
-        public static void DisplayLeftList(ProductModel[] products, string title, int selected, bool focus)
+        public static void DisplayLeftList(ProductModel[] products, string title, int Selected, bool focus)
         {
             ClearList(false);
 
@@ -96,13 +95,13 @@ namespace FarmConsole.Body.Views.CentralViews
             if (focus)
             {
                 PrintList();
-                UpdateSelect(selected, selected, products.Length, rangeProp: 15);
+                UpdateSelect(Selected, Selected, products.Length, rangeProp: 15);
             }
             else DisableView();
             LeftList = ComponentList.ToList();
         }
 
-        public static void DisplayRightList(List<ProductModel> products, string title, int selected, bool focus, bool cleaning = false)
+        public static void DisplayRightList(List<ProductModel> products, string title, int Selected, bool focus, bool cleaning = false)
         {
             if (cleaning && View != null && LastDisplayedComponent != null)
                 View.DisplayPixels(LastDisplayedComponent.Pos, LastDisplayedComponent.Size);
@@ -134,7 +133,7 @@ namespace FarmConsole.Body.Views.CentralViews
             if (focus)
             {
                 PrintList();
-                UpdateSelect(selected, selected, products.Count > 0 ? products.Count : 1, rangeProp: 15);
+                UpdateSelect(Selected, Selected, products.Count > 0 ? products.Count : 1, rangeProp: 15);
             }
             else DisableView();
 

@@ -1,20 +1,18 @@
-﻿using FarmConsole.Body.Controlers;
+﻿using FarmConsole.Body.Controllers.CentralControllers;
 using FarmConsole.Body.Engines;
 using FarmConsole.Body.Models;
-using FarmConsole.Body.Resources.Sounds;
-using FarmConsole.Body.Services;
-using FarmConsole.Body.Views.CentralViews;
-using FarmConsole.Body.Views.MenuViews;
+using FarmConsole.Body.Services.GameServices;
+using FarmConsole.Body.Services.MainServices;
+using FarmConsole.Body.Views.GameViews;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FarmConsole.Body.Controllers.CentralControllers
+namespace FarmConsole.Body.Controllers.GameControllers
 {
-    class ProductOfferController : MainController
+    class ProductOfferController : HeadController
     {
-        private static int selected;
         private static int SliderValue = 4;
         private static int[] Values2 = new int[] { 1, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200 };
         private static int[] Values = new int[] { 1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };
@@ -30,7 +28,7 @@ namespace FarmConsole.Body.Controllers.CentralControllers
             string lasEscapeScreen = EscapeScreen;
             EscapeScreen = "ProductOffer";
             OpenScreen = "Container";
-            MenuManager.Clean();
+            ComponentService.Clean();
             ContainerController.Open(AvailableProductsContainer);
             EscapeScreen = lasEscapeScreen;
             SetAmount();
@@ -38,9 +36,9 @@ namespace FarmConsole.Body.Controllers.CentralControllers
         }
         private static void UpdateSlider(int value)
         {
-            if ((value < 0 && SliderValue > 0) || (value > 0 && SliderValue < Values.Length - 1))
+            if (value < 0 && SliderValue > 0 || value > 0 && SliderValue < Values.Length - 1)
             {
-                S.Play("K1");
+                SoundService.Play("K1");
                 SliderValue += value;
                 Multiplier = Values[SliderValue];
                 SetAmount();
@@ -61,24 +59,25 @@ namespace FarmConsole.Body.Controllers.CentralControllers
                     {
                         var inventoryProduct = GameInstance.Inventory.Find(p => p.ObjectName == offerProduct.ObjectName);
                         inventoryProduct.Amount -= offerProduct.Amount;
+                        GameService.IncreaseInExperience(offerProduct.Amount);
                         if (inventoryProduct.Amount == 0) GameInstance.Inventory.Remove(inventoryProduct);
                     }
                     MapEngine.Map.SortContainers(OfferCart);
                     GameInstance.CardFunds += transferpayment ? amount : 0;
                     GameInstance.WalletFunds += transferpayment ? 0 : amount;
                     OpenScreen = EscapeScreen;
-                    S.Play("K3");
+                    SoundService.Play("K3");
                     string message = LS.Navigation("sale finalized");
-                    MenuManager.GoodNews(message);
+                    ComponentService.GoodNews(message);
                 }
                 else
                 {
                     string seller = LS.Object("seller");
                     string message = LS.Navigation("i have to reject offer, because") + LS.Navigation("price is to hight");
-                    MenuManager.Warning(message, seller);
+                    ComponentService.Warning(message, seller);
                 }
             }
-            else MenuManager.Warning(LS.Action("no items in cart"));
+            else ComponentService.Warning(LS.Action("no items in cart"));
             DisplayCaptains();
         }
         private static void ChangePaymentMethod()
@@ -104,12 +103,11 @@ namespace FarmConsole.Body.Controllers.CentralControllers
                 var founded = SupplyProducts.Find(x => x.ObjectName == inventoryProduct.ObjectName);
                 if (founded != null) MatchProducts.Add(inventoryProduct);
             }
-            AvailableProductsContainer = new ContainerModel(MatchProducts, (short)MatchProducts.Count);
+            AvailableProductsContainer = new ContainerModel(MatchProducts, (short)MatchProducts.Count, "inventory");
             OfferCart = GameInstance.Cart;
             transferpayment = false;
-            selected = 1;
             SetAmount();
-            MenuManager.SetView = MapEngine.Map;
+            ComponentService.SetView = MapEngine.Map;
             DisplayCaptains(true);
 
             while (OpenScreen == "ProductOffer")
@@ -120,18 +118,18 @@ namespace FarmConsole.Body.Controllers.CentralControllers
                     switch (cki.Key)
                     {
                         case ConsoleKey.Tab:
-                        case ConsoleKey.Escape: OpenScreen = EscapeScreen; S.Play("K2"); break;
+                        case ConsoleKey.Escape: OpenScreen = EscapeScreen; SoundService.Play("K2"); break;
                         case ConsoleKey.S: EditOffer(); break;
                         case ConsoleKey.A: UpdateSlider(-1); break;
                         case ConsoleKey.D: UpdateSlider(+1); break;
-                        case ConsoleKey.Q: ChangePaymentMethod();break;
+                        case ConsoleKey.Q: ChangePaymentMethod(); break;
                         case ConsoleKey.E: TryToSell(); break;
                     }
                 }
             }
 
             GameInstance.Cart = BufferCart;
-            MenuManager.Clean();
+            ComponentService.Clean();
         }
 
     }

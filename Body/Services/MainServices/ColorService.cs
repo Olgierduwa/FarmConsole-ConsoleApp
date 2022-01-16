@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 
-namespace FarmConsole.Body.Services
+namespace FarmConsole.Body.Services.MainServices
 {
     static class ColorService
     {
         public static Color BackgroundColor;
         public static Color ForegroundColor;
         public static Color SelectionColor;
+        public static bool ColorVisibility = true;
 
         private static List<ColorModel> Colors;
         public static void SetColorPalette()
@@ -25,6 +26,8 @@ namespace FarmConsole.Body.Services
         }
         public static Color GetColorByName(string colorName)
         {
+            if (!ColorVisibility) colorName = "White";
+
             int index = 0;
             colorName = colorName.ToLower();
             while (index < Colors.Count && Colors[index].ColorName.ToLower() != colorName) index++;

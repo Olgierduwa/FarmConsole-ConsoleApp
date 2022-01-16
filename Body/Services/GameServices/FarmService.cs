@@ -4,11 +4,11 @@ using System.Drawing;
 using System.Text;
 using System.Threading;
 using FarmConsole.Body.Models;
-using FarmConsole.Body.Services;
+using FarmConsole.Body.Services.MainServices;
 
-namespace FarmConsole.Body.Views.LocationViews
+namespace FarmConsole.Body.Services.GameServices
 {
-    public class FarmView : MapManager
+    public class FarmService : MapService
     {
         public static void MowGrass()
         {
@@ -49,7 +49,7 @@ namespace FarmConsole.Body.Views.LocationViews
         public static string WaterIt()
         {
             FieldModel Field = GetField();
-            if ((Field.Duration / 10) % 2 == 1) return LS.Action("already watered");
+            if (Field.Duration / 10 % 2 == 1) return LS.Action("already watered");
 
             Field.Duration += 10;
             Field.View.ColorizePixels("Darker");

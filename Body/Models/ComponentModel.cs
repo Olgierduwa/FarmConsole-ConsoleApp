@@ -1,4 +1,4 @@
-﻿using FarmConsole.Body.Services;
+﻿using FarmConsole.Body.Services.MainServices;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -35,7 +35,7 @@ namespace FarmConsole.Body.Models
 
         public override string ToString()
         {
-            return "".PadLeft(ID_group,' ') + Name + "   " + Pos.X + "X," + Pos.Y + "Y, " + Size.Width + "W, " + Size.Height + "H";
+            return "".PadLeft(ID_group,'.') + Name + "   " + Pos.X + "X," + Pos.Y + "Y, " + Size.Width + "W, " + Size.Height + "H";
         }
 
         public CM(int id_group, int id_object, Point pos, Size size, string[] view, string name, int prop = 0,

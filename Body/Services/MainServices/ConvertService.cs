@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 
-namespace FarmConsole.Body.Services
+namespace FarmConsole.Body.Services.MainServices
 {
     public static class ConvertService
     {
@@ -16,6 +16,18 @@ namespace FarmConsole.Body.Services
         private static readonly int MaxAmount = 100000;
         private static readonly int MaxDuration = 100;
         private static int SymbolsLength;
+
+        private static int _lvl = 0;
+        private static int _experience = 0;
+        public static int RequiredExperience(int lvl)
+        {
+            if (lvl != _lvl)
+            {
+                _lvl = lvl;
+                _experience = Convert.ToInt32(Math.Pow((1 + Math.Sqrt(5)) / 2, lvl)) * 100;
+            }
+            return _experience;
+        }
 
         private static char[] Symbols;
         public static void SetSymbols()
@@ -44,8 +56,8 @@ namespace FarmConsole.Body.Services
             Value = Value * MaxAmount + amount;
 
             string Result;
-            Result = Symbols[(Value / SymbolsLength / SymbolsLength) % SymbolsLength].ToString();
-            Result += Symbols[(Value / SymbolsLength) % SymbolsLength].ToString();
+            Result = Symbols[Value / SymbolsLength / SymbolsLength % SymbolsLength].ToString();
+            Result += Symbols[Value / SymbolsLength % SymbolsLength].ToString();
             Result += Symbols[Value % SymbolsLength].ToString();
             return Result;
         }
@@ -57,7 +69,7 @@ namespace FarmConsole.Body.Services
             Value = Value * MaxDuration + duration;
 
             string Result;
-            Result = Symbols[(Value / SymbolsLength) % SymbolsLength].ToString();
+            Result = Symbols[Value / SymbolsLength % SymbolsLength].ToString();
             Result += Symbols[Value % SymbolsLength].ToString();
             return Result;
         }
@@ -73,10 +85,10 @@ namespace FarmConsole.Body.Services
             }
             return new int[]
             {
-                (Value / MaxAmount / MaxType / MaxProductState / MaxScale ) + 2,
-                (Value / MaxAmount / MaxType / MaxProductState ) % MaxScale,
-                (Value / MaxAmount / MaxType ) % MaxProductState,
-                (Value / MaxAmount) % MaxType,
+                Value / MaxAmount / MaxType / MaxProductState / MaxScale  + 2,
+                Value / MaxAmount / MaxType / MaxProductState  % MaxScale,
+                Value / MaxAmount / MaxType  % MaxProductState,
+                Value / MaxAmount % MaxType,
                 Value % MaxAmount
             };
         }
@@ -91,7 +103,7 @@ namespace FarmConsole.Body.Services
             }
             return new short[4]
             {
-                (short)((Value / MaxDuration / MaxType / MaxFieldState) + 1),
+                (short)(Value / MaxDuration / MaxType / MaxFieldState + 1),
                 (short)(Value / MaxDuration / MaxType % MaxFieldState),
                 (short)(Value / MaxDuration % MaxType),
                 (short)(Value % MaxDuration)
@@ -100,12 +112,12 @@ namespace FarmConsole.Body.Services
 
         public static string[] ConcatActionTables(string[] stateActs, string[] mainActs)
         {
-            if (stateActs.Length == 0 || (stateActs.Length == 1 && stateActs[0] == "")) return mainActs;
-            
+            if (stateActs.Length == 0 || stateActs.Length == 1 && stateActs[0] == "") return mainActs;
+
             List<string> ForbiddenActs = new List<string>();
             int ActsCount = stateActs.Length + mainActs.Length;
-            foreach(string act in stateActs)
-                if(act.Length > 0 && act[0] == '-')
+            foreach (string act in stateActs)
+                if (act.Length > 0 && act[0] == '-')
                 {
                     ActsCount -= 2;
                     ForbiddenActs.Add(act[1..]);
@@ -134,15 +146,15 @@ namespace FarmConsole.Body.Services
             }
             return AllowedActions.ToArray();
         }
-        public static string Cammel(string text)
+        public static string CamelCase(string text)
         {
             return string.Join("", text.Split().Select(i => char.ToUpper(i[0]) + i.Substring(1)));
         }
         public static string RemoveSpacesAfterEndline(string text)
         {
             for (int i = 0; i < text.Length;)
-                if(text[i++] == '\n')
-                    while(i < text.Length && text[i] == ' ')
+                if (text[i++] == '\n')
+                    while (i < text.Length && text[i] == ' ')
                         text = text.Remove(i, 1);
             return text;
         }

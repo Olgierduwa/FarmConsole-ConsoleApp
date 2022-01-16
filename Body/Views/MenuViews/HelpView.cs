@@ -1,14 +1,13 @@
 ﻿using FarmConsole.Body.Engines;
 using FarmConsole.Body.Models;
-using FarmConsole.Body.Resources.Sounds;
-using FarmConsole.Body.Services;
+using FarmConsole.Body.Services.MainServices;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace FarmConsole.Body.Views.MenuViews
 {
-    class HelpView : MenuManager
+    class HelpView : ComponentService
     {
         public static void Display()
         {
@@ -31,7 +30,7 @@ namespace FarmConsole.Body.Views.MenuViews
             PrintList();
             //showComponentList();
 
-            ComponentsDisplayed = new List<CM>();
+            ComponentsDisplayed.Clear();
             ComponentsDisplayed.Add(GetComponentByName("GS",2));
             ComponentsDisplayed.Add(GetComponentByName("GS",3));
         }

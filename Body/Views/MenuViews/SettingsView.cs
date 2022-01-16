@@ -1,6 +1,6 @@
 ﻿using FarmConsole.Body.Engines;
 using FarmConsole.Body.Models;
-using FarmConsole.Body.Services;
+using FarmConsole.Body.Services.MainServices;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -8,7 +8,7 @@ using System.Text;
 
 namespace FarmConsole.Body.Views.MenuViews
 {
-    class SettingsView : MenuManager
+    class SettingsView : ComponentService
     {
         public static void Display()
         {

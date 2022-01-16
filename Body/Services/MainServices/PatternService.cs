@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FarmConsole.Body.Services
+namespace FarmConsole.Body.Services.MainServices
 {
-    static class ComponentViewService
+    static class PatternService
     {
         public static string SingleLine(int diff = 0)
         {
@@ -30,16 +30,16 @@ namespace FarmConsole.Body.Services
             if (left) view = "'"; view += "".PadRight(lenght - 2, '─'); if (right) view += "'";
             return view;
         }
-        public static string[] SideLeft(int width, int lenght)
+        public static string[] SideLeft(int width, int height)
         {
-            string[] text = new string[lenght];
-            for (int i = 0; i < lenght; i++) text[i] = "".PadRight(width - 1, ' ') + "│";
+            string[] text = new string[height];
+            for (int i = 0; i < height; i++) text[i] = "".PadRight(width - 1, ' ') + "│";
             return text;
         }
-        public static string[] SideRight(int width, int lenght)
+        public static string[] SideRight(int width, int height)
         {
-            string[] text = new string[lenght];
-            for (int i = 0; i < lenght; i++) text[i] = "│" + "".PadRight(width - 1, ' ');
+            string[] text = new string[height];
+            for (int i = 0; i < height; i++) text[i] = "│" + "".PadRight(width - 1, ' ');
             return text;
         }
         public static string[] Sides(List<string> content)
@@ -48,9 +48,9 @@ namespace FarmConsole.Body.Services
             for (int i = 0; i < content.Count; i++) text[i] = "│" + content[i] + "│";
             return text;
         }
-        public static string Fragment(int lenght, char c)
+        public static string Fragment(int width, char c)
         {
-            return "".PadRight(lenght, c);
+            return "".PadRight(width, c);
         }
         public static string[] ExtendGraphis(string[] baseContent, string[] extendedContent)
         {

@@ -625,4 +625,12 @@
     <value>Biurko</value>
     <comment>furniture</comment>
   </data>
+  <data name="credit card" xml:space="preserve">
+    <value>Karta Kredytowa</value>
+    <comment>object</comment>
+  </data>
+  <data name="cash machine" xml:space="preserve">
+    <value>Bankomat</value>
+    <comment>furniture</comment>
+  </data>
 </root>

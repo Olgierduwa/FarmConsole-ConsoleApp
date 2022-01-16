@@ -1,18 +1,18 @@
-﻿using FarmConsole.Body.Engines;
+﻿using FarmConsole.Body.Controllers.CentralControllers;
+using FarmConsole.Body.Engines;
 using FarmConsole.Body.Models;
-using FarmConsole.Body.Resources.Sounds;
-using FarmConsole.Body.Services;
+using FarmConsole.Body.Services.MainServices;
 using FarmConsole.Body.Views.MenuViews;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace FarmConsole.Body.Controlers
+namespace FarmConsole.Body.Controllers.MenuControllers
 {
-    class SettingsController : MainController
+    class SettingsController : HeadController
     {
         private static List<SettingModel> Settings;
-        private static int selected;
+        private static int Selected;
         private static int selCount;
         private static bool Edited;
         private static bool ChangedLanguage;
@@ -21,52 +21,52 @@ namespace FarmConsole.Body.Controlers
         {
             if (value < 0)
             {
-                if (selected > 0)
+                if (Selected > 0)
                 {
-                    S.Play("K1");
-                    selected--;
-                    SettingsView.UpdateMenuSelect(selected + 1, selected + 2, selCount, 2, 15);
-                    SettingsView.UpdateMenuSelectOnly(selected + 1, selected + 2, selCount, 3, 15);
-                    SettingsView.DisplayLastListElement();
+                    SoundService.Play("K1");
+                    Selected--;
+                    ComponentService.UpdateMenuSelect(Selected + 1, Selected + 2, selCount, 2, 15);
+                    ComponentService.UpdateMenuSelectOnly(Selected + 1, Selected + 2, selCount, 3, 15);
+                    ComponentService.DisplayLastListElement();
                 }
             }
             else
             {
-                if (selected < selCount - 1)
+                if (Selected < selCount - 1)
                 {
-                    S.Play("K1");
-                    selected++;
-                    SettingsView.UpdateMenuSelect(selected + 1, selected, selCount, 2, 15);
-                    SettingsView.UpdateMenuSelectOnly(selected + 1, selected, selCount, 3, 15);
-                    SettingsView.DisplayLastListElement();
+                    SoundService.Play("K1");
+                    Selected++;
+                    ComponentService.UpdateMenuSelect(Selected + 1, Selected, selCount, 2, 15);
+                    ComponentService.UpdateMenuSelectOnly(Selected + 1, Selected, selCount, 3, 15);
+                    ComponentService.DisplayLastListElement();
                 }
             }
         }
         private static void UpdateSlider(int value)
         {
-            if (selected < selCount - 2 && Settings[selected].SetSliderValue(value))
+            if (Selected < selCount - 2 && Settings[Selected].SetSliderValue(value))
             {
                 Edited = true;
-                S.Play("K3");
-                switch (Settings[selected].Key)
+                SoundService.Play("K3");
+                switch (Settings[Selected].Key)
                 {
-                    case "set effects volume": S.SetSoundVolume(); break;
-                    case "set music volume": S.SetMusicVolume(); break;
+                    case "set effects volume": SoundService.SetSoundVolume(); break;
+                    case "set music volume": SoundService.SetMusicVolume(); break;
                 }
-                SettingsView.UpdateMenuSlider(selected + 1, Settings[selected].GetMaxSliderValue, value);
+                ComponentService.UpdateMenuSlider(Selected + 1, Settings[Selected].GetMaxSliderValue, value);
             }
-            else if (selected == selCount - 2)
+            else if (Selected == selCount - 2)
             {
                 Edited = true;
                 ChangedLanguage = true;
                 SettingsService.SetLanguage(value);
-                SettingsView.UpdateMenuTextBox(selected + 1, SettingsService.GetLanguage(), 3);
+                ComponentService.UpdateMenuTextBox(Selected + 1, SettingsService.GetLanguage(), 3);
             }
         }
         private static void UpdateSettings()
         {
-            S.Play("K2");
-            if (selected == selCount - 1) { SettingsService.RestoreDefaultSettings(); Edited = true; }
+            SoundService.Play("K2");
+            if (Selected == selCount - 1) { SettingsService.RestoreDefaultSettings(); Edited = true; }
             else SettingsService.SaveSettings();
 
             if (ChangedLanguage)
@@ -77,25 +77,25 @@ namespace FarmConsole.Body.Controlers
 
             if (Edited)
             {
-                MenuManager.Clean(true);
+                ComponentService.Clean(true);
                 WindowService.SetWindow();
-                MenuManager.Captions();
+                ComponentService.Captions();
                 if (LastScreen != "Menu") GameInstance.ReloadMaps(EscapeScreen);
 
                 SettingsView.Display();
-                MenuManager.SetView = MapEngine.Map;
-                selected = 0;
-                SettingsView.UpdateMenuSelect(selected + 1, selected + 1, selCount);
-                SettingsView.DisplayLastListElement();
+                ComponentService.SetView = MapEngine.Map;
+                Selected = 0;
+                ComponentService.UpdateMenuSelect(Selected + 1, Selected + 1, selCount);
+                ComponentService.DisplayLastListElement();
                 Edited = false;
             }
         }
         private static void GoBack()
         {
             SettingsService.LoadSettings();
-            S.SetSoundVolume();
-            S.SetMusicVolume();
-            S.Play("K3");
+            SoundService.SetSoundVolume();
+            SoundService.SetMusicVolume();
+            SoundService.Play("K3");
             OpenScreen = LastScreen;
         }
 
@@ -103,9 +103,9 @@ namespace FarmConsole.Body.Controlers
         {
             Edited = ChangedLanguage = false;
             Settings = SettingsService.GetSettings;
-            selected = 0; selCount = Settings.Count + 2;
-            SettingsView.Display(); SettingsView.UpdateMenuSelect(selected + 1, selected + 1, selCount);
-            SettingsView.DisplayLastListElement();
+            Selected = 0; selCount = Settings.Count + 2;
+            SettingsView.Display(); ComponentService.UpdateMenuSelect(Selected + 1, Selected + 1, selCount);
+            ComponentService.DisplayLastListElement();
             while (OpenScreen == "Settings")
             {
                 if (Console.KeyAvailable)
@@ -127,7 +127,7 @@ namespace FarmConsole.Body.Controlers
                     Previously = DateTime.Now;
                 }
             }
-            SettingsView.Clean();
+            ComponentService.Clean();
         }
     }
 }

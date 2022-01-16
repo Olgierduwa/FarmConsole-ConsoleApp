@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SettingsCollection>
-	<setting key='set screen width' default='5' value='0' max='6' multiplier='20' offset='120'/>
+	<setting key='set screen width' default='5' value='3' max='6' multiplier='20' offset='120'/>
 	<setting key='set screen height' default='1' value='0' max='6' multiplier='5' offset='35'/>
-	<setting key='set effects volume' default='3' value='2' max='6' multiplier='1' offset='0'/>
+	<setting key='set effects volume' default='3' value='0' max='6' multiplier='1' offset='0'/>
 	<setting key='set music volume' default='3' value='3' max='6' multiplier='1' offset='0'/>
 	<setting key='set field name' default='1' value='1' max='1' multiplier='1' offset='0'/>
 	<setting key='set player move axis' default='1' value='1' max='1' multiplier='1' offset='0'/>

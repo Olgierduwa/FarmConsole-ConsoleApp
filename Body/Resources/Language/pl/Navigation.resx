@@ -503,9 +503,90 @@
   </data>
   <data name="tiles count" xml:space="preserve">
     <value>Liczba Kafelków</value>
+    <comment>game label</comment>
   </data>
   <data name="land ownership document" xml:space="preserve">
     <value>Niniejszy dokument z dniem dzisiejszym uprawnia Cię do korzystania z terenu okalającego Twoją działę.</value>
+    <comment>game lablel</comment>
+  </data>
+  <data name="in cash" xml:space="preserve">
+    <value>w Gotówce</value>
+    <comment>game label</comment>
+  </data>
+  <data name="inside you will find:" xml:space="preserve">
+    <value>Wewnątrz znajdziesz:</value>
+    <comment>game label</comment>
+  </data>
+  <data name="account information" xml:space="preserve">
+    <value>INFORMACJE O KONCIE</value>
+    <comment>action button</comment>
+  </data>
+  <data name="deposit" xml:space="preserve">
+    <value>WPŁAĆ GOTÓWKĘ</value>
+    <comment>action button</comment>
+  </data>
+  <data name="do operation" xml:space="preserve">
+    <value>WYKONAJ OPERACJĘ</value>
+    <comment>action button</comment>
+  </data>
+  <data name="remove card" xml:space="preserve">
+    <value>WYJMIJ KARTĘ</value>
+    <comment>action button</comment>
+  </data>
+  <data name="transfer" xml:space="preserve">
+    <value>WYKONAJ PRZELEW</value>
+    <comment>action button</comment>
+  </data>
+  <data name="withdraw" xml:space="preserve">
+    <value>WYPŁAĆ GOTÓWKĘ</value>
+    <comment>action button</comment>
+  </data>
+  <data name="cash machine label" xml:space="preserve">
+    <value>Zarządzaj swoimi pieniędzmi wedle potrzeb!</value>
+    <comment>game label</comment>
+  </data>
+  <data name="operation" xml:space="preserve">
+    <value>Operacja</value>
+    <comment>game label</comment>
+  </data>
+  <data name="account" xml:space="preserve">
+    <value>Konto</value>
+    <comment>game label</comment>
+  </data>
+  <data name="account balance" xml:space="preserve">
+    <value>Stan Konta</value>
+    <comment>game label</comment>
+  </data>
+  <data name="deposit amount" xml:space="preserve">
+    <value>Wpłacana Kwota</value>
+    <comment>game lablel</comment>
+  </data>
+  <data name="opening date" xml:space="preserve">
+    <value>Data Otwarcia</value>
+    <comment>game label</comment>
+  </data>
+  <data name="operation temporarily unavailable" xml:space="preserve">
+    <value>Operacja Chwilowo Niedostępna</value>
+    <comment>game label</comment>
+  </data>
+  <data name="owner" xml:space="preserve">
+    <value>Właściciel</value>
+    <comment>game label</comment>
+  </data>
+  <data name="wallet balance" xml:space="preserve">
+    <value>Stan Portfela</value>
+    <comment>game label</comment>
+  </data>
+  <data name="withdraw amount" xml:space="preserve">
+    <value>Wypłacana Kwota</value>
+    <comment>game lablel</comment>
+  </data>
+  <data name="amount paid" xml:space="preserve">
+    <value>Wpłacono na konto zadaną kwotę.</value>
+    <comment>game lablel</comment>
+  </data>
+  <data name="amount paid out" xml:space="preserve">
+    <value>Wypłacono z konta zadaną kwotę.</value>
     <comment>game lablel</comment>
   </data>
 </root>

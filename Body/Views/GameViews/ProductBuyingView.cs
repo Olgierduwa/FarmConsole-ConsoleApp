@@ -1,15 +1,14 @@
 ﻿using FarmConsole.Body.Models;
-using FarmConsole.Body.Services;
-using FarmConsole.Body.Views.MenuViews;
+using FarmConsole.Body.Services.MainServices;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace FarmConsole.Body.Views.CentralViews
+namespace FarmConsole.Body.Views.GameViews
 {
-    class ProductBuyingView : MenuManager
+    class ProductBuyingView : ComponentService
     {
-        public static void Display(List<ProductModel> products, int selected, decimal amount, bool paybycard)
+        public static void Display(List<ProductModel> products, int Selected, decimal amount, bool paybycard)
         {
             ClearList(false);
 
@@ -18,7 +17,7 @@ namespace FarmConsole.Body.Views.CentralViews
             Endl(3);
             H2(LS.Navigation("product buying label"));
             GroupStart(0);
-            
+
             GroupStart(2);
             Endl(2);
             TextBox(LS.Object("cart"));
@@ -40,7 +39,7 @@ namespace FarmConsole.Body.Views.CentralViews
             }
             Endl(1);
             if (products.Count > 0)
-                 TextBox(LS.Navigation("reject product", " [D]"), foreground: ColorService.GetColorByName("redL"));
+                TextBox(LS.Navigation("reject product", " [D]"), foreground: ColorService.GetColorByName("redL"));
             else TextBox(LS.Navigation("reject product", " [D]"), foreground: ColorService.GetColorByName("gray3"));
 
             GroupEnd();
@@ -51,7 +50,7 @@ namespace FarmConsole.Body.Views.CentralViews
             TextBox(LS.Navigation("amount to pay") + ": " + amount.ToString() + LS.Navigation("currency"));
             Endl(Height * 3 - 10);
             Endl(1);
-            if(paybycard) TextBox(LS.Navigation("pay by card", " [E]"), foreground: ColorService.GetColorByName("limeD"));
+            if (paybycard) TextBox(LS.Navigation("pay by card", " [E]"), foreground: ColorService.GetColorByName("limeD"));
             else TextBox(LS.Navigation("pay with cash", " [E]"), foreground: ColorService.GetColorByName("limeD"));
             TextBox(LS.Navigation("change payment method", " [A]"), foreground: ColorService.GetColorByName("orangeL"));
             Endl(1);
@@ -61,11 +60,11 @@ namespace FarmConsole.Body.Views.CentralViews
             GroupEnd();
 
             PrintList();
-            UpdateSelect(selected, selected, products.Count, 3, rangeProp:19);
+            UpdateSelect(Selected, Selected, products.Count, 3, rangeProp: 19);
 
             ComponentsDisplayed = new List<CM>();
-            ComponentsDisplayed.Add(GetComponentByName("GS",2));
-            ComponentsDisplayed.Add(GetComponentByName("GS",3));
+            ComponentsDisplayed.Add(GetComponentByName("GS", 2));
+            ComponentsDisplayed.Add(GetComponentByName("GS", 3));
         }
 
     }

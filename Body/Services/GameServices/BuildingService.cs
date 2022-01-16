@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 
-namespace FarmConsole.Body.Services
+namespace FarmConsole.Body.Services.GameServices
 {
     static class BuildingService
     {
@@ -20,7 +20,7 @@ namespace FarmConsole.Body.Services
             for (int y = p.Y; y < p.Y + s.Height; y++)
                 for (int x = p.X; x < p.X + s.Width; x++)
                 {
-                         if (y == p.Y && x == p.X + s.Width - 1) Set(x, y, structure, c + 2);
+                    if (y == p.Y && x == p.X + s.Width - 1) Set(x, y, structure, c + 2);
                     else if (y == p.Y && x == p.X) Set(x, y, structure, c + 3);
                     else if (y == p.Y + s.Height - 1 && x == p.X) Set(x, y, structure, c + 4);
                     else if (y == p.Y + s.Height - 1 && x == p.X + s.Width - 1) Set(x, y, structure, c + 5);
@@ -35,7 +35,7 @@ namespace FarmConsole.Body.Services
                     else if (!orientation && x % 2 == 0) Set(x, y, structure, 6);
                     else if (!orientation && x % 2 == 1) Set(x, y, structure, 7);
                 }
-            if(orientation)
+            if (orientation)
             {
                 var road = map.GetField(p.X + 1, p.Y - 1);
                 if (road.ObjectName == "road with sidewalk")
@@ -77,7 +77,7 @@ namespace FarmConsole.Body.Services
             for (int y = p.Y; y < p.Y + s.Height; y++)
                 for (int x = p.X; x < p.X + s.Width; x++)
                 {
-                         if (y == p.Y + s.Height - 1 && x == p.X) Set(x, y, structure, 8);
+                    if (y == p.Y + s.Height - 1 && x == p.X) Set(x, y, structure, 8);
                     else if (y == p.Y + s.Height - 1 && x == p.X + s.Width - 1) Set(x, y, structure, 9);
                     else if (y == p.Y && x == p.X + s.Width - 1) Set(x, y, structure, 10);
                     else if (y == p.Y && x == p.X) Set(x, y, structure, 11);
@@ -95,7 +95,7 @@ namespace FarmConsole.Body.Services
             for (int y = p.Y; y < p.Y + s.Height; y++)
                 for (int x = p.X; x < p.X + s.Width; x++)
                 {
-                         if (y == p.Y + s.Height - 1 && x == p.X) Set(x, y, structure, 2);
+                    if (y == p.Y + s.Height - 1 && x == p.X) Set(x, y, structure, 2);
                     else if (y == p.Y + s.Height - 1 && x == p.X + s.Width - 1) Set(x, y, structure, 3);
                     else if (y == p.Y && x == p.X + s.Width - 1) Set(x, y, structure, 4);
                     else if (y == p.Y && x == p.X) Set(x, y, structure, 5);

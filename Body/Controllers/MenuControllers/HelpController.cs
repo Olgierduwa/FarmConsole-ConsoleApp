@@ -1,21 +1,22 @@
-﻿using FarmConsole.Body.Resources.Sounds;
+﻿using FarmConsole.Body.Controllers.CentralControllers;
 using FarmConsole.Body.Services;
+using FarmConsole.Body.Services.MainServices;
 using FarmConsole.Body.Views.MenuViews;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace FarmConsole.Body.Controlers
+namespace FarmConsole.Body.Controllers.MenuControllers
 {
-    class HelpController : MainController
+    class HelpController : HeadController
     {
         public static void Open()
         {
             HelpView.Display();
             OpenScreen = LastScreen;
             Console.ReadKey(true);
-            S.Play("K3");
-            HelpView.Clean();
+            SoundService.Play("K3");
+            ComponentService.Clean();
         }
     }
 }

@@ -1,51 +1,52 @@
-﻿using FarmConsole.Body.Resources.Sounds;
-using FarmConsole.Body.Models;
-using FarmConsole.Body.Services;
+﻿using FarmConsole.Body.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using FarmConsole.Body.Views.MenuViews;
+using FarmConsole.Body.Services.MainServices;
+using FarmConsole.Body.Controllers.CentralControllers;
 
-namespace FarmConsole.Body.Controlers
+namespace FarmConsole.Body.Controllers.MenuControllers
 {
-    class GameLoadController : MainController
+    class GameLoadController : HeadController
     {
         public static void Open()
         {
             GameInstanceModel[] saves = XF.GetGameInstances();
-            int selected = 1, selCount = saves.Length + 1, selStart = 1;
-            GameLoadView.Display(saves); GameLoadView.UpdateMenuSelect(selected, selected, selCount);
+            int Selected = 1, selCount = saves.Length + 1, selStart = 1;
+            GameLoadView.Display(saves); ComponentService.UpdateMenuSelect(Selected, Selected, selCount);
             while (OpenScreen == "Load")
             {
                 if (Console.KeyAvailable)
                 {
                     switch (Console.ReadKey(true).Key)
                     {
-                        case ConsoleKey.W: if (selected > selStart) { S.Play("K1"); selected--; GameLoadView.UpdateMenuSelect(selected, selected + 1, selCount); } break;
-                        case ConsoleKey.S: if (selected < selCount) { S.Play("K1"); selected++; GameLoadView.UpdateMenuSelect(selected, selected - 1, selCount); } break;
+                        case ConsoleKey.W: if (Selected > selStart) { SoundService.Play("K1"); Selected--; ComponentService.UpdateMenuSelect(Selected, Selected + 1, selCount); } break;
+                        case ConsoleKey.S: if (Selected < selCount) { SoundService.Play("K1"); Selected++; ComponentService.UpdateMenuSelect(Selected, Selected - 1, selCount); } break;
                         case ConsoleKey.Escape:
-                        case ConsoleKey.Q: S.Play("K3"); OpenScreen = "Menu"; break;
-                        case ConsoleKey.E: S.Play("K2");
-                            switch (selected)
+                        case ConsoleKey.Q: SoundService.Play("K3"); OpenScreen = "Menu"; break;
+                        case ConsoleKey.E:
+                            SoundService.Play("K2");
+                            switch (Selected)
                             {
                                 case 1: OpenScreen = "NewGame"; break;
-                                default: GameInstance = new GameInstanceModel(); GameInstance.Load(selected - 1); OpenScreen = GameInstance.Lastmap; break;
+                                default: GameInstance = new GameInstanceModel(Selected - 1); OpenScreen = GameInstance.Lastmap; break;
                             }
                             break;
                         case ConsoleKey.D:
-                            if (selected > 1 && GameLoadView.Danger() == true)
+                            if (Selected > 1 && ComponentService.Danger() == true)
                             {
-                                saves[selected - 2].Delete();
+                                saves[Selected - 2].Delete();
                                 saves = XF.GetGameInstances();
-                                selected = 1;
+                                Selected = 1;
                                 selCount = saves.Length + 1;
-                                GameLoadView.Clean();
+                                ComponentService.Clean();
                                 GameLoadView.Display(saves);
-                                GameLoadView.UpdateMenuSelect(1, 1, selCount);
+                                ComponentService.UpdateMenuSelect(1, 1, selCount);
                             }
                             break;
                     }
-                    GameLoadView.SetPreview(saves, selected);
+                    GameLoadView.SetPreview(saves, Selected);
                 }
                 else if ((DateTime.Now - Previously).TotalMilliseconds >= FrameTime)
                 {
@@ -53,7 +54,7 @@ namespace FarmConsole.Body.Controlers
                     Previously = DateTime.Now;
                 }
             }
-            GameLoadView.Clean();
+            ComponentService.Clean();
         }
     }
 }

@@ -52,9 +52,9 @@ namespace FarmConsole.Body.Models
             }
             foreach (var p in Slots) if (p != null) { IsEmpty = false; break; }
         }
-        public ContainerModel(List<ProductModel> _Products, short _MaxSlots)
+        public ContainerModel(List<ProductModel> _Products, short _MaxSlots, string _SufixName)
         {
-            SufixName = "";
+            SufixName = _SufixName;
             MaxSlotsCount = _MaxSlots;
             Slots = new ProductModel[MaxSlotsCount];
             IsEmpty = true;

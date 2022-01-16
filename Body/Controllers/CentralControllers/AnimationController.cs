@@ -1,11 +1,11 @@
-﻿using FarmConsole.Body.Services;
-using FarmConsole.Body.Views;
+﻿using FarmConsole.Body.Services.MainServices;
+using FarmConsole.Body.Views.MenuViews;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 
-namespace FarmConsole.Body.Controlers
+namespace FarmConsole.Body.Controllers.CentralControllers
 {
     static class AnimationController
     {
@@ -47,7 +47,7 @@ namespace FarmConsole.Body.Controlers
             string[] NewDateValues = NewDate.Split('-');
             bool[] DifferentValues = new bool[3];
             int[] columns = new int[] { 23, 56, 83 };
-            
+
             for (int i = 0; i < 3; i++)
                 if (OldDateValues[i] != NewDateValues[i])
                     DifferentValues[i] = true;
@@ -60,19 +60,19 @@ namespace FarmConsole.Body.Controlers
                 NewGraphicViews.Add(XF.GetGraphic(NewDateValues[i][0].ToString()));
                 for (int j = 1; j < OldDateValues[i].Length; j++)
                 {
-                    OldGraphicViews[i] = ComponentViewService.ExtendGraphis(OldGraphicViews[i], XF.GetGraphic(OldDateValues[i][j].ToString()));
-                    NewGraphicViews[i] = ComponentViewService.ExtendGraphis(NewGraphicViews[i], XF.GetGraphic(NewDateValues[i][j].ToString()));
+                    OldGraphicViews[i] = PatternService.ExtendGraphis(OldGraphicViews[i], XF.GetGraphic(OldDateValues[i][j].ToString()));
+                    NewGraphicViews[i] = PatternService.ExtendGraphis(NewGraphicViews[i], XF.GetGraphic(NewDateValues[i][j].ToString()));
                 }
             }
 
-            Effect("CrossInEffect", GV: OldGraphicViews[0],     CD: new int[] { columns[0], 100 }, ST: 0);
-            Effect("CrossInEffect", GV: XF.GetGraphic("/"),  CD: new int[] { 43, 100 }, ST: 0);
-            Effect("CrossInEffect", GV: OldGraphicViews[1],     CD: new int[] { columns[1], 100 }, ST: 0);
-            Effect("CrossInEffect", GV: XF.GetGraphic("/"),  CD: new int[] { 70, 100 }, ST: 0);
-            Effect("CrossInEffect", GV: OldGraphicViews[2],     CD: new int[] { columns[2], 100 }, ST: 500);
-            
+            Effect("CrossInEffect", GV: OldGraphicViews[0], CD: new int[] { columns[0], 100 }, ST: 0);
+            Effect("CrossInEffect", GV: XF.GetGraphic("/"), CD: new int[] { 43, 100 }, ST: 0);
+            Effect("CrossInEffect", GV: OldGraphicViews[1], CD: new int[] { columns[1], 100 }, ST: 0);
+            Effect("CrossInEffect", GV: XF.GetGraphic("/"), CD: new int[] { 70, 100 }, ST: 0);
+            Effect("CrossInEffect", GV: OldGraphicViews[2], CD: new int[] { columns[2], 100 }, ST: 500);
+
             for (int i = OldGraphicViews.Count - 1; i >= 0; i--)
-                if(DifferentValues[i])
+                if (DifferentValues[i])
                 {
                     Effect("VerticalSlideOutEffect", GV: OldGraphicViews[i], CD: new int[] { columns[i], 100 }, ST: 0);
                     Effect("VerticalSlideInEffect", GV: NewGraphicViews[i], CD: new int[] { columns[i], 100 }, ST: 500);
@@ -96,7 +96,7 @@ namespace FarmConsole.Body.Controlers
             else if (Stage < 5 * limit + PopupSleepTime[1] / 50) { currentColorId = 4; GraphicView = new string[] { GraphicView[0], GraphicView[1] }; }
             else if (Stage < 6 * limit + PopupSleepTime[1] / 50) { currentColorId = 5; Stage = -1; GraphicView = new string[] { GraphicView[0] }; }
 
-            AnimationView.PopUp(AnimationController.GraphicView, ColorService.GetColorByID(ColorIds[currentColorId]));
+            AnimationView.PopUp(GraphicView, ColorService.GetColorByID(ColorIds[currentColorId]));
             return Stage;
         }
 

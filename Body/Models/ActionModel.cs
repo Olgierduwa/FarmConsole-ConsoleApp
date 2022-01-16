@@ -8,7 +8,8 @@ namespace FarmConsole.Body.Models
     {
         public string Name { get; set; }
         public string Type { get; set; }
-        public string Result { get; set; }
+        public string Result { get; set; } 
+        public string ResultTitle = "";
         public bool IsInProcess { get; set; }
         public ProductModel SelectedProduct { get; set; }
         public void SetPropertyProduct() => SelectedProduct = ObjectModel.GetObject(SelectedProduct.Property).ToProduct();

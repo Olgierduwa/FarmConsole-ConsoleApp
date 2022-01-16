@@ -1,5 +1,5 @@
 ﻿using FarmConsole.Body.Engines;
-using FarmConsole.Body.Services;
+using FarmConsole.Body.Services.MainServices;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -87,17 +87,18 @@ namespace FarmConsole.Body.Models
         public void Reload()
         {
             int VSize = (WindowSize.Width + 23) / 24 + (WindowSize.Height - 3) / 6 + 3;
-            int correction = (VSize - VSize % 2) * 3 - 6;
-            Point VisualMapPosition = new Point(WindowSize.Width / 2 - 12, (WindowSize.Height - 8) / 2 - correction);
+            int MapPosCorrection = (VSize - VSize % 2) * 3 - 6;
+            Point VisualMapPosition = new Point(WindowSize.Width / 2 - 12, (WindowSize.Height - 8) / 2 - MapPosCorrection);
             Point StandPos = GetMatchPoint(StandPosition, VisualMapPosition, MapPosition);
 
             WindowSize = new Size(Console.WindowWidth, Console.WindowHeight);
             MapPosition = new Point(Console.WindowWidth / 2 - 12, (Console.WindowHeight - 8) / 2 - (MapSize + MapSize % 2) * 3);
             VSize =  (Console.WindowWidth + 23) / 24 + (Console.WindowHeight - 3) / 6 + 3;
-            correction = (VSize - VSize % 2) * 3 - 6;
-            VisualMapPosition = new Point(Console.WindowWidth / 2 - 12, (Console.WindowHeight - 8) / 2 - correction);
+            MapPosCorrection = (VSize - VSize % 2) * 3 - 6;
+            VisualMapPosition = new Point(Console.WindowWidth / 2 - 12, (Console.WindowHeight - 8) / 2 - MapPosCorrection);
 
-            StandPosition = new Point(VSize / 2, VSize / 2);
+            int StandPosCorrection = (StandPos.X + StandPos.Y) % 2;
+            StandPosition = new Point(VSize / 2, VSize / 2 - StandPosCorrection);
             Point CenterPos = GetMatchPoint(StandPosition, VisualMapPosition, MapPosition);
             MapPosition = GetCoordByPos(new Point(CenterPos.X - StandPos.X, CenterPos.Y - StandPos.Y), MapPosition);
         }
@@ -163,9 +164,10 @@ namespace FarmConsole.Body.Models
 
             MapPosition = new Point(Console.WindowWidth / 2 - 12, (Console.WindowHeight - 8) / 2 - (MapSize + MapSize % 2) * 3);
             int VSize = (Console.WindowWidth + 23) / 24 + (Console.WindowHeight - 3) / 6 + 3;
-            int correction = (VSize - VSize % 2) * 3 - 6;
-            Point VisualMapPosition = new Point(Console.WindowWidth / 2 - 12, (Console.WindowHeight - 8) / 2 - correction);
-            StandPosition = new Point(VSize / 2, VSize / 2);
+            int MapPosCorrection = (VSize - VSize % 2) * 3 - 6;
+            Point VisualMapPosition = new Point(Console.WindowWidth / 2 - 12, (Console.WindowHeight - 8) / 2 - MapPosCorrection);
+            int StandPosCorrection = (ExpectedPos.X + ExpectedPos.Y) % 2;
+            StandPosition = new Point(VSize / 2, VSize / 2 - StandPosCorrection);
             Point CenterPos = GetMatchPoint(StandPosition, VisualMapPosition, MapPosition);
             MapPosition = GetCoordByPos(new Point(CenterPos.X - ExpectedPos.X, CenterPos.Y - ExpectedPos.Y), MapPosition);
             

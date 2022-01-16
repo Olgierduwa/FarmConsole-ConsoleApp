@@ -1,9 +1,8 @@
-﻿using FarmConsole.Body.Controlers;
+﻿using FarmConsole.Body.Controllers.CentralControllers;
 using FarmConsole.Body.Engines;
-using FarmConsole.Body.Resources.Sounds;
-using FarmConsole.Body.Services;
+using FarmConsole.Body.Services.GameServices;
+using FarmConsole.Body.Services.MainServices;
 using FarmConsole.Body.Views.GameViews;
-using FarmConsole.Body.Views.MenuViews;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -11,7 +10,7 @@ using System.Text;
 
 namespace FarmConsole.Body.Controllers.GameControllers
 {
-    class PlotExtendingController : MainController
+    class PlotExtendingController : HeadController
     {
         private static int tilePrice;
         private static int tileCount;
@@ -27,10 +26,11 @@ namespace FarmConsole.Body.Controllers.GameControllers
         }
         private static void Extending()
         {
-            int amount = tileCount ;
+            int amount = tileCount * tilePrice;
             if (GameInstance.WalletFunds >= amount)
             {
                 GameInstance.WalletFunds -= amount;
+                GameService.IncreaseInExperience(tileCount);
                 OpenScreen = EscapeScreen;
                 switch(direction)
                 {
@@ -39,10 +39,10 @@ namespace FarmConsole.Body.Controllers.GameControllers
                     case "extend right": GameInstance.ExpandMap("Farm", new Point(-1, 1)); break;
                     case "extend left": GameInstance.ExpandMap("Farm", new Point(1, -1)); break;
                 }
-                S.Play("K3");
-                MenuManager.GoodNews(LS.Navigation("land ownership document"));
+                SoundService.Play("K3");
+                ComponentService.GoodNews(LS.Navigation("land ownership document"));
             }
-            else MenuManager.Warning(LS.Action("no money in wallet"));
+            else ComponentService.Warning(LS.Action("no money in wallet"));
         }
 
         public static void Open()
@@ -51,7 +51,7 @@ namespace FarmConsole.Body.Controllers.GameControllers
             tilePrice = 20 * GameInstance.LVL;
             tileCount = size + size - 1;
             direction = "extend down";
-            MenuManager.SetView = MapEngine.Map;
+            ComponentService.SetView = MapEngine.Map;
             PlotExtendingView.Display(tilePrice, tileCount, direction);
 
             while (OpenScreen == "PlotExtending")
@@ -63,7 +63,7 @@ namespace FarmConsole.Body.Controllers.GameControllers
                     {
                         case ConsoleKey.Q:
                         case ConsoleKey.Tab:
-                        case ConsoleKey.Escape: OpenScreen = EscapeScreen; S.Play("K2"); break;
+                        case ConsoleKey.Escape: OpenScreen = EscapeScreen; SoundService.Play("K2"); break;
                         case ConsoleKey.W: UpdateSelected("extend up"); break;
                         case ConsoleKey.S: UpdateSelected("extend down"); break;
                         case ConsoleKey.D: UpdateSelected("extend right"); break;
@@ -72,7 +72,7 @@ namespace FarmConsole.Body.Controllers.GameControllers
                     }
                 }
             }
-            MenuManager.Clean();
+            ComponentService.Clean();
         }
     }
 }

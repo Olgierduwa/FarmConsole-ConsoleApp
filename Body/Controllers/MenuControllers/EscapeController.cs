@@ -1,44 +1,54 @@
-﻿using FarmConsole.Body.Resources.Sounds;
-using FarmConsole.Body.Models;
+﻿using FarmConsole.Body.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using FarmConsole.Body.Views.MenuViews;
-using FarmConsole.Body.Services;
 using FarmConsole.Body.Engines;
+using FarmConsole.Body.Views.GameViews;
+using FarmConsole.Body.Services.MainServices;
+using FarmConsole.Body.Controllers.CentralControllers;
 
-namespace FarmConsole.Body.Controlers
+namespace FarmConsole.Body.Controllers.MenuControllers
 {
-    class EscapeController : MainController
+    class EscapeController : HeadController
     {
         public static void Open()
         {
             LastScreen = "Escape";
-            int selected = 1, selCount = 5, selStart = 1;
+            int Selected = 1, selCount = 5, selStart = 1;
 
-            MenuManager.SetView = MapEngine.Map;
+            ComponentService.SetView = MapEngine.Map;
             EscapeView.Display();
-            EscapeView.UpdateMenuSelect(selected, selected, selCount);
+            ComponentService.UpdateMenuSelect(Selected, Selected, selCount);
             while (OpenScreen == "Escape")
             {
                 if (Console.KeyAvailable)
                 {
                     switch (Console.ReadKey(true).Key)
                     {
-                        case ConsoleKey.W: if (selected > selStart) { S.Play("K1"); selected--; EscapeView.UpdateMenuSelect(selected, selected + 1, selCount); } break;
-                        case ConsoleKey.S: if (selected < selCount) { S.Play("K1"); selected++; EscapeView.UpdateMenuSelect(selected, selected - 1, selCount); } break;
+                        case ConsoleKey.W: if (Selected > selStart) { SoundService.Play("K1"); Selected--; ComponentService.UpdateMenuSelect(Selected, Selected + 1, selCount); } break;
+                        case ConsoleKey.S: if (Selected < selCount) { SoundService.Play("K1"); Selected++; ComponentService.UpdateMenuSelect(Selected, Selected - 1, selCount); } break;
                         case ConsoleKey.Q:
-                        case ConsoleKey.Escape: S.Play("K3"); OpenScreen = EscapeScreen; MenuView.SetView = null; break;
-                        case ConsoleKey.G: SettingsService.GODMOD = !SettingsService.GODMOD; S.Play("K3"); break;
+                        case ConsoleKey.Escape: SoundService.Play("K3"); OpenScreen = EscapeScreen; ComponentService.SetView = null; break;
+                        case ConsoleKey.G: SettingsService.GODMOD = !SettingsService.GODMOD; SoundService.Play("K3"); break;
                         case ConsoleKey.E:
-                            switch (selected)
+                            switch (Selected)
                             {
-                                case 1: S.Play("K3"); OpenScreen = EscapeScreen; MenuView.SetView = null; break;
-                                case 2: S.Play("K2"); OpenScreen = "Save"; break;
-                                case 3: if (EscapeView.Danger(false) == true) { OpenScreen = LastScreen = "Menu"; MenuView.SetView = null;
-                                        MapEngine.Map = null; GameInstance = null; GameView.Clean(true, true); } break;
-                                case 4: S.Play("K2"); OpenScreen = "Settings"; break;
-                                case 5: S.Play("K2"); OpenScreen = "Help"; break;
+                                case 1: SoundService.Play("K3"); OpenScreen = EscapeScreen; ComponentService.SetView = null; break;
+                                case 2: SoundService.Play("K2"); OpenScreen = "Save"; break;
+                                case 3:
+                                    if (ComponentService.Danger(false) == true)
+                                    {
+                                        OpenScreen = LastScreen = "Menu";
+                                        ComponentService.SetView = null;
+                                        MapEngine.Map = null;
+                                        GameInstance = null;
+                                        ComponentService.Clean(true, true);
+                                        ColorService.ColorVisibility = true;
+                                    }
+                                    break;
+                                case 4: SoundService.Play("K2"); OpenScreen = "Settings"; break;
+                                case 5: SoundService.Play("K2"); OpenScreen = "Help"; break;
                             }
                             break;
                     }
@@ -49,7 +59,7 @@ namespace FarmConsole.Body.Controlers
                     Previously = DateTime.Now;
                 }
             }
-            EscapeView.Clean();
+            ComponentService.Clean();
         }
     }
 }

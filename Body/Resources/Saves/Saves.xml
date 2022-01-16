@@ -1,3 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Saves>
+  <save id="1">
+    <lvl>2</lvl>
+    <experience>195</experience>
+    <energy>852</energy>
+    <hunger>1000</hunger>
+    <immunity>650</immunity>
+    <health>1000</health>
+    <username>Gracz</username>
+    <difficulty>2</difficulty>
+    <gender>2</gender>
+    <gamedate>13.10.2020</gamedate>
+    <lastplay>16.01.2022 13:40:32</lastplay>
+    <lastmap>Farm</lastmap>
+    <wallet>0</wallet>
+    <card>615</card>
+    <inventory>ŐnÅŐĐÅŐƍÅŐȊÅŐʇÅŐ̄Åő0ÅőÞÅőśÅőǘÅőɕÅő˒Åő͏ÅŒ¬ÅŒĩÅƟʹÅƟ̶ÅƠnÅƠĐÅƠƍÅƠȊÅƠʇÅƠ̄Åơ0ÅơÞÅơśÅơǘÅơɕÅơ˒Åơ͏ÅȿÅÅȿłÅȿƿÅȿȼÅȿʹÅȿ̶ÅɀnÅɀĐÅɀƍÅɀȊÅɀʇÅɀ̄ÅɁ0ÅɁÞÅɁśÅɁǘÅɁɕÅɁ˒ÒɁ͏Åɂ¬ÅɂĩÅɂƦÅʎ˫ÅʎͨÊʏÅÅʏłÊʏƿÅʏȼÅʏʹÅʏ̶ÅʐnÅʐĐÅʐƍÅʐȊÅ˞ǱÅ˞ɮÅ</inventory>
+    <cart>inventory</cart>
+    <rules>1111111111111</rules>
+  </save>
 </Saves>

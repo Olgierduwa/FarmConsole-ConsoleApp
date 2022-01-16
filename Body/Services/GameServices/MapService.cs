@@ -1,15 +1,15 @@
 ﻿using FarmConsole.Body.Engines;
 using FarmConsole.Body.Models;
-using FarmConsole.Body.Services;
+using FarmConsole.Body.Services.MainServices;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 using System.Threading;
 
-namespace FarmConsole.Body.Views.LocationViews
+namespace FarmConsole.Body.Services.GameServices
 {
-    public class MapManager : MapEngine
+    public class MapService : MapEngine
     {
         public static void GlobalMapInit()
         {
@@ -18,7 +18,7 @@ namespace FarmConsole.Body.Views.LocationViews
             GameService.SetGrowCycle();
             SetMapScreenBorders();
         }
-        
+
         public static void InitMap(MapModel Map)
         {
             SetMapScreenBorders();
@@ -26,7 +26,19 @@ namespace FarmConsole.Body.Views.LocationViews
             InitVisualMap();
             InitMapView();
         }
-        
+
+        public static void FadeOut()
+        {
+            int procent = 30;
+            for (int i = 0; i < 5; i++)
+            {
+                BrighterMapView(procent);
+                ShowMapView();
+                Map.View.SetWords();
+                procent += 10;
+            }
+        }
+
         public static void ShowMap(bool Smoothly = true)
         {
             int procent = 60;
@@ -46,7 +58,7 @@ namespace FarmConsole.Body.Views.LocationViews
                 ShowMapView();
             }
         }
-        
+
         public static void HideMap(bool CompletelyHide = true)
         {
             Map.View.SetWords();
@@ -55,7 +67,7 @@ namespace FarmConsole.Body.Views.LocationViews
                 DarkerMapView(30);
                 ShowMapView();
             }
-            if (CompletelyHide) ClearMapSreen(); 
+            if (CompletelyHide) ClearMapSreen();
         }
 
 
@@ -66,7 +78,7 @@ namespace FarmConsole.Body.Views.LocationViews
             ClearSelectedFields(1);
             return LS.Action("done");
         }
-        
+
         public static string Destroy()
         {
             var DeletingField = GetField().ToField();
@@ -75,20 +87,20 @@ namespace FarmConsole.Body.Views.LocationViews
             ClearSelectedFields(1);
             return LS.Action("done");
         }
-        
+
         public static void Dragg()
         {
-            if(GetField("Stand").Category == 3) ClearSelectedFields(); 
+            if (GetField("Stand").Category == 3) ClearSelectedFields();
             SetField(GetPos(), null, "Dragged");
             SetField(GetPos(), null, "Base");
             //Destroy();
             ClearSelectedFields();
             ShowField(GetPos());
         }
-        
+
         public static void Drop(bool ConfirmDrop = true)
         {
-            if(GetField("Dragged") != null)
+            if (GetField("Dragged") != null)
             {
                 if (ConfirmDrop)
                 {
@@ -106,7 +118,7 @@ namespace FarmConsole.Body.Views.LocationViews
                 ShowField(GetPos());
             }
         }
-        
+
         public static string Rotate()
         {
             FieldModel Field = GetField();
@@ -129,7 +141,7 @@ namespace FarmConsole.Body.Views.LocationViews
             ClearSelectedFields(1);
             return LS.Action("done");
         }
-        
+
         public static void DigPath()
         {
             SetField(GetPos(), ObjectModel.GetObject("path").ToField());

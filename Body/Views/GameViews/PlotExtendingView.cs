@@ -1,12 +1,11 @@
-﻿using FarmConsole.Body.Services;
-using FarmConsole.Body.Views.MenuViews;
+﻿using FarmConsole.Body.Services.MainServices;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace FarmConsole.Body.Views.GameViews
 {
-    class PlotExtendingView : MenuManager
+    class PlotExtendingView : ComponentService
     {
         public static void Display(int price, int count, string direction)
         {

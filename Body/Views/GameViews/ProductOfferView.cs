@@ -1,14 +1,13 @@
 ﻿using FarmConsole.Body.Models;
-using FarmConsole.Body.Services;
-using FarmConsole.Body.Views.MenuViews;
+using FarmConsole.Body.Services.MainServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FarmConsole.Body.Views.CentralViews
+namespace FarmConsole.Body.Views.GameViews
 {
-    class ProductOfferView : MenuManager
+    class ProductOfferView : ComponentService
     {
         public static void DisplayCaptains(int amount, List<ProductModel> products, bool transferpayment, int sliderValue, bool init = false)
         {
@@ -50,7 +49,7 @@ namespace FarmConsole.Body.Views.CentralViews
             Slider(10, sliderValue);
 
             Endl(1);
-            if(transferpayment) TextBox(LS.Navigation("accept payment by transfer", " [E]"), foreground: ColorService.GetColorByName("limeD"));
+            if (transferpayment) TextBox(LS.Navigation("accept payment by transfer", " [E]"), foreground: ColorService.GetColorByName("limeD"));
             else TextBox(LS.Navigation("accept cash payment", " [E]"), foreground: ColorService.GetColorByName("limeD"));
             TextBox(LS.Navigation("change payment method", " [Q]"), foreground: ColorService.GetColorByName("orangeL"));
             GroupEnd();

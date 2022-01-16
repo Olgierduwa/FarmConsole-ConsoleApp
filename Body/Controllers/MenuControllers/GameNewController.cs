@@ -1,16 +1,16 @@
-﻿using FarmConsole.Body.Resources.Sounds;
-using FarmConsole.Body.Models;
+﻿using FarmConsole.Body.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using FarmConsole.Body.Views.MenuViews;
-using FarmConsole.Body.Services;
+using FarmConsole.Body.Services.MainServices;
+using FarmConsole.Body.Controllers.CentralControllers;
 
-namespace FarmConsole.Body.Controlers
+namespace FarmConsole.Body.Controllers.MenuControllers
 {
-    class GameNewController : MainController
+    class GameNewController : HeadController
     {
-        private static int selected;
+        private static int Selected;
         private static int selCount;
         private static int selStart;
         private static string NickName;
@@ -18,32 +18,24 @@ namespace FarmConsole.Body.Controlers
 
         private static void StartNewGame()
         {
-            S.Play("K2");
-            int Difficulty = GameNewView.GetSliderValue(2);
-            int Gender = GameNewView.GetSliderValue(3);
+            SoundService.Play("K2");
+            int Gender = ComponentService.GetSliderValue(2);
+            int Difficulty = ComponentService.GetSliderValue(3);
             GameInstance = new GameInstanceModel(NickName, Difficulty, Gender);
             OpenScreen = GameInstance.Lastmap;
         }
         private static void UpdateSelect(int value)
         {
-            S.Play("K1");
-            GameNewView.UpdateMenuSelect(selected + value, selected, selCount);
-            selected += value;
+            SoundService.Play("K1");
+            ComponentService.UpdateMenuSelect(Selected + value, Selected, selCount);
+            Selected += value;
         }
         private static void UpdateSlider(int value)
         {
             int MaxSliderValue = 4;
-            if (selected > 1)
-                if (value < 0)
-                {
-                    if (GameNewView.GetSliderValue(selected) > 0)
-                    { GameNewView.UpdateMenuSlider(selected, MaxSliderValue, value); S.Play("K3"); }
-                }
-                else
-                {
-                    if (GameNewView.GetSliderValue(selected) < MaxSliderValue)
-                    { GameNewView.UpdateMenuSlider(selected, MaxSliderValue, value); S.Play("K2"); }
-                }
+            if (Selected > 1)
+                if (ComponentService.GetSliderValue(Selected) + value >= 0 && ComponentService.GetSliderValue(Selected) + value <= MaxSliderValue)
+                { ComponentService.UpdateMenuSlider(Selected, MaxSliderValue, value); SoundService.Play("K3"); }
         }
         private static void GenerateAvatar()
         {
@@ -77,30 +69,30 @@ namespace FarmConsole.Body.Controlers
             }
             if (NickName == ":") NickName = DefaultNickName;
             GameNewView.SetNewGameView();
-            GameNewView.UpdateMenuTextBox(1, NickName, 3);
+            ComponentService.UpdateMenuTextBox(1, NickName, 3);
         }
 
         public static void Open()
         {
-            selected = 1;
+            Selected = 1;
             selCount = 4;
             selStart = 1;
             DefaultNickName = LS.Navigation("default nickname");
             NickName = DefaultNickName;
-            GameNewView.Display(NickName); GameNewView.UpdateMenuSelect(selected, selected, selCount);
+            GameNewView.Display(NickName); ComponentService.UpdateMenuSelect(Selected, Selected, selCount);
             while (OpenScreen == "NewGame")
             {
                 if (Console.KeyAvailable)
                 {
                     switch (Console.ReadKey(true).Key)
                     {
-                        case ConsoleKey.W: if (selected > selStart) UpdateSelect(-1); break;
-                        case ConsoleKey.S: if (selected < selCount) UpdateSelect(+1); break;
-                        case ConsoleKey.A: if (selected == selCount) GenerateAvatar(); else UpdateSlider(-1); break;
-                        case ConsoleKey.D: if (selected == selCount) GenerateAvatar(); else UpdateSlider(+1); break;
-                        case ConsoleKey.E: if (selected == selStart) EditNickName(); else StartNewGame(); break;
+                        case ConsoleKey.W: if (Selected > selStart) UpdateSelect(-1); break;
+                        case ConsoleKey.S: if (Selected < selCount) UpdateSelect(+1); break;
+                        case ConsoleKey.A: if (Selected == selCount) GenerateAvatar(); else UpdateSlider(-1); break;
+                        case ConsoleKey.D: if (Selected == selCount) GenerateAvatar(); else UpdateSlider(+1); break;
+                        case ConsoleKey.E: if (Selected == selStart) EditNickName(); else StartNewGame(); break;
                         case ConsoleKey.Escape:
-                        case ConsoleKey.Q: S.Play("K3"); OpenScreen = "Menu"; break;
+                        case ConsoleKey.Q: SoundService.Play("K3"); OpenScreen = "Menu"; break;
                     }
                 }
                 else if ((DateTime.Now - Previously).TotalMilliseconds >= FrameTime)
@@ -109,7 +101,7 @@ namespace FarmConsole.Body.Controlers
                     Previously = DateTime.Now;
                 }
             }
-            GameNewView.Clean();
+            ComponentService.Clean();
         }
     }
 }

@@ -1,22 +1,22 @@
 ﻿using FarmConsole.Body.Engines;
 using FarmConsole.Body.Models;
-using FarmConsole.Body.Services;
+using FarmConsole.Body.Services.MainServices;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace FarmConsole.Body.Controlers
+namespace FarmConsole.Body.Controllers.CentralControllers
 {
-    class MainController
+    class HeadController
     {
-        protected static GameInstanceModel GameInstance;
-        protected static ActionModel Action;
+        protected static GameInstanceModel GameInstance { get; set; }
+        protected static ActionModel Action { get; set; }
 
         public static DateTime Previously = DateTime.Now;
         public static double FrameTime = 10;
-        public static bool PlayerMovementAxis; 
-        public static bool MapMovementAxis; 
-        public static bool FieldNameVisibility; 
+        public static bool PlayerMovementAxis;
+        public static bool MapMovementAxis;
+        public static bool FieldNameVisibility;
 
         public static string OpenScreen = "Menu";
         public static string LastScreen = "Menu";
@@ -38,9 +38,8 @@ namespace FarmConsole.Body.Controlers
             if (POPUPSTAGE < 0) POPUPID = 0;
         }
 
-        static MainController()
+        static HeadController()
         {
-            GameInstance = new GameInstanceModel();
             Action = new ActionModel();
         }
     }

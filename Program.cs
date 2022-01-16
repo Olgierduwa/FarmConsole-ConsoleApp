@@ -1,9 +1,8 @@
-﻿using FarmConsole.Body.Controlers;
-using FarmConsole.Body.Controllers.CentralControllers;
+﻿using FarmConsole.Body.Controllers.CentralControllers;
 using FarmConsole.Body.Controllers.GameControllers;
-using FarmConsole.Body.Services;
-using FarmConsole.Body.Views.LocationViews;
-using FarmConsole.Body.Views.MenuViews;
+using FarmConsole.Body.Controllers.MenuControllers;
+using FarmConsole.Body.Services.GameServices;
+using FarmConsole.Body.Services.MainServices;
 using System;
 using System.IO;
 using System.Text;
@@ -17,14 +16,14 @@ namespace FarmConsole
         {
             SettingsService.LoadSettings();
             WindowService.PresetWindow();
-            MapManager.GlobalMapInit();
-            MenuManager.Captions();
-            while (MainController.OpenScreen != "Close")
+            MapService.GlobalMapInit();
+            ComponentService.Captions();
+            while (HeadController.OpenScreen != "Close")
             {
-                switch (MainController.OpenScreen)
+                switch (HeadController.OpenScreen)
                 {
                     // menu controllers
-                    case "Menu": MenuController.Open(); break;
+                    case "Menu": MainMenuController.Open(); break;
                     case "Load": GameLoadController.Open(); break;
                     case "Save": GameSaveController.Open(); break;
                     case "Escape": EscapeController.Open(); break;
@@ -40,9 +39,10 @@ namespace FarmConsole
                     case "PlotExtending": PlotExtendingController.Open(); break;
                     case "PlotSelling": PlotSellingController.Open(); break;
                     case "PlotBuying": PlotBuyingController.Open(); break;
+                    case "CashMachine": CashMachineController.Open(); break;
 
                     // location controllers
-                    default: LocationController.Open(MainController.OpenScreen); break;
+                    default: LocationController.Open(HeadController.OpenScreen); break;
                 }
             }
         }

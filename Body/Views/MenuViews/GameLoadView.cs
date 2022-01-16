@@ -1,7 +1,6 @@
 ﻿using FarmConsole.Body.Engines;
 using FarmConsole.Body.Models;
-using FarmConsole.Body.Resources.Sounds;
-using FarmConsole.Body.Services;
+using FarmConsole.Body.Services.MainServices;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -9,7 +8,7 @@ using System.Text;
 
 namespace FarmConsole.Body.Views.MenuViews
 {
-    class GameLoadView : MenuManager
+    class GameLoadView : ComponentService
     {
         public static void Display(GameInstanceModel[] saves)
         {
@@ -52,11 +51,11 @@ namespace FarmConsole.Body.Views.MenuViews
             //vt1.showComponentList();
             DangerMessage = LS.Text("delete question");
         }
-        public static void SetPreview(GameInstanceModel[] saves, int selected)
+        public static void SetPreview(GameInstanceModel[] saves, int Selected)
         {
-            if (selected > 1)
+            if (Selected > 1)
             {
-                var save = saves[selected - 2];
+                var save = saves[Selected - 2];
                 UpdateTextBox(3, 1, ". . ." + " ---------------------------------- " +
                 LS.Navigation("nickname label") + " - " + save.UserName.ToString() + " ---------------------------------- " +
                 LS.Navigation("lvl label") + " - " + save.LVL.ToString() + " ---------------------------------- " +

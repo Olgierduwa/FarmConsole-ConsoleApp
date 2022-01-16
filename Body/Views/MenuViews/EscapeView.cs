@@ -1,7 +1,6 @@
 ﻿using FarmConsole.Body.Engines;
 using FarmConsole.Body.Models;
-using FarmConsole.Body.Resources.Sounds;
-using FarmConsole.Body.Services;
+using FarmConsole.Body.Services.MainServices;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -9,7 +8,7 @@ using System.Text;
 
 namespace FarmConsole.Body.Views.MenuViews
 {
-    class EscapeView : MenuManager
+    class EscapeView : ComponentService
     {
         public static void Display()
         {
@@ -32,7 +31,7 @@ namespace FarmConsole.Body.Views.MenuViews
             PrintList();
 
             DangerMessage = LS.Text("exit question");
-            ComponentsDisplayed = new List<CM>();
+            ComponentsDisplayed.Clear();
             ComponentsDisplayed.Add(GetComponentByName("GS", 2));
         }
     }

@@ -1,11 +1,11 @@
-﻿using FarmConsole.Body.Controlers;
+﻿using FarmConsole.Body.Controllers.CentralControllers;
 using FarmConsole.Body.Models;
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
-namespace FarmConsole.Body.Services
+namespace FarmConsole.Body.Services.MainServices
 {
     public static class SettingsService
     {
@@ -49,9 +49,9 @@ namespace FarmConsole.Body.Services
         {
             Settings = XF.GetSettings();
             ConvertService.SetSymbols();
-            MainController.FieldNameVisibility = Convert.ToBoolean(GetSetting("set field name").GetRealValue);
-            MainController.PlayerMovementAxis = Convert.ToBoolean(GetSetting("set player move axis").GetRealValue);
-            MainController.MapMovementAxis = Convert.ToBoolean(GetSetting("set map move axis").GetRealValue);
+            HeadController.FieldNameVisibility = Convert.ToBoolean(GetSetting("set field name").GetRealValue);
+            HeadController.PlayerMovementAxis = Convert.ToBoolean(GetSetting("set player move axis").GetRealValue);
+            HeadController.MapMovementAxis = Convert.ToBoolean(GetSetting("set map move axis").GetRealValue);
             LoadLanguages();
         }
         public static void SaveSettings()
@@ -61,7 +61,7 @@ namespace FarmConsole.Body.Services
         }
         public static void RestoreDefaultSettings()
         {
-            foreach(var setting in Settings) setting.SetDefaultValue();
+            foreach (var setting in Settings) setting.SetDefaultValue();
             SaveSettings();
         }
     }

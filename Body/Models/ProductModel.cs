@@ -8,9 +8,16 @@ namespace FarmConsole.Body.Models
     public class ProductModel : ObjectModel
     {
         public int Amount { get; set; }
-
-        public override string ToString()
+        public bool AddAmount(int value)
         {
+            Amount += value;
+            if (Amount <= 0) return false;
+            else return true;
+        }
+
+        public string ToString(bool BaseString = false)
+        {
+            if (BaseString) return base.ToString();
             return ConvertService.ConvertProductToString(Category, Scale, State, Type, Amount);
         }
         public ProductModel() { }
@@ -23,12 +30,13 @@ namespace FarmConsole.Body.Models
             Type = Values[3];
             Amount = Values[4];
         }
-        public static List<ProductModel> SelectProductsByAction(List<ProductModel> _Products, string _Action)
+        public static List<ProductModel> SelectProductsByAction(List<ProductModel> _Products, string _Action, int? Category = null, bool _SearchMapActs = true)
         {
             List<ProductModel> SelectedProducts = new List<ProductModel>();
             foreach (var P in _Products)
-                if (P.MenuActions.Length > 0 && P.MenuActions[0] == _Action)
-                    SelectedProducts.Add(P);
+                if (Category != null && P.Category == Category || Category == null)
+                    if (_SearchMapActs) { foreach (var act in P.MapActions) if (act == _Action) SelectedProducts.Add(P); }
+                    else { foreach (var act in P.MenuActions) if (act == _Action) SelectedProducts.Add(P); }
             return SelectedProducts;
         }
     }

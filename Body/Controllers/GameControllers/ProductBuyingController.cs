@@ -30,28 +30,33 @@ namespace FarmConsole.Body.Controllers.GameControllers
         {
             if (Cart.Count > 0)
             {
-                if (paybycard && GameInstance.CardFunds >= amount || GameInstance.WalletFunds >= amount)
+                if (GameInstance.Inventory.Find(x => x.ObjectName == "wallet") != null)
                 {
-                    GameInstance.CardFunds -= paybycard ? amount : 0;
-                    GameInstance.WalletFunds -= paybycard ? 0 : amount;
-                    foreach (var cartProduct in Cart)
+                    if (paybycard && GameInstance.CardFunds >= amount || GameInstance.WalletFunds >= amount)
                     {
-                        var foundProduct = GameInstance.Inventory.Find(p => p.ObjectName == cartProduct.ObjectName);
-                        if (foundProduct != null) foundProduct.Amount += cartProduct.Amount;
-                        else GameInstance.Inventory.Add(cartProduct.ToProduct());
-                        GameService.IncreaseInExperience(cartProduct.Amount);
+                        GameInstance.CardFunds -= paybycard ? amount : 0;
+                        GameInstance.WalletFunds -= paybycard ? 0 : amount;
+                        foreach (var cartProduct in Cart)
+                        {
+                            var foundProduct = GameInstance.Inventory.Find(p => p.ObjectName == cartProduct.ObjectName);
+                            cartProduct.Amount *= cartProduct.Slots < 0 ? cartProduct.Slots * -1 : 1;
+                            if (foundProduct != null) foundProduct.AddAmount(cartProduct.Amount);
+                            else GameInstance.Inventory.Add(cartProduct.ToProduct());
+                            GameService.IncreaseInExperience(cartProduct.Amount);
+                        }
+                        Cart.Clear();
+                        OpenScreen = EscapeScreen;
+                        SoundService.Play("K3");
+                        string message = LS.Navigation("purchases finalized");
+                        ComponentService.GoodNews(message);
                     }
-                    Cart.Clear();
-                    OpenScreen = EscapeScreen;
-                    SoundService.Play("K3");
-                    string message = LS.Navigation("purchases finalized");
-                    ComponentService.GoodNews(message);
+                    else
+                    {
+                        if (paybycard) ComponentService.Warning(LS.Action("no money on card"));
+                        else ComponentService.Warning(LS.Action("no money in wallet"));
+                    }
                 }
-                else
-                {
-                    if (paybycard) ComponentService.Warning(LS.Action("no money on card"));
-                    else ComponentService.Warning(LS.Action("no money in wallet"));
-                }
+                else ComponentService.Warning(LS.Action("no wallet"));
             }
             else ComponentService.Warning(LS.Action("no items in cart"));
         }

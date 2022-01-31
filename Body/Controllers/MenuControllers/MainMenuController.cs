@@ -26,7 +26,7 @@ namespace FarmConsole.Body.Controllers.MenuControllers
                         case ConsoleKey.W: if (Selected > selStart) { SoundService.Play("K1"); Selected--; ComponentService.UpdateMenuSelect(Selected, Selected + 1, selCount); } break;
                         case ConsoleKey.S: if (Selected < selCount) { SoundService.Play("K1"); Selected++; ComponentService.UpdateMenuSelect(Selected, Selected - 1, selCount); } break;
                         case ConsoleKey.Escape:
-                        case ConsoleKey.Q: if (ComponentService.Danger() == true) OpenScreen = "Close"; break;
+                        case ConsoleKey.Q: if (ComponentService.Danger(LS.Text("exit question")) == true) OpenScreen = "Close"; break;
                         case ConsoleKey.G: SettingsService.GODMOD = !SettingsService.GODMOD; SoundService.Play("K3"); break;
                         case ConsoleKey.E:
                             SoundService.Play("K2"); switch (Selected)

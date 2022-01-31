@@ -325,4 +325,60 @@
     <value>Nic tu nie ma</value>
     <comment>action result</comment>
   </data>
+  <data name="plot buying" xml:space="preserve">
+    <value>Kup działkę</value>
+    <comment>action name</comment>
+  </data>
+  <data name="plot extending" xml:space="preserve">
+    <value>Rozszerz działkę</value>
+    <comment>action name</comment>
+  </data>
+  <data name="plot selling" xml:space="preserve">
+    <value>Sprzedaj działkę</value>
+    <comment>action name</comment>
+  </data>
+  <data name="cant sleep cause hunger" xml:space="preserve">
+    <value>Nie dasz rady zasnąć czując tak silny głód!</value>
+    <comment>action result</comment>
+  </data>
+  <data name="cant sleep cause too much energy" xml:space="preserve">
+    <value>Nie zaśniesz mając tyle rozpierającej Cię energii!</value>
+    <comment>action result</comment>
+  </data>
+  <data name="insert card" xml:space="preserve">
+    <value>Włóż Kartę</value>
+    <comment>action name</comment>
+  </data>
+  <data name="no wallet" xml:space="preserve">
+    <value>Nie posiadasz przy sobie portfela!</value>
+    <comment>action result</comment>
+  </data>
+  <data name="dont have enough product" xml:space="preserve">
+    <value>Nie posiadasz wystarczającej ilości produktu!</value>
+    <comment>action result</comment>
+  </data>
+  <data name="bake" xml:space="preserve">
+    <value>Upiecz</value>
+    <comment>action name</comment>
+  </data>
+  <data name="cook" xml:space="preserve">
+    <value>Ugotuj</value>
+    <comment>action name</comment>
+  </data>
+  <data name="fry" xml:space="preserve">
+    <value>Usmaż</value>
+    <comment>action name</comment>
+  </data>
+  <data name="compose" xml:space="preserve">
+    <value>Skomponuj Posiłek</value>
+    <comment>action name</comment>
+  </data>
+  <data name="no space on oven" xml:space="preserve">
+    <value>Nie ma miejsca w Piekarniku!</value>
+    <comment>action result</comment>
+  </data>
+  <data name="no space on stove" xml:space="preserve">
+    <value>Nie ma miejsca na Kuchence!</value>
+    <comment>action result</comment>
+  </data>
 </root>

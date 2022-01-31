@@ -589,4 +589,140 @@
     <value>Wypłacono z konta zadaną kwotę.</value>
     <comment>game lablel</comment>
   </data>
+  <data name="quantity" xml:space="preserve">
+    <value>Sztuk</value>
+    <comment>game label</comment>
+  </data>
+  <data name="box" xml:space="preserve">
+    <value>Opak.</value>
+    <comment>unit of one</comment>
+  </data>
+  <data name="kg" xml:space="preserve">
+    <value>KG</value>
+    <comment>unit of one</comment>
+  </data>
+  <data name="kgs" xml:space="preserve">
+    <value>Kilogramów</value>
+    <comment>unit of many</comment>
+  </data>
+  <data name="l" xml:space="preserve">
+    <value>L</value>
+    <comment>unit of one</comment>
+  </data>
+  <data name="ls" xml:space="preserve">
+    <value>Litrów</value>
+    <comment>unit of many</comment>
+  </data>
+  <data name="packages" xml:space="preserve">
+    <value>Pakietów</value>
+    <comment>unit of many</comment>
+  </data>
+  <data name="piece" xml:space="preserve">
+    <value>x</value>
+    <comment>unit of one</comment>
+  </data>
+  <data name="pieces" xml:space="preserve">
+    <value>Sztuk</value>
+    <comment>unit of many</comment>
+  </data>
+  <data name="servings" xml:space="preserve">
+    <value>Porcji</value>
+    <comment>unit of many</comment>
+  </data>
+  <data name="slices" xml:space="preserve">
+    <value>Plastrów</value>
+    <comment>unit of many</comment>
+  </data>
+  <data name="bake label" xml:space="preserve">
+    <value>Wypiekaj z wypiekami na twarzy to, na co masz ochotę!</value>
+    <comment>game label</comment>
+  </data>
+  <data name="cook label" xml:space="preserve">
+    <value>Ugotuj pyszne, gorące, pełne energii danie!</value>
+    <comment>game label</comment>
+  </data>
+  <data name="fry label" xml:space="preserve">
+    <value>Usmaż nieco smakołyków w gorącym oleju!</value>
+    <comment>game label</comment>
+  </data>
+  <data name="compose label" xml:space="preserve">
+    <value>Skomponuj własną kombinację ulubionych składników!</value>
+    <comment>game label</comment>
+  </data>
+  <data name="manage dishes" xml:space="preserve">
+    <value>ZARZĄDZAJ DANIAMI</value>
+    <comment>action button</comment>
+  </data>
+  <data name="remove from the oven" xml:space="preserve">
+    <value>WYJMIJ Z PIEKARNIKA</value>
+    <comment>action button</comment>
+  </data>
+  <data name="remove from the stove" xml:space="preserve">
+    <value>ZDEJMIJ Z KUCHENKI</value>
+    <comment>action button</comment>
+  </data>
+  <data name="energy" xml:space="preserve">
+    <value>Energia</value>
+    <comment>main</comment>
+  </data>
+  <data name="health" xml:space="preserve">
+    <value>Zdrowie</value>
+    <comment>main</comment>
+  </data>
+  <data name="hunger" xml:space="preserve">
+    <value>Głód</value>
+    <comment>main</comment>
+  </data>
+  <data name="immunity" xml:space="preserve">
+    <value>Odporność</value>
+    <comment>main</comment>
+  </data>
+  <data name="cheers" xml:space="preserve">
+    <value>Na zdrowie!</value>
+    <comment>game label</comment>
+  </data>
+  <data name="wallet" xml:space="preserve">
+    <value>Portfel</value>
+    <comment>game label</comment>
+  </data>
+  <data name="set stats" xml:space="preserve">
+    <value>Widoczność Statytyk</value>
+    <comment>menu setting name</comment>
+  </data>
+  <data name="choose a recipe" xml:space="preserve">
+    <value>WYBIERZ PRZEPIS</value>
+    <comment>action button</comment>
+  </data>
+  <data name="choose an ingredient" xml:space="preserve">
+    <value>WYBIERZ SKŁADNIK</value>
+    <comment>action button</comment>
+  </data>
+  <data name="clean the composition" xml:space="preserve">
+    <value>WYCZYŚĆ KOMPOZYCJĘ</value>
+    <comment>action button</comment>
+  </data>
+  <data name="compose and eat the dish" xml:space="preserve">
+    <value>SKOMPONUJ I ZJEDZ DANIE</value>
+    <comment>action button</comment>
+  </data>
+  <data name="disconnect the composition" xml:space="preserve">
+    <value>ZREZYGNUJ Z KOMPOZYCJI</value>
+    <comment>action button</comment>
+  </data>
+  <data name="give up the ingredient" xml:space="preserve">
+    <value>ZREZYGNUJ ZE SKŁADNIKA</value>
+    <comment>action button</comment>
+  </data>
+  <data name="ingredients" xml:space="preserve">
+    <value>Składniki</value>
+    <comment>game label</comment>
+  </data>
+  <data name="plate" xml:space="preserve">
+    <value>Talerz</value>
+    <comment>game label</comment>
+  </data>
+  <data name="recipes" xml:space="preserve">
+    <value>Przepisy</value>
+    <comment>game label</comment>
+  </data>
 </root>

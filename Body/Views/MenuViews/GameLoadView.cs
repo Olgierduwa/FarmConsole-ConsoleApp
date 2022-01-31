@@ -12,6 +12,7 @@ namespace FarmConsole.Body.Views.MenuViews
     {
         public static void Display(GameInstanceModel[] saves)
         {
+            ClearList(false);
             int savesCount = saves.Length;
             int freeSpace = Console.WindowHeight - 15;
             int showCount = freeSpace / 3;
@@ -37,20 +38,22 @@ namespace FarmConsole.Body.Views.MenuViews
             Endl(detailsHeight);
             TextBox(LS.Navigation("new game button", " E"));
             GroupEnd();
+
             GroupStart(Console.WindowWidth * 4 / 5 - Console.WindowWidth / 10 - 10, Console.WindowWidth);
             Endl(detailsHeight + 14);
-            TextBox(LS.Navigation("delete save button", " D"), 19, false, margin: 0);
+            TextBox(LS.Navigation("delete save button", " D"), 19, false, Margin: 0);
             GroupEnd();
+
             GroupStart(Console.WindowWidth * 4 / 5 - Console.WindowWidth / 10 + 11, Console.WindowWidth);
             Endl(detailsHeight + 14);
-            TextBox(LS.Navigation("continue button", " E"), 19, false, margin: 0);
+            TextBox(LS.Navigation("continue button", " E"), 19, false, Margin: 0);
             GroupEnd();
 
             GroupEnd();
             PrintList();
             //vt1.showComponentList();
-            DangerMessage = LS.Text("delete question");
         }
+
         public static void SetPreview(GameInstanceModel[] saves, int Selected)
         {
             if (Selected > 1)
@@ -67,7 +70,6 @@ namespace FarmConsole.Body.Views.MenuViews
             else
             {
                 UpdateTextBox(3, 1, LS.Navigation("new game button", " E"));
-                SetShowability(3, 3, false);
                 SetShowability(4, 1, false);
                 SetShowability(5, 1, false);
             }

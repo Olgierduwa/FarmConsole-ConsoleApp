@@ -46,7 +46,7 @@ namespace FarmConsole.Body.Controllers.GameControllers
             E = true;
 
             ProductsLabel = LS.Object(productsGroup);
-            ProductsGroup = ProductModel.SelectProductsByAction(GameInstance.GetProductsByScale(Scale), Action.Name);
+            ProductsGroup = ProductModel.SelectProductsByAction(GameInstance.GetProductsByScale(Scale), Action.Name, _SearchMapActs: false);
             FilteredProducts = ProductsGroup.ToList();
             MenuCount = ProductsGroup.Count + 1;
             MenuSize["R"] = SideMenuView.DisplayRightMenu(FilteredProducts, ProductsLabel, CS, extended: true);
@@ -70,9 +70,10 @@ namespace FarmConsole.Body.Controllers.GameControllers
                 {
                     case "build": DisplayFieldActionProducts("objects"); break;
                     case "sow": DisplayFieldActionProducts("seeds"); break;
+                    case "drink": DisplayFieldActionProducts("drinks"); break;
                     case "fertilize": DisplayFieldActionProducts("fertilizers"); break;
-                    case "move": DRAGGED = true; SideMenuService.TakeAction(); ShowResult(); break;
-                    default: SideMenuService.TakeAction(); ShowResult(); break;
+                    case "move": DRAGGED = true; ActionService.TakeAction(); ShowResult(); break;
+                    default: ActionService.TakeAction(); ShowResult(); break;
                 }
             }
             else TAB = false;
@@ -85,8 +86,8 @@ namespace FarmConsole.Body.Controllers.GameControllers
                 else
                 {
                     Action.Type = "InInventory";
-                    Action.SelectedProduct = FilteredProducts[CS - 2];
-                    SideMenuService.TakeAction();
+                    Action.SetSelectedProduct(FilteredProducts[CS - 2]);
+                    ActionService.TakeAction();
                     ShowResult();
                 }
             }
@@ -152,8 +153,8 @@ namespace FarmConsole.Body.Controllers.GameControllers
             {
                 Action.Type = "InInventory";
                 Action.Name = ProductActions[CS - 1];
-                Action.SelectedProduct = FilteredProducts[ES - 2];
-                SideMenuService.TakeAction();
+                Action.SetSelectedProduct(FilteredProducts[ES - 2]);
+                ActionService.TakeAction();
                 ShowResult();
             }
         }
@@ -301,7 +302,7 @@ namespace FarmConsole.Body.Controllers.GameControllers
                 }
                 else if ((DateTime.Now - Previously).TotalMilliseconds >= FrameTime)
                 {
-                    if (Action.IsInProcess) if (!SideMenuService.MakeAction()) ShowResult();
+                    if (Action.IsInProcess) if (!ActionService.MakeAction()) ShowResult();
                     Previously = DateTime.Now;
                 }
             }

@@ -11,10 +11,18 @@ namespace FarmConsole.Body.Services.MainServices
         // private static int MaxCategory = 5;
         private static readonly int MaxScale = 3;
         private static readonly int MaxFieldState = 12;
-        private static readonly int MaxProductState = 3;
-        private static readonly int MaxType = 170;
+        private static readonly int MaxProductState = 4;
+        private static readonly int MaxType = 100;
         private static readonly int MaxAmount = 100000;
         private static readonly int MaxDuration = 100;
+
+        public static int RandomAround(int amount, double procent)
+        {
+            Random random = new Random();
+            double x = Convert.ToDouble(amount);
+            return Convert.ToInt32(random.Next(Convert.ToInt32(x * procent * 2)) + x - (x * procent));
+        }
+
         private static int SymbolsLength;
 
         private static int _lvl = 0;

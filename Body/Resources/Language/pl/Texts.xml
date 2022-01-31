@@ -50,44 +50,4 @@
     A B Y _ U Z U P E Ł N I Ć
     K R Z T A Ł T O W A N I E
   </text>
-  <text key="extend up">
-
-              ▄
-          ▄ ▀ . ▀ ▄
-      ▄ ▀ . ' . ' . ▀ ▄
-    ▀ . ' . ' . ' . ' . ▀
-        ' . ' . ' . '
-            ' . '
-        
-  </text>
-  <text key="extend down">
-
-              .
-          . ' . ' .
-      . ' . ' . ' . ' .
-    ▀ ▄ ' . ' . ' . ' ▄ ▀
-        ▀ ▄ ' . ' ▄ ▀
-            ▀ ▄ ▀
-
-  </text>
-  <text key="extend left">
-
-              ▄
-          ▄ ▀ . ' .
-      ▄ ▀ . ' . ' . ' .
-    ▀ ▄ ' . ' . ' . ' . '
-        ▀ ▄ ' . ' . '
-            ▀ ▄ '
-
-  </text>
-  <text key="extend right">
-
-              ▄
-          . ' . ▀ ▄
-      . ' . ' . ' . ▀ ▄
-    ' . ' . ' . ' . ' ▄ ▀
-        ' . ' . ' ▄ ▀
-            ' ▄ ▀
-
-  </text>
 </texts>

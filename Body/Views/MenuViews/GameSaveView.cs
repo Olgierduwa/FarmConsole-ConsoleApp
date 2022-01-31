@@ -33,14 +33,14 @@ namespace FarmConsole.Body.Views.MenuViews
             for (int i = 0; i < savesCount; i++)
                 if (i < showCount)
                     TextBox(saves[i].UserName);
-                else TextBox(saves[i].UserName, show: false);
+                else TextBox(saves[i].UserName, Show: false);
             GroupEnd();
 
             GroupStart(4);
             Endl(detailsHeight);
             TextBox(LS.Navigation("new save button", " E"));
             Endl(11);
-            TextBox(LS.Navigation("override save button", " E"), show: false);
+            TextBox(LS.Navigation("override save button", " E"), Show: false);
             GroupEnd();
 
             GroupEnd();
@@ -50,7 +50,6 @@ namespace FarmConsole.Body.Views.MenuViews
             ComponentsDisplayed.Clear();
             ComponentsDisplayed.Add(GetComponentByName("GS", 2));
             ComponentsDisplayed.Add(GetComponentByName("GS", 3));
-            DangerMessage = LS.Text("update question");
         }
         public static void DisplayReview(GameInstanceModel[] saves, int Selected, int selCount)
         {

@@ -154,7 +154,7 @@
     <comment>main</comment>
   </data>
   <data name="warning" xml:space="preserve">
-    <value>OSTRZEZENIE!</value>
+    <value>OSTRZEZENIE</value>
     <comment>game label</comment>
   </data>
   <data name="control label" xml:space="preserve">
@@ -218,7 +218,7 @@
     <comment>menu button</comment>
   </data>
   <data name="setting label" xml:space="preserve">
-    <value>Ustaw Spersonalizowane Opcje</value>
+    <value>Set Personalized Options</value>
     <comment>menu label</comment>
   </data>
   <data name="override save button" xml:space="preserve">
@@ -226,15 +226,15 @@
     <comment>menu button</comment>
   </data>
   <data name="reject button" xml:space="preserve">
-    <value>Odrzuć</value>
+    <value>Reject</value>
     <comment>menu button</comment>
   </data>
   <data name="set restore default" xml:space="preserve">
-    <value>Przywróć Domyślne Ustawienia</value>
+    <value>Restore Default Settings</value>
     <comment>menu setting name</comment>
   </data>
   <data name="save button" xml:space="preserve">
-    <value>Zapisz</value>
+    <value>Save</value>
     <comment>menu button</comment>
   </data>
   <data name="save game label" xml:space="preserve">
@@ -323,7 +323,7 @@
   </data>
   <data name="container label" xml:space="preserve">
     <value>Bierz i odkładaj wedle uznania!</value>
-    <comment>menu label</comment>
+    <comment>game label</comment>
   </data>
   <data name="put item back" xml:space="preserve">
     <value>ODŁÓŻ</value>
@@ -342,35 +342,35 @@
     <comment>action button</comment>
   </data>
   <data name="set effects volume" xml:space="preserve">
-    <value>Głośność Efektów</value>
+    <value>Volume of Effects</value>
     <comment>menu setting name</comment>
   </data>
   <data name="set music volume" xml:space="preserve">
-    <value>Głośność Muzyki</value>
+    <value>Volume of Music</value>
     <comment>menu setting name</comment>
   </data>
   <data name="set screen height" xml:space="preserve">
-    <value>Wysokość Ekranu</value>
+    <value>Screen Height</value>
     <comment>menu setting name</comment>
   </data>
   <data name="set screen width" xml:space="preserve">
-    <value>Szerokość Ekranu</value>
+    <value>Screen Width</value>
     <comment>menu setting name</comment>
   </data>
   <data name="set language" xml:space="preserve">
-    <value>Język</value>
+    <value>Language</value>
     <comment>menu setting name</comment>
   </data>
   <data name="set player move axis" xml:space="preserve">
-    <value>Kierunek Ruchu Gracza</value>
+    <value>Player's Direction Movement</value>
     <comment>menu setting name</comment>
   </data>
   <data name="set field name" xml:space="preserve">
-    <value>Widoczność Nazwy Pola</value>
+    <value>Field Name Visibility</value>
     <comment>menu setting name</comment>
   </data>
   <data name="set map move axis" xml:space="preserve">
-    <value>Kierunek Ruchu Mapy</value>
+    <value>Map's Direction Movement</value>
     <comment>menu setting name</comment>
   </data>
   <data name="default nickname" xml:space="preserve">
@@ -407,7 +407,7 @@
   </data>
   <data name="product buying label" xml:space="preserve">
     <value>Sfinalizuj tranzakcję lub zrezygnuj z zakupów</value>
-    <comment>menu label</comment>
+    <comment>game label</comment>
   </data>
   <data name="price" xml:space="preserve">
     <value>Cena</value>
@@ -416,5 +416,252 @@
   <data name="cancel button " xml:space="preserve">
     <value>Anuluj</value>
     <comment>menu button</comment>
+  </data>
+  <data name="product selling label" xml:space="preserve">
+    <value>Zaproponuj swoją ofertę sprzedawcy</value>
+    <comment>game label</comment>
+  </data>
+  <data name="accept cash payment" xml:space="preserve">
+    <value>PRZYJMIJ PŁATNOŚĆ GOTÓWKĄ</value>
+    <comment>action button</comment>
+  </data>
+  <data name="accept payment by transfer" xml:space="preserve">
+    <value>PRZYJMIJ PŁATNOŚĆ PRZELEWEM</value>
+    <comment>action button</comment>
+  </data>
+  <data name="percent default price" xml:space="preserve">
+    <value>% Domyślnej Ceny</value>
+    <comment>game label</comment>
+  </data>
+  <data name="amount for the offer" xml:space="preserve">
+    <value>Kwota za ofertę</value>
+    <comment>game label</comment>
+  </data>
+  <data name="manage offer" xml:space="preserve">
+    <value>ZARZĄDZAJ OFERTĄ</value>
+    <comment>action button</comment>
+  </data>
+  <data name="selected item" xml:space="preserve">
+    <value>Wybrany Przedmiot</value>
+    <comment>game label</comment>
+  </data>
+  <data name="i have to reject offer, because" xml:space="preserve">
+    <value>Muszę odrzucić Twoją ofertę, ponieważ </value>
+    <comment>game label</comment>
+  </data>
+  <data name="price is to hight" xml:space="preserve">
+    <value>cena jest za wysoka</value>
+    <comment>game label</comment>
+  </data>
+  <data name="excellent" xml:space="preserve">
+    <value>DOSKONALE</value>
+    <comment>game label</comment>
+  </data>
+  <data name="purchases finalized" xml:space="preserve">
+    <value>Zakupy od teraz należą do Ciebie!</value>
+    <comment>game label</comment>
+  </data>
+  <data name="sale finalized" xml:space="preserve">
+    <value>Twoja oferta została przyjęta!</value>
+    <comment>game label</comment>
+  </data>
+  <data name="plot extending label" xml:space="preserve">
+    <value>Rozszerz swoją działkę, jeśli potrzebujesz więcej miejsca!</value>
+    <comment>game label</comment>
+  </data>
+  <data name="act of ownership" xml:space="preserve">
+    <value>Akt Własności</value>
+    <comment>game label</comment>
+  </data>
+  <data name="choose the direction" xml:space="preserve">
+    <value>WYBIERZ KIERUNEK</value>
+    <comment>action button</comment>
+  </data>
+  <data name="direction of expansion" xml:space="preserve">
+    <value>Kierunek Rozszerzania</value>
+    <comment>game label</comment>
+  </data>
+  <data name="do not sign document" xml:space="preserve">
+    <value>NIE PODPISUJ DOKUMENTU</value>
+    <comment>action button</comment>
+  </data>
+  <data name="plot buying label" xml:space="preserve">
+    <value>Kup na własność kolejne działki!</value>
+    <comment>game label</comment>
+  </data>
+  <data name="plot selling label" xml:space="preserve">
+    <value>Odsprzedaj działkę jeśli nie jest Ci potrzebna!</value>
+    <comment>game label</comment>
+  </data>
+  <data name="sign document and pay" xml:space="preserve">
+    <value>PODPISZ DOKUMENT I ZAPŁAĆ</value>
+    <comment>action button</comment>
+  </data>
+  <data name="tile price" xml:space="preserve">
+    <value>Cena za Kafelek</value>
+    <comment>game label</comment>
+  </data>
+  <data name="tiles count" xml:space="preserve">
+    <value>Liczba Kafelków</value>
+    <comment>game label</comment>
+  </data>
+  <data name="land ownership document" xml:space="preserve">
+    <value>Niniejszy dokument z dniem dzisiejszym uprawnia Cię do korzystania z terenu okalającego Twoją działę.</value>
+    <comment>game lablel</comment>
+  </data>
+  <data name="in cash" xml:space="preserve">
+    <value>w Gotówce</value>
+    <comment>game label</comment>
+  </data>
+  <data name="inside you will find:" xml:space="preserve">
+    <value>Wewnątrz znajdziesz:</value>
+    <comment>game label</comment>
+  </data>
+  <data name="account information" xml:space="preserve">
+    <value>INFORMACJE O KONCIE</value>
+    <comment>action button</comment>
+  </data>
+  <data name="deposit" xml:space="preserve">
+    <value>WPŁAĆ GOTÓWKĘ</value>
+    <comment>action button</comment>
+  </data>
+  <data name="do operation" xml:space="preserve">
+    <value>WYKONAJ OPERACJĘ</value>
+    <comment>action button</comment>
+  </data>
+  <data name="remove card" xml:space="preserve">
+    <value>WYJMIJ KARTĘ</value>
+    <comment>action button</comment>
+  </data>
+  <data name="transfer" xml:space="preserve">
+    <value>WYKONAJ PRZELEW</value>
+    <comment>action button</comment>
+  </data>
+  <data name="withdraw" xml:space="preserve">
+    <value>WYPŁAĆ GOTÓWKĘ</value>
+    <comment>action button</comment>
+  </data>
+  <data name="cash machine label" xml:space="preserve">
+    <value>Zarządzaj swoimi pieniędzmi wedle potrzeb!</value>
+    <comment>game label</comment>
+  </data>
+  <data name="operation" xml:space="preserve">
+    <value>Operacja</value>
+    <comment>game label</comment>
+  </data>
+  <data name="account" xml:space="preserve">
+    <value>Konto</value>
+    <comment>game label</comment>
+  </data>
+  <data name="account balance" xml:space="preserve">
+    <value>Stan Konta</value>
+    <comment>game label</comment>
+  </data>
+  <data name="deposit amount" xml:space="preserve">
+    <value>Wpłacana Kwota</value>
+    <comment>game lablel</comment>
+  </data>
+  <data name="opening date" xml:space="preserve">
+    <value>Data Otwarcia</value>
+    <comment>game label</comment>
+  </data>
+  <data name="operation temporarily unavailable" xml:space="preserve">
+    <value>Operacja Chwilowo Niedostępna</value>
+    <comment>game label</comment>
+  </data>
+  <data name="owner" xml:space="preserve">
+    <value>Właściciel</value>
+    <comment>game label</comment>
+  </data>
+  <data name="wallet balance" xml:space="preserve">
+    <value>Stan Portfela</value>
+    <comment>game label</comment>
+  </data>
+  <data name="withdraw amount" xml:space="preserve">
+    <value>Wypłacana Kwota</value>
+    <comment>game lablel</comment>
+  </data>
+  <data name="amount paid" xml:space="preserve">
+    <value>Wpłacono na konto zadaną kwotę.</value>
+    <comment>game lablel</comment>
+  </data>
+  <data name="amount paid out" xml:space="preserve">
+    <value>Wypłacono z konta zadaną kwotę.</value>
+    <comment>game lablel</comment>
+  </data>
+  <data name="quantity" xml:space="preserve">
+    <value>Sztuk</value>
+    <comment>game label</comment>
+  </data>
+  <data name="box" xml:space="preserve">
+    <value>Opak.</value>
+    <comment>unit of one</comment>
+  </data>
+  <data name="kg" xml:space="preserve">
+    <value>KG</value>
+    <comment>unit of one</comment>
+  </data>
+  <data name="kgs" xml:space="preserve">
+    <value>Kilogramów</value>
+    <comment>unit of many</comment>
+  </data>
+  <data name="l" xml:space="preserve">
+    <value>L</value>
+    <comment>unit of one</comment>
+  </data>
+  <data name="ls" xml:space="preserve">
+    <value>Litrów</value>
+    <comment>unit of many</comment>
+  </data>
+  <data name="packages" xml:space="preserve">
+    <value>Pakietów</value>
+    <comment>unit of many</comment>
+  </data>
+  <data name="piece" xml:space="preserve">
+    <value>x</value>
+    <comment>unit of one</comment>
+  </data>
+  <data name="pieces" xml:space="preserve">
+    <value>Sztuk</value>
+    <comment>unit of many</comment>
+  </data>
+  <data name="servings" xml:space="preserve">
+    <value>Porcji</value>
+    <comment>unit of many</comment>
+  </data>
+  <data name="slices" xml:space="preserve">
+    <value>Plastrów</value>
+    <comment>unit of many</comment>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="bake label" xml:space="preserve">
+    <value>Wypiekaj z wypiekami na twarzy to, na co masz ochotę!</value>
+    <comment>game label</comment>
+  </data>
+  <data name="cook label" xml:space="preserve">
+    <value>Ugotuj pyszne, gorące, pełne energii danie!</value>
+    <comment>game label</comment>
+  </data>
+  <data name="fry label" xml:space="preserve">
+    <value>Usmaż nieco smakołyków w gorącym oleju!</value>
+    <comment>game label</comment>
+  </data>
+  <data name="compose label" xml:space="preserve">
+    <value>Skomponuj własną kombinację ulubionych składników!</value>
+    <comment>game label</comment>
+  </data>
+  <data name="manage dishes" xml:space="preserve">
+    <value>ZARZĄDZAJ DANIAMI</value>
+    <comment>action button</comment>
+  </data>
+  <data name="remove from the oven" xml:space="preserve">
+    <value>WYJMIJ Z PIEKARNIKA</value>
+    <comment>action button</comment>
+  </data>
+  <data name="remove from the stove" xml:space="preserve">
+    <value>ZDEJMIJ Z KUCHENKI</value>
+    <comment>action button</comment>
   </data>
 </root>

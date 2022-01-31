@@ -131,11 +131,11 @@
   </data>
   <data name="cart" xml:space="preserve">
     <value>Koszyk</value>
-    <comment>trading object</comment>
+    <comment>object</comment>
   </data>
   <data name="cash register" xml:space="preserve">
     <value>Kasa</value>
-    <comment>object</comment>
+    <comment>furniture</comment>
   </data>
   <data name="inventory" xml:space="preserve">
     <value>Ekwipunek</value>
@@ -143,51 +143,51 @@
   </data>
   <data name="man" xml:space="preserve">
     <value>Mężczyzna</value>
-    <comment>people</comment>
+    <comment>person</comment>
   </data>
   <data name="woman" xml:space="preserve">
     <value>Kobieta</value>
-    <comment>people</comment>
+    <comment>person</comment>
   </data>
   <data name="oat" xml:space="preserve">
     <value>Owies</value>
-    <comment>object</comment>
+    <comment>cereal</comment>
   </data>
   <data name="corn" xml:space="preserve">
     <value>Kukurydza</value>
-    <comment>object</comment>
+    <comment>cereal</comment>
   </data>
   <data name="oat seeds" xml:space="preserve">
     <value>Nasiona Owsu</value>
-    <comment>object</comment>
+    <comment>seed</comment>
   </data>
   <data name="corn seeds" xml:space="preserve">
     <value>Nasiona Kukurydzy</value>
-    <comment>object</comment>
+    <comment>seed</comment>
   </data>
   <data name="wheat seeds" xml:space="preserve">
     <value>Nasiona Pszenicy</value>
-    <comment>object</comment>
+    <comment>seed</comment>
   </data>
-  <data name="rape seed" xml:space="preserve">
+  <data name="canola seed" xml:space="preserve">
     <value>Nasiona Rzepaku</value>
-    <comment>object</comment>
+    <comment>seed</comment>
   </data>
   <data name="parsley seeds" xml:space="preserve">
     <value>Nasiona Pietruszki</value>
-    <comment>object</comment>
+    <comment>seed</comment>
   </data>
   <data name="potato seeds" xml:space="preserve">
     <value>Nasiona Ziemniaka</value>
-    <comment>object</comment>
+    <comment>seed</comment>
   </data>
   <data name="carrot seeds" xml:space="preserve">
     <value>Nasiona Marchwi</value>
-    <comment>object</comment>
+    <comment>seed</comment>
   </data>
   <data name="radish seeds" xml:space="preserve">
     <value>Nasiona Rzodkiewki</value>
-    <comment>object</comment>
+    <comment>seed</comment>
   </data>
   <data name="phone" xml:space="preserve">
     <value>Telefon</value>
@@ -195,151 +195,151 @@
   </data>
   <data name="beetroot seeds" xml:space="preserve">
     <value>Nasiona Buraka</value>
-    <comment>object</comment>
+    <comment>seed</comment>
   </data>
-  <data name="rape" xml:space="preserve">
+  <data name="canola" xml:space="preserve">
     <value>Rzepak</value>
-    <comment>object</comment>
+    <comment>cereal</comment>
   </data>
   <data name="parsley" xml:space="preserve">
     <value>Pietruszka</value>
-    <comment>object</comment>
+    <comment>vegetable</comment>
   </data>
   <data name="potato" xml:space="preserve">
     <value>Ziemniak</value>
-    <comment>object</comment>
+    <comment>vegetable</comment>
   </data>
   <data name="carrot" xml:space="preserve">
     <value>Marchew</value>
-    <comment>object</comment>
+    <comment>vegetable</comment>
   </data>
   <data name="radish" xml:space="preserve">
     <value>Rzodkiew</value>
-    <comment>object</comment>
+    <comment>vegetable</comment>
   </data>
   <data name="beetroot" xml:space="preserve">
     <value>Burak</value>
-    <comment>object</comment>
+    <comment>vegetable</comment>
   </data>
   <data name="spruce seedling" xml:space="preserve">
     <value>Sadzonka Świerku</value>
-    <comment>object</comment>
+    <comment>seed</comment>
   </data>
   <data name="wall" xml:space="preserve">
     <value>Ściana</value>
-    <comment>object</comment>
+    <comment>structure</comment>
   </data>
   <data name="front door" xml:space="preserve">
     <value>Drzwi wejściowe</value>
-    <comment>object</comment>
+    <comment>structure</comment>
   </data>
   <data name="counter" xml:space="preserve">
     <value>Lada</value>
-    <comment>object</comment>
+    <comment>furniture</comment>
   </data>
   <data name="door" xml:space="preserve">
     <value>Drzwi</value>
-    <comment>object</comment>
+    <comment>structure</comment>
   </data>
   <data name="window" xml:space="preserve">
     <value>Okno</value>
-    <comment>object</comment>
+    <comment>structure</comment>
   </data>
   <data name="bed" xml:space="preserve">
     <value>Łóżko</value>
-    <comment>object</comment>
+    <comment>furniture</comment>
   </data>
   <data name="small bookcase" xml:space="preserve">
     <value>Mały Regał</value>
-    <comment>object</comment>
+    <comment>furniture</comment>
   </data>
   <data name="big bookcase" xml:space="preserve">
     <value>Duży Regał</value>
-    <comment>object</comment>
+    <comment>furniture</comment>
   </data>
   <data name="stand" xml:space="preserve">
     <value>Stragan</value>
-    <comment>object</comment>
+    <comment>furniture</comment>
   </data>
   <data name="shop frige" xml:space="preserve">
     <value>Lodówka</value>
-    <comment>object</comment>
+    <comment>furniture</comment>
   </data>
   <data name="shop freezer" xml:space="preserve">
     <value>Zamrażarka</value>
-    <comment>object</comment>
+    <comment>furniture</comment>
   </data>
   <data name="emptiness" xml:space="preserve">
     <value>Pustka</value>
-    <comment>object</comment>
+    <comment>technical</comment>
   </data>
   <data name="eraser" xml:space="preserve">
     <value>Gumka</value>
-    <comment>object</comment>
+    <comment>technical</comment>
   </data>
   <data name="error" xml:space="preserve">
     <value>Błąd</value>
-    <comment>object</comment>
+    <comment>technical</comment>
   </data>
   <data name="field" xml:space="preserve">
     <value>Pole</value>
-    <comment>object</comment>
+    <comment>field</comment>
   </data>
   <data name="grass" xml:space="preserve">
     <value>Trawa</value>
-    <comment>object</comment>
+    <comment>ground</comment>
   </data>
   <data name="path" xml:space="preserve">
     <value>Ścieżka</value>
-    <comment>object</comment>
+    <comment>ground</comment>
   </data>
   <data name="road" xml:space="preserve">
     <value>Droga</value>
-    <comment>object</comment>
+    <comment>ground</comment>
   </data>
   <data name="road with sidewalk" xml:space="preserve">
     <value>Droga z Chodnikiem</value>
-    <comment>object</comment>
+    <comment>ground</comment>
   </data>
   <data name="rails" xml:space="preserve">
     <value>Tory</value>
-    <comment>object</comment>
+    <comment>ground</comment>
   </data>
   <data name="rail crossing" xml:space="preserve">
     <value>Przejazd Kolejowy</value>
-    <comment>object</comment>
+    <comment>ground</comment>
   </data>
-  <data name="wooden floor" xml:space="preserve">
+  <data name="spruce wooden floor" xml:space="preserve">
     <value>Drewniana Podłoga</value>
-    <comment>object</comment>
+    <comment>ground</comment>
   </data>
   <data name="tiled floor" xml:space="preserve">
     <value>Kafelkowa Podłoga</value>
-    <comment>object</comment>
+    <comment>ground</comment>
   </data>
   <data name="synthetic grass" xml:space="preserve">
     <value>Sztuczna Trawa</value>
-    <comment>object</comment>
+    <comment>ground</comment>
   </data>
   <data name="stone floor" xml:space="preserve">
     <value>Kamienna Płyta</value>
-    <comment>object</comment>
+    <comment>ground</comment>
   </data>
   <data name="fence" xml:space="preserve">
     <value>Płot</value>
-    <comment>object</comment>
+    <comment>fence</comment>
   </data>
   <data name="gate" xml:space="preserve">
     <value>Brama</value>
-    <comment>object</comment>
+    <comment>fence</comment>
   </data>
   <data name="bakery" xml:space="preserve">
     <value>Piekarnia</value>
-    <comment>object</comment>
+    <comment>building</comment>
   </data>
   <data name="farm" xml:space="preserve">
     <value>Farma</value>
-    <comment>object</comment>
+    <comment>fence</comment>
   </data>
   <data name="car" xml:space="preserve">
     <value>Auto</value>
@@ -351,7 +351,7 @@
   </data>
   <data name="house" xml:space="preserve">
     <value>Dom</value>
-    <comment>object</comment>
+    <comment>building</comment>
   </data>
   <data name="silo" xml:space="preserve">
     <value>Silos</value>
@@ -361,49 +361,49 @@
     <value>Wieża Ciśnień</value>
     <comment>object</comment>
   </data>
-  <data name="AgroShop" xml:space="preserve">
+  <data name="agro shop" xml:space="preserve">
     <value>Sklep Rolniczy</value>
-    <comment>object</comment>
+    <comment>building</comment>
   </data>
   <data name="butchers shop" xml:space="preserve">
     <value>Masarnia</value>
-    <comment>object</comment>
+    <comment>building</comment>
   </data>
   <data name="marker" xml:space="preserve">
     <value>Marker</value>
-    <comment>object</comment>
+    <comment>technical</comment>
   </data>
   <data name="oat field" xml:space="preserve">
     <value>Pole Owsu</value>
-    <comment>object</comment>
+    <comment>field</comment>
   </data>
   <data name="wheat field" xml:space="preserve">
     <value>Pole Pszenicy</value>
-    <comment>object</comment>
+    <comment>field</comment>
   </data>
-  <data name="rape field" xml:space="preserve">
+  <data name="canola field" xml:space="preserve">
     <value>Pole Rzepaku</value>
-    <comment>object</comment>
+    <comment>field</comment>
   </data>
   <data name="parsley field" xml:space="preserve">
     <value>Pole Pietruszek</value>
-    <comment>object</comment>
+    <comment>field</comment>
   </data>
   <data name="potato field" xml:space="preserve">
     <value>Pole Ziemniaków</value>
-    <comment>object</comment>
+    <comment>field</comment>
   </data>
   <data name="carrot field" xml:space="preserve">
     <value>Pole Marchwi</value>
-    <comment>object</comment>
+    <comment>field</comment>
   </data>
   <data name="radish field" xml:space="preserve">
     <value>Pole Rzodkiewek</value>
-    <comment>object</comment>
+    <comment>field</comment>
   </data>
   <data name="beetroot field" xml:space="preserve">
     <value>Pole Buraków</value>
-    <comment>object</comment>
+    <comment>field</comment>
   </data>
   <data name="plowed" xml:space="preserve">
     <value>Zaorane</value>
@@ -453,7 +453,7 @@
     <value>Brudna</value>
     <comment>state</comment>
   </data>
-  <data name="wood" xml:space="preserve">
+  <data name="spruce wood" xml:space="preserve">
     <value>Drzewo</value>
     <comment>object</comment>
   </data>
@@ -463,11 +463,11 @@
   </data>
   <data name="coffee" xml:space="preserve">
     <value>Kawa</value>
-    <comment>object</comment>
+    <comment>drink</comment>
   </data>
   <data name="corn field" xml:space="preserve">
     <value>Pole Kukurydzy</value>
-    <comment>object</comment>
+    <comment>field</comment>
   </data>
   <data name="natural fertilizer" xml:space="preserve">
     <value>Nawóz Naturalny</value>
@@ -475,7 +475,7 @@
   </data>
   <data name="plate" xml:space="preserve">
     <value>Talerz</value>
-    <comment>object</comment>
+    <comment>kitchen object</comment>
   </data>
   <data name="synthetic fertilizer" xml:space="preserve">
     <value>Nawóz Syntetyczny</value>
@@ -487,7 +487,7 @@
   </data>
   <data name="wheat" xml:space="preserve">
     <value>Pszenica</value>
-    <comment>object</comment>
+    <comment>cereal</comment>
   </data>
   <data name="with cereal seeds" xml:space="preserve">
     <value>z Nasionami Zbóż</value>
@@ -500,5 +500,325 @@
   <data name="with vegetable seeds" xml:space="preserve">
     <value>z Nasionami Warzyw</value>
     <comment>group description</comment>
+  </data>
+  <data name="offer" xml:space="preserve">
+    <value>Oferta</value>
+    <comment>object</comment>
+  </data>
+  <data name="seller" xml:space="preserve">
+    <value>Sprzedawca</value>
+    <comment>person</comment>
+  </data>
+  <data name="construction shop" xml:space="preserve">
+    <value>Sklep Budowlany</value>
+    <comment>building</comment>
+  </data>
+  <data name="supermarket" xml:space="preserve">
+    <value>Supermarket</value>
+    <comment>building</comment>
+  </data>
+  <data name="(empty)" xml:space="preserve">
+    <value>(Pusty)</value>
+    <comment>group description</comment>
+  </data>
+  <data name="cleaning detergent" xml:space="preserve">
+    <value>Detergent</value>
+    <comment>industrial goods</comment>
+  </data>
+  <data name="cutlery" xml:space="preserve">
+    <value>Zestaw Sztućców</value>
+    <comment>kitchen object</comment>
+  </data>
+  <data name="fork" xml:space="preserve">
+    <value>Widelec</value>
+    <comment>kitchen object</comment>
+  </data>
+  <data name="juice" xml:space="preserve">
+    <value>Sok</value>
+    <comment>drink</comment>
+  </data>
+  <data name="knife" xml:space="preserve">
+    <value>Nóż</value>
+    <comment>kitchen object</comment>
+  </data>
+  <data name="plates" xml:space="preserve">
+    <value>Zestaw Talerzy</value>
+    <comment>kitchen object</comment>
+  </data>
+  <data name="soda" xml:space="preserve">
+    <value>Gazowany Napój</value>
+    <comment>drink</comment>
+  </data>
+  <data name="spoon" xml:space="preserve">
+    <value>Łyżka</value>
+    <comment>kitchen object</comment>
+  </data>
+  <data name="tea" xml:space="preserve">
+    <value>Herbata</value>
+    <comment>drink</comment>
+  </data>
+  <data name="with buildings" xml:space="preserve">
+    <value>z Budynkami</value>
+    <comment>group description</comment>
+  </data>
+  <data name="with cereal" xml:space="preserve">
+    <value>ze Zbożami</value>
+    <comment>group description</comment>
+  </data>
+  <data name="with drinks" xml:space="preserve">
+    <value>z Napojami</value>
+    <comment>group description</comment>
+  </data>
+  <data name="with fences" xml:space="preserve">
+    <value>z Ogrodzeniami</value>
+    <comment>group description</comment>
+  </data>
+  <data name="with floors" xml:space="preserve">
+    <value>z Podłogami</value>
+    <comment>group description</comment>
+  </data>
+  <data name="with furniture" xml:space="preserve">
+    <value>z Meblami</value>
+    <comment>group description</comment>
+  </data>
+  <data name="with industrial goods" xml:space="preserve">
+    <value>z Artyk. Przemysł.</value>
+    <comment>group description</comment>
+  </data>
+  <data name="with structures" xml:space="preserve">
+    <value>ze Strukturami</value>
+    <comment>group description</comment>
+  </data>
+  <data name="with vegetable" xml:space="preserve">
+    <value>z Ważywami</value>
+    <comment>group description</comment>
+  </data>
+  <data name="trading house" xml:space="preserve">
+    <value>Dom Handlowy</value>
+    <comment>building</comment>
+  </data>
+  <data name="parking" xml:space="preserve">
+    <value>Parking</value>
+    <comment>ground</comment>
+  </data>
+  <data name="parking exit" xml:space="preserve">
+    <value>Wyjazd z Parkingu</value>
+    <comment>ground</comment>
+  </data>
+  <data name="town hall" xml:space="preserve">
+    <value>Urząd Miasta</value>
+    <comment>bulding</comment>
+  </data>
+  <data name="office desk" xml:space="preserve">
+    <value>Biurko Służbowe</value>
+    <comment>furniture</comment>
+  </data>
+  <data name="no one office" xml:space="preserve">
+    <value>Puste Biuro</value>
+    <comment>person</comment>
+  </data>
+  <data name="notary office" xml:space="preserve">
+    <value>Notariusz</value>
+    <comment>person</comment>
+  </data>
+  <data name="desk" xml:space="preserve">
+    <value>Biurko</value>
+    <comment>furniture</comment>
+  </data>
+  <data name="credit card" xml:space="preserve">
+    <value>Karta Kredytowa</value>
+    <comment>object</comment>
+  </data>
+  <data name="cash machine" xml:space="preserve">
+    <value>Bankomat</value>
+    <comment>furniture</comment>
+  </data>
+  <data name="butter" xml:space="preserve">
+    <value>Masło Maślne</value>
+    <comment>food</comment>
+  </data>
+  <data name="canola oil" xml:space="preserve">
+    <value>Olej Rzepakowy</value>
+    <comment>food</comment>
+  </data>
+  <data name="cheese" xml:space="preserve">
+    <value>Ser Żółty</value>
+    <comment>food</comment>
+  </data>
+  <data name="chicken eggs" xml:space="preserve">
+    <value>Jaja Kurze</value>
+    <comment>food</comment>
+  </data>
+  <data name="chicken pate" xml:space="preserve">
+    <value>Pasztet Drobiowy</value>
+    <comment>food</comment>
+  </data>
+  <data name="classic fries" xml:space="preserve">
+    <value>Frytki Klasyczne</value>
+    <comment>food</comment>
+  </data>
+  <data name="crab sticks" xml:space="preserve">
+    <value>Paluszki Krabowe</value>
+    <comment>food</comment>
+  </data>
+  <data name="dumplings with meat" xml:space="preserve">
+    <value>Pyzy z Mięsem</value>
+    <comment>food</comment>
+  </data>
+  <data name="fatty milk" xml:space="preserve">
+    <value>Mleko Tłuste</value>
+    <comment>food</comment>
+  </data>
+  <data name="fish sticks" xml:space="preserve">
+    <value>Paluszki Rybne</value>
+    <comment>food</comment>
+  </data>
+  <data name="frozen pizza" xml:space="preserve">
+    <value>Pizza Mrożona</value>
+    <comment>food</comment>
+  </data>
+  <data name="ham" xml:space="preserve">
+    <value>Szynka Krucha</value>
+    <comment>food</comment>
+  </data>
+  <data name="herring" xml:space="preserve">
+    <value>Śledzie</value>
+    <comment>food</comment>
+  </data>
+  <data name="lactose free milk" xml:space="preserve">
+    <value>Mleko Bez Laktozy</value>
+    <comment>food</comment>
+  </data>
+  <data name="lasagne" xml:space="preserve">
+    <value>Lasagne</value>
+    <comment>food</comment>
+  </data>
+  <data name="pierogi with meat" xml:space="preserve">
+    <value>Pierogi z Mięsem</value>
+    <comment>food</comment>
+  </data>
+  <data name="rye bread" xml:space="preserve">
+    <value>Chleb Żytni</value>
+    <comment>food</comment>
+  </data>
+  <data name="soy milk" xml:space="preserve">
+    <value>Mleko Sojowe</value>
+    <comment>food</comment>
+  </data>
+  <data name="wheat bread" xml:space="preserve">
+    <value>Chleb Pszenny</value>
+    <comment>food</comment>
+  </data>
+  <data name="wheat flour" xml:space="preserve">
+    <value>Mąka Pszenna</value>
+    <comment>food</comment>
+  </data>
+  <data name="wheat roll" xml:space="preserve">
+    <value>Bułka Pszenna</value>
+    <comment>food</comment>
+  </data>
+  <data name="whole grain bread" xml:space="preserve">
+    <value>Chleb Pełnoziarnisty</value>
+    <comment>food</comment>
+  </data>
+  <data name="wardrobe" xml:space="preserve">
+    <value>Szafa</value>
+    <comment>furniture</comment>
+  </data>
+  <data name="water" xml:space="preserve">
+    <value>Woda</value>
+    <comment>drink</comment>
+  </data>
+  <data name="dresser" xml:space="preserve">
+    <value>Komoda</value>
+    <comment>furniture</comment>
+  </data>
+  <data name="worktop" xml:space="preserve">
+    <value>Blat</value>
+    <comment>furniture</comment>
+  </data>
+  <data name="coffe table" xml:space="preserve">
+    <value>Stolik Kawowy</value>
+    <comment>furniture</comment>
+  </data>
+  <data name="boiled eggs" xml:space="preserve">
+    <value>Jaja Gotowane</value>
+    <comment>food</comment>
+  </data>
+  <data name="fried eggs" xml:space="preserve">
+    <value>Jaja Sadzone</value>
+    <comment>food</comment>
+  </data>
+  <data name="sandwich" xml:space="preserve">
+    <value>Kanapka</value>
+    <comment>food</comment>
+  </data>
+  <data name="scrambled eggs" xml:space="preserve">
+    <value>Jajecznica</value>
+    <comment>food</comment>
+  </data>
+  <data name="stove with oven" xml:space="preserve">
+    <value>Kuchenka z Piekarnikiem</value>
+    <comment>furniture</comment>
+  </data>
+  <data name="oven" xml:space="preserve">
+    <value>Piekarnik</value>
+    <comment>furniture</comment>
+  </data>
+  <data name="products" xml:space="preserve">
+    <value>Produkty</value>
+    <comment>group of objects</comment>
+  </data>
+  <data name="stove" xml:space="preserve">
+    <value>Kuchenka</value>
+    <comment>furniture</comment>
+  </data>
+  <data name="he bake" xml:space="preserve">
+    <value>Upieczony</value>
+    <comment>state</comment>
+  </data>
+  <data name="he cooked" xml:space="preserve">
+    <value>Ugotowany</value>
+    <comment>state</comment>
+  </data>
+  <data name="he fry" xml:space="preserve">
+    <value>Usmażony</value>
+    <comment>state</comment>
+  </data>
+  <data name="he raw" xml:space="preserve">
+    <value>Surowy</value>
+    <comment>state</comment>
+  </data>
+  <data name="it bake" xml:space="preserve">
+    <value>Upieczone</value>
+    <comment>state</comment>
+  </data>
+  <data name="it cooked" xml:space="preserve">
+    <value>Ugotowane</value>
+    <comment>state</comment>
+  </data>
+  <data name="it fry" xml:space="preserve">
+    <value>Usmażone</value>
+    <comment>state</comment>
+  </data>
+  <data name="it raw" xml:space="preserve">
+    <value>Surowe</value>
+    <comment>state</comment>
+  </data>
+  <data name="she bake" xml:space="preserve">
+    <value>Upieczona</value>
+    <comment>state</comment>
+  </data>
+  <data name="she cooked" xml:space="preserve">
+    <value>Ugotowana</value>
+    <comment>state</comment>
+  </data>
+  <data name="she fry" xml:space="preserve">
+    <value>Usmażona</value>
+    <comment>state</comment>
+  </data>
+  <data name="she raw" xml:space="preserve">
+    <value>Surowa</value>
+    <comment>state</comment>
   </data>
 </root>

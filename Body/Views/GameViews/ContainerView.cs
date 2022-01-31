@@ -30,11 +30,13 @@ namespace FarmConsole.Body.Views.GameViews
             Endl(2);
             TextBox(LS.Navigation("selected item"));
             Endl(1);
-            TextBoxLines(item);
+
+            if (item[1] == "") TextBoxLines(item);
+            else TextBoxLines(item, Background: ColorService.GetColorByName("redl"));
             GroupEnd();
 
             GroupStart(Console.WindowWidth / 2, Console.WindowWidth);
-            Endl(Height + 8 - item.Length * 2);
+            Endl(Height + 10 - item.Length * 2);
             Slider(4, sliderValue);
             GroupEnd();
 
@@ -43,13 +45,13 @@ namespace FarmConsole.Body.Views.GameViews
 
             if (!side)
             {
-                TextBox(LS.Navigation("take item", " " + Multiplier + "x [E]  >>>>", Before: ">>>>  "), foreground: ColorService.GetColorByName("limeD"), margin: 0);
-                TextBox(LS.Navigation("put items back", " [Q]  <<<<", Before: "<<<<  "), foreground: ColorService.GetColorByName("orangeL"), margin: 0);
+                TextBox(LS.Navigation("take item", " " + Multiplier + "x [E]  >>>>", Before: ">>>>  "), Foreground: ColorService.GetColorByName("limeD"), Margin: 0);
+                TextBox(LS.Navigation("put items back", " [Q]  <<<<", Before: "<<<<  "), Foreground: ColorService.GetColorByName("orangeL"), Margin: 0);
             }
             else
             {
-                TextBox(LS.Navigation("put item back", " " + Multiplier + "x [E]  <<<<", Before: "<<<<  "), foreground: ColorService.GetColorByName("orangeL"), margin: 0);
-                TextBox(LS.Navigation("take items", " [Q]  >>>>", Before: ">>>>  "), foreground: ColorService.GetColorByName("limeD"), margin: 0);
+                TextBox(LS.Navigation("put item back", " " + Multiplier + "x [E]  <<<<", Before: "<<<<  "), Foreground: ColorService.GetColorByName("orangeL"), Margin: 0);
+                TextBox(LS.Navigation("take items", " [Q]  >>>>", Before: ">>>>  "), Foreground: ColorService.GetColorByName("limeD"), Margin: 0);
             }
 
             GroupEnd();
@@ -76,15 +78,18 @@ namespace FarmConsole.Body.Views.GameViews
             int Height = Console.WindowHeight - 15;
             for (int i = 0; i < products.Length; i++)
             {
+                //var amount = products[i].Amount / (products[i].Slots < 0 ? (products[i].Slots * -1) : 1);
                 if (i < Height / 3)
                 {
-                    if (products[i] != null) TextBox(products[i].Amount + "x " + LS.Object(products[i].ObjectName), width: Width, margin: 0);
-                    else TextBox("...", width: Width, margin: 0);
+                    if (products[i] != null) TextBox(LS.Object(products[i].ObjectName) + " : " + products[i].Amount +
+                        LS.Navigation(products[i].Unit.Split('/')[0], " ", Before: " "), Width: Width, Margin: 0);
+                    else TextBox("...", Width: Width, Margin: 0);
                 }
                 else
                 {
-                    if (products[i] != null) TextBox(products[i].Amount + "x " + LS.Object(products[i].ObjectName), width: Width, show: false, margin: 0);
-                    else TextBox("...", width: Width, show: false, margin: 0);
+                    if (products[i] != null) TextBox(LS.Object(products[i].ObjectName) + " : " + products[i].Amount +
+                        LS.Navigation(products[i].Unit.Split('/')[0], " ", Before: " "), Width: Width, Show: false, Margin: 0);
+                    else TextBox("...", Width: Width, Show: false, Margin: 0);
                 }
             }
 
@@ -120,11 +125,13 @@ namespace FarmConsole.Body.Views.GameViews
 
             int Height = Console.WindowHeight - 15;
 
-            if (products.Count == 0) TextBox("...", width: Width, margin: 0);
+            if (products.Count == 0) TextBox("...", Width: Width, Margin: 0);
             else for (int i = 0; i < products.Count; i++)
                 {
-                    if (i < Height / 3) TextBox(products[i].Amount + "x " + LS.Object(products[i].ObjectName), width: Width, margin: 0);
-                    else TextBox(products[i].Amount + "x " + LS.Object(products[i].ObjectName), width: Width, show: false, margin: 0);
+                    if (i < Height / 3) TextBox(LS.Object(products[i].ObjectName) + " : " + products[i].Amount +
+                        LS.Navigation(products[i].Unit.Split('/')[0], " ", Before: " "), Width: Width, Margin: 0);
+                    else TextBox(LS.Object(products[i].ObjectName) + " : " + products[i].Amount +
+                        LS.Navigation(products[i].Unit.Split('/')[0], " ", Before: " "), Width: Width, Show: false, Margin: 0);
                 }
 
             GroupEnd();

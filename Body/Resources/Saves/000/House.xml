@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Supply deliverydays="">
+	<Container name="bed" pos="2,2" state="0"/>
+	<Container name="small bookcase" pos="3,2" state="0"/>
+	<Container name="dresser" pos="2,3" state="1"/>
+	<Container name="wardrobe" pos="4,2" state="0"/>
+	<Container name="big bookcase" pos="5,2" state="0"/>
+	<Container name="desk" pos="6,2" state="0"/>
+	
+	<Container name="wall" pos="2,4" state="2"/>
+	<Container name="wall" pos="3,4" state="2"/>
+	<Container name="shop frige" pos="3,5" state="0"/>
+	<Container name="worktop" pos="2,5" state="1"/>
+	<Container name="stove with oven" pos="2,6" state="1"/>
+	<Container name="worktop" pos="2,7" state="1"/>
+	
+	<Container name="big bookcase" pos="7,5" state="3"/>
+	<Container name="wardrobe" pos="7,7" state="3"/>
+</Supply>

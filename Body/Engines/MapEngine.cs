@@ -1,5 +1,6 @@
 ﻿using FarmConsole.Body.Controllers.MenuControllers;
 using FarmConsole.Body.Models;
+using FarmConsole.Body.Services.GameServices;
 using FarmConsole.Body.Services.MainServices;
 using FarmConsole.Body.Views.GameViews;
 using Pastel;
@@ -71,7 +72,7 @@ namespace FarmConsole.Body.Engines
         }
         public static void MoveMapPosition(Point Vector)
         {
-            if (!TryMoveCSP(Vector, false, false)) return;
+            if (!TryMoveCSP(Vector, false, true)) return;
 
             Point ViewPos = PhisicalMap.View.GetPosition;
             Point MOVE = new Point(0, 0), ITER = new Point(1, 1);
@@ -101,7 +102,7 @@ namespace FarmConsole.Body.Engines
                 //HelpService.START_TIMER_2();
                 ShowMapView();
 
-                if (MainMenuController.FieldNameVisibility) GameView.DisplayFieldName();
+                GameService.DisplayFieldName();
                 //HelpService.STOP_TIMER_2();
                 //HelpService.AVG();
             }
@@ -118,7 +119,7 @@ namespace FarmConsole.Body.Engines
             if (Vector.X > 0) { START.X = END.X; END.X = 0; ITER.X = -1; }
             if (Vector.Y > 0) { START.Y = END.Y; END.Y = 0; ITER.Y = -1; }
 
-            TryMoveCSP(Vector, true, false);
+            TryMoveCSP(Vector, true, true);
 
             for (int X = START.X; X != END.X; X += ITER.X)
                 for (int Y = START.Y; Y != END.Y; Y += ITER.Y)
@@ -329,14 +330,14 @@ namespace FarmConsole.Body.Engines
                     if (IsBetweenBorder(P, LeftBorder - 22, RightBorder + 22, BotBorder - 6, BotBorder + 5)) OutermostScreenFields[3].Add(new Point(x, y));
                 }
         }
-        private static bool TryMoveCSP(Point Vector, bool Change = true, bool IncludeHitbox = true)
+        private static bool TryMoveCSP(Point Vector, bool Change = true, bool SkipHitbox = false)
         {
             Point TargetVisualPos = new Point(PhisicalMap.StandPosition.X + Vector.X, PhisicalMap.StandPosition.Y + Vector.Y);
             if (!IsOnMap(TargetVisualPos, VisualMapSize)) return false;
 
             short Escape = (short)(Math.Abs(Vector.X) * Math.Abs(Vector.X - 1) + Math.Abs(Vector.Y) * Math.Abs(Vector.Y - 2));
             short Arrival = (short)(Math.Abs(Vector.X) * (Vector.X + 1) + Math.Abs(Vector.Y) * (Vector.Y + 2));
-            if (IncludeHitbox)
+            if (!SkipHitbox && !SettingsService.GODMOD)
             {
                 var Field = GetField("Stand");
                 if (Field.StateName[0] == '-') // Escape Hitbox

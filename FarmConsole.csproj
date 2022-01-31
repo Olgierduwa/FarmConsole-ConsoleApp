@@ -14,10 +14,10 @@
     <ApplicationIcon>FC.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Google.GData.Extensions" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Azure.Amqp" Version="2.5.6" />
+    <PackageReference Include="Core.Google.GData.Extensions" Version="1.0.2" />
+    <PackageReference Include="Microsoft.Azure.Amqp" Version="2.5.10" />
     <PackageReference Include="NAudio" Version="2.0.1" />
-    <PackageReference Include="Pastel" Version="2.1.0" />
+    <PackageReference Include="Pastel" Version="3.0.0" />
   </ItemGroup>
   <ItemGroup Condition="$(VisualStudioVersion) == '16.0'">
     <Reference Include="Microsoft.Data.Tools.Schema.Sql, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -34,6 +34,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="FC.ico">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Update="Body\Resources\Language\en\Actions.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -46,6 +52,11 @@
   </ItemGroup>
   <PropertyGroup>
     <SsdtUnitTestVersion>3.1</SsdtUnitTestVersion>
+    <Authors>Olgierd Kuczyński</Authors>
+    <NeutralLanguage>pl</NeutralLanguage>
+    <PackageIcon>FC.ico</PackageIcon>
+    <PackageIconUrl />
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
   </PropertyGroup>
   <Import Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.Sql.UnitTesting.targets" Condition="$(VisualStudioVersion) != '15.0' And '$(SQLDBExtensionsRefPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.Sql.UnitTesting.targets" Condition="$(VisualStudioVersion) != '15.0' And '$(SQLDBExtensionsRefPath)' == ''" />

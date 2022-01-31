@@ -5,7 +5,7 @@
 		<Slot>oat seeds:100</Slot>
 		<Slot>corn seeds:100</Slot>
 		<Slot>wheat seeds:100</Slot>
-		<Slot>rape seed:100</Slot>
+		<Slot>canola seed:100</Slot>
 	</Container>
 	<Container name="big bookcase" sufix="with vegetable seeds" pos="5,2" state="0">
 		<Slot>potato seeds:100</Slot>

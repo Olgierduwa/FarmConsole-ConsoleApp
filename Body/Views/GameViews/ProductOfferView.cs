@@ -28,12 +28,12 @@ namespace FarmConsole.Body.Views.GameViews
                 if (i < products.Count)
                 {
                     if (i < Height) TextBox(products[i].Amount + "x " + LS.Object(products[i].ObjectName));
-                    else TextBox(products[i].Amount + "x " + LS.Object(products[i].ObjectName), show: false);
+                    else TextBox(products[i].Amount + "x " + LS.Object(products[i].ObjectName), Show: false);
                 }
                 else TextBox("...");
             }
             Endl(1);
-            TextBox(LS.Navigation("manage offer", " [S]"), foreground: ColorService.GetColorByName("cyan"));
+            TextBox(LS.Navigation("manage offer", " [S]"), Foreground: ColorService.GetColorByName("cyan"));
             GroupEnd();
 
             GroupStart(2);
@@ -49,9 +49,9 @@ namespace FarmConsole.Body.Views.GameViews
             Slider(10, sliderValue);
 
             Endl(1);
-            if (transferpayment) TextBox(LS.Navigation("accept payment by transfer", " [E]"), foreground: ColorService.GetColorByName("limeD"));
-            else TextBox(LS.Navigation("accept cash payment", " [E]"), foreground: ColorService.GetColorByName("limeD"));
-            TextBox(LS.Navigation("change payment method", " [Q]"), foreground: ColorService.GetColorByName("orangeL"));
+            if (transferpayment) TextBox(LS.Navigation("accept payment by transfer", " [E]"), Foreground: ColorService.GetColorByName("limeD"));
+            else TextBox(LS.Navigation("accept cash payment", " [E]"), Foreground: ColorService.GetColorByName("limeD"));
+            TextBox(LS.Navigation("change payment method", " [Q]"), Foreground: ColorService.GetColorByName("orangeL"));
             GroupEnd();
 
             GroupEnd();

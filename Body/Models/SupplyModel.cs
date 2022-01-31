@@ -104,7 +104,7 @@ namespace FarmConsole.Body.Models
                         {
                             var pocket = Fields[SupplyPos.X, SupplyPos.Y].Pocket;
                             if (pocket.GetSlot(j) == null) pocket.SetSlot(j, Product);
-                            else pocket.GetSlot(j).Amount += Product.Amount;
+                            else pocket.GetSlot(j).AddAmount(Product.Amount);
                             FoundProducts.Remove(Product);
                         }
                     }

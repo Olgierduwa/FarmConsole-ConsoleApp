@@ -14,17 +14,17 @@ namespace FarmConsole.Body.Services.MainServices
 
         public static void Play(string select)
         {
-            waveSound = new WaveOutEvent
-            {
-                Volume = volumeSound
-            };
-            switch (select)
-            {
-                case "K1": waveSound.Init(new WaveFileReader(location + "klik1.wav")); break;
-                case "K2": waveSound.Init(new WaveFileReader(location + "klik2.wav")); break;
-                case "K3": waveSound.Init(new WaveFileReader(location + "klik3.wav")); break;
-            }
-            waveSound.Play();
+            //waveSound = new WaveOutEvent
+            //{
+            //    Volume = volumeSound
+            //};
+            //switch (select)
+            //{
+            //    case "K1": waveSound.Init(new WaveFileReader(location + "klik1.wav")); break;
+            //    case "K2": waveSound.Init(new WaveFileReader(location + "klik2.wav")); break;
+            //    case "K3": waveSound.Init(new WaveFileReader(location + "klik3.wav")); break;
+            //}
+            //waveSound.Play();
         }
         public static void PlayMusic(string select)
         {

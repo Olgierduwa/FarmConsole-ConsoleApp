@@ -13,6 +13,7 @@ namespace FarmConsole.Body.Controllers.GameControllers
     class LocationController : HeadController
     {
         private static bool ShiftPressed;
+        private static string Location;
 
         private static void MoveStandPosition(string Direction)
         {
@@ -30,7 +31,7 @@ namespace FarmConsole.Body.Controllers.GameControllers
                     case "LEFT": MapEngine.MoveStandPosition(new Point(0, -1), ShiftPressed); break;
                     case "RIGHT": MapEngine.MoveStandPosition(new Point(0, 1), ShiftPressed); break;
                 }
-            if (FieldNameVisibility) GameView.DisplayFieldName();
+            GameService.DisplayFieldName();
         }
         private static void MoveMapPosition(string Direction)
         {
@@ -56,7 +57,7 @@ namespace FarmConsole.Body.Controllers.GameControllers
             SideMenuController.Init(map.Scale);
             MapService.InitMap(map);
             MapService.ShowMap();
-            if (FieldNameVisibility) GameView.DisplayFieldName();
+            GameService.DisplayFieldName();
         }
         private static void LeaveLocation(string Location)
         {
@@ -68,9 +69,9 @@ namespace FarmConsole.Body.Controllers.GameControllers
             else MapService.HideMap(false);
         }
 
-
-        public static void Open(string Location)
+        public static void Open(string _Location)
         {
+            Location = _Location;
             //HelpService.CLEAR_TIMERS();
             EnterLocation(Location);
             GameService.DisplayStats();
@@ -98,25 +99,10 @@ namespace FarmConsole.Body.Controllers.GameControllers
                         case ConsoleKey.LeftArrow: MoveMapPosition("LEFT"); break;
                         case ConsoleKey.RightArrow: MoveMapPosition("RIGHT"); break;
 
-                        // ponadprogramowe
-
-                        case ConsoleKey.D1: MapEngine.FPM = 1; break;
-                        case ConsoleKey.D2: MapEngine.FPM = 2; break;
-                        case ConsoleKey.D3: MapEngine.FPM = 3; break;
-                        case ConsoleKey.D4: MapEngine.FPM = 6; break;
-                        case ConsoleKey.Z: GameService.Die(); break;
-                        case ConsoleKey.X: SideMenuService.RESULT = LS.Action("done"); SideMenuService.GetTired(30); break;
-                        case ConsoleKey.R:
-                            GameInstance.SetMapSupply(Location); GameInstance.SetMap(Location, MapEngine.Map);
-                            MapService.GlobalMapInit(); MapEngine.ReloadMapView(); break;
-                        case ConsoleKey.F:
-                            GameInstance.SetMap(Location, MapEngine.Map); GameService.GrowingUp();
-                            MapService.InitMap(GameInstance.GetMap(Location)); MapService.ShowMap(); break;
-
-                            // koniec ponadprogramowych
+                        default: GOODMOD(cki); break;
                     }
                     GameService.DisplayStats();
-                    if (FieldNameVisibility) GameView.DisplayFieldName();
+                    GameService.DisplayFieldName();
                 }
                 else if ((DateTime.Now - Previously).TotalMilliseconds >= FrameTime)
                 {
@@ -124,8 +110,8 @@ namespace FarmConsole.Body.Controllers.GameControllers
 
                     if (Action.IsInProcess)
                     {
-                        if (!SideMenuService.MakeAction()) SideMenuController.ShowResult();
-                        if (FieldNameVisibility) GameView.DisplayFieldName();
+                        if (!ActionService.MakeAction()) SideMenuController.ShowResult();
+                        GameService.DisplayFieldName();
                     }
                     Previously = DateTime.Now;
                 }
@@ -133,6 +119,26 @@ namespace FarmConsole.Body.Controllers.GameControllers
             LeaveLocation(Location);
         }
 
+        private static void GOODMOD(ConsoleKeyInfo cki)
+        {
+            if(SettingsService.GODMOD) switch(cki.Key)
+            {
+                case ConsoleKey.D1: MapEngine.FPM = 1; break;
+                case ConsoleKey.D2: MapEngine.FPM = 2; break;
+                case ConsoleKey.D3: MapEngine.FPM = 3; break;
+                case ConsoleKey.D4: MapEngine.FPM = 6; break;
 
+                case ConsoleKey.Z: GameService.Die(); break;
+                case ConsoleKey.X: ActionService.RESULT = LS.Action("done"); ActionService.GetTired(30); break;
+
+                case ConsoleKey.R:
+                    GameInstance.SetMapSupply(Location); GameInstance.SetMap(Location, MapEngine.Map);
+                    MapService.GlobalMapInit(); MapEngine.ReloadMapView(); break;
+
+                case ConsoleKey.F:
+                    GameInstance.SetMap(Location, MapEngine.Map); GameService.GrowingUp();
+                    MapService.InitMap(GameInstance.GetMap(Location)); MapService.ShowMap(); break;
+            }
+        }
     }
 }

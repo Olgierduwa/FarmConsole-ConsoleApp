@@ -52,7 +52,7 @@ namespace FarmConsole.Body.Controllers.MenuControllers
             {
                 var cki = Console.ReadKey(true);
                 if (cki.Modifiers == ConsoleModifiers.Shift) ShiftPressed = true; else ShiftPressed = false;
-                if (cki.Key == ConsoleKey.Q) break;
+                if (cki.Key == ConsoleKey.Tab || cki.Key == ConsoleKey.Escape) break;
                 else if (cki.Key == ConsoleKey.Backspace && NickName.Length > 0)
                 {
                     NickName = NickName[0..^1];

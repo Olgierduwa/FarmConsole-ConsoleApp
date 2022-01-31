@@ -2,16 +2,16 @@
 <texts>
   <text key="controls">
     ' ' '
-    ------------------------------------ 
-    --- [Q] --- Kwestionariusz --------- 
-    --- [E] --- Ekwipunek -------------- 
-    --- [W] --- Ruch Góra -------------- 
-    --- [S] --- Ruch Dół --------------- 
-    --- [A] --- Ruch Lewo -------------- 
-    --- [D] --- Ruch Prawo ------------- 
-    --- [TAB] - Szybki Wybór ----------- 
-    --- [ESC] - Pauza / Powrót --------- 
-    ------------------------------------ 
+    ------------------------------------
+    --- [Q] --- Kwestionariusz ---------
+    --- [E] --- Ekwipunek --------------
+    --- [W] --- Ruch Góra --------------
+    --- [S] --- Ruch Dół ---------------
+    --- [A] --- Ruch Lewo --------------
+    --- [D] --- Ruch Prawo -------------
+    --- [TAB] - Szybki Wybór -----------
+    --- [ESC] - Pauza / Powrót ---------
+    ------------------------------------
     . . .
   </text>
   <text key="about">
@@ -31,23 +31,23 @@
     . . .
   </text>
   <text key="exit question">
-    !!! Ś W I A D O M I E !!! 
+    !!! Ś W I A D O M I E !!!
     !!! O P U S Z C Z A M !!!
-    !!! R O Z G R Y W K Ę !!! 
+    !!! R O Z G R Y W K Ę !!!
   </text>
   <text key="delete question">
-    B E Z S P R Z E C Z N I E 
-    P R A G N Ę _ U S U N Ą Ć 
-    T E N _ Z A P I S _ G R Y 
-    T R W A L E _ T R A C Ą C 
+    B E Z S P R Z E C Z N I E
+    P R A G N Ę _ U S U N Ą Ć
+    T E N _ Z A P I S _ G R Y
+    T R W A L E _ T R A C Ą C
     O D T W A R Z A L N O Ś Ć
   </text>
   <text key="update question">
-    E K W I W A L E N T N I E 
-    N A D P I S U J Ę _ T E N 
-    W Y B R A N Y _ Z A P I S 
-    T Y M Ż E _ Z A P I S E M 
-    A B Y _ U Z U P E Ł N I Ć 
+    E K W I W A L E N T N I E
+    N A D P I S U J Ę _ T E N
+    W Y B R A N Y _ Z A P I S
+    T Y M Ż E _ Z A P I S E M
+    A B Y _ U Z U P E Ł N I Ć
     K R Z T A Ł T O W A N I E
   </text>
 </texts>

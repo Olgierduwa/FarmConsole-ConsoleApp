@@ -14,43 +14,61 @@ namespace FarmConsole.Body.Services.MainServices
         {
             return "".PadRight(Console.WindowWidth, '=');
         }
-        public static string CenteredText(int length, string text)
+        public static string CenteredText(string Text, int Width)
         {
-            return "".PadRight((length - text.Length) / 2, ' ') + text + "".PadRight((length - text.Length) / 2, ' ');
+            return "".PadRight((Width - Text.Length) / 2, ' ') + Text + "".PadRight(Width - Text.Length - (Width - Text.Length) / 2, ' ');
         }
-        public static string Top(int lenght, bool left = true, bool right = true)
+        public static List<string> CenteredLines(string[] Lines, int Width)
+        {
+            List<string> Content = new List<string>();
+            foreach (string Line in Lines) Content.Add(CenteredText(Line, Width));
+            return Content;
+        }
+        public static List<string> SplitText(string Text, int Width, int Margin)
+        {
+            string Line = "";
+            List<string> Content = new List<string>();
+            foreach (string Word in Text.Split(' '))
+            {
+                if (Line.Length + Word.Length <= Width - (Margin * 2 + 2)) Line += string.IsNullOrEmpty(Line) ? Word : " " + Word;
+                else if (Word != "") { Content.Add(CenteredText(Line, Width - 2)); Line = " " + Word; }
+            }
+            Content.Add(CenteredText(Line, Width - 2));
+            return Content;
+        }
+        public static string Top(int Width, bool left = true, bool right = true)
         {
             string view = "";
-            if (left) view = "."; view += "".PadRight(lenght - 2, '─'); if (right) view += ".";
+            if (left) view = "."; view += "".PadRight(Width - 2, '─'); if (right) view += ".";
             return view;
         }
-        public static string Bot(int lenght, bool left = true, bool right = true)
+        public static string Bot(int Width, bool left = true, bool right = true)
         {
             string view = "";
-            if (left) view = "'"; view += "".PadRight(lenght - 2, '─'); if (right) view += "'";
+            if (left) view = "'"; view += "".PadRight(Width - 2, '─'); if (right) view += "'";
             return view;
         }
-        public static string[] SideLeft(int width, int height)
+        public static string[] SideLeft(int Width, int Height)
         {
-            string[] text = new string[height];
-            for (int i = 0; i < height; i++) text[i] = "".PadRight(width - 1, ' ') + "│";
+            string[] text = new string[Height];
+            for (int i = 0; i < Height; i++) text[i] = "".PadRight(Width - 1, ' ') + "│";
             return text;
         }
-        public static string[] SideRight(int width, int height)
+        public static string[] SideRight(int Width, int Height)
         {
-            string[] text = new string[height];
-            for (int i = 0; i < height; i++) text[i] = "│" + "".PadRight(width - 1, ' ');
+            string[] text = new string[Height];
+            for (int i = 0; i < Height; i++) text[i] = "│" + "".PadRight(Width - 1, ' ');
             return text;
         }
-        public static string[] Sides(List<string> content)
+        public static string[] Sides(List<string> Content)
         {
-            string[] text = new string[content.Count];
-            for (int i = 0; i < content.Count; i++) text[i] = "│" + content[i] + "│";
+            string[] text = new string[Content.Count];
+            for (int i = 0; i < Content.Count; i++) text[i] = "│" + Content[i] + "│";
             return text;
         }
-        public static string Fragment(int width, char c)
+        public static string Fragment(int Width, char c)
         {
-            return "".PadRight(width, c);
+            return "".PadRight(Width, c);
         }
         public static string[] ExtendGraphis(string[] baseContent, string[] extendedContent)
         {

@@ -22,11 +22,11 @@ namespace FarmConsole.Body.Views.GameViews
             Endl(2);
             TextBox(LS.Navigation("direction of expansion"));
             Endl(1);
-            TextBoxLines(LS.Text(direction).Split('\n'));
+            TextBoxLines(XF.GetGraphic(direction));
             
             Endl(1);
             TextBox(LS.Navigation("choose the direction", " [W] [A] [S] [D]"),
-                foreground: ColorService.GetColorByName("cyan"));
+                Foreground: ColorService.GetColorByName("cyan"));
             GroupEnd();
 
             GroupStart(4);
@@ -37,8 +37,8 @@ namespace FarmConsole.Body.Views.GameViews
             TextBox(LS.Navigation("tiles count", ": " + count + "x"));
             TextBox(LS.Navigation("amount to pay", ": " + (price * count) + c));
             Endl(3);
-            TextBox(LS.Navigation("sign document and pay"," [E]"), foreground: ColorService.GetColorByName("limeD"));
-            TextBox(LS.Navigation("do not sign document"," [Q]"), foreground: ColorService.GetColorByName("redL"));
+            TextBox(LS.Navigation("sign document and pay"," [E]"), Foreground: ColorService.GetColorByName("limeD"));
+            TextBox(LS.Navigation("do not sign document"," [Q]"), Foreground: ColorService.GetColorByName("redL"));
             GroupEnd();
             GroupEnd();
 

@@ -169,7 +169,7 @@
     <value>Nasiona Pszenicy</value>
     <comment>seed</comment>
   </data>
-  <data name="rape seed" xml:space="preserve">
+  <data name="canola seed" xml:space="preserve">
     <value>Nasiona Rzepaku</value>
     <comment>seed</comment>
   </data>
@@ -197,7 +197,7 @@
     <value>Nasiona Buraka</value>
     <comment>seed</comment>
   </data>
-  <data name="rape" xml:space="preserve">
+  <data name="canola" xml:space="preserve">
     <value>Rzepak</value>
     <comment>cereal</comment>
   </data>
@@ -287,43 +287,43 @@
   </data>
   <data name="grass" xml:space="preserve">
     <value>Trawa</value>
-    <comment>floor</comment>
+    <comment>ground</comment>
   </data>
   <data name="path" xml:space="preserve">
     <value>Ścieżka</value>
-    <comment>floor</comment>
+    <comment>ground</comment>
   </data>
   <data name="road" xml:space="preserve">
     <value>Droga</value>
-    <comment>floor</comment>
+    <comment>ground</comment>
   </data>
   <data name="road with sidewalk" xml:space="preserve">
     <value>Droga z Chodnikiem</value>
-    <comment>floor</comment>
+    <comment>ground</comment>
   </data>
   <data name="rails" xml:space="preserve">
     <value>Tory</value>
-    <comment>floor</comment>
+    <comment>ground</comment>
   </data>
   <data name="rail crossing" xml:space="preserve">
     <value>Przejazd Kolejowy</value>
-    <comment>floor</comment>
+    <comment>ground</comment>
   </data>
-  <data name="wooden floor" xml:space="preserve">
+  <data name="spruce wooden floor" xml:space="preserve">
     <value>Drewniana Podłoga</value>
-    <comment>floor</comment>
+    <comment>ground</comment>
   </data>
   <data name="tiled floor" xml:space="preserve">
     <value>Kafelkowa Podłoga</value>
-    <comment>floor</comment>
+    <comment>ground</comment>
   </data>
   <data name="synthetic grass" xml:space="preserve">
     <value>Sztuczna Trawa</value>
-    <comment>floor</comment>
+    <comment>ground</comment>
   </data>
   <data name="stone floor" xml:space="preserve">
     <value>Kamienna Płyta</value>
-    <comment>floor</comment>
+    <comment>ground</comment>
   </data>
   <data name="fence" xml:space="preserve">
     <value>Płot</value>
@@ -381,7 +381,7 @@
     <value>Pole Pszenicy</value>
     <comment>field</comment>
   </data>
-  <data name="rape field" xml:space="preserve">
+  <data name="canola field" xml:space="preserve">
     <value>Pole Rzepaku</value>
     <comment>field</comment>
   </data>
@@ -453,7 +453,7 @@
     <value>Brudna</value>
     <comment>state</comment>
   </data>
-  <data name="wood" xml:space="preserve">
+  <data name="spruce wood" xml:space="preserve">
     <value>Drzewo</value>
     <comment>object</comment>
   </data>
@@ -599,18 +599,18 @@
   </data>
   <data name="parking" xml:space="preserve">
     <value>Parking</value>
-    <comment>floor</comment>
+    <comment>ground</comment>
   </data>
   <data name="parking exit" xml:space="preserve">
     <value>Wyjazd z Parkingu</value>
-    <comment>floor</comment>
+    <comment>ground</comment>
   </data>
   <data name="town hall" xml:space="preserve">
     <value>Urząd Miasta</value>
     <comment>bulding</comment>
   </data>
   <data name="office desk" xml:space="preserve">
-    <value>Biurko</value>
+    <value>Biurko Służbowe</value>
     <comment>furniture</comment>
   </data>
   <data name="no one office" xml:space="preserve">
@@ -632,5 +632,197 @@
   <data name="cash machine" xml:space="preserve">
     <value>Bankomat</value>
     <comment>furniture</comment>
+  </data>
+  <data name="butter" xml:space="preserve">
+    <value>Masło Maślne</value>
+    <comment>food</comment>
+  </data>
+  <data name="canola oil" xml:space="preserve">
+    <value>Olej Rzepakowy</value>
+    <comment>food</comment>
+  </data>
+  <data name="cheese" xml:space="preserve">
+    <value>Ser Żółty</value>
+    <comment>food</comment>
+  </data>
+  <data name="chicken eggs" xml:space="preserve">
+    <value>Jaja Kurze</value>
+    <comment>food</comment>
+  </data>
+  <data name="chicken pate" xml:space="preserve">
+    <value>Pasztet Drobiowy</value>
+    <comment>food</comment>
+  </data>
+  <data name="classic fries" xml:space="preserve">
+    <value>Frytki Klasyczne</value>
+    <comment>food</comment>
+  </data>
+  <data name="crab sticks" xml:space="preserve">
+    <value>Paluszki Krabowe</value>
+    <comment>food</comment>
+  </data>
+  <data name="dumplings with meat" xml:space="preserve">
+    <value>Pyzy z Mięsem</value>
+    <comment>food</comment>
+  </data>
+  <data name="fatty milk" xml:space="preserve">
+    <value>Mleko Tłuste</value>
+    <comment>food</comment>
+  </data>
+  <data name="fish sticks" xml:space="preserve">
+    <value>Paluszki Rybne</value>
+    <comment>food</comment>
+  </data>
+  <data name="frozen pizza" xml:space="preserve">
+    <value>Pizza Mrożona</value>
+    <comment>food</comment>
+  </data>
+  <data name="ham" xml:space="preserve">
+    <value>Szynka Krucha</value>
+    <comment>food</comment>
+  </data>
+  <data name="herring" xml:space="preserve">
+    <value>Śledzie</value>
+    <comment>food</comment>
+  </data>
+  <data name="lactose free milk" xml:space="preserve">
+    <value>Mleko Bez Laktozy</value>
+    <comment>food</comment>
+  </data>
+  <data name="lasagne" xml:space="preserve">
+    <value>Lasagne</value>
+    <comment>food</comment>
+  </data>
+  <data name="pierogi with meat" xml:space="preserve">
+    <value>Pierogi z Mięsem</value>
+    <comment>food</comment>
+  </data>
+  <data name="rye bread" xml:space="preserve">
+    <value>Chleb Żytni</value>
+    <comment>food</comment>
+  </data>
+  <data name="soy milk" xml:space="preserve">
+    <value>Mleko Sojowe</value>
+    <comment>food</comment>
+  </data>
+  <data name="wheat bread" xml:space="preserve">
+    <value>Chleb Pszenny</value>
+    <comment>food</comment>
+  </data>
+  <data name="wheat flour" xml:space="preserve">
+    <value>Mąka Pszenna</value>
+    <comment>food</comment>
+  </data>
+  <data name="wheat roll" xml:space="preserve">
+    <value>Bułka Pszenna</value>
+    <comment>food</comment>
+  </data>
+  <data name="whole grain bread" xml:space="preserve">
+    <value>Chleb Pełnoziarnisty</value>
+    <comment>food</comment>
+  </data>
+  <data name="wardrobe" xml:space="preserve">
+    <value>Szafa</value>
+    <comment>furniture</comment>
+  </data>
+  <data name="water" xml:space="preserve">
+    <value>Woda</value>
+    <comment>drink</comment>
+  </data>
+  <data name="dresser" xml:space="preserve">
+    <value>Komoda</value>
+    <comment>furniture</comment>
+  </data>
+  <data name="worktop" xml:space="preserve">
+    <value>Blat</value>
+    <comment>furniture</comment>
+  </data>
+  <data name="coffe table" xml:space="preserve">
+    <value>Stolik Kawowy</value>
+    <comment>furniture</comment>
+  </data>
+  <data name="boiled eggs" xml:space="preserve">
+    <value>Jaja Gotowane</value>
+    <comment>food</comment>
+  </data>
+  <data name="fried eggs" xml:space="preserve">
+    <value>Jaja Sadzone</value>
+    <comment>food</comment>
+  </data>
+  <data name="sandwich" xml:space="preserve">
+    <value>Kanapka</value>
+    <comment>food</comment>
+  </data>
+  <data name="scrambled eggs" xml:space="preserve">
+    <value>Jajecznica</value>
+    <comment>food</comment>
+  </data>
+  <data name="stove with oven" xml:space="preserve">
+    <value>Kuchenka z Piekarnikiem</value>
+    <comment>furniture</comment>
+  </data>
+  <data name="oven" xml:space="preserve">
+    <value>Piekarnik</value>
+    <comment>furniture</comment>
+  </data>
+  <data name="products" xml:space="preserve">
+    <value>Produkty</value>
+    <comment>group of objects</comment>
+  </data>
+  <data name="stove" xml:space="preserve">
+    <value>Kuchenka</value>
+    <comment>furniture</comment>
+  </data>
+  <data name="he bake" xml:space="preserve">
+    <value>Upieczony</value>
+    <comment>state</comment>
+  </data>
+  <data name="he cooked" xml:space="preserve">
+    <value>Ugotowany</value>
+    <comment>state</comment>
+  </data>
+  <data name="he fry" xml:space="preserve">
+    <value>Usmażony</value>
+    <comment>state</comment>
+  </data>
+  <data name="he raw" xml:space="preserve">
+    <value>Surowy</value>
+    <comment>state</comment>
+  </data>
+  <data name="it bake" xml:space="preserve">
+    <value>Upieczone</value>
+    <comment>state</comment>
+  </data>
+  <data name="it cooked" xml:space="preserve">
+    <value>Ugotowane</value>
+    <comment>state</comment>
+  </data>
+  <data name="it fry" xml:space="preserve">
+    <value>Usmażone</value>
+    <comment>state</comment>
+  </data>
+  <data name="it raw" xml:space="preserve">
+    <value>Surowe</value>
+    <comment>state</comment>
+  </data>
+  <data name="she bake" xml:space="preserve">
+    <value>Upieczona</value>
+    <comment>state</comment>
+  </data>
+  <data name="she cooked" xml:space="preserve">
+    <value>Ugotowana</value>
+    <comment>state</comment>
+  </data>
+  <data name="she fry" xml:space="preserve">
+    <value>Usmażona</value>
+    <comment>state</comment>
+  </data>
+  <data name="she raw" xml:space="preserve">
+    <value>Surowa</value>
+    <comment>state</comment>
+  </data>
+  <data name="drinks" xml:space="preserve">
+    <value>Napoje</value>
+    <comment>group of objects</comment>
   </data>
 </root>

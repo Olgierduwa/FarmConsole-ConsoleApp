@@ -12,14 +12,14 @@
 	<Container name="big bookcase" sufix="(empty)" pos="2,6" state="1"/>
 	<Container name="small bookcase" sufix="with cereal" pos="4,2" state="0">
 		<Slot>oat:100</Slot>
-		<Slot>corn:100</Slot>
 		<Slot>wheat:100</Slot>
-		<Slot>rape:100</Slot>
+		<Slot>canola:100</Slot>
 	</Container>
 	<Container name="stand" sufix="(empty)" pos="6,2" state="0"/>
 	<Container name="stand" sufix="with vegetable" pos="5,2" state="5">
 		<Slot>potato:100</Slot>
 		<Slot>beetroot:100</Slot>
+		<Slot>corn:100</Slot>
 	</Container>
 	<Container name="stand" sufix="with vegetable" pos="5,3" state="1">
 		<Slot>carrot:100</Slot>

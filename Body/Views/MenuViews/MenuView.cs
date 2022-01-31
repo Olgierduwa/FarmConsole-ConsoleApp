@@ -30,7 +30,6 @@ namespace FarmConsole.Body.Views.MenuViews
             GroupEnd();
             PrintList();
             //vt1.ShowComponentList();
-            DangerMessage = LS.Text("exit question");
         }
     }
 }

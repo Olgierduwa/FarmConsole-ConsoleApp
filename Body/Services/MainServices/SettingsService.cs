@@ -50,6 +50,7 @@ namespace FarmConsole.Body.Services.MainServices
             Settings = XF.GetSettings();
             ConvertService.SetSymbols();
             HeadController.FieldNameVisibility = Convert.ToBoolean(GetSetting("set field name").GetRealValue);
+            HeadController.StatsVisibility = Convert.ToBoolean(GetSetting("set stats").GetRealValue);
             HeadController.PlayerMovementAxis = Convert.ToBoolean(GetSetting("set player move axis").GetRealValue);
             HeadController.MapMovementAxis = Convert.ToBoolean(GetSetting("set map move axis").GetRealValue);
             LoadLanguages();

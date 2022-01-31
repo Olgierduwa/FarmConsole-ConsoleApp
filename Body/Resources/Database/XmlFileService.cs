@@ -26,6 +26,7 @@ namespace FarmConsole.Body.Services.MainServices
         private static readonly string graphics_path = res + db + "Graphics.xml";
         private static readonly string colors_path = res + db + "Colors.xml";
         private static readonly string rules_path = res + db + "Rules.xml";
+        private static readonly string recipes_path = res + db + "FoodRecipes.xml";
 
         private static readonly string languages_path = res + language + "Languages.xml";
         private static readonly string saves_path = res + saves + "Saves.xml";
@@ -69,6 +70,8 @@ namespace FarmConsole.Body.Services.MainServices
                         string[] StateViewLines = Field.InnerText.Replace("\r", "").Replace("\n", "").Replace("\t", "").Split('@');
                         string Property = Attributes.Contains("property") && Field.Attributes["property"].Value != "" ? Field.Attributes["property"].Value : "";
                         string Price = Attributes.Contains("price") ? Field.Attributes["price"].Value : "0";
+                        string Unit = Attributes.Contains("unit") ? Field.Attributes["unit"].Value : "piece";
+                        string Lvl = Attributes.Contains("lvl") ? Field.Attributes["lvl"].Value : "0";
                         bool Cutted = Attributes.Contains("cut");
                         short Slots = Attributes.Contains("slots") ? Convert.ToInt16(Field.Attributes["slots"].Value) : (short)0;
                         int ViewHeight = (StateViewLines.Length - 1) / States.Length;
@@ -124,6 +127,8 @@ namespace FarmConsole.Body.Services.MainServices
                                 State = State,
                                 StateName = States[State],
                                 ObjectName = Field.Attributes["name"].Value,
+                                RequiredLevel = int.Parse(Lvl),
+                                Unit = Unit,
                                 MenuActions = ConvertService.ConcatActionTables(StateMenuActs, MainMenuActs),
                                 MapActions = ConvertService.ConcatActionTables(StateMapActions, MainMapAct),
                                 Price = int.Parse(Price),
@@ -156,6 +161,34 @@ namespace FarmConsole.Body.Services.MainServices
                 });
             }
             return Rules;
+        }
+        public static List<RecipeModel> GetFoodRecipes()
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(recipes_path);
+            XmlNodeList recipeNodes = doc.SelectNodes("/FoodRecipes/recipe");
+            List<RecipeModel> Recipes = new List<RecipeModel>();
+            foreach (XmlNode recipeNode in recipeNodes)
+            {
+                string RecipeName = recipeNode.Attributes["name"].Value;
+                List<ProductModel> Ingredients = new List<ProductModel>();
+
+                foreach(XmlNode ingredient in recipeNode.ChildNodes)
+                {
+                    string name = ingredient.Attributes["name"].Value;
+                    int state = Convert.ToInt32(ingredient.Attributes["state"].Value);
+                    int count = Convert.ToInt32(ingredient.Attributes["count"].Value);
+                    int main = Convert.ToInt32(ingredient.Attributes["main"].Value);
+                    var product = ObjectModel.GetObject(name, state).ToProduct();
+                    product.Price = count;
+                    product.Scale = main;
+                    Ingredients.Add(product);
+                }
+
+                RecipeModel Recipe = new RecipeModel(RecipeName, Ingredients);
+                Recipes.Add(Recipe);
+            }
+            return Recipes;
         }
         public static List<SettingModel> GetSettings()
         {
@@ -202,19 +235,22 @@ namespace FarmConsole.Body.Services.MainServices
             doc.Save(languages_path);
         }
 
-        public static string[] GetGraphic(string GraphicName)
+        public static string[] GetGraphic(string GraphicKey)
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(graphics_path);
-            XmlNodeList list = doc.SelectNodes("/graphics/graphic[@id='" + GraphicName + "']");
+            XmlNodeList list = doc.SelectNodes("/graphics/graphic[@key='" + GraphicKey + "']");
             XmlNode node = list[0];
             if (list.Count < 1) { return new string[] { "- BRAK GRAFIKI -" }; }
 
-            char[] MyChar = { '\r', '\n' };
-            string[] oryginalgraphic = node.InnerText.Split('@');
-            string[] graphic = new string[oryginalgraphic.Length - 1];
+            string[] oryginalgraphic = node.InnerText.Split('\n');
+            string[] graphic = new string[oryginalgraphic.Length - 2];
             for (int i = 0; i < graphic.Length; i++)
-                graphic[i] = oryginalgraphic[i].Trim(MyChar)[4..];
+            {
+                oryginalgraphic[i+1] = oryginalgraphic[i+1].Replace("\r", "");
+                if (oryginalgraphic[i+1].Length > 0) graphic[i] = oryginalgraphic[i+1][4..];
+                else graphic[i] = "";
+            }
 
             return graphic;
         }

@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<FoodRecipes>
+	<recipe name="sandwich">
+		<product main="1" state="0" count="1" name="wheat roll"/>
+		<product main="1" state="0" count="2" name="wheat bread"/>
+		<product main="1" state="0" count="2" name="rye bread"/>
+		<product main="1" state="0" count="2" name="whole grain bread"/>
+		<product main="0" state="0" count="2" name="ham"/>
+		<product main="0" state="0" count="2" name="cheese"/>
+		<product main="0" state="0" count="1" name="chicken pate"/>
+		<product main="0" state="0" count="2" name="butter"/>
+	</recipe>
+	<recipe name="boiled eggs">
+		<product main="2" state="1" count="5" name="chicken eggs"/>
+		<product main="1" state="0" count="1" name="wheat roll"/>
+		<product main="1" state="0" count="2" name="wheat bread"/>
+		<product main="1" state="0" count="2" name="rye bread"/>
+		<product main="1" state="0" count="2" name="whole grain bread"/>
+		<product main="0" state="0" count="2" name="butter"/>
+		<product main="0" state="0" count="2" name="ham"/>
+		<product main="0" state="0" count="2" name="cheese"/>
+		<product main="0" state="0" count="1" name="chicken pate"/>
+	</recipe>
+	<recipe name="scrambled eggs">
+		<product main="2" state="2" count="5" name="chicken eggs"/>
+		<product main="1" state="0" count="1" name="wheat roll"/>
+		<product main="1" state="0" count="2" name="wheat bread"/>
+		<product main="1" state="0" count="2" name="rye bread"/>
+		<product main="1" state="0" count="2" name="whole grain bread"/>
+		<product main="0" state="0" count="2" name="butter"/>
+		<product main="0" state="0" count="2" name="ham"/>
+		<product main="0" state="0" count="2" name="cheese"/>
+		<product main="0" state="0" count="1" name="chicken pate"/>
+	</recipe>
+	<recipe name="dumplings with meat">
+		<product main="1" state="1" count="1" name="dumplings with meat"/>
+		<product main="1" state="2" count="1" name="dumplings with meat"/>
+		<product main="0" state="1" count="1" name="classic fries"/>
+	</recipe>
+	<recipe name="pierogi with meat">
+		<product main="1" state="1" count="1" name="pierogi with meat"/>
+		<product main="1" state="2" count="1" name="pierogi with meat"/>
+		<product main="0" state="1" count="1" name="classic fries"/>
+	</recipe>
+	<recipe name="fish sticks">
+		<product main="1" state="1" count="1" name="fish sticks"/>
+		<product main="0" state="1" count="1" name="classic fries"/>
+	</recipe>
+	<recipe name="lasagne">
+		<product main="1" state="1" count="1" name="lasagne"/>
+		<product main="0" state="1" count="1" name="classic fries"/>
+	</recipe>
+	<recipe name="frozen pizza">
+		<product main="1" state="1" count="1" name="frozen pizza"/>
+		<product main="0" state="1" count="1" name="classic fries"/>
+	</recipe>
+	<recipe name="herring">
+		<product main="2" state="0" count="1" name="herring"/>
+		<product main="1" state="0" count="1" name="wheat roll"/>
+		<product main="1" state="0" count="2" name="wheat bread"/>
+		<product main="1" state="0" count="2" name="rye bread"/>
+		<product main="1" state="0" count="2" name="whole grain bread"/>
+		<product main="0" state="0" count="2" name="butter"/>
+		<product main="0" state="0" count="2" name="ham"/>
+		<product main="0" state="0" count="2" name="cheese"/>
+		<product main="0" state="0" count="1" name="chicken pate"/>
+	</recipe>
+	<recipe name="crab sticks">
+		<product main="1" state="0" count="1" name="crab sticks"/>
+		<product main="0" state="1" count="1" name="classic fries"/>
+	</recipe>
+</FoodRecipes>

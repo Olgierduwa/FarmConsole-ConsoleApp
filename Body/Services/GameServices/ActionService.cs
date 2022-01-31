@@ -1,13 +1,13 @@
 ﻿using FarmConsole.Body.Controllers.CentralControllers;
 using FarmConsole.Body.Engines;
 using FarmConsole.Body.Models;
-using FarmConsole.Body.Services.GameServices;
+using FarmConsole.Body.Services.MainServices;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace FarmConsole.Body.Services.MainServices
+namespace FarmConsole.Body.Services.GameServices
 {
-    class SideMenuService : HeadController
+    class ActionService : HeadController
     {
         public static string DONE = LS.Action("done");
         public static string RESULT { get; set; }
@@ -16,15 +16,12 @@ namespace FarmConsole.Body.Services.MainServices
         {
             if (RESULT == DONE)
             {
-                if (Value < 0 && SettingsService.GODMOD) return;
-                int Index = GameInstance.Inventory.FindIndex(x => x.Category == Action.SelectedProduct.Category
-                && x.Type == Action.SelectedProduct.Type && x.Scale == Action.SelectedProduct.Scale);
-                if (Index < 0) GameInstance.Inventory.Add(Action.SelectedProduct);
-                else
-                {
-                    GameInstance.Inventory[Index].Amount += Value;
-                    if (GameInstance.Inventory[Index].Amount == 0) GameInstance.Inventory.RemoveAt(Index);
-                }
+                Value = Value == 0 ? ConvertService.RandomAround(Action.GetSelectedProduct.Amount, 0.1) : Value;
+                if (SettingsService.GODMOD) return;
+                int Index = GameInstance.Inventory.FindIndex(x => x.Category == Action.GetSelectedProduct.Category
+                && x.Type == Action.GetSelectedProduct.Type && x.Scale == Action.GetSelectedProduct.Scale);
+                if (Index < 0) GameInstance.Inventory.Add(Action.GetSelectedProduct);
+                else if(!GameInstance.Inventory[Index].AddAmount(Value)) GameInstance.Inventory.RemoveAt(Index);
             }
         }
         private static void SetCart()
@@ -61,19 +58,20 @@ namespace FarmConsole.Body.Services.MainServices
             switch (Action.Name)
             {
                 case "destroy": AddAmount(-1); GetTired(40); break;
-                case "build": RESULT = MapService.Build(Action.SelectedProduct); AddAmount(-1); GetTired(50); break;
-                case "sow": RESULT = FarmService.Sow(Action.SelectedProduct); AddAmount(-1); GetTired(20); break;
-                case "fertilize": RESULT = FarmService.Fertilize(Action.SelectedProduct); AddAmount(-1); GetTired(30); break;
+                case "build": RESULT = MapService.Build(Action.GetSelectedProduct); AddAmount(-1); GetTired(50); break;
+                case "sow": RESULT = FarmService.Sow(Action.GetSelectedProduct); AddAmount(-1); GetTired(20); break;
+                case "fertilize": RESULT = FarmService.Fertilize(Action.GetSelectedProduct); AddAmount(-1); GetTired(30); break;
                 case "check":
                     {
-                        switch (Action.SelectedProduct.ObjectName)
+                        switch (Action.GetSelectedProduct.ObjectName)
                         {
                             case "wallet": RESULT = GetWalletContent(); break;
                             case "phone": OpenScreen = "Phone"; break;
                         }
                     }
                     break;
-                case "drink": break;
+                case "eat": break;
+                case "drink": RESULT = GameService.Drink();  break;
                 default: RESULT = LS.Action("unknown action"); break;
             }
             Action.Result = RESULT;
@@ -81,7 +79,7 @@ namespace FarmConsole.Body.Services.MainServices
         private static void DoOnMap()
         {
             RESULT = DONE;
-            Action.SelectedProduct = MapEngine.GetField().ToProduct();
+            Action.SetSelectedProduct(MapEngine.GetField().ToProduct());
             switch (Action.Name)
             {
                 // MapView Activities
@@ -95,7 +93,7 @@ namespace FarmConsole.Body.Services.MainServices
                 case "come in":
                     {
                         string CurrentScreen = OpenScreen;
-                        OpenScreen = ConvertService.CamelCase(Action.SelectedProduct.ObjectName);
+                        OpenScreen = ConvertService.CamelCase(Action.GetSelectedProduct.ObjectName);
                         GameInstance.GetMap(OpenScreen).EscapeScreen = CurrentScreen;
                         GameInstance.GetMap(OpenScreen).Delivery(GameInstance.GameDate);
                         SetCart();
@@ -123,11 +121,14 @@ namespace FarmConsole.Body.Services.MainServices
                 case "mow grass": FarmService.MowGrass(); GetTired(30); break;
                 case "plow": RESULT = FarmService.Plow(); GetTired(30); break;
                 case "water it": RESULT = FarmService.WaterIt(); GetTired(10); break;
-                case "collect": RESULT = FarmService.Collect(); Action.SetPropertyProduct(); AddAmount(1); GetTired(40); break;
+                case "collect": RESULT = FarmService.Collect(); Action.SetPropertyProduct(); AddAmount(0); GetTired(40); break;
                 case "make fertilizer": FarmService.MakeFertilize(); Action.SetProductByName("natural fertilizer"); AddAmount(1); GetTired(40); break;
 
                 // HouseView Activities
-                case "wash": break;
+                case "compose": OpenScreen = "FoodCompose"; break;
+                case "cook": OpenScreen = "FoodCook"; break;
+                case "fry": OpenScreen = "FoodFry"; break;
+                case "bake": OpenScreen = "FoodBake"; break;
                 case "lock": MapService.Lock(); break;
                 case "unlock": MapService.Unlock(); break;
 

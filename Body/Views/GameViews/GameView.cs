@@ -25,27 +25,27 @@ namespace FarmConsole.Body.Views.GameViews
             ClearList(false);
             Endl(Console.WindowHeight - 5);
             GroupStart(3);
-            BotBar(prefix + LS.Object(f.ObjectName) + sufix, height: 2, foreground: ColorService.GetColorByName("gray3"));
+            BotBar(prefix + LS.Object(f.ObjectName) + sufix, Height: 2, Foreground: ColorService.GetColorByName("gray3"));
             GroupEnd();
             PrintList();
         }
 
         public static void DisplayStats(int[] stats)
         {
-            string[] exp = new string[] { ("Poziom " + stats[0] + " ").PadLeft(10, ' ') + "".PadRight(stats[1] * 21 / stats[2], '▄').PadRight(20, '_') };
-            string[] energy = new string[] { "Energia ".PadLeft(10, ' ') + "".PadRight(stats[3] / 500, '▄').PadRight(20, '_') };
-            string[] hunger = new string[] { "Głód ".PadLeft(10, ' ') + "".PadRight(stats[4] / 50, '▄').PadRight(20, '_') };
-            string[] immunity = new string[] { "Odporonść ".PadLeft(10, ' ') + "".PadRight(stats[5] / 50, '▄').PadRight(20, '_') };
-            string[] health = new string[] { "Zdrowie ".PadLeft(10, ' ') + "".PadRight(stats[6] / 50, '▄').PadRight(20, '_') };
+            string EXP = (LS.Navigation("lvl"," ") + stats[0] + " ").PadLeft(10, ' ') + "".PadRight(stats[1] * 21 / stats[2], '▄').PadRight(20, '_') ;
+            string ENE = LS.Navigation("energy"," ").PadLeft(10, ' ') + "".PadRight(stats[3] / 500, '▄').PadRight(20, '_') ;
+            string HUN = LS.Navigation("hunger"," ").PadLeft(10, ' ') + "".PadRight(stats[4] / 50, '▄').PadRight(20, '_') ;
+            string IMM = LS.Navigation("immunity"," ").PadLeft(10, ' ') + "".PadRight(stats[5] / 50, '▄').PadRight(20, '_') ;
+            string HEA = LS.Navigation("health"," ").PadLeft(10, ' ') + "".PadRight(stats[6] / 50, '▄').PadRight(20, '_') ;
 
             ClearList(false);
             Endl(Console.WindowHeight - 8);
-            GroupStart(1, 6);
-            GraphicBox(exp, true, ColorService.GetColorByName("cyan"));
-            GraphicBox(energy, true, ColorService.GetColorByName("limed"));
-            GraphicBox(hunger, true, ColorService.GetColorByName("yellow"));
-            GraphicBox(immunity, true, ColorService.GetColorByName("orange"));
-            GraphicBox(health, true, ColorService.GetColorByName("redl"));
+            GroupStart(15, Console.WindowWidth);
+            GraphicBox(new string[] { EXP }, true, ColorService.GetColorByName("cyan"));
+            GraphicBox(new string[] { ENE }, true, ColorService.GetColorByName("limed"));
+            GraphicBox(new string[] { HUN }, true, ColorService.GetColorByName("yellow"));
+            GraphicBox(new string[] { IMM }, true, ColorService.GetColorByName("orange"));
+            GraphicBox(new string[] { HEA }, true, ColorService.GetColorByName("redl"));
             GroupEnd();
             PrintList();
         }

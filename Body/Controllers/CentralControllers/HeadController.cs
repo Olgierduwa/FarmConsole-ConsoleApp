@@ -14,9 +14,11 @@ namespace FarmConsole.Body.Controllers.CentralControllers
 
         public static DateTime Previously = DateTime.Now;
         public static double FrameTime = 10;
+        public static double BakeTime = 100;
         public static bool PlayerMovementAxis;
         public static bool MapMovementAxis;
         public static bool FieldNameVisibility;
+        public static bool StatsVisibility;
 
         public static string OpenScreen = "Menu";
         public static string LastScreen = "Menu";

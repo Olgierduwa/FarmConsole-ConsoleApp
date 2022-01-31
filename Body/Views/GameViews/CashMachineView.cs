@@ -23,7 +23,7 @@ namespace FarmConsole.Body.Views.GameViews
             TextBox(LS.Navigation("deposit"));
             TextBox(LS.Navigation("transfer"));
             Endl(1);
-            TextBox(LS.Navigation("remove card", " [Q]"), foreground: ColorService.GetColorByName("redl"));
+            TextBox(LS.Navigation("remove card", " [Q]"), Foreground: ColorService.GetColorByName("redl"));
             GroupEnd();
             
             GroupStart(2);
@@ -74,7 +74,7 @@ namespace FarmConsole.Body.Views.GameViews
             TextBox(LS.Navigation("wallet balance") + ": " + Wallet + LS.Navigation("currency"));
             Slider(36, SliderValue);
             Endl(1);
-            TextBox(LS.Navigation("do operation", " [E]"), foreground: ColorService.GetColorByName("limed"));
+            TextBox(LS.Navigation("do operation", " [E]"), Foreground: ColorService.GetColorByName("limed"));
             GroupEnd();
 
             GroupEnd();
@@ -99,7 +99,7 @@ namespace FarmConsole.Body.Views.GameViews
             TextBox(LS.Navigation("account balance") + ": " + Card + LS.Navigation("currency"));
             Slider(36, SliderValue);
             Endl(1);
-            TextBox(LS.Navigation("do operation", " [E]"), foreground: ColorService.GetColorByName("limed"));
+            TextBox(LS.Navigation("do operation", " [E]"), Foreground: ColorService.GetColorByName("limed"));
             GroupEnd();
 
             GroupEnd();
@@ -118,11 +118,11 @@ namespace FarmConsole.Body.Views.GameViews
 
             GroupStart(4);
             Endl(2);
-            TextBox(LS.Navigation("operation"), foreground: ColorService.GetColorByName("gray3"));
+            TextBox(LS.Navigation("operation"), Foreground: ColorService.GetColorByName("gray3"));
             Endl(1);
-            TextBox(LS.Navigation("operation temporarily unavailable"), foreground: ColorService.GetColorByName("gray3"));
+            TextBox(LS.Navigation("operation temporarily unavailable"), Foreground: ColorService.GetColorByName("gray3"));
             Endl(10);
-            TextBox(LS.Navigation("do operation", " [E]"), foreground: ColorService.GetColorByName("gray3"));
+            TextBox(LS.Navigation("do operation", " [E]"), Foreground: ColorService.GetColorByName("gray3"));
             GroupEnd();
 
             GroupEnd();

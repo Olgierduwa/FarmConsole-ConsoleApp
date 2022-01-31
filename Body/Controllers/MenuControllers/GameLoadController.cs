@@ -34,7 +34,7 @@ namespace FarmConsole.Body.Controllers.MenuControllers
                             }
                             break;
                         case ConsoleKey.D:
-                            if (Selected > 1 && ComponentService.Danger() == true)
+                            if (Selected > 1 && ComponentService.Danger(LS.Text("delete question")) == true)
                             {
                                 saves[Selected - 2].Delete();
                                 saves = XF.GetGameInstances();

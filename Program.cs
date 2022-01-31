@@ -41,6 +41,11 @@ namespace FarmConsole
                     case "PlotBuying": PlotBuyingController.Open(); break;
                     case "CashMachine": CashMachineController.Open(); break;
 
+                    case "FoodCompose": FoodComposingController.Open(); break;
+                    case "FoodCook": StoveController.Open("cook"); break;
+                    case "FoodFry": StoveController.Open("fry"); break;
+                    case "FoodBake": StoveController.Open("bake"); break;
+
                     // location controllers
                     default: LocationController.Open(HeadController.OpenScreen); break;
                 }

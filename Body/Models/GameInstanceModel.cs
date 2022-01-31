@@ -100,7 +100,7 @@ namespace FarmConsole.Body.Models
         private void BuildHouseMap()
         {
             int Size = 8;
-            MapModel HouseMap = new MapModel("House", "wooden floor", new Point(-4, Size), Size, _AccessLevel: 3);
+            MapModel HouseMap = new MapModel("House", "spruce wooden floor", new Point(-4, Size), Size, _AccessLevel: 3);
             BuildingService.BuildRectangle(HouseMap, new Point(1, 1), new Size(Size, Size), "synthetic grass", false);
             BuildingService.BuildWalls(HouseMap, new Point(1, 1), new Size(Size, Size));
 
@@ -112,9 +112,9 @@ namespace FarmConsole.Body.Models
             HouseMap.SetField(3, Size, ObjectModel.GetObject("window", 0).ToField());
             HouseMap.SetField(Size, 3, ObjectModel.GetObject("window", 1).ToField());
             HouseMap.SetField(Size, 4, ObjectModel.GetObject("window", 1).ToField());
-            HouseMap.SetField(4, 4, ObjectModel.GetObject("bed").ToField());
 
             Maps.Add(HouseMap);
+            SetMapSupply("House");
         }
         private void BuildStreetMap()
         {
@@ -220,11 +220,13 @@ namespace FarmConsole.Body.Models
                 foreach (var day in DeliveryDaysString) if (day.Length > 0) DeliveryDays.Add(int.Parse(day));
                 for (int c = 0; c < ContainerList.Count; c++)
                 {
+                    var Attributes = new List<string>();
+                    foreach (XmlAttribute a in ContainerList[c].Attributes) Attributes.Add(a.Name);
                     var Coords = ContainerList[c].Attributes["pos"].Value.Split(',');
                     var ContainerPos = new Point(int.Parse(Coords[0]), int.Parse(Coords[1]));
-                    var ContainerState = int.Parse(ContainerList[c].Attributes["state"].Value);
+                    var ContainerState = Attributes.Contains("state") ? int.Parse(ContainerList[c].Attributes["state"].Value) : 0;
+                    var ContainerSufix = Attributes.Contains("sufix") ? ContainerList[c].Attributes["sufix"].Value : "";
                     var ContainerName = ContainerList[c].Attributes["name"].Value;
-                    var ContainerSufix = ContainerList[c].Attributes["sufix"].Value;
 
                     var Field = ObjectModel.GetObject(ContainerName, ContainerState).ToField();
                     var Slots = new string[ContainerList[c].ChildNodes.Count];
@@ -251,8 +253,10 @@ namespace FarmConsole.Body.Models
             if (SettingsService.GODMOD)
             {
                 Inventory = new List<ProductModel>();
-                var objects = ObjectModel.GetObjects(_State: 0);
-                foreach (var o in objects) if (o.Category > 2) Inventory.Add(o.ToProduct(100));
+                var objects = ObjectModel.GetObjects();
+                foreach (var o in objects)
+                    if (o.Category > 3) Inventory.Add(o.ToProduct(10));
+                    else  if (o.Category > 2 && o.State == 0) Inventory.Add(o.ToProduct(10));
             }
             else Inventory = new List<ProductModel>
             {

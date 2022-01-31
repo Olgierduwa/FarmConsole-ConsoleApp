@@ -27,7 +27,7 @@ namespace FarmConsole.Body.Controllers.MenuControllers
                         case ConsoleKey.Escape:
                         case ConsoleKey.Q: SoundService.Play("K3"); OpenScreen = "Escape"; break;
                         case ConsoleKey.E:
-                            if (Selected == 1 || ComponentService.Danger() == true)
+                            if (Selected == 1 || ComponentService.Danger(LS.Text("update question")) == true)
                             {
                                 GameInstance.Lastmap = EscapeScreen;
                                 GameInstance.Update(Selected - 1);

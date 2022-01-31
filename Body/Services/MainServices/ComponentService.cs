@@ -30,23 +30,35 @@ namespace FarmConsole.Body.Services.MainServices
             if (ConsoleClear) Console.Clear();
             if (RestoreCaptions) Captions();
         }
-        public static void UpdateMenuSelect(int CS, int PS, int MenuCount, int IDG = 2, int Prop = 13) => UpdateSelect(CS, PS, MenuCount, IDG, Prop);
-        public static void UpdateMenuSelectOnly(int CS, int PS, int MenuCount, int IDG = 2, int Prop = 13) => UpdateSelect(CS, PS, MenuCount, IDG, Prop, false);
-        public static void UpdateMenuSlider(int IDO, int Count, int Movement, int IDG = 3) => UpdateSlider(IDG, IDO, Count, Movement);
-        public static void UpdateMenuTextBox(int IDO, string text, int IDG = 2, int margin = 3) => UpdateTextBox(IDG, IDO, text, margin);
+        public static void UpdateMenuSelect(int CS, int PS, int MenuCount, int GID = 2, int Prop = 13) => UpdateSelect(CS, PS, MenuCount, GID, Prop);
+        public static void UpdateMenuSelectOnly(int CS, int PS, int MenuCount, int GID = 2, int Prop = 13) => UpdateSelect(CS, PS, MenuCount, GID, Prop, false);
+        public static void UpdateMenuSlider(int OID, int Count, int Movement, int GID = 3) => UpdateSlider(GID, OID, Count, Movement);
+        public static void UpdateMenuTextBox(int OID, string Text, int GID = 2, int Margin = 3) => UpdateTextBox(GID, OID, Text, Margin);
         public static int GetSliderValue(int CS) => ComponentEngine.GetSliderValue(CS);
-        public static void DisplayLastListElement(int PropHeight = 15)
+        public static void RepairDamageRemoval(int LastOID = 1, int GID = 2)
         {
             if (View != null)
             {
-                var component = GetComponentByName("TB", 3, SettingsService.GetSettings.Count + 2);
+                int[] view = GetEndingListView("TB", GID, LastOID);
+                if (view[0] != 0 || view[1] != 0 || view[2] != 0 || view[3] != 0)
+                    View.DisplayPixels(new Point(view[0], view[1]), new Size(view[2], view[3]));
+            }
+        }
+        public static void DisplayLastListElement(int GID = 2, int PropHeight = 15)
+        {
+            if (View != null)
+            {
+                var component = GetComponentByName("TB", GID, SettingsService.GetSettings.Count + 2);
                 int showCount = (Console.WindowHeight - PropHeight) / 3;
                 int Y = SettingsService.GetSettings.Count + 2 - showCount < 0 ? component.Pos.Y :
                     component.Pos.Y - (SettingsService.GetSettings.Count + 2 - showCount) * 3;
                 if (component.IsVisible == true) View.DisplayPixels(new Point(component.Pos.X, Y), component.Size);
             }
         }
-        public static bool? Danger(bool ClearBefore = true)
+        public static void DisplayView() => PrintList();
+        public static void DisableView(bool IsEnable = false) => DisableList(IsEnable);
+        public static void SetProgressBar(int GID, int OID, int Procent) => ComponentEngine.SetProgressBar(GID, OID, Procent);
+        public static bool? Danger(string Text, bool ClearBeforeEnableView = true)
         {
             SoundService.Play("K2");
             List<CM> TemporaryList = ComponentList.ToList();
@@ -56,28 +68,30 @@ namespace FarmConsole.Body.Services.MainServices
             GroupStart(0);
 
             GroupStart(Console.WindowWidth / 2, Console.WindowWidth);
-            Endl((Console.WindowHeight - DangerMessage.Split('\n').Length - 8) / 2);
-            TextBoxLines(DangerMessage.Split('\n'), 33, true, ColorService.GetColorByName("Red"));
+            Endl((Console.WindowHeight - Text.Split('\n').Length - 8) / 2);
+            TextBoxLines(Text.Split('\n'), 33, true, ColorService.GetColorByName("Red"));
             var textbox = GetComponentByName("TBL");
             GroupEnd();
 
             GroupStart(Console.WindowWidth / 2 - 9, Console.WindowWidth);
             Endl((Console.WindowHeight + textbox.Size.Height - 4) / 2);
-            TextBox(LS.Navigation("no", " Q"), 15, true, ColorService.GetColorByName("Red"), margin: 0);
+            TextBox(LS.Navigation("no", " Q"), 15, true, ColorService.GetColorByName("Red"), Margin: 0);
             GroupEnd();
 
             GroupStart(Console.WindowWidth / 2 + 9, Console.WindowWidth);
             Endl((Console.WindowHeight + textbox.Size.Height - 4) / 2);
-            TextBox(LS.Navigation("yes", " E"), 15, true, ColorService.GetColorByName("Red"), margin: 0);
+            TextBox(LS.Navigation("yes", " E"), 15, true, ColorService.GetColorByName("Red"), Margin: 0);
             GroupEnd();
 
             GroupEnd();
             PrintList();
 
-            List<CM> ComponentsToClear = new List<CM>();
-            ComponentsToClear.Add(GetComponentByName("GS", 2));
-            ComponentsToClear.Add(GetComponentByName("GS", 3));
-            ComponentsToClear.Add(GetComponentByName("GS", 4));
+            List<CM> ComponentsToClear = new List<CM>
+            {
+                GetComponentByName("GS", 2),
+                GetComponentByName("GS", 3),
+                GetComponentByName("GS", 4)
+            };
 
             bool? choice = null;
             while (choice == null)
@@ -90,20 +104,21 @@ namespace FarmConsole.Body.Services.MainServices
                 }
             }
 
-            if (ClearBefore)
+            if (ClearBeforeEnableView)
                 if (View != null) foreach (var c in ComponentsToClear)
                         View.DisplayPixels(c.Pos, c.Size);
                 else ClearList();
             else ClearList(false);
 
             ComponentList = TemporaryList.ToList();
-            PrintList();
+            DisableView(true);
+            //PrintList();
             return choice;
         }
-        public static void GoodNews(string content, string label = "")
+        public static void GoodNews(string Text, string Label = "", string EndLineSign = ":", bool ReturnView = true)
         {
-            label = label != "" ? label : LS.Navigation("excellent");
-            label = label.ToUpper() + ":";
+            Label = Label != "" ? Label : LS.Navigation("excellent");
+            Label = Label.ToUpper() + EndLineSign;
             List<CM> TemporaryList = ComponentList.ToList();
             DisableView();
             ClearList(false);
@@ -111,33 +126,36 @@ namespace FarmConsole.Body.Services.MainServices
             string[] text, text2;
             int Width = 40;
 
-            text = new string[] { " ", label, " " };
-            text2 = TextBoxView(content, Width);
+            text = new string[] { " ", Label, " " };
+            text2 = GetTextBoxView(Text, Width);
             text = text.Concat(text2.Concat(new string[] { " " }).ToArray()).ToArray();
 
             int Height = text2.Length + 6;
 
             Endl((Console.WindowHeight - Height) / 2);
             GroupStart(3);
-            TextBoxLines(text, Width, color1: ColorService.GetColorByName("LimeD"));
+            TextBoxLines(text, Width, Background: ColorService.GetColorByName("LimeD"));
             GroupEnd();
             PrintList();
 
-            List<CM> ComponentsToClear = new List<CM>();
-            ComponentsToClear.Add(GetComponentByName("TBL"));
+            List<CM> ComponentsToClear = new List<CM> { GetComponentByName("TBL") };
             Console.ReadKey(true);
 
-            if (View != null) foreach (var c in ComponentsToClear)
-                    View.DisplayPixels(c.Pos, c.Size);
-            else ClearList();
+            if (ReturnView)
+            {
+                if (View != null)
+                    foreach (var c in ComponentsToClear)
+                        View.DisplayPixels(c.Pos, c.Size);
+                else ClearList();
 
-            ComponentList = TemporaryList.ToList();
-            PrintList();
+                ComponentList = TemporaryList.ToList();
+                DisableView(true);
+            }
         }
-        public static void Warning(string content, string label = "")
+        public static void Warning(string Text, string Label = "")
         {
-            label = label != "" ? label : LS.Navigation("warning");
-            label = label.ToUpper() + ":";
+            Label = Label != "" ? Label : LS.Navigation("warning");
+            Label = Label.ToUpper() + ":";
             List<CM> TemporaryList = ComponentList.ToList();
             DisableView();
             ClearList(false);
@@ -145,20 +163,19 @@ namespace FarmConsole.Body.Services.MainServices
             string[] text, text2;
             int Width = 40;
 
-            text = new string[] { " ", label, " " };
-            text2 = TextBoxView(content, Width);
+            text = new string[] { " ", Label, " " };
+            text2 = GetTextBoxView(Text, Width);
             text = text.Concat(text2.Concat(new string[] { " " }).ToArray()).ToArray();
 
             int Height = text2.Length + 6;
 
             Endl((Console.WindowHeight - Height) / 2);
             GroupStart(3);
-            TextBoxLines(text, Width, color1: ColorService.GetColorByName("Red"));
+            TextBoxLines(text, Width, Background: ColorService.GetColorByName("Red"));
             GroupEnd();
             PrintList();
 
-            List<CM> ComponentsToClear = new List<CM>();
-            ComponentsToClear.Add(GetComponentByName("TBL"));
+            List<CM> ComponentsToClear = new List<CM> { GetComponentByName("TBL") };
             Console.ReadKey(true);
 
             if (View != null) foreach (var c in ComponentsToClear)
@@ -166,7 +183,8 @@ namespace FarmConsole.Body.Services.MainServices
             else ClearList();
 
             ComponentList = TemporaryList.ToList();
-            PrintList();
+            DisableView(true);
+            //PrintList();
         }
         public static void Captions()
         {

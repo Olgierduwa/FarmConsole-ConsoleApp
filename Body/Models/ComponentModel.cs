@@ -11,8 +11,8 @@ namespace FarmConsole.Body.Models
         private static readonly Color static_base_color = ColorService.GetColorByName("gray3");
         private static readonly Color static_content_color = ColorService.GetColorByName("White");
 
-        public int ID_group { get; }
-        public int ID_object { get; }
+        public int GroupID { get; }
+        public int ObjectID { get; }
         public string Name { get; set; }
         public bool? IsVisible { get; set; }
         public bool? IsEnable { get; set; }
@@ -35,7 +35,7 @@ namespace FarmConsole.Body.Models
 
         public override string ToString()
         {
-            return "".PadLeft(ID_group,'.') + Name + "   " + Pos.X + "X," + Pos.Y + "Y, " + Size.Width + "W, " + Size.Height + "H";
+            return "".PadLeft(GroupID,'.') + Name + "   " + Pos.X + "X," + Pos.Y + "Y, " + Size.Width + "W, " + Size.Height + "H";
         }
 
         public CM(int id_group, int id_object, Point pos, Size size, string[] view, string name, int prop = 0,
@@ -44,8 +44,8 @@ namespace FarmConsole.Body.Models
             color1 = color1 == new Color() ? static_base_color : color1;
             color2 = color2 == new Color() ? static_content_color : color2;
 
-            this.ID_group = id_group;
-            this.ID_object = id_object;
+            this.GroupID = id_group;
+            this.ObjectID = id_object;
             this.Pos = pos;
             this.Size = size;
             this.View = view;

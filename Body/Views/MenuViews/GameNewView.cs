@@ -12,6 +12,7 @@ namespace FarmConsole.Body.Views.MenuViews
     {
         public static void Display(string NickName)
         {
+            ClearList(false);
             Endl(3);
             H2(LS.Navigation("new game label"));
             GroupStart(0);
@@ -35,34 +36,34 @@ namespace FarmConsole.Body.Views.MenuViews
 
             GroupStart(Console.WindowWidth * 15 / 22 - 18, Console.WindowWidth);
             Endl(Height + 3);
-            TextBox(LS.Object("woman"), 13, foreground: ColorService.GetColorByName("gray3"), margin: 0);
-            TextBox(LS.Navigation("easy"), 13, foreground: ColorService.GetColorByName("gray3"), margin: 0);
+            TextBox(LS.Object("woman"), 13, Foreground: ColorService.GetColorByName("gray3"), Margin: 0);
+            TextBox(LS.Navigation("easy"), 13, Foreground: ColorService.GetColorByName("gray3"), Margin: 0);
             GroupEnd();
 
             GroupStart(Console.WindowWidth * 15 / 22 + 19, Console.WindowWidth);
             Endl(Height + 3);
-            TextBox(LS.Object("man"), 13, foreground: ColorService.GetColorByName("gray3"), margin:0);
-            TextBox(LS.Navigation("hard"), 13, foreground: ColorService.GetColorByName("gray3"), margin:0);
+            TextBox(LS.Object("man"), 13, Foreground: ColorService.GetColorByName("gray3"), Margin:0);
+            TextBox(LS.Navigation("hard"), 13, Foreground: ColorService.GetColorByName("gray3"), Margin:0);
             GroupEnd();
 
             GroupStart(Console.WindowWidth * 15 / 22 - 13, Console.WindowWidth);
             Endl(Height + 9);
-            TextBox(LS.Navigation("random", " A"), 24, margin: 0);
+            TextBox(LS.Navigation("random", " A"), 24, Margin: 0);
             GroupEnd();
 
             GroupStart(Console.WindowWidth * 15 / 22 + 13, Console.WindowWidth);
             Endl(Height + 9);
-            TextBox(LS.Navigation("self", " D"), 24, margin:0);
+            TextBox(LS.Navigation("self", " D"), 24, Margin:0);
             GroupEnd();
 
             GroupStart(Console.WindowWidth / 2 - 10, Console.WindowWidth);
             Endl(Console.WindowHeight - 12);
-            TextBox(LS.Navigation("cancel button ", " Q"), 19, margin: 0);
+            TextBox(LS.Navigation("cancel button ", " Q"), 19, Margin: 0);
             GroupEnd();
 
             GroupStart(Console.WindowWidth / 2 + 11, Console.WindowWidth);
             Endl(Console.WindowHeight - 12);
-            TextBox(LS.Navigation("continue button", " E"), 19, margin: 0);
+            TextBox(LS.Navigation("continue button", " E"), 19, Margin: 0);
             GroupEnd();
 
             GroupEnd();
@@ -74,7 +75,7 @@ namespace FarmConsole.Body.Views.MenuViews
             ClearList(false);
             Endl(Console.WindowHeight / 2 - 8);
             GroupStart(Console.WindowWidth * 15 / 22, Console.WindowWidth);
-            TextBox(defaultString, 50, background: ColorService.SelectionColor);
+            TextBox(defaultString, 50, Background: ColorService.SelectionColor);
             GroupEnd();
             PrintList();
         }

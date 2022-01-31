@@ -37,7 +37,7 @@ namespace FarmConsole.Body.Controllers.MenuControllers
                                 case 1: SoundService.Play("K3"); OpenScreen = EscapeScreen; ComponentService.SetView = null; break;
                                 case 2: SoundService.Play("K2"); OpenScreen = "Save"; break;
                                 case 3:
-                                    if (ComponentService.Danger(false) == true)
+                                    if (ComponentService.Danger(LS.Text("exit question"), false) == true)
                                     {
                                         OpenScreen = LastScreen = "Menu";
                                         ComponentService.SetView = null;

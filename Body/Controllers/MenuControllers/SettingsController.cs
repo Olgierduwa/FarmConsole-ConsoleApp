@@ -27,7 +27,7 @@ namespace FarmConsole.Body.Controllers.MenuControllers
                     Selected--;
                     ComponentService.UpdateMenuSelect(Selected + 1, Selected + 2, selCount, 2, 15);
                     ComponentService.UpdateMenuSelectOnly(Selected + 1, Selected + 2, selCount, 3, 15);
-                    ComponentService.DisplayLastListElement();
+                    ComponentService.DisplayLastListElement(3);
                 }
             }
             else
@@ -38,7 +38,7 @@ namespace FarmConsole.Body.Controllers.MenuControllers
                     Selected++;
                     ComponentService.UpdateMenuSelect(Selected + 1, Selected, selCount, 2, 15);
                     ComponentService.UpdateMenuSelectOnly(Selected + 1, Selected, selCount, 3, 15);
-                    ComponentService.DisplayLastListElement();
+                    ComponentService.DisplayLastListElement(3);
                 }
             }
         }
@@ -86,7 +86,7 @@ namespace FarmConsole.Body.Controllers.MenuControllers
                 ComponentService.SetView = MapEngine.Map;
                 Selected = 0;
                 ComponentService.UpdateMenuSelect(Selected + 1, Selected + 1, selCount);
-                ComponentService.DisplayLastListElement();
+                ComponentService.DisplayLastListElement(3);
                 Edited = false;
             }
         }
@@ -105,7 +105,7 @@ namespace FarmConsole.Body.Controllers.MenuControllers
             Settings = SettingsService.GetSettings;
             Selected = 0; selCount = Settings.Count + 2;
             SettingsView.Display(); ComponentService.UpdateMenuSelect(Selected + 1, Selected + 1, selCount);
-            ComponentService.DisplayLastListElement();
+            ComponentService.DisplayLastListElement(3);
             while (OpenScreen == "Settings")
             {
                 if (Console.KeyAvailable)

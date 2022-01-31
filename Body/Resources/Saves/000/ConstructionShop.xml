@@ -6,7 +6,7 @@
 		<Slot>door:100</Slot>
 	</Container>
 	<Container name="big bookcase" sufix="with floors" pos="5,2" state="0">
-		<Slot>wooden floor:100</Slot>
+		<Slot>spruce wooden floor:100</Slot>
 		<Slot>tiled floor:100</Slot>
 		<Slot>synthetic grass:100</Slot>
 		<Slot>stone floor:100</Slot>

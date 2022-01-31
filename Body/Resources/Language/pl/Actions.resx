@@ -353,4 +353,40 @@
     <value>Nie posiadasz przy sobie portfela!</value>
     <comment>action result</comment>
   </data>
+  <data name="dont have enough product" xml:space="preserve">
+    <value>Nie posiadasz wystarczającej ilości produktu!</value>
+    <comment>action result</comment>
+  </data>
+  <data name="bake" xml:space="preserve">
+    <value>Upiecz</value>
+    <comment>action name</comment>
+  </data>
+  <data name="cook" xml:space="preserve">
+    <value>Ugotuj</value>
+    <comment>action name</comment>
+  </data>
+  <data name="fry" xml:space="preserve">
+    <value>Usmaż</value>
+    <comment>action name</comment>
+  </data>
+  <data name="compose" xml:space="preserve">
+    <value>Skomponuj Posiłek</value>
+    <comment>action name</comment>
+  </data>
+  <data name="no space on oven" xml:space="preserve">
+    <value>Nie ma miejsca w Piekarniku!</value>
+    <comment>action result</comment>
+  </data>
+  <data name="no space on stove" xml:space="preserve">
+    <value>Nie ma miejsca na Kuchence!</value>
+    <comment>action result</comment>
+  </data>
+  <data name="you don't feel like drinking" xml:space="preserve">
+    <value>Nie chce Ci się pić!</value>
+    <comment>action result</comment>
+  </data>
+  <data name="you don't feel like eating" xml:space="preserve">
+    <value>Nie chce Ci się jeść!</value>
+    <comment>action result</comment>
+  </data>
 </root>

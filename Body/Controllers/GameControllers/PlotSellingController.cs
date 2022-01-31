@@ -11,12 +11,12 @@ namespace FarmConsole.Body.Controllers.GameControllers
 {
     class PlotSellingController : HeadController
     {
-        private static int amount;
         private static int Selected;
 
         private static void UpdateSelected(int value)
         {
             Selected += value;
+            ComponentService.UpdateMenuSelect(Selected, Selected, 3);
         }
         private static void TryToSell()
         {
@@ -44,7 +44,7 @@ namespace FarmConsole.Body.Controllers.GameControllers
                         case ConsoleKey.S: UpdateSelected(-1); break;
                         case ConsoleKey.D: break;
                         case ConsoleKey.A: break;
-                        case ConsoleKey.E: break;
+                        case ConsoleKey.E: TryToSell(); break;
                         case ConsoleKey.Q: break;
                     }
                 }

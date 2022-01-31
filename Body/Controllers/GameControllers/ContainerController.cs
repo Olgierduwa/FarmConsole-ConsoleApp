@@ -14,11 +14,11 @@ namespace FarmConsole.Body.Controllers.GameControllers
     {
         private static int Selected;
         private static int SliderValue = 2;
-        private static int[] Values = new int[] { 1, 5, 10, 25, 50 };
+        private static readonly int[] Values = new int[] { 1, 5, 10, 25, 50 };
         private static int Multiplier = Values[SliderValue];
         private static int CartCount;
         private static bool Side;
-        private static bool ShiftPressed;
+        //private static bool ShiftPressed;
         private static string LeftTitle;
         private static string RightTitle;
         private static ProductModel SelectedProduct { get; set; }
@@ -48,63 +48,75 @@ namespace FarmConsole.Body.Controllers.GameControllers
         }
         private static void Transfer()
         {
-            if (SelectedProduct != null && SelectedProduct.Amount >= Multiplier)
+            if (SelectedProduct != null)
             {
-                if (Side) // from cart to container
+                if (SelectedProduct.Amount >= Multiplier)
                 {
-                    int index = 0;
-                    while (index < Pocket.GetSlotsCount) if (Pocket.GetSlot(index) != null &&
-                            Pocket.GetSlot(index).ObjectName == SelectedProduct.ObjectName) break;
-                        else index++;
-                    if (index == Pocket.GetSlotsCount)
+                    if (Side) // from cart to container
                     {
-                        index = 0;
-                        while (index < Pocket.GetSlotsCount) if (Pocket.GetSlot(index) == null) break; else index++;
+                        int index = 0;
+                        while (index < Pocket.GetSlotsCount) if (Pocket.GetSlot(index) != null &&
+                                Pocket.GetSlot(index).ObjectName == SelectedProduct.ObjectName) break;
+                            else index++;
+                        if (index == Pocket.GetSlotsCount)
+                        {
+                            index = 0;
+                            while (index < Pocket.GetSlotsCount) if (Pocket.GetSlot(index) == null) break; else index++;
+                        }
+                        if (index != Pocket.GetSlotsCount)
+                        {
+                            if (Pocket.GetSlot(index) != null) Pocket.GetSlot(index).AddAmount(Multiplier);
+                            else
+                            {
+                                ProductModel NewProduct = SelectedProduct.ToProduct();
+                                NewProduct.AddAmount(Multiplier);
+                                Pocket.SetSlot(index, NewProduct);
+                            }
+                            ContainerView.DisplayLeftList(Pocket.GetSlots, LeftTitle, Selected, false);
+                            SelectedProduct.AddAmount(-1 * Multiplier);
+                            if (SelectedProduct.Amount == 0)
+                            {
+                                Selected = 1;
+                                Cart.Remove(SelectedProduct);
+                                CartCount = Cart.Count;
+                                if (Cart.Count > 0) SelectedProduct = Cart[Selected - 1]; else SelectedProduct = null;
+                                ContainerView.DisplayRightList(Cart, RightTitle, Selected, true, cleaning: true);
+                            }
+                            else
+                            {
+                                ContainerView.SetRightView();
+                                string content = LS.Object(SelectedProduct.ObjectName) + " : " + SelectedProduct.Amount +
+                                                 LS.Navigation(SelectedProduct.Unit.Split('/')[0], " ", Before: " ");
+                                ComponentService.UpdateMenuTextBox(Selected, content, Margin: 0);
+                                ContainerView.GetRightView();
+                            }
+                            SoundService.Play("K1");
+                        }
                     }
-                    if (index != Pocket.GetSlotsCount)
+                    else if (RightTitle == "cart" && (SelectedProduct.RequiredLevel == 0 ||
+                        SelectedProduct.RequiredLevel <= GameInstance.LVL) || RightTitle != "cart")           // from container to cart
                     {
-                        if (Pocket.GetSlot(index) != null) Pocket.GetSlot(index).Amount += Multiplier;
-                        else
-                        {
-                            ProductModel NewProduct = SelectedProduct.ToProduct();
-                            NewProduct.Amount = Multiplier;
-                            Pocket.SetSlot(index, NewProduct);
-                        }
-                        ContainerView.DisplayLeftList(Pocket.GetSlots, LeftTitle, Selected, false);
-                        SelectedProduct.Amount -= Multiplier;
-                        if (SelectedProduct.Amount == 0)
-                        {
-                            Selected = 1;
-                            Cart.Remove(SelectedProduct);
-                            CartCount = Cart.Count;
-                            if (Cart.Count > 0) SelectedProduct = Cart[Selected - 1]; else SelectedProduct = null;
-                            ContainerView.DisplayRightList(Cart, RightTitle, Selected, true, cleaning: true);
-                        }
-                        else
-                        {
-                            ContainerView.SetRightView();
-                            ComponentService.UpdateMenuTextBox(Selected, SelectedProduct.Amount + "x " + LS.Object(SelectedProduct.ObjectName), margin: 0);
-                            ContainerView.GetRightView();
-                        }
+                        ProductModel NewProduct = SelectedProduct.ToProduct();
+                        if(!SelectedProduct.AddAmount(-1 * Multiplier)) Pocket.SetSlot(Selected - 1, null);
+                        NewProduct.Amount = Multiplier;
+                        int index = 0;
+                        while (index < Cart.Count) if (Cart[index].ObjectName == NewProduct.ObjectName) break; else index++;
+                        if (index == Cart.Count) Cart.Add(NewProduct);
+                        else Cart[index].AddAmount(Multiplier);
+                        ContainerView.GetLeftView();
+                        ContainerView.DisplayRightList(Cart, RightTitle, Selected, false);
+                        ContainerView.SetLeftView();
+                        string content = SelectedProduct.Amount == 0 ? "..." :
+                                        LS.Object(SelectedProduct.ObjectName) + " : " + SelectedProduct.Amount +
+                                        LS.Navigation(SelectedProduct.Unit.Split('/')[0], " ", Before: " ");
+                        ComponentService.UpdateMenuTextBox(Selected, content, Margin: 0);
                         SoundService.Play("K1");
                     }
                 }
-                else // from container to cart
+                else
                 {
-                    ProductModel NewProduct = SelectedProduct.ToProduct();
-                    SelectedProduct.Amount -= Multiplier;
-                    if (SelectedProduct.Amount == 0) Pocket.SetSlot(Selected - 1, null);
-                    NewProduct.Amount = Multiplier;
-                    int index = 0;
-                    while (index < Cart.Count) if (Cart[index].ObjectName == NewProduct.ObjectName) break; else index++;
-                    if (index == Cart.Count) Cart.Add(NewProduct);
-                    else Cart[index].Amount += Multiplier;
-                    ContainerView.GetLeftView();
-                    ContainerView.DisplayRightList(Cart, RightTitle, Selected, false);
-                    ContainerView.SetLeftView();
-                    string content = SelectedProduct.Amount == 0 ? "..." : SelectedProduct.Amount + "x " + LS.Object(SelectedProduct.ObjectName);
-                    ComponentService.UpdateMenuTextBox(Selected, content, margin: 0);
-                    SoundService.Play("K1");
+                    SoundService.Play("K2");
+                    //ComponentService.Warning(LS.Action("dont have enough product"));
                 }
             }
             else SoundService.Play("K2");
@@ -137,11 +149,21 @@ namespace FarmConsole.Body.Controllers.GameControllers
         }
         private static void Captains()
         {
-            string[] itemDetails = new string[] { "", "", "", "", "", "" };
+            string[] itemDetails = new string[] { "", "", "", "", "", "", "" };
             if (SelectedProduct != null)
             {
-                itemDetails[2] = LS.Object(SelectedProduct.ObjectName);
-                itemDetails[3] = LS.Navigation("price") + ": " + SelectedProduct.Price.ToString() + LS.Navigation("currency");
+                itemDetails[2] = LS.Object(SelectedProduct.ObjectName); 
+                if (RightTitle == "cart" || RightTitle == "offer")
+                {
+                    if(SelectedProduct.RequiredLevel > 0 && GameInstance.LVL < SelectedProduct.RequiredLevel)
+                        itemDetails[1] = LS.Navigation("required", " ") + LS.Navigation("lvl",": ") + SelectedProduct.RequiredLevel;
+
+                    itemDetails[3] = LS.Navigation("price") + ": " + SelectedProduct.Price.ToString() + LS.Navigation("currency");
+
+                    var units = SelectedProduct.Unit.Split('/');
+                    if (units.Length > 1) itemDetails[4] = LS.Navigation(units[1] + "s", Before: "[") + ": " +
+                                          (SelectedProduct.Slots < 0 ? (-1 * SelectedProduct.Slots) : 1) + "]";
+                }
             }
             else itemDetails[itemDetails.Length / 2] = "...";
             ContainerView.DisplayCaptains(itemDetails, Side, SliderValue);
@@ -158,7 +180,7 @@ namespace FarmConsole.Body.Controllers.GameControllers
             Pocket = Container ?? MapEngine.GetField().Pocket;
             SelectedProduct = Pocket.GetSlot(Selected);
 
-            LeftTitle = Container == null ? Action.SelectedProduct.ObjectName : Container.SufixName;
+            LeftTitle = Container == null ? Action.GetSelectedProduct.ObjectName : Container.SufixName;
             RightTitle = Container == null ? Cart == GameInstance.Inventory ? "inventory" : "cart" : "offer";
 
             Switch();
@@ -167,7 +189,7 @@ namespace FarmConsole.Body.Controllers.GameControllers
                 if (Console.KeyAvailable)
                 {
                     var cki = Console.ReadKey(true);
-                    if (cki.Modifiers == ConsoleModifiers.Shift) ShiftPressed = true; else ShiftPressed = false;
+                    //if (cki.Modifiers == ConsoleModifiers.Shift) ShiftPressed = true; else ShiftPressed = false;
 
                     switch (cki.Key)
                     {

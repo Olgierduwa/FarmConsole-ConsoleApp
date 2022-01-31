@@ -16,8 +16,12 @@ namespace FarmConsole.Body.Models
         public int State { get => _State; set { _State = value; Edited = true; } }
         public short ID { get; set; }
         private bool Edited { get; set; }
+
+
+        public int RequiredLevel { get; set; }
         public string StateName { get; set; }
         public string ObjectName { get; set; }
+        public string Unit { get; set; }
         public string Property { get; set; }
         public int Price { get; set; }
         public string[] MenuActions { get; set; }
@@ -42,7 +46,7 @@ namespace FarmConsole.Body.Models
             else ID = Index;
             Edited = false;
         }
-        private ObjectModel Clone(object ExpectedModel)
+        private ObjectModel Clone(object ExpectedModel = null)
         {
             ObjectModel O = new ObjectModel();
             if(ExpectedModel is ProductModel) O = new ProductModel();
@@ -53,6 +57,8 @@ namespace FarmConsole.Body.Models
             O.State = State;
             O.StateName = StateName;
             O.ObjectName = ObjectName;
+            O.RequiredLevel = RequiredLevel;
+            O.Unit = Unit;
             O.Property = Property;
             O.Price = Price;
             O.MenuActions = (string[])MenuActions.Clone();
@@ -117,14 +123,15 @@ namespace FarmConsole.Body.Models
             int Index = 0;
             while (Index < Objects.Count)
             {
-                if (Objects[Index].ObjectName == _Name &&
+                if (Objects[Index].ObjectName == _Name.Split(':')[0] &&
                   ((_StateName != "" && Objects[Index].StateName == _StateName) ||
                    (_StateName == "" && Objects[Index].State == _State))) break;
                 Index++;
             }
             if (Index == Objects.Count) return Objects[3]; // error
-            if (Objects[Index].Property == "") Objects[Index].Property = sufix;
-            return Objects[Index];
+            var FoundObject = Objects[Index].Clone();
+            if (FoundObject.Property == "" && sufix != "") FoundObject.Property = sufix;
+            return FoundObject;
         }
         public static List<ObjectModel> GetObjects(int? _Category = null, int? _Scale = null, int? _Type = null, int? _State = null)
         {
@@ -138,7 +145,8 @@ namespace FarmConsole.Body.Models
                         (_State == null || p.State == _State))
                         objects.Add(p);
                 }
-            return objects;
+            return Objects;
         }
+        
     }
 }

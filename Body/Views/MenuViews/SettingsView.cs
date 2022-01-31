@@ -28,13 +28,13 @@ namespace FarmConsole.Body.Views.MenuViews
             Endl(endlCount);
             for (int i = 0; i < Settings.Count; i++)
                 if (i < showCount) TextBox(Settings[i].Name);
-                else TextBox(Settings[i].Name, show: false);
+                else TextBox(Settings[i].Name, Show: false);
 
             if (Settings.Count < showCount) TextBox(LS.Navigation("set language"));
-            else TextBox(LS.Navigation("set language"), show: false);
+            else TextBox(LS.Navigation("set language"), Show: false);
 
             if (Settings.Count + 1 < showCount) TextBox(LS.Navigation("set restore default"));
-            else TextBox(LS.Navigation("set restore default"), show: false);
+            else TextBox(LS.Navigation("set restore default"), Show: false);
 
             GroupEnd();
 
@@ -45,21 +45,21 @@ namespace FarmConsole.Body.Views.MenuViews
                 else Slider(Settings[i].GetMaxSliderValue, Settings[i].GetSliderValue, show: false);
 
             if (Settings.Count < showCount) TextBox(SettingsService.GetLanguage());
-            else TextBox(SettingsService.GetLanguage(), show: false);
+            else TextBox(SettingsService.GetLanguage(), Show: false);
 
             if (Settings.Count + 1 < showCount) TextBox("");
-            else TextBox("", show: false);
+            else TextBox("", Show: false);
 
             GroupEnd();
 
             GroupStart(Console.WindowWidth / 2 - 10, Console.WindowWidth);
             Endl(Console.WindowHeight - 12);
-            TextBox(LS.Navigation("reject button", " Q"), 19, margin: 0);
+            TextBox(LS.Navigation("reject button", " Q"), 19, Margin: 0);
             GroupEnd();
 
             GroupStart(Console.WindowWidth / 2 + 11, Console.WindowWidth);
             Endl(Console.WindowHeight - 12);
-            TextBox(LS.Navigation("save button", " E"), 19, margin: 0);
+            TextBox(LS.Navigation("save button", " E"), 19, Margin: 0);
             GroupEnd();
 
             GroupEnd();

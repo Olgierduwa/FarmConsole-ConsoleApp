@@ -27,6 +27,26 @@ namespace FarmConsole.Body.Services.MainServices
         [DllImport("kernel32.dll", ExactSpelling = true)]
         private static extern IntPtr GetConsoleWindow();
 
+        const uint ENABLE_QUICK_EDIT = 0x0040;
+
+        // STD_INPUT_HANDLE (DWORD): -10 is the standard input device.
+        const int STD_INPUT_HANDLE = -10;
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        static extern IntPtr GetStdHandle(int nStdHandle);
+
+        [DllImport("kernel32.dll")]
+        static extern bool GetConsoleMode(IntPtr hConsoleHandle, out uint lpMode);
+
+        [DllImport("kernel32.dll")]
+        static extern bool SetConsoleMode(IntPtr hConsoleHandle, uint dwMode);
+
+        private static IntPtr ThisConsole = GetConsoleWindow();
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+
+        private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
         public static void PresetWindow()
         {
             IntPtr handle = GetConsoleWindow();
@@ -43,14 +63,23 @@ namespace FarmConsole.Body.Services.MainServices
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.White;
 
+            IntPtr consoleHandle = GetStdHandle(STD_INPUT_HANDLE);
+            uint consoleMode;
+            if (!GetConsoleMode(consoleHandle, out consoleMode)) return; 
+            consoleMode &= ~ENABLE_QUICK_EDIT;
+            if (!SetConsoleMode(consoleHandle, consoleMode)) return;
+
             SetWindow();
         }
 
         public static void SetWindow()
         {
-            Console.CursorVisible = false;
             windowWidth = SettingsService.GetSetting("set screen width").GetRealValue;
             windowHeight = SettingsService.GetSetting("set screen height").GetRealValue;
+            if (windowWidth == Console.LargestWindowWidth && windowHeight == Console.LargestWindowHeight)
+                ShowWindow(ThisConsole, 3);
+            else ShowWindow(ThisConsole, 9);
+            Console.CursorVisible = false;
             SoundService.SetSoundVolume();
             SoundService.SetMusicVolume();
             Console.SetWindowSize(windowWidth, windowHeight);

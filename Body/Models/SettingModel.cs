@@ -1,4 +1,5 @@
 ﻿using FarmConsole.Body.Services;
+using FarmConsole.Body.Services.MainServices;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,16 +8,18 @@ namespace FarmConsole.Body.Models
 {
     public class SettingModel
     {
-        public SettingModel(string _key, int _default, int _value, int _max, int _multi, int _offset)
+        public SettingModel(string _key, int _default, int _value, int _max, int _offset)
         {
             Key = _key;
-
             DefaultValue = _default;
             SliderValue = _value;
             MaxSliderValue = _max;
-            Multiplier = _multi;
             Offset = _offset;
-            RealValue = SliderValue * Multiplier + Offset;
+            if (Key == "set screen width")
+                RealValue = (SliderValue + Offset) * SettingsService.MaxWindowWidth / (MaxSliderValue + Offset);
+            else if (Key == "set screen height")
+                RealValue = (SliderValue + Offset) * SettingsService.MaxWindowHeihgt / (MaxSliderValue + Offset);
+            else RealValue = SliderValue;
         }
         public override string ToString()
         {
@@ -24,7 +27,6 @@ namespace FarmConsole.Body.Models
                 "' default='" + DefaultValue +
                 "' value='" + SliderValue +
                 "' max='" + MaxSliderValue +
-                "' multiplier='" + Multiplier +
                 "' offset='" + Offset + "'/>";
         }
 
@@ -32,7 +34,6 @@ namespace FarmConsole.Body.Models
         public string Name { get; set; }
 
         private int Offset { get; set; }
-        private int Multiplier { get; set; }
         private int MaxSliderValue { get; set; }
         private int DefaultValue { get; set; }
         private int RealValue { get; set; }
@@ -46,7 +47,11 @@ namespace FarmConsole.Body.Models
             if(SliderValue + value >= 0 && SliderValue + value <= MaxSliderValue)
             {
                 SliderValue += value;
-                RealValue = SliderValue * Multiplier + Offset;
+                if (Key == "set screen width")
+                    RealValue = (SliderValue + Offset) * SettingsService.MaxWindowWidth / (MaxSliderValue + Offset);
+                else if(Key == "set screen height")
+                    RealValue = (SliderValue + Offset) * SettingsService.MaxWindowHeihgt / (MaxSliderValue + Offset);
+                else RealValue = SliderValue;
                 return true;
             }
             return false;
@@ -54,7 +59,11 @@ namespace FarmConsole.Body.Models
         public void SetDefaultValue()
         {
             SliderValue = DefaultValue;
-            RealValue = SliderValue * Multiplier + Offset;
+            if (Key == "set screen width")
+                RealValue = (SliderValue + Offset) * SettingsService.MaxWindowWidth / (MaxSliderValue + Offset);
+            else if(Key == "set screen height")
+                RealValue = (SliderValue + Offset) * SettingsService.MaxWindowHeihgt / (MaxSliderValue + Offset);
+            else RealValue = SliderValue;
         }
     }
 }

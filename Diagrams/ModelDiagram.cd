@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="FarmConsole.Body.Models.ActionModel" Collapsed="true">
+    <Position X="2.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EIAAAAAAEAAAAAAAAAAAAAQAgAUAAAAAAQACAAAAAAA=</HashCode>
+      <FileName>Body\Models\ActionModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Models.ColorModel" Collapsed="true">
+    <Position X="0.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgAAAAAg=</HashCode>
+      <FileName>Body\Models\ColorModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Models.ContainerModel" Collapsed="true">
+    <Position X="4" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAACIAAAAAEAAABEAAAgAQBAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Body\Models\ContainerModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Models.FieldModel" Collapsed="true">
+    <Position X="2.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACACAEAAAAAAAAAAAAAAAACAJAAAEAAAA=</HashCode>
+      <FileName>Body\Models\FieldModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Models.GameInstanceModel" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QpQACEBgQQACgQCIQAAEAAEFQQEIIAAAAQGQAgCAQAg=</HashCode>
+      <FileName>Body\Models\GameInstanceModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Models.PixelModel" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAA0AAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Body\Models\PixelModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Models.ProductModel" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAACAAAAAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>Body\Models\ProductModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Models.RecipeModel" Collapsed="true">
+    <Position X="2.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAACAEAAAAACAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Body\Models\RecipeModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Models.RuleModel" Collapsed="true">
+    <Position X="4" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAEAAAgAAQAAAAIAAAAAAAAAIAABAA=</HashCode>
+      <FileName>Body\Models\RuleModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Models.SettingModel" Collapsed="true">
+    <Position X="2.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACIQIQEAABAAARAAABAAAAEAAKAAAAAgAA=</HashCode>
+      <FileName>Body\Models\SettingModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Models.SupplyModel" Collapsed="true">
+    <Position X="4" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAAAEAAIAAAAAhAAEAAAAAggACAAAAAg=</HashCode>
+      <FileName>Body\Models\SupplyModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Models.ViewModel" Collapsed="true">
+    <Position X="0.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABBBiAACAAAAGAEAABgAIAAAACAAAAIAQQAAAAAAA=</HashCode>
+      <FileName>Body\Models\ViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Models.ObjectModel" Collapsed="true">
+    <Position X="1.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ARAIACAAAQAAoAAEIAIgMAAQAAABAQEAIUAABaEACBA=</HashCode>
+      <FileName>Body\Models\ObjectModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

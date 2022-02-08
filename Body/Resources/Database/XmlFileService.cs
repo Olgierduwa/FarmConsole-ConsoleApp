@@ -15,7 +15,7 @@ namespace FarmConsole.Body.Services.MainServices
 {
     public static class XF
     {
-        private static readonly string res = "../../../Body/Resources/";
+        private static readonly string res = "Body/Resources/";
 
         private static readonly string db = "Database/";
         private static readonly string saves = "Saves/";
@@ -203,9 +203,8 @@ namespace FarmConsole.Body.Services.MainServices
                 int Default = int.Parse(S.Attributes["default"].Value);
                 int Value = int.Parse(S.Attributes["value"].Value);
                 int Max = int.Parse(S.Attributes["max"].Value);
-                int Multi = int.Parse(S.Attributes["multiplier"].Value);
                 int Offset = int.Parse(S.Attributes["offset"].Value);
-                Settings.Add(new SettingModel(Key, Default, Value, Max, Multi, Offset));
+                Settings.Add(new SettingModel(Key, Default, Value, Max, Offset));
             }
             return Settings;
         }

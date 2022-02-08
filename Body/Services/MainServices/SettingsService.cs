@@ -13,6 +13,8 @@ namespace FarmConsole.Body.Services.MainServices
         public static string[] BLOCKEDACTIONS_LVL2 = new string[] { "hide", "destroy", "build", "dig path", "plow" };
         public static string[] BLOCKEDACTIONS_LVL1 = new string[] { "rotate", "move", "lock", "unlock" };
 
+        public static int MaxWindowWidth { get; set; }
+        public static int MaxWindowHeihgt { get; set; }
         public static string LanguageKey { get; set; }
         public static Dictionary<string, string> Languages { get; set; }
         public static string GetLanguage()
@@ -47,8 +49,11 @@ namespace FarmConsole.Body.Services.MainServices
         }
         public static void LoadSettings()
         {
+            MaxWindowHeihgt = Console.LargestWindowHeight;
+            MaxWindowWidth = Console.LargestWindowWidth;
             Settings = XF.GetSettings();
             ConvertService.SetSymbols();
+            ColorService.SetColorPalette();
             HeadController.FieldNameVisibility = Convert.ToBoolean(GetSetting("set field name").GetRealValue);
             HeadController.StatsVisibility = Convert.ToBoolean(GetSetting("set stats").GetRealValue);
             HeadController.PlayerMovementAxis = Convert.ToBoolean(GetSetting("set player move axis").GetRealValue);

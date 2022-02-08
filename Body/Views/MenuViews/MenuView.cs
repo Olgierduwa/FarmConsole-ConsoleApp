@@ -13,23 +13,22 @@ namespace FarmConsole.Body.Views.MenuViews
             Endl(Console.WindowHeight / 2 - 9);
             GroupStart(0);
 
-                GroupStart(2);
-                Endl(1);
-                TextBox(LS.Navigation("start game button"));
-                TextBox(LS.Navigation("load game button"));
-                TextBox(LS.Navigation("settings button"));
-                TextBox(LS.Navigation("help button"));
-                GroupEnd();
+            GroupStart(2);
+            Endl(1);
+            TextBox(LS.Navigation("start game button"));
+            TextBox(LS.Navigation("load game button"));
+            TextBox(LS.Navigation("settings button"));
+            TextBox(LS.Navigation("help button"));
+            GroupEnd();
 
-                GroupStart(4);
-                Endl(1);
-                TextBox("\"" + LS.Navigation("menu text 1") + "\"");
-                TextBox("\"" + LS.Navigation("menu text 2") + "\"");
-                GroupEnd();
+            GroupStart(4);
+            Endl(1);
+            TextBox("\"" + LS.Navigation("menu text 1") + "\"");
+            TextBox("\"" + LS.Navigation("menu text 2") + "\"");
+            GroupEnd();
 
             GroupEnd();
             PrintList();
-            //vt1.ShowComponentList();
         }
     }
 }

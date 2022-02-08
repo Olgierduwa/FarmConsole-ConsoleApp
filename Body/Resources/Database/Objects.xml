@@ -448,7 +448,7 @@
 				´´´´´´´´´´´´´´´´´´´´´´´@´´´´´´´´´´´´´´´´´´´´´´´@´´´´´´´´´'┴-'´´´´´´´´´´@´´´´´´´´´´'-┴'´´´´´´´´´@´´´´´´´´´´'-┴'´´´´´´´´´@´´´´´´´´´´´´´´´´´´´´´´´@´´´´´´´´´'┴-'´´´´´´´´´´@´´´´´´´´´´'┴'´´´´´´´´´´@´´´´´´´´´´´´´´´´´´´´´´´@´´´´´´´´´´´´´´´´´´´´´´´@´´´´´´´´´´´´´´´´´´´´´´´@´´´´´´´´´´'┴'´´´´´´´´´´@
 			</object>
 			<object price="9500" name="door" state="-00000/-00011/-00000/-00101/-00000/-01001/-00000/-10001/+/+/+/+" layers="8,0/8,1/9,2/9,3/10,4/10,5/11,6/11,7" lvl="8"
-				   mapAct="come out,lock/unlock" colors="gray2/gray2/gray2/gray2/gray2/gray2/gray2/gray2/brownd/brownd/brownd/brownd" cut="">
+				   mapAct="lock/unlock" colors="gray2/gray2/gray2/gray2/gray2/gray2/gray2/gray2/brownd/brownd/brownd/brownd" cut="">
 				´´´´´´´´´´´.-´´´´´´´´´´@´´´´´´´´´´´.-´´´´´´´´´´@´´´´´´´´´´-.´´´´´´´´´´´@´´´´´´´´´´-.´´´´´´´´´´´@´´´´´´´´´´´´´´´´´´´´´´´@´´´´´´´´´´´´´´´´´´´´´´´@´´´´´´´´´´´´´´´´´´´´´´´@´´´´´´´´´´´´´´´´´´´´´´´@´´´´´´´´´´´´´´´´´´´´´´´@´´´´´´´´´´´´´´´´´´´´´´´@´´´´´´´´´´´´´´´´´´´´´´´@´´´´´´´´´´´´´´´´´´´´´´´@
 				´´´´´´´´´´´´´´┐-'´´´´´´@´´´´´´´´´´´´´´┐-'´´´´´´@´´´´´´'-.´´´´´´´´´´´´´´@´´´´´´'-.´´´´´´´´´´´´´´@´´´´´´´´´´´´´´´´´´´´´´´@´´´´´´´´´´´´´´´´´´´´´´´@´´´´´´´´´´´´´´´´´´´´´´´@´´´´´´´´´´´´´´´´´´´´´´´@´´´´´´´´´▄▄▀▀▄´´´´´´´´´@´´´´´´´´´▄▀▀▄▄´´´´´´´´´@´´´´´´´´´´´´´´´´´´´´´´´@´´´´´´´´´´´´´´´´´´´´´´´@
 				´´_.-´´´´´´´´´|  ´´´´´´@´´_.-´´´´´´´´´|  ´´´´´´@´´´´´´  |´´´´´´´´´-._´´@´´´´´´  |´´´´´´´´´-._´´@´´´´´´´´´´´´´´´´´´´ ´´´@´´´´´´´´´´´´´´´´´´´ ´´´@´´´ ´´´´´´´´´´´´´´´´´´´@´´´ ´´´´´´´´´´´´´´´´´´´@´´´´´▄▄▀▀▄▄███´´´´´´´´´@´´´´´´´´´███▄▄▀▀▄▄´´´´´@´´´´´´´´´´´´´´´´´▄▄´´´´@´´´´▄▄´´´´´´´´´´´´´´´´´@
@@ -689,9 +689,9 @@
 			<object price="50" name="fork" state="clean/he dirty" menuAct="use/wash"/>
 			<object price="50" name="spoon" state="clean/he dirty" menuAct="use/wash"/>
 
-			<object lvl="1" unit="kg/piece" state="he raw/he cooked/he bake/he fry" price="6" property="e60:90:2" slots="-11" mapAct="cook,bake,fry/compose/compose" name="potato"/>
+			<object lvl="1" unit="kg/piece" state="he raw/he cooked/he bake/he fry" price="6" property="e60:90:2" slots="-11" mapAct="cook,bake,fry/compose/compose/compose" name="potato"/>
 			<object lvl="3" unit="kg" price="16" property="" name="wheat"/>
-			<object lvl="5" unit="kg/piece" state="he raw/he cooked/he bake/he fry" price="7" property="e45:90:3" slots="-10" mapAct="cook,bake,fry/compose/compose" name="beetroot"/>
+			<object lvl="5" unit="kg/piece" state="he raw/he cooked/he bake/he fry" price="7" property="e45:90:3" slots="-10" mapAct="cook,bake,fry/compose/compose/compose" name="beetroot"/>
 			<object lvl="7" unit="kg" price="8" property="" name="oat"/>
 			<object lvl="9" unit="kg/piece" state="she raw/she cooked" price="10" property="e20:30:3" slots="-22" mapAct="cook/compose" name="carrot"/>
 			<object lvl="15" unit="kg" price="24" property="" name="canola"/>

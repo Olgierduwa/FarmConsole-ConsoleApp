@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="FarmConsole.Body.Controllers.CentralControllers.HeadController" Collapsed="true">
+    <Position X="5.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABEAAAAAAAAAAFAAAAEgAAAgAEggAJgAAAAAQAACQ=</HashCode>
+      <FileName>Body\Controllers\CentralControllers\HeadController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Controllers.GameControllers.CashMachineController" Collapsed="true">
+    <Position X="8.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAQQACIAAAAEAAAAAEQBAAAAABAACAAAAAAEI=</HashCode>
+      <FileName>Body\Controllers\GameControllers\CashMachineController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Controllers.GameControllers.ContainerController" Collapsed="true">
+    <Position X="6.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAEABQoCAoIAAAAAAAQBQAAAAAEAAAAIgCAAAAAI=</HashCode>
+      <FileName>Body\Controllers\GameControllers\ContainerController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Controllers.GameControllers.FoodComposingController" Collapsed="true">
+    <Position X="8.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAEAIAAAIAAAAAAIICAAQAAgAAAAAAAAAABBAAI=</HashCode>
+      <FileName>Body\Controllers\GameControllers\FoodComposingController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Controllers.GameControllers.LocationController" Collapsed="true">
+    <Position X="5.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAQIAAAAAIEAAAAAAAQAAAAAAAAAAAIAAg=</HashCode>
+      <FileName>Body\Controllers\GameControllers\LocationController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Controllers.GameControllers.PlotBuyingController" Collapsed="true">
+    <Position X="8.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAIAAI=</HashCode>
+      <FileName>Body\Controllers\GameControllers\PlotBuyingController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Controllers.GameControllers.PlotExtendingController" Collapsed="true">
+    <Position X="6.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQCAAAAAIAAAAAAAAAAAAAAAAAAkAAAAAAAAAAA=</HashCode>
+      <FileName>Body\Controllers\GameControllers\PlotExtendingController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Controllers.GameControllers.PlotSellingController" Collapsed="true">
+    <Position X="8.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAIAAAAAAAEAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Body\Controllers\GameControllers\PlotSellingController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Controllers.GameControllers.ProductBuyingController" Collapsed="true">
+    <Position X="8.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAEAAQAAAIAAAAAAAAACAAAECgAAAAEAAAAAAgAI=</HashCode>
+      <FileName>Body\Controllers\GameControllers\ProductBuyingController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Controllers.GameControllers.ProductOfferController" Collapsed="true">
+    <Position X="6.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAIAAAACAIAAAAAAAMADAACEEgAAAAAIkAAAAAAA=</HashCode>
+      <FileName>Body\Controllers\GameControllers\ProductOfferController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Controllers.GameControllers.SideMenuController" Collapsed="true">
+    <Position X="2.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>DAgEiAAAAAEIJBAgsBIgAwQACAAFAEAQAAQCggBiEAE=</HashCode>
+      <FileName>Body\Controllers\GameControllers\SideMenuController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Controllers.GameControllers.StoveController" Collapsed="true">
+    <Position X="6.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAQAEQIJBEAAAAAwAAAAAAAAAAAAAEEAAIgA4=</HashCode>
+      <FileName>Body\Controllers\GameControllers\StoveController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Controllers.MenuControllers.EscapeController" Collapsed="true">
+    <Position X="2.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Body\Controllers\MenuControllers\EscapeController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Controllers.MenuControllers.GameLoadController" Collapsed="true">
+    <Position X="4" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Body\Controllers\MenuControllers\GameLoadController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Controllers.MenuControllers.GameNewController" Collapsed="true">
+    <Position X="4" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAgIQAAAAAAAAAAAAAAAgEACABAQAAAAAI=</HashCode>
+      <FileName>Body\Controllers\MenuControllers\GameNewController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Controllers.MenuControllers.GameSaveController" Collapsed="true">
+    <Position X="2.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Body\Controllers\MenuControllers\GameSaveController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Controllers.MenuControllers.HelpController" Collapsed="true">
+    <Position X="2.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Body\Controllers\MenuControllers\HelpController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Controllers.MenuControllers.IntroController" Collapsed="true">
+    <Position X="4" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Body\Controllers\MenuControllers\IntroController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Controllers.MenuControllers.MainMenuController" Collapsed="true">
+    <Position X="4" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Body\Controllers\MenuControllers\MainMenuController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Controllers.MenuControllers.SettingsController" Collapsed="true">
+    <Position X="2.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAgAAAAAAIAAAAAAAAAAAAIAAAQEAgABAQAAAAAI=</HashCode>
+      <FileName>Body\Controllers\MenuControllers\SettingsController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Services.GameServices.ActionService" Collapsed="true">
+    <Position X="6.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAADEATAAAAAAQAQAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Body\Services\GameServices\ActionService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Services.GameServices.GameService" Collapsed="true">
+    <Position X="4" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAEEQgAAAAgACAAAAgIEAAIAgAAgAAACAggAAA=</HashCode>
+      <FileName>Body\Services\GameServices\GameService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

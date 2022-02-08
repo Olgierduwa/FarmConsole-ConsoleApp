@@ -255,7 +255,7 @@ namespace FarmConsole.Body.Models
                 Inventory = new List<ProductModel>();
                 var objects = ObjectModel.GetObjects();
                 foreach (var o in objects)
-                    if (o.Category > 3) Inventory.Add(o.ToProduct(10));
+                    if (o.Category > 3) Inventory.Add(o.ToProduct(20));
                     else  if (o.Category > 2 && o.State == 0) Inventory.Add(o.ToProduct(10));
             }
             else Inventory = new List<ProductModel>

@@ -57,11 +57,10 @@ namespace FarmConsole.Body.Controllers.GameControllers
                 {
                     foreach (var offerProduct in OfferCart)
                     {
-                        var inventoryProduct = GameInstance.Inventory.Find(p => p.ObjectName == offerProduct.ObjectName);
+                        int IPID = GameInstance.Inventory.FindIndex(p => p.ObjectName == offerProduct.ObjectName && p.State == offerProduct.State);
                         offerProduct.Amount *= offerProduct.Slots < 0 ? offerProduct.Slots * -1 : 1;
-                        inventoryProduct.AddAmount(-1 * offerProduct.Amount);
                         GameService.IncreaseInExperience(offerProduct.Amount);
-                        if (inventoryProduct.Amount == 0) GameInstance.Inventory.Remove(inventoryProduct);
+                        if (!GameInstance.Inventory[IPID].AddAmount(-1 * offerProduct.Amount)) GameInstance.Inventory.RemoveAt(IPID);
                     }
                     MapEngine.Map.SortContainers(OfferCart);
                     GameInstance.CardFunds += transferpayment ? amount : 0;
@@ -101,15 +100,16 @@ namespace FarmConsole.Body.Controllers.GameControllers
             List<ProductModel> MatchProducts = new List<ProductModel>();
             foreach (var inventoryProduct in GameInstance.Inventory)
             {
-                var founded = SupplyProducts.Find(x => x.ObjectName == inventoryProduct.ObjectName);
+                var founded = SupplyProducts.Find(x => x.ObjectName == inventoryProduct.ObjectName && inventoryProduct.State == 0);
                 if (founded != null)
                 {
                     var splitProduct = founded.ToProduct();
-                    splitProduct.Amount /= splitProduct.Slots < 0 ? (splitProduct.Slots * -1) : 1;
+                    splitProduct.Amount = inventoryProduct.Amount / (splitProduct.Slots < 0 ? (splitProduct.Slots * -1) : 1);
                     MatchProducts.Add(splitProduct);
                 }
             }
-                AvailableProductsContainer = new ContainerModel(MatchProducts, (short)MatchProducts.Count, "inventory");
+
+            AvailableProductsContainer = new ContainerModel(MatchProducts, (short)MatchProducts.Count, "inventory");
             OfferCart = GameInstance.Cart;
             transferpayment = false;
             SetAmount();

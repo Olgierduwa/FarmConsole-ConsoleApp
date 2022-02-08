@@ -126,7 +126,7 @@ namespace FarmConsole.Body.Controllers.GameControllers
                     COM = Q = true;
 
                     var Product = FilteredProducts[ES - 2];
-                    ProductActions = Product.MenuActions;
+                    ProductActions = ConvertService.SelectAllowedActions(Product.MenuActions, MapEngine.Map.AccessLevel);
                     MenuCount = ProductActions.Length;
                     MenuSize["L"] = SideMenuView.DisplayLeftMenu(ProductActions, LS.Object(Product.ObjectName), CS, true);
                 }
@@ -142,7 +142,7 @@ namespace FarmConsole.Body.Controllers.GameControllers
                 TAB = true;
 
                 var Product = FilteredProducts[ES - 2];
-                ProductActions = Product.MenuActions;
+                ProductActions = ConvertService.SelectAllowedActions(Product.MenuActions, MapEngine.Map.AccessLevel);
                 MenuCount = ProductActions.Length;
                 ConfirmProductAction();
             }

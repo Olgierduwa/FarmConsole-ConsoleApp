@@ -140,17 +140,17 @@ namespace FarmConsole.Body.Services.MainServices
 
             return ActionsTable;
         }
-        public static string[] SelectAllowedActions(string[] mapActions, byte accesslevel)
+        public static string[] SelectAllowedActions(string[] Actions, byte accesslevel)
         {
-            if (SettingsService.GODMOD) return mapActions;
+            if (SettingsService.GODMOD) return Actions;
             if (accesslevel == 0) return new string[] { };
             List<string> AllowedActions = new List<string>();
-            for (int i = 0; i < mapActions.Length; i++)
+            for (int i = 0; i < Actions.Length; i++)
             {
                 bool Permission = true;
-                if (accesslevel < 3 && SettingsService.BLOCKEDACTIONS_LVL2.Contains(mapActions[i])) Permission = false;
-                if (accesslevel < 2 && SettingsService.BLOCKEDACTIONS_LVL1.Contains(mapActions[i])) Permission = false;
-                if (Permission) AllowedActions.Add(mapActions[i]);
+                if (accesslevel < 3 && SettingsService.BLOCKEDACTIONS_LVL2.Contains(Actions[i])) Permission = false;
+                if (accesslevel < 2 && SettingsService.BLOCKEDACTIONS_LVL1.Contains(Actions[i])) Permission = false;
+                if (Permission) AllowedActions.Add(Actions[i]);
             }
             return AllowedActions.ToArray();
         }

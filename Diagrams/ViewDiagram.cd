@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="FarmConsole.Body.Services.MainServices.ComponentService" Collapsed="true">
+    <Position X="3.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAgYAQAAAAABBAJAABGAAQAMAAAQAAQAA=</HashCode>
+      <FileName>Body\Services\MainServices\ComponentService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Views.GameViews.CashMachineView" Collapsed="true">
+    <Position X="6.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAABBAAAAAAAAAAAAAAAAAAQAAEAAAAAA=</HashCode>
+      <FileName>Body\Views\GameViews\CashMachineView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Views.GameViews.ContainerView" Collapsed="true">
+    <Position X="4.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AoAAAAQAAAAAAkAAACAIAAACAAAAAAAAQAAEAAAAACA=</HashCode>
+      <FileName>Body\Views\GameViews\ContainerView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Views.GameViews.FoodComposingView" Collapsed="true">
+    <Position X="6.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAIEAABAAKAAgAAAAAAAgAACAAAAAAAIAEgAAAQAQ=</HashCode>
+      <FileName>Body\Views\GameViews\FoodComposingView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Views.GameViews.GameView" Collapsed="true">
+    <Position X="3.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAEAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Body\Views\GameViews\GameView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Views.GameViews.PlotBuyingView" Collapsed="true">
+    <Position X="6.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Body\Views\GameViews\PlotBuyingView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Views.GameViews.PlotExtendingView" Collapsed="true">
+    <Position X="4.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Body\Views\GameViews\PlotExtendingView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Views.GameViews.PlotSellingView" Collapsed="true">
+    <Position X="5.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Body\Views\GameViews\PlotSellingView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Views.GameViews.ProductBuyingView" Collapsed="true">
+    <Position X="4.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Body\Views\GameViews\ProductBuyingView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Views.GameViews.ProductOfferView" Collapsed="true">
+    <Position X="6.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>Body\Views\GameViews\ProductOfferView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Views.GameViews.SideMenuView" Collapsed="true">
+    <Position X="0.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAABAAAAAAAAAAAAAAAAAAgAABAgAAwAAACAAA=</HashCode>
+      <FileName>Body\Views\GameViews\SideMenuView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Views.GameViews.StoveView" Collapsed="true">
+    <Position X="4.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAQQIIAAAAAAAAAAAAQAAEAAAAIAA=</HashCode>
+      <FileName>Body\Views\GameViews\StoveView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Views.MenuViews.AnimationView" Collapsed="true">
+    <Position X="2.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAQAQAA=</HashCode>
+      <FileName>Body\Views\MenuViews\AnimationView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Views.MenuViews.EscapeView" Collapsed="true">
+    <Position X="1.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Body\Views\MenuViews\EscapeView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Views.MenuViews.GameLoadView" Collapsed="true">
+    <Position X="2.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Body\Views\MenuViews\GameLoadView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Views.MenuViews.GameNewView" Collapsed="true">
+    <Position X="2.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAARAAEAEAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Body\Views\MenuViews\GameNewView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Views.MenuViews.GameSaveView" Collapsed="true">
+    <Position X="0.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAACAAAAAAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Body\Views\MenuViews\GameSaveView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Views.MenuViews.HelpView" Collapsed="true">
+    <Position X="0.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Body\Views\MenuViews\HelpView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Views.MenuViews.MenuView" Collapsed="true">
+    <Position X="2.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Body\Views\MenuViews\MenuView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Views.MenuViews.SettingsView" Collapsed="true">
+    <Position X="0.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Body\Views\MenuViews\SettingsView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FarmConsole.Body.Engines.ComponentEngine" Collapsed="true">
+    <Position X="3.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgUCAiQAAacAYIgAAQAAAEMAABAgAAAhABBACBHBBA=</HashCode>
+      <FileName>Body\Engines\ComponentEngine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

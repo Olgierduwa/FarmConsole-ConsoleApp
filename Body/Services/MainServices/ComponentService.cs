@@ -10,7 +10,6 @@ namespace FarmConsole.Body.Services.MainServices
 {
     class ComponentService : ComponentEngine
     {
-        protected static string DangerMessage;
         protected static List<CM> ComponentsDisplayed = new List<CM>();
         protected static ViewModel View;
 

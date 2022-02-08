@@ -2,10 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Reflection;
 using System.Resources;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Xml;
 
 namespace FarmConsole.Body.Services.MainServices
@@ -17,6 +19,7 @@ namespace FarmConsole.Body.Services.MainServices
         private static Dictionary<string, string> _objects { get; set; }
         private static Dictionary<string, string> _texts { get; set; }
         private static string LanguageKey { get; set; }
+        private static Assembly assembly { get; set; }
 
         public static string Navigation(string Key, string After = "", string Before = "")
             => Before + (_navigation.ContainsKey(Key) ? _navigation[Key] : "UNKNOWN NAVIGATION") + After;
@@ -40,7 +43,7 @@ namespace FarmConsole.Body.Services.MainServices
 
             _texts = new Dictionary<string, string>();
             XmlDocument doc = new XmlDocument();
-            doc.Load("../../../Body/Resources/Language/" + LanguageKey + "/Texts.xml");
+            doc.Load($"Body/Resources/Language/{LanguageKey}/Texts.xml");
             foreach (XmlNode node in doc.SelectNodes("/texts/text"))
             {
                 string text = ConvertService.RemoveSpacesAfterEndline(node.InnerText.Replace("\r", ""));
@@ -49,10 +52,12 @@ namespace FarmConsole.Body.Services.MainServices
         }
         private static void Load(Dictionary<string, string> dictionary, string name)
         {
-            ResourceManager resmanager = new ResourceManager("FarmConsole.Body.Resources.Language." + LanguageKey + "." + name, typeof(LS).Assembly);
-            ResourceSet resourceSet = resmanager.GetResourceSet(new CultureInfo(LanguageKey), true, true);
-            foreach (DictionaryEntry entry in resourceSet)
-                dictionary.Add(entry.Key.ToString(), entry.Value.ToString());
+            string path = $"Body/Resources/Language/{LanguageKey}/{name}.resx";
+            XmlDocument doc = new XmlDocument();
+            doc.Load(path);
+            XmlNodeList Data = doc.SelectNodes("/root/data");
+            foreach (XmlNode node in Data)
+                dictionary.Add(node.Attributes["name"].Value, node.SelectNodes("value")[0].InnerText);
         }
     }
 }

@@ -117,10 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="401" xml:space="preserve">
-    <value>Wybieranie elementu Menu: W/S Zatwierdzenie lub wycofanie: E/Q Wybór wartości suwaka: A/D</value>
-    <comment>main</comment>
-  </data>
   <data name="choose" xml:space="preserve">
     <value>WYBIERZ</value>
     <comment>action button</comment>
@@ -194,11 +190,11 @@
     <comment>menu label</comment>
   </data>
   <data name="menu text 1" xml:space="preserve">
-    <value>Swietny Tytul!!</value>
+    <value>Przykładowe motto!</value>
     <comment>main</comment>
   </data>
   <data name="menu text 2" xml:space="preserve">
-    <value>Oto najlpesza gra konsolowa, o jakiej slyszal swiat!</value>
+    <value>Przykładowa opinia lub wskazówka dotycząca rozgrywki</value>
     <comment>main</comment>
   </data>
   <data name="new save button" xml:space="preserve">

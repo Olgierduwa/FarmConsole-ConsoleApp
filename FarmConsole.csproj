@@ -11,11 +11,100 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <ApplicationIcon>FC.ico</ApplicationIcon>
+    <ApplicationIcon></ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Core.Google.GData.Extensions" Version="1.0.2" />
-    <PackageReference Include="Microsoft.Azure.Amqp" Version="2.5.10" />
+    <EmbeddedResource Remove="Body\Resources\Language\en\Actions.resx" />
+    <EmbeddedResource Remove="Body\Resources\Language\en\Navigation.resx" />
+    <EmbeddedResource Remove="Body\Resources\Language\en\Objects.resx" />
+    <EmbeddedResource Remove="Body\Resources\Language\pl\Actions.resx" />
+    <EmbeddedResource Remove="Body\Resources\Language\pl\Navigation.resx" />
+    <EmbeddedResource Remove="Body\Resources\Language\pl\Objects.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Body\Resources\Database\colors.xml" />
+    <None Remove="Body\Resources\Database\FoodRecipes.xml" />
+    <None Remove="Body\Resources\Database\graphics.xml" />
+    <None Remove="Body\Resources\Database\Objects.xml" />
+    <None Remove="Body\Resources\Database\Rules.xml" />
+    <None Remove="Body\Resources\Database\Settings.xml" />
+    <None Remove="Body\Resources\Language\en\Texts.xml" />
+    <None Remove="Body\Resources\Language\Languages.xml" />
+    <None Remove="Body\Resources\Language\pl\Texts.xml" />
+    <None Remove="Body\Resources\Saves\000\AgroShop.xml" />
+    <None Remove="Body\Resources\Saves\000\ConstructionShop.xml" />
+    <None Remove="Body\Resources\Saves\000\House.xml" />
+    <None Remove="Body\Resources\Saves\000\Supermarket.xml" />
+    <None Remove="Body\Resources\Saves\000\TownHall.xml" />
+    <None Remove="Body\Resources\Saves\Saves.xml" />
+    <None Remove="xd.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Body\Resources\Database\Colors.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Body\Resources\Database\FoodRecipes.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Body\Resources\Database\Graphics.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Body\Resources\Database\Objects.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Body\Resources\Database\Rules.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Body\Resources\Database\Settings.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Body\Resources\Language\en\Actions.resx">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Body\Resources\Language\en\Navigation.resx">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Body\Resources\Language\en\Objects.resx">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Body\Resources\Language\en\Texts.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Body\Resources\Language\pl\Actions.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Body\Resources\Language\pl\Navigation.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Body\Resources\Language\pl\Objects.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Body\Resources\Language\pl\Texts.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Body\Resources\Saves\000\AgroShop.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Body\Resources\Saves\000\ConstructionShop.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Body\Resources\Saves\000\House.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Body\Resources\Saves\000\Supermarket.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Body\Resources\Saves\000\TownHall.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Body\Resources\Saves\Saves.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="NAudio" Version="2.0.1" />
     <PackageReference Include="Pastel" Version="3.0.0" />
   </ItemGroup>
@@ -40,15 +129,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Update="Body\Resources\Language\en\Actions.resx">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Body\Resources\Language\en\Navigation.resx">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Body\Resources\Language\en\Objects.resx">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
+    <Content Include="Body\Resources\Language\Languages.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <SsdtUnitTestVersion>3.1</SsdtUnitTestVersion>
@@ -57,6 +140,9 @@
     <PackageIcon>FC.ico</PackageIcon>
     <PackageIconUrl />
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Win32Resource />
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>Kluczyk.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <Import Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.Sql.UnitTesting.targets" Condition="$(VisualStudioVersion) != '15.0' And '$(SQLDBExtensionsRefPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.Sql.UnitTesting.targets" Condition="$(VisualStudioVersion) != '15.0' And '$(SQLDBExtensionsRefPath)' == ''" />

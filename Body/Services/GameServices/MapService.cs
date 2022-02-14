@@ -73,6 +73,7 @@ namespace FarmConsole.Body.Services.GameServices
 
         public static string Build(ProductModel BuildProduct)
         {
+            if (BuildProduct.Amount < 1) { ClearSelectedFields(); return LS.Action("no more objects"); }
             if (GetField().Category == 3) return LS.Action("overwriting");
             SetField(GetPos(), BuildProduct.ToField());
             ClearSelectedFields(1);

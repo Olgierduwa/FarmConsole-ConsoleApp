@@ -110,7 +110,12 @@ namespace FarmConsole.Body.Controllers.GameControllers
 
                     if (Action.IsInProcess)
                     {
-                        if (!ActionService.MakeAction()) SideMenuController.ShowResult();
+                        if (!ActionService.MakeAction())
+                        {
+                            SideMenuController.ShowResult();
+                            Console.ReadKey(true);
+                            SideMenuController.HideSideMenu("C");
+                        }
                         GameService.DisplayFieldName();
                     }
                     Previously = DateTime.Now;

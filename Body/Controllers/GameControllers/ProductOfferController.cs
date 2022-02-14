@@ -20,7 +20,7 @@ namespace FarmConsole.Body.Controllers.GameControllers
         private static int amount;
         private static bool transferpayment;
         private static List<ProductModel> OfferCart { get; set; }
-        private static ContainerModel AvailableProductsContainer;
+        private static ContainerModel AvailableProductsContainer { get; set; }
 
 
         private static void EditOffer()

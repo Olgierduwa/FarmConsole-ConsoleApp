@@ -777,7 +777,7 @@
     <value>Upieczony</value>
     <comment>state</comment>
   </data>
-  <data name="he cooked" xml:space="preserve">
+  <data name="he cook" xml:space="preserve">
     <value>Ugotowany</value>
     <comment>state</comment>
   </data>
@@ -793,7 +793,7 @@
     <value>Upieczone</value>
     <comment>state</comment>
   </data>
-  <data name="it cooked" xml:space="preserve">
+  <data name="it cook" xml:space="preserve">
     <value>Ugotowane</value>
     <comment>state</comment>
   </data>
@@ -809,7 +809,7 @@
     <value>Upieczona</value>
     <comment>state</comment>
   </data>
-  <data name="she cooked" xml:space="preserve">
+  <data name="she cook" xml:space="preserve">
     <value>Ugotowana</value>
     <comment>state</comment>
   </data>
@@ -824,5 +824,21 @@
   <data name="drinks" xml:space="preserve">
     <value>Napoje</value>
     <comment>group of objects</comment>
+  </data>
+  <data name="with bread" xml:space="preserve">
+    <value>z Pieczywem</value>
+    <comment>group description</comment>
+  </data>
+  <data name="with freezers" xml:space="preserve">
+    <value>z Mrożonkami</value>
+    <comment>group description</comment>
+  </data>
+  <data name="with dairy" xml:space="preserve">
+    <value>z Nabiałem</value>
+    <comment>group description</comment>
+  </data>
+  <data name="with meat products" xml:space="preserve">
+    <value>z Artyk. Mięsnymi</value>
+    <comment>group description</comment>
   </data>
 </root>

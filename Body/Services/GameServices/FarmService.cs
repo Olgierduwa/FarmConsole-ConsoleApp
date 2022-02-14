@@ -28,6 +28,7 @@ namespace FarmConsole.Body.Services.GameServices
 
         public static string Sow(ProductModel Product)
         {
+            if (Product.Amount < 1) { ClearSelectedFields(); return LS.Action("no more seeds"); }
             if (GetField().ObjectName != "field") { ClearSelectedFields(); return LS.Action("no plowed field"); }
             SetField(GetPos(), ObjectModel.GetObject(Product.Property).ToField());
             ClearSelectedFields(1);
@@ -37,6 +38,7 @@ namespace FarmConsole.Body.Services.GameServices
         public static string Fertilize(ProductModel Product)
         {
             FieldModel Field = GetField();
+            if (Product.Amount < 1) { ClearSelectedFields(); return LS.Action("no more fertilizer"); }
             if (Field.Category != 1 || Field.Type < 1) return LS.Action("cant fertilizating");
             if (Field.Duration / 10 > 1) return LS.Action("already fertilized");
 

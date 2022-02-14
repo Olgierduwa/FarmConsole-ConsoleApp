@@ -11,7 +11,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <ApplicationIcon></ApplicationIcon>
+    <ApplicationIcon>FC.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Remove="Body\Resources\Language\en\Actions.resx" />
@@ -38,6 +38,10 @@
     <None Remove="Body\Resources\Saves\000\TownHall.xml" />
     <None Remove="Body\Resources\Saves\Saves.xml" />
     <None Remove="xd.txt" />
+    <None Include="FC.ico">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Body\Resources\Database\Colors.xml">
@@ -123,15 +127,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="FC.ico">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Body\Resources\Language\Languages.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="FC.ico">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
   <PropertyGroup>
     <SsdtUnitTestVersion>3.1</SsdtUnitTestVersion>
@@ -143,6 +147,7 @@
     <Win32Resource />
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>Kluczyk.pfx</AssemblyOriginatorKeyFile>
+    <Company>ConsoleStudio</Company>
   </PropertyGroup>
   <Import Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.Sql.UnitTesting.targets" Condition="$(VisualStudioVersion) != '15.0' And '$(SQLDBExtensionsRefPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.Sql.UnitTesting.targets" Condition="$(VisualStudioVersion) != '15.0' And '$(SQLDBExtensionsRefPath)' == ''" />

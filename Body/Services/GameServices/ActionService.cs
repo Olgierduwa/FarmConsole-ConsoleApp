@@ -20,8 +20,10 @@ namespace FarmConsole.Body.Services.GameServices
                 if (SettingsService.GODMOD) return;
                 int Index = GameInstance.Inventory.FindIndex(x => x.Category == Action.GetSelectedProduct.Category
                 && x.Type == Action.GetSelectedProduct.Type && x.Scale == Action.GetSelectedProduct.Scale);
-                if (Index < 0) GameInstance.Inventory.Add(Action.GetSelectedProduct);
-                else if(!GameInstance.Inventory[Index].AddAmount(Value)) GameInstance.Inventory.RemoveAt(Index);
+                if (Index < 0)
+                    if (Value > 0) GameInstance.Inventory.Add(Action.GetSelectedProduct);
+                    else RESULT = LS.Navigation("no item in inventory");
+                else if (!GameInstance.Inventory[Index].AddAmount(Value)) GameInstance.Inventory.RemoveAt(Index);
             }
         }
         private static void SetCart()
@@ -152,6 +154,7 @@ namespace FarmConsole.Body.Services.GameServices
                     }
                     else Action.Result = LS.Action(Rule.Name) + " (" + LS.Navigation("lvl") + ":" + Rule.RequiredLevel + ")";
                 }
+                else MakeAction();
             }
             else MakeAction();
         }
@@ -165,7 +168,8 @@ namespace FarmConsole.Body.Services.GameServices
                     case "InInventory": DoInInventory(); break;
                 }
                 if (MapEngine.GetSelectedFieldCount() == 0) Action.IsInProcess = false;
-                return true;
+                if (Action.Result == DONE) return true;
+                else return false;
             }
             else
             {

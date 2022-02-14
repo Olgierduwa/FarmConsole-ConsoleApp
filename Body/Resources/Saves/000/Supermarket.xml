@@ -1,40 +1,65 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Supply deliverydays="1,8,15,29">
 	<Container name="shop frige" sufix="with drinks" pos="2,2" state="1">
-		<Slot>soda:100</Slot>
-		<Slot>coffee:100</Slot>
-		<Slot>tea:100</Slot>
-		<Slot>juice:100</Slot>
+		<Slot>soda:30</Slot>
+		<Slot>coffee:20</Slot>
+		<Slot>tea:15</Slot>
+		<Slot>juice:30</Slot>
+		<Slot>water:30</Slot>
 	</Container>
-	<Container name="shop frige" sufix="(empty)" pos="2,3" state="1"/>
-	<Container name="big bookcase" sufix="(empty)" pos="2,4" state="1"/>
+	<Container name="shop frige" sufix="with dairy" pos="2,3" state="1">
+		<Slot>chicken eggs:20</Slot>
+		<Slot>butter:20</Slot>
+		<Slot>cheese:15</Slot>
+		<Slot>soy milk:20</Slot>
+		<Slot>lactose free milk:15</Slot>
+		<Slot>fatty milk:10</Slot>
+	</Container>
+	<Container name="shop frige" sufix="with meat products" pos="2,4" state="1">
+		<Slot>herring:15</Slot>
+		<Slot>crab sticks:10</Slot>
+		<Slot>ham:20</Slot>
+		<Slot>chicken pate:20</Slot>
+	</Container>
 	<Container name="small bookcase" sufix="(empty)" pos="2,5" state="1"/>
 	<Container name="big bookcase" sufix="(empty)" pos="2,6" state="1"/>
 	<Container name="small bookcase" sufix="with cereal" pos="4,2" state="0">
-		<Slot>oat:100</Slot>
-		<Slot>wheat:100</Slot>
-		<Slot>canola:100</Slot>
+		<Slot>oat:30</Slot>
+		<Slot>wheat:40</Slot>
+		<Slot>canola:50</Slot>
 	</Container>
 	<Container name="stand" sufix="(empty)" pos="6,2" state="0"/>
 	<Container name="stand" sufix="with vegetable" pos="5,2" state="5">
-		<Slot>potato:100</Slot>
-		<Slot>beetroot:100</Slot>
-		<Slot>corn:100</Slot>
+		<Slot>potato:75</Slot>
+		<Slot>beetroot:60</Slot>
+		<Slot>corn:40</Slot>
 	</Container>
 	<Container name="stand" sufix="with vegetable" pos="5,3" state="1">
-		<Slot>carrot:100</Slot>
-		<Slot>radish:100</Slot>
-		<Slot>parsley:100</Slot>
+		<Slot>carrot:45</Slot>
+		<Slot>radish:50</Slot>
+		<Slot>parsley:40</Slot>
 	</Container>
 	<Container name="big bookcase" sufix="with industrial goods" pos="5,5" state="0">
-		<Slot>plates:100</Slot>
-		<Slot>cutlery:100</Slot>
-		<Slot>bucket:100</Slot>
-		<Slot>cleaning detergent:100</Slot>
+		<Slot>plates:20</Slot>
+		<Slot>cutlery:20</Slot>
+		<Slot>bucket:10</Slot>
+		<Slot>cleaning detergent:30</Slot>
 	</Container>
-	<Container name="shop freezer" sufix="(empty)" pos="3,2" state="0"/>
-	<Container name="big bookcase" sufix="(empty)" pos="5,6" state="2"/>
+	<Container name="shop freezer" sufix="with freezers" pos="3,2" state="0">
+		<Slot>dumplings with meat:10</Slot>
+		<Slot>pierogi with meat:10</Slot>
+		<Slot>fish sticks:20</Slot>
+		<Slot>classic fries:30</Slot>
+		<Slot>frozen pizza:10</Slot>
+		<Slot>lasagne:10</Slot>
+	</Container>
+	<Container name="big bookcase" sufix="with bread" pos="5,6" state="2">
+		<Slot>whole grain bread:20</Slot>
+		<Slot>rye bread:20</Slot>
+		<Slot>wheat bread:20</Slot>
+		<Slot>wheat roll:50</Slot>
+	</Container>
 	<Container name="big bookcase" sufix="(empty)" pos="4,6" state="2"/>
-	<Container name="cash register" sufix="" pos="3,4" state="1"/>
-	<Container name="counter" sufix="" pos="3,5" state="1"/>
+	<Container name="cash register" sufix="" pos="3,5" state="1"/>
+	<Container name="counter" sufix="" pos="3,6" state="1"/>
 </Supply>

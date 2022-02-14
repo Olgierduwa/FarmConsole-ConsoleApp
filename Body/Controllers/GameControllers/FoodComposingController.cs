@@ -92,7 +92,7 @@ namespace FarmConsole.Body.Controllers.GameControllers
             if (SelectedList == 0) UpdateSelectList(+1);
             else if (SelectedList == 1)
             {
-                if (Ingredients.Count > 0)
+                if (Ingredients.Count > 0 && Ingredients[Selected[SelectedList] - 1].Amount > 0)
                 {
                     for (int i = 0; i < PlateProducts.Length; i++)
                         if (PlateProducts[i] == null)

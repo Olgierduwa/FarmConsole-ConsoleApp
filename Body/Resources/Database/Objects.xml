@@ -663,16 +663,16 @@
 	<category cat="4" name="virtual fields" menuAct="destroy" >
 		<scale s="10m x 10m">
 			
-			<object lvl="1" unit="piece/serving" price="60" name="potato seeds" menuAct="sow" property="potato field"/>
-			<object lvl="3" unit="piece/serving" price="120" name="wheat seeds" menuAct="sow" property="wheat field"/>
-			<object lvl="5" unit="piece/serving" price="80" name="beetroot seeds" menuAct="sow" property="beetroot field"/>
-			<object lvl="7" unit="piece/serving" price="80" name="oat seeds" menuAct="sow" property="oat field:l7"/>
-			<object lvl="9" unit="piece/serving" price="180" name="carrot seeds" menuAct="sow" property="carrot field"/>
-			<object lvl="11" unit="piece/serving" price="100" name="corn seeds" menuAct="sow" property="corn field"/>
-			<object lvl="13" unit="piece/serving" price="150" name="radish seeds" menuAct="sow" property="radish field"/>
-			<object lvl="15" unit="piece/serving" price="50" name="canola seed" menuAct="sow" property="canola field"/>
-			<object lvl="17" unit="piece/serving" price="120" name="parsley seeds" menuAct="sow" property="parsley field"/>
-			<object lvl="19" unit="piece/serving" price="400" name="spruce seedling" menuAct="sow" property="spruce seedling field"/>
+			<object lvl="1" unit="piece/serving" price="6" name="potato seeds" menuAct="sow" property="potato field"/>
+			<object lvl="3" unit="piece/serving" price="12" name="wheat seeds" menuAct="sow" property="wheat field"/>
+			<object lvl="5" unit="piece/serving" price="8" name="beetroot seeds" menuAct="sow" property="beetroot field"/>
+			<object lvl="7" unit="piece/serving" price="8" name="oat seeds" menuAct="sow" property="oat field:l7"/>
+			<object lvl="9" unit="piece/serving" price="18" name="carrot seeds" menuAct="sow" property="carrot field"/>
+			<object lvl="11" unit="piece/serving" price="10" name="corn seeds" menuAct="sow" property="corn field"/>
+			<object lvl="13" unit="piece/serving" price="15" name="radish seeds" menuAct="sow" property="radish field"/>
+			<object lvl="15" unit="piece/serving" price="5" name="canola seed" menuAct="sow" property="canola field"/>
+			<object lvl="17" unit="piece/serving" price="12" name="parsley seeds" menuAct="sow" property="parsley field"/>
+			<object lvl="19" unit="piece/serving" price="40" name="spruce seedling" menuAct="sow" property="spruce seedling field"/>
 			
 			<object price="3000" name="spruce wood"/>
 			<object lvl="5" unit="piece/serving" price="300" name="natural fertilizer" slots="-20" menuAct="fertilize" property="20"/>
@@ -689,30 +689,30 @@
 			<object price="50" name="fork" state="clean/he dirty" menuAct="use/wash"/>
 			<object price="50" name="spoon" state="clean/he dirty" menuAct="use/wash"/>
 
-			<object lvl="1" unit="kg/piece" state="he raw/he cooked/he bake/he fry" price="6" property="e60:90:2" slots="-11" mapAct="cook,bake,fry/compose/compose/compose" name="potato"/>
+			<object lvl="1" unit="kg/piece" state="he raw/he cook/he bake/he fry" price="6" property="e60:90:2" slots="-11" mapAct="cook,bake,fry/compose/compose/compose" name="potato"/>
 			<object lvl="3" unit="kg" price="16" property="" name="wheat"/>
-			<object lvl="5" unit="kg/piece" state="he raw/he cooked/he bake/he fry" price="7" property="e45:90:3" slots="-10" mapAct="cook,bake,fry/compose/compose/compose" name="beetroot"/>
+			<object lvl="5" unit="kg/piece" state="he raw/he cook/he bake/he fry" price="7" property="e45:90:3" slots="-10" mapAct="cook,bake,fry/compose/compose/compose" name="beetroot"/>
 			<object lvl="7" unit="kg" price="8" property="" name="oat"/>
-			<object lvl="9" unit="kg/piece" state="she raw/she cooked" price="10" property="e20:30:3" slots="-22" mapAct="cook/compose" name="carrot"/>
+			<object lvl="9" unit="kg/piece" state="she raw/she cook" price="10" property="e20:30:3" slots="-22" mapAct="cook/compose" name="carrot"/>
 			<object lvl="15" unit="kg" price="24" property="" name="canola"/>
-			<object lvl="17" unit="kg/piece" state="she raw/she cooked" price="20" property="e20:30:3" slots="-16" mapAct="cook/compose" name="parsley"/>
+			<object lvl="17" unit="kg/piece" state="she raw/she cook" price="20" property="e20:30:3" slots="-16" mapAct="cook/compose" name="parsley"/>
 			
-			<object lvl="10" unit="box" state="it raw/it cooked/it fry" price="100" property="e580:850:1" mapAct="fry,cook/compose/compose" name="dumplings with meat"/>
-			<object lvl="10" unit="box" state="it raw/it cooked/it fry" price="130" property="e840:900:1" mapAct="fry,cook/compose/compose" name="pierogi with meat"/>
+			<object lvl="10" unit="box" state="it raw/it cook/it fry" price="100" property="e580:850:1" mapAct="fry,cook/compose/compose" name="dumplings with meat"/>
+			<object lvl="10" unit="box" state="it raw/it cook/it fry" price="130" property="e840:900:1" mapAct="fry,cook/compose/compose" name="pierogi with meat"/>
 			<object lvl="8" unit="box" state="it raw/it fry" price="145" property="e750:800:2" mapAct="fry/compose" name="fish sticks"/>
 			<object lvl="7" unit="box" state="it raw/it fry" price="40" property="e360:300:0" mapAct="fry/compose" name="classic fries"/>
 			<object lvl="8" unit="box" state="she raw/she bake" price="110" property="e880:850:0" mapAct="bake/compose" name="frozen pizza"/>
 			<object lvl="6" unit="box" state="she raw/she bake" price="75" property="e540:800:0" mapAct="bake/compose" name="lasagne"/>
-			<object lvl="4" unit="box/piece" state="it raw/it cooked/it fry" price="75" property="e85:175:3" slots="-10" mapAct="cook,fry/compose/compose" name="chicken eggs"/>
-			<object lvl="11" unit="kg/piece" state="she raw/she cooked/she fry" price="12" property="e400:250:2" slots="-5" mapAct="cook,fry/compose/compose" name="corn"/>
+			<object lvl="4" unit="box/piece" state="it raw/it cook/it fry" price="75" property="e85:175:3" slots="-10" mapAct="cook,fry/compose/compose" name="chicken eggs"/>
+			<object lvl="11" unit="kg/piece" state="she raw/she cook/she fry" price="12" property="e400:250:2" slots="-5" mapAct="cook,fry/compose/compose" name="corn"/>
 			
-			<object lvl="3" price="6" property="e220:140:1" name="wheat roll"/>
-			<object lvl="4" unit="piece/serving" price="50" property="e90:40:2" slots="-10" mapAct="compose" name="rye bread"/>
-			<object lvl="3" unit="piece/serving" price="30" property="e105:50:1" slots="-10" mapAct="compose" name="wheat bread"/>
+			<object lvl="1" price="6" property="e220:140:1" name="wheat roll"/>
+			<object lvl="3" unit="piece/serving" price="50" property="e90:40:2" slots="-10" mapAct="compose" name="rye bread"/>
+			<object lvl="1" unit="piece/serving" price="30" property="e105:50:1" slots="-10" mapAct="compose" name="wheat bread"/>
 			<object lvl="5" unit="piece/serving" price="80" property="e190:100:3" slots="-10" mapAct="compose" name="whole grain bread"/>
-			<object lvl="3" unit="piece/serving" price="40" property="e40:30:1" slots="-10" mapAct="compose" name="chicken pate"/>
-			<object lvl="3" unit="piece/serving" price="60" property="e35:10:2" slots="-20" mapAct="compose" name="butter"/>
-			<object lvl="5" unit="piece/slice" price="75" property="e50:20:2" slots="-10" mapAct="compose" name="ham"/>
+			<object lvl="1" unit="piece/serving" price="40" property="e40:30:1" slots="-10" mapAct="compose" name="chicken pate"/>
+			<object lvl="1" unit="piece/serving" price="60" property="e35:10:2" slots="-20" mapAct="compose" name="butter"/>
+			<object lvl="2" unit="piece/slice" price="75" property="e50:20:2" slots="-10" mapAct="compose" name="ham"/>
 			<object lvl="4" unit="piece/slice" price="60" property="e75:30:2" slots="-5" mapAct="compose" name="cheese"/>
 			<object lvl="13" unit="kg/piece" price="14" property="e5:5:4" slots="-65" mapAct="compose" name="radish"/>
 			<object lvl="12" unit="kg/serving" price="35" property="e75:15:1" slots="-50" mapAct="compose" name="wheat flour"/>

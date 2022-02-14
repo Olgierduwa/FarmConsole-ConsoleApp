@@ -9,7 +9,7 @@ namespace FarmConsole.Body.Services.MainServices
 {
     public static class SettingsService
     {
-        public static bool GODMOD = true;
+        public static bool GODMOD = false;
         public static string[] BLOCKEDACTIONS_LVL2 = new string[] { "hide", "destroy", "build", "dig path", "plow" };
         public static string[] BLOCKEDACTIONS_LVL1 = new string[] { "rotate", "move", "lock", "unlock" };
 

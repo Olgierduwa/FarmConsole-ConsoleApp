@@ -21,6 +21,7 @@ namespace FarmConsole.Body.Services.GameServices
             for (int i = 0; i < Objects.Count; i++) DaysForStates.Add(Objects[i].Price.ToString());
             foreach (var dfs in DaysForStates) if (dfs.Length > MaxStateCount) MaxStateCount = dfs.Length;
             GrowCycle = new short[Objects.Count, MaxStateCount + 1];
+
             for (int i = 0; i < DaysForStates.Count; i++)
                 for (int j = 0; j < MaxStateCount + 1; j++)
                     if (j < DaysForStates[i].Length) GrowCycle[i, j] = short.Parse(DaysForStates[i][j].ToString());
@@ -58,7 +59,7 @@ namespace FarmConsole.Body.Services.GameServices
                         Field = Field.ToField();
                         GameInstance.GetMap("Farm").SetField(x, y, Field);
                     }
-                    else if (Field.Category == 1 && Field.Type > 0 && Field.ToProduct().StateName != "Zgniłe") // state fields
+                    else if (Field.Category == 1 && Field.Type > 0 && Field.ToProduct().StateName != "rotten") // state fields
                     {
                         // +5 synthetic fertilize + water
                         // +4 synthetic fertilize
@@ -67,7 +68,7 @@ namespace FarmConsole.Body.Services.GameServices
                         // +1 water
                         // +0 no water
 
-                        int RottenState = ObjectModel.GetObject(Field.ObjectName, _StateName: "Zgniłe").State;
+                        int RottenState = ObjectModel.GetObject(Field.ObjectName, _StateName: "rotten").State;
                         Increase = (short)(Field.Duration / 10);
                         Field.Duration += Increase > 0 ? Increase : (short)1;
                         Field.Duration -= (short)(Increase * 10);

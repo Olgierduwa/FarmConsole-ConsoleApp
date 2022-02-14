@@ -13,7 +13,7 @@ namespace FarmConsole.Body.Models
             List<ProductModel> Products = new List<ProductModel>();
             foreach(var IP in Ingredients)
             {
-                int Index = Inventory.FindIndex(x => x.ObjectName == IP.ObjectName && x.State == x.State);
+                int Index = Inventory.FindIndex(x => x.ObjectName == IP.ObjectName && x.State == IP.State);
                 var ingredient = ObjectModel.GetObject(IP.ObjectName, IP.State).ToProduct();
                 ingredient.Scale = IP.Scale;
                 ingredient.Price = IP.Price;

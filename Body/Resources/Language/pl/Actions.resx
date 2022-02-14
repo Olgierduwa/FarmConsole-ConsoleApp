@@ -389,4 +389,20 @@
     <value>Nie chce Ci się jeść!</value>
     <comment>action result</comment>
   </data>
+  <data name="no item in inventory" xml:space="preserve">
+    <value>Nie posiadasz odpowiedniego przedmiotu w ekwpipunku!</value>
+    <comment>action result</comment>
+  </data>
+  <data name="no more seeds" xml:space="preserve">
+    <value>Nie posiadasz więcej tych nasion!</value>
+    <comment>action result</comment>
+  </data>
+  <data name="no more fertilizer" xml:space="preserve">
+    <value>Nie posiadasz więcej tego nawozu!</value>
+    <comment>action result</comment>
+  </data>
+  <data name="no more objects" xml:space="preserve">
+    <value>Nie posiadasz więcej tych obiektów!</value>
+    <comment>action result</comment>
+  </data>
 </root>

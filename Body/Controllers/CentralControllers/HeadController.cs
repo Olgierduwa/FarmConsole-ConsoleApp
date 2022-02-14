@@ -13,7 +13,7 @@ namespace FarmConsole.Body.Controllers.CentralControllers
         protected static ActionModel Action { get; set; }
 
         public static DateTime Previously = DateTime.Now;
-        public static double FrameTime = 10;
+        public static double FrameTime = 30;
         public static double BakeTime = 100;
         public static bool PlayerMovementAxis;
         public static bool MapMovementAxis;

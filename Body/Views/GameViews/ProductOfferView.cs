@@ -42,7 +42,8 @@ namespace FarmConsole.Body.Views.GameViews
             Endl(1);
             TextBox(LS.Navigation("amount for the offer") + ": " + amount.ToString() + LS.Navigation("currency"));
 
-            Endl(Height * 3 - 12);
+            if (Height * 3 - 12 > 0)
+                Endl(Height * 3 - 12);
             int[] Values2 = new int[] { 1, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200 };
             int[] Values = new int[] { 1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };
             TextBox(Values[sliderValue] + LS.Navigation("percent default price"));

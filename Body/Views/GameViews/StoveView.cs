@@ -26,37 +26,40 @@ namespace FarmConsole.Body.Views.GameViews
             GroupStart(1, 2);
             Endl(4);
             int Height = Console.WindowHeight - 23;
-            for (int i = 0; i < Products.Count; i++)
-            {
-                if (Products[i] != null)
+            if (Products.Count > 0)
+                for (int i = 0; i < Products.Count; i++)
                 {
-                    string StateName = Products[i].StateName.Length > 0 && Products[i].StateName[0] > '@' ? LS.Object(Products[i].StateName) + " " : "";
-                    if (i < Height / 3) 
-                         TextBox(StateName + LS.Object(Products[i].ObjectName) + " : " + Products[i].Amount +
-                         LS.Navigation(Products[i].Unit.Split('/')[0], " ", Before: " "), Margin: 0);
-                    else TextBox(StateName + LS.Object(Products[i].ObjectName) + " : " + Products[i].Amount +
-                         LS.Navigation(Products[i].Unit.Split('/')[0], " ", Before: " "), Margin: 0, Show: false);
+                    if (Products[i] != null)
+                    {
+                        string StateName = Products[i].StateName.Length > 0 && Products[i].StateName[0] > '@' ? LS.Object(Products[i].StateName) + " " : "";
+                        if (i < Height / 3)
+                            TextBox(StateName + LS.Object(Products[i].ObjectName) + " : " + Products[i].Amount +
+                            LS.Navigation(Products[i].Unit.Split('/')[0], " ", Before: " "), Margin: 0);
+                        else TextBox(StateName + LS.Object(Products[i].ObjectName) + " : " + Products[i].Amount +
+                             LS.Navigation(Products[i].Unit.Split('/')[0], " ", Before: " "), Margin: 0, Show: false);
+                    }
                 }
-            }
+            else TextBox("...");
+            
             GroupEnd();
 
             GroupStart(1, 2);
             TextBox(LS.Object("products"));
             Endl(Height + 2);
             TextBox(LS.Action(Action, " [E]").ToUpper(), Foreground: ColorService.GetColorByName("limeD"));
-            TextBox(LS.Navigation("manage dishes", " [Q]"), Foreground: ColorService.GetColorByName("orange"));
+            TextBox(LS.Navigation("manage dishes", " [D]"), Foreground: ColorService.GetColorByName("orange"));
             GroupEnd();
 
             GroupStart(2, 2);
             TextBox(LS.Object("stove"));
             Height = Console.WindowHeight - 27;
-            Endl(15 - (Height / 3 < 4 ? Height / 3 * 3 : 0));
+            Endl(Height / 3 < 4 ? Height / 3 * 3 + 2 : 14);
             TextBox(LS.Object("oven"));
             GroupEnd();
 
             GroupEnd();
             PrintList();
-            if(IsSelected) UpdateMenuSelect(Selected, Selected, Products.Count);
+            if(IsSelected) UpdateMenuSelect(Selected, Selected, Products.Count > 0 ? Products.Count : 1);
 
             LastDisplayedComponent = GetComponentByName("TB", 2, Products.Count > 0 ? Products.Count : 1);
         }
@@ -84,7 +87,7 @@ namespace FarmConsole.Body.Views.GameViews
             GroupEnd();
 
             GroupStart(2, 2);
-            Endl(24 - (Height / 3 < 4 ? Height / 3 * 3 : 0));
+            Endl(Height / 3 < 4 ? Height / 3 * 3 + 11 : 23);
             for (int i = 4; i < 6; i++)
                 if (products[i] != null) TextBox(LS.Object(products[i].ObjectName));
                 else TextBox("...");

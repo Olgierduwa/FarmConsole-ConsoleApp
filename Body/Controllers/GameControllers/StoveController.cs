@@ -19,17 +19,16 @@ namespace FarmConsole.Body.Controllers.GameControllers
         private static bool Stove;
         private static FieldModel Field;
 
-        private static List<ProductModel> Products { get; set; }
-        private static List<ProductModel> InventoryProducts { get; set; }
+        private static List<ProductModel> IngredientProducts { get; set; }
         private static ProductModel[] StoveProducts { get; set; }
 
         private static void UpdateSelecet(int value)
         {
-            if (!Stove && Selected + value <= Products.Count && Selected + value > 0)
+            if (!Stove && Selected + value <= IngredientProducts.Count && Selected + value > 0)
             {
                 SoundService.Play("K1");
                 Selected += value;
-                ComponentService.UpdateMenuSelect(Selected, Selected - value, Products.Count, Prop: 23);
+                ComponentService.UpdateMenuSelect(Selected, Selected - value, IngredientProducts.Count, Prop: 23);
             }
             else if (Stove && Selected + value > 0 && Selected + value <= StoveProducts.Length)
             {
@@ -56,9 +55,29 @@ namespace FarmConsole.Body.Controllers.GameControllers
                 ShowProgress();
             }
         }
-        private static void Switch()
+        private static void SwitchStove()
         {
-            if(Stove)
+            if (!Stove)
+            {
+                var CurrentSelected = Selected;
+                Selected = LastSelected;
+                LastSelected = CurrentSelected;
+                string WarningMessage = Selected > 4 ? "oven" : "stove";
+                StoveView.GetLeftList();
+                ComponentService.UpdateMenuTextBox(2, LS.Navigation("remove from the " + WarningMessage, " [E]"), 3);
+                ComponentService.UpdateMenuTextBox(3, LS.Navigation("take items", " [A]"), 3);
+                ComponentService.UpdateMenuSelect(IngredientProducts.Count + 1, LastSelected, 1, 2, 23);
+
+                StoveView.SetRightList();
+                ComponentService.UpdateMenuSelect(Selected - (Selected > 4 ? 4 : 0), Selected - (Selected > 4 ? 4 : 0), Selected > 4 ? 2 : 4, Selected > 4 ? 3 : 2, 27);
+                StoveView.GetRightList();
+                ShowProgress();
+                Stove = !Stove;
+            }
+        }
+        private static void SwitchItems()
+        {
+            if (Stove)
             {
                 StoveView.GetRightList();
                 ComponentService.UpdateMenuSelect(Selected > 4 ? 3 : 5, Selected - (Selected > 4 ? 4 : 0), Selected > 4 ? 2 : 4, Selected > 4 ? 3 : 2, 21);
@@ -69,31 +88,15 @@ namespace FarmConsole.Body.Controllers.GameControllers
                 LastSelected = CurrentSelected;
                 StoveView.SetLeftList();
                 ComponentService.UpdateMenuTextBox(2, LS.Action(ActionName, " [E]").ToUpper(), 3);
-                ComponentService.UpdateMenuTextBox(3, LS.Navigation("manage dishes", " [Q]"), 3);
-                ComponentService.UpdateMenuSelect(Selected, Selected, Products.Count, 2, 23);
+                ComponentService.UpdateMenuTextBox(3, LS.Navigation("manage dishes", " [D]"), 3);
+                ComponentService.UpdateMenuSelect(Selected, Selected, IngredientProducts.Count, 2, 23);
+                Stove = !Stove;
             }
-            else
-            {
-                var CurrentSelected = Selected;
-                Selected = LastSelected;
-                LastSelected = CurrentSelected;
-                string WarningMessage = Selected > 4 ? "oven" : "stove";
-                StoveView.GetLeftList();
-                ComponentService.UpdateMenuTextBox(2, LS.Navigation("remove from the " + WarningMessage, " [E]"), 3);
-                ComponentService.UpdateMenuTextBox(3, LS.Navigation("take items", " [Q]"), 3);
-                ComponentService.UpdateMenuSelect(Products.Count + 1, LastSelected, 1, 2, 23);
-
-                StoveView.SetRightList();
-                ComponentService.UpdateMenuSelect(Selected - (Selected > 4 ? 4 : 0), Selected - (Selected > 4 ? 4 : 0), Selected > 4 ? 2 : 4, Selected > 4 ? 3 : 2, 27);
-                StoveView.GetRightList();
-                ShowProgress();
-            }
-            Stove = !Stove;
         }
         private static void Transfer()
         {
             if (Stove && StoveProducts[Selected - 1] != null) Drop();
-            else if (!Stove && Products.Count >= Selected) Put();
+            else if (!Stove && IngredientProducts.Count >= Selected) Put();
         }
         private static void Put()
         {
@@ -103,9 +106,9 @@ namespace FarmConsole.Body.Controllers.GameControllers
             while (PlaceIndex < MaxCount && StoveProducts[PlaceIndex] != null) PlaceIndex++;
             if (PlaceIndex < MaxCount)
             {
-                var PlacedProduct = Products[Selected - 1].ToProduct();
+                var PlacedProduct = IngredientProducts[Selected - 1].ToProduct();
                 string StateName = PlacedProduct.StateName.Split(' ')[0] + " " + ActionName;
-                PlacedProduct.State = ObjectModel.GetObject(Field.ObjectName, _StateName: StateName).State;
+                PlacedProduct.StateName = StateName;
                 PlacedProduct.Amount = 1;
                 StoveView.GetLeftList();
                 Field.Pocket.SetSlot(PlaceIndex, PlacedProduct);
@@ -114,24 +117,23 @@ namespace FarmConsole.Body.Controllers.GameControllers
                 StoveView.GetRightList();
 
                 IsInProgress = true;
-                int PiecesAmount = Products[Selected - 1].Slots < 0 ? Products[Selected - 1].Slots : -1;
-                int Index = GameInstance.Inventory.FindIndex(x => x.ObjectName == PlacedProduct.ObjectName && x.State == PlacedProduct.State);
-                if (!GameInstance.Inventory[Index].AddAmount(PiecesAmount)) GameInstance.Inventory.RemoveAt(Index);
-                if (!InventoryProducts[Selected - 1].AddAmount(PiecesAmount)) InventoryProducts.RemoveAt(Selected - 1);
-                if (!Products[Selected - 1].AddAmount(-1)) 
+                int PiecesAmount = IngredientProducts[Selected - 1].Slots < 0 ? IngredientProducts[Selected - 1].Slots : -1;
+                int Index = GameInstance.Inventory.FindIndex(x => x.ObjectName == PlacedProduct.ObjectName && x.State == 0);
+                if (!GameInstance.Inventory[Index].AddAmount(PiecesAmount))
                 {
                     StoveView.SetLeftList();
-                    StoveView.RepairDamageRemoval(Products.Count);
-                    Products.RemoveAt(Selected - 1);
+                    StoveView.RepairDamageRemoval(IngredientProducts.Count);
+                    GameInstance.Inventory.RemoveAt(Index);
+                    IngredientProducts.RemoveAt(Selected - 1);
                     Selected = 1;
-                    StoveView.DisplayCaptains(ActionName, Products, 1);
+                    StoveView.DisplayCaptains(ActionName, IngredientProducts, 1);
                 }
                 else
                 {
                     StoveView.SetLeftList();
-                    string Content = (Products[Selected - 1].StateName.Length > 0 && Products[Selected - 1].StateName[0] > '@' ?
-                                     LS.Object(Products[Selected - 1].StateName) + " " : "") +  LS.Object(Products[Selected - 1].ObjectName) +
-                                     " : " + Products[Selected - 1].Amount + LS.Navigation(Products[Selected - 1].Unit.Split('/')[0], " ", Before: " ");
+                    string Content = (IngredientProducts[Selected - 1].StateName.Length > 0 && IngredientProducts[Selected - 1].StateName[0] > '@' ?
+                                     LS.Object(IngredientProducts[Selected - 1].StateName) + " " : "") +  LS.Object(IngredientProducts[Selected - 1].ObjectName) +
+                                     " : " + IngredientProducts[Selected - 1].Amount + LS.Navigation(IngredientProducts[Selected - 1].Unit.Split('/')[0], " ", Before: " ");
                     ComponentService.UpdateMenuTextBox(Selected, Content);
                 }
             }
@@ -158,9 +160,9 @@ namespace FarmConsole.Body.Controllers.GameControllers
             else GameInstance.Inventory[Index].AddAmount(SP.Amount);
             SetProducts();
             LastSelected = Selected = 1;
-            StoveView.DisplayCaptains(ActionName, Products, LastSelected, IsSelected: false);
+            StoveView.DisplayCaptains(ActionName, IngredientProducts, LastSelected, IsSelected: false);
             ComponentService.UpdateMenuTextBox(2, LS.Navigation("remove from the stove", " [E]"), 3);
-            ComponentService.UpdateMenuTextBox(3, LS.Navigation("take items", " [Q]"), 3);
+            ComponentService.UpdateMenuTextBox(3, LS.Navigation("take items", " [A]"), 3);
             StoveView.GetLeftList();
             StoveView.DisplayStove(StoveProducts, Selected);
         }
@@ -182,7 +184,7 @@ namespace FarmConsole.Body.Controllers.GameControllers
                     if (p.Amount < 100 && p.State == 0) p.AddAmount(1);
                     else if (p.State == 0)
                     {
-                        p.State++; // zmien stan na gotowe
+                        p.State = ObjectModel.GetObject(p.ObjectName,_StateName: p.StateName).State; // zmien stan na gotowe
                     }
                 }
             }
@@ -196,13 +198,13 @@ namespace FarmConsole.Body.Controllers.GameControllers
         }
         private static void SetProducts()
         {
-            InventoryProducts = ProductModel.SelectProductsByAction(GameInstance.Inventory, ActionName, Category: 4, _SearchMapActs: true);
-            Products = new List<ProductModel>();
+            var InventoryProducts = ProductModel.SelectProductsByAction(GameInstance.Inventory, ActionName, Category: 4, _SearchMapActs: true);
+            IngredientProducts = new List<ProductModel>();
             foreach (var ip in InventoryProducts)
             {
                 var p = ip.ToProduct();
                 p.Amount /= p.Slots < 0 ? (-1 * p.Slots) : 1;
-                if(p.Amount > 0) Products.Add(p);
+                if(p.Amount > 0) IngredientProducts.Add(p);
             }
         }
 
@@ -222,7 +224,7 @@ namespace FarmConsole.Body.Controllers.GameControllers
 
             StoveView.DisplayStove(StoveProducts, 0);
             StoveView.GetRightList();
-            StoveView.DisplayCaptains(ActionName, Products, Selected);
+            StoveView.DisplayCaptains(ActionName, IngredientProducts, Selected);
             
             while (OpenScreen.Contains("Food"))
             {
@@ -231,11 +233,13 @@ namespace FarmConsole.Body.Controllers.GameControllers
                     var cki = Console.ReadKey(true);
                     switch (cki.Key)
                     {
+                        case ConsoleKey.Q:
                         case ConsoleKey.Tab:
                         case ConsoleKey.Escape: OpenScreen = EscapeScreen; SoundService.Play("K2"); break;
                         case ConsoleKey.W: UpdateSelecet(-1); break;
                         case ConsoleKey.S: UpdateSelecet(+1); break;
-                        case ConsoleKey.Q: Switch(); break;
+                        case ConsoleKey.D: SwitchStove(); break;
+                        case ConsoleKey.A: SwitchItems(); break;
                         case ConsoleKey.E: Transfer(); break;
                     }
                 }

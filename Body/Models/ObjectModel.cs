@@ -137,14 +137,18 @@ namespace FarmConsole.Body.Models
         {
             List<ObjectModel> objects = new List<ObjectModel>();
             if (_Category != null || _Scale != null || _Type != null || _State != null)
+            {
+
                 foreach (var p in Objects)
                 {
                     if ((_Category == null || p.Category == _Category) &&
                         (_Scale == null || p.Scale == _Scale) &&
                         (_Type == null || p.Type == _Type) &&
                         (_State == null || p.State == _State))
-                        objects.Add(p);
+                        objects.Add(p.Clone());
                 }
+                return objects;
+            }
             return Objects;
         }
         

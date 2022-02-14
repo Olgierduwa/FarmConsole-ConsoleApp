@@ -38,7 +38,7 @@ namespace FarmConsole.Body.Controllers.GameControllers
                         GameInstance.WalletFunds -= paybycard ? 0 : amount;
                         foreach (var cartProduct in Cart)
                         {
-                            var foundProduct = GameInstance.Inventory.Find(p => p.ObjectName == cartProduct.ObjectName);
+                            var foundProduct = GameInstance.Inventory.Find(p => p.ObjectName == cartProduct.ObjectName && p.State == cartProduct.State);
                             cartProduct.Amount *= cartProduct.Slots < 0 ? cartProduct.Slots * -1 : 1;
                             if (foundProduct != null) foundProduct.AddAmount(cartProduct.Amount);
                             else GameInstance.Inventory.Add(cartProduct.ToProduct());

@@ -205,7 +205,7 @@ namespace FarmConsole.Body.Controllers.GameControllers
                 }
             }
         }
-        private static void HideSideMenu(string type, bool tab = false)
+        public static void HideSideMenu(string type, bool tab = false)
         {
             foreach (char symbol in type)
             {
